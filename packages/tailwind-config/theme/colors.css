@@ -1,0 +1,40 @@
+@theme {
+    --color-*: initial;
+
+    /* Grayscale */
+    --color-gray-01: #151515;
+    --color-gray-02: #333333;
+    --color-gray-03: #505050;
+    --color-gray-04: #666666;
+    --color-gray-05: #767676;
+    --color-gray-06: #888888;
+    --color-gray-07: #999999;
+    --color-gray-08: #bbbbbb;
+    --color-gray-09: #cccccc;
+    --color-gray-10: #dddddd;
+    --color-gray-11: #ebebed;
+    --color-gray-12: #f5f5f5;
+    --color-gray-13: #ffffff;
+
+    /* Line Color */
+    --color-line-light: #f7f7fb;
+    --color-line-regular: #e5e5ec;
+    --color-line-disabled: #cacad7;
+
+    /* Button & Background Color */
+    --color-btn-bg-light: #f7f7fb;
+    --color-btn-bg-regular: #f1f1f5;
+    --color-btn-bg-disabled: #cccccc;
+
+    /* Status Color */
+    --color-status-red: #ff3d40;
+    --color-status-blue: #247eed;
+
+    /* Point Color */
+    --color-point-base: #ff5a2d;
+}
+
+@theme inline {
+    --color-black: var(--color-gray-01);
+    --color-white: var(--color-gray-13);
+}
