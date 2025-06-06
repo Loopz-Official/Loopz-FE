@@ -22,6 +22,7 @@ const Configuration = {
                 'sentence-case',
                 'start-case',
                 'pascal-case',
+                'lower-case',
                 'upper-case',
                 'kebab-case',
             ],
