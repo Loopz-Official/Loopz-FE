@@ -1,6 +1,25 @@
 # Loopz
 
-This is Frontend Monorepo build with [Turborepo](https://turborepo.com/) with [Tailwind CSS](https://tailwindcss.com/) and [Next.js](https://nextjs.org/).
+This is Frontend Monorepo built with [Turborepo](https://turborepo.com/) with [Tailwind CSS](https://tailwindcss.com/) and [Next.js](https://nextjs.org/).
+
+## 🏛️ Project Structure
+
+```shell
+.
+├── apps
+│   ├── admin
+│   │   ├── app
+│   │   └── public
+│   └── client
+│       ├── app
+│       └── public
+└── packages
+    ├── eslint-config
+    ├── tailwind-config
+    ├── typescript-config
+    └── ui
+        └── src
+```
 
 ---
 
