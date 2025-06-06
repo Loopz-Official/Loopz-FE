@@ -11,13 +11,13 @@ This is Frontend Monorepo build with [Turborepo](https://turborepo.com/) with [T
 
 ### 📌 NVM 사용 권장
 
-  ```bash
-  # .nvmrc 내 명시된 버전으로 Node.js 설치
-  nvm install 
+```bash
+# .nvmrc 내 명시된 버전으로 Node.js 설치
+nvm install
 
-  # 설치된 버전 사용
-  nvm use
-  ```
+# 설치된 버전 사용
+nvm use
+```
 
 ### pnpm-workspace.yaml의 버전 강제 설정 (의존성 관리용)
 

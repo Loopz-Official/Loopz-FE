@@ -1,9 +1,9 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+    - 'apps/*'
+    - 'packages/*'
 
 nodeVersion: 22.16.0
 engineStrict: true
 
 executionEnv:
-  nodeVersion: 22.16.0
+    nodeVersion: 22.16.0

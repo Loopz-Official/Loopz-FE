@@ -3,28 +3,28 @@ description: '기존 기능 및 구현 방식을 수정해야할 때 제안해�
 title: '[Fix]: '
 labels: ['fix']
 assignees:
-  - 'DefineXX'
+    - 'DefineXX'
 
 body:
-  - type: markdown
-    attributes:
-      value: '### 🐛 Fix What & Why?'
+    - type: markdown
+      attributes:
+          value: '### 🐛 Fix What & Why?'
 
-  - type: input
-    id: summary
-    attributes:
-      label: '🤷🏼‍♂️ Reason'
-      description: '수정하는 이유를 간략하게 설명해주세요'
-      placeholder: '예: 로그인 시 특정 상황에서 500 에러 발생'
+    - type: input
+      id: summary
+      attributes:
+          label: '🤷🏼‍♂️ Reason'
+          description: '수정하는 이유를 간략하게 설명해주세요'
+          placeholder: '예: 로그인 시 특정 상황에서 500 에러 발생'
 
-    validations:
-      required: true
+      validations:
+          required: true
 
-  - type: textarea
-    id: bug-description
-    attributes:
-      label: '📄 Plan'
-      description: '무엇을, 어떻게 수정할 것인지 설명해주세요'
+    - type: textarea
+      id: bug-description
+      attributes:
+          label: '📄 Plan'
+          description: '무엇을, 어떻게 수정할 것인지 설명해주세요'
 
-    validations:
-      required: true
+      validations:
+          required: true
