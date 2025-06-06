@@ -1,8 +1,8 @@
-@import 'tailwindcss';
 @import '@repo/tailwind-config';
 @import '@repo/ui/styles.css';
 
-:root {
+/* Remove Comments to check usage example */
+/* :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
@@ -24,4 +24,6 @@ body {
             rgb(var(--background-end-rgb))
         )
         rgb(var(--background-start-rgb));
-}
+} */
+
+/* Remove above styles, then add apps/client package's Global Styles */
