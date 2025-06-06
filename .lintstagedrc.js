@@ -1,8 +1,8 @@
 export default {
     '**/*.{ts,tsx}': [
         'prettier --write',
-        'pnpm lint -- --fix',
-        'pnpm check-types --',
+        () => 'pnpm lint', // file name will not be passed by arguments
+        () => 'pnpm check-types',
     ],
     '**/*.{js,css,md,json}': 'prettier --write',
 };
