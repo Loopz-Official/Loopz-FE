@@ -30,4 +30,4 @@ const Configuration = {
     },
 };
 
-module.exports = Configuration;
+export default Configuration;
