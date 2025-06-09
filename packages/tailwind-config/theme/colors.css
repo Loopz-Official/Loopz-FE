@@ -17,24 +17,40 @@
     --color-gray-13: #ffffff;
 
     /* Line Color */
-    --color-line-light: #f7f7fb;
-    --color-line-regular: #e5e5ec;
-    --color-line-disabled: #cacad7;
-
-    /* Button & Background Color */
-    --color-btn-bg-light: #f7f7fb;
-    --color-btn-bg-regular: #f1f1f5;
-    --color-btn-bg-disabled: #cccccc;
+    --border-color-light: #f7f7fb;
+    --border-color-regular: #e5e5ec;
+    --border-color-disabled: #cacad7;
 
     /* Status Color */
     --color-status-red: #ff3d40;
     --color-status-blue: #247eed;
 
     /* Point Color */
-    --color-point-base: #ff5a2d;
+    --color-point: #ff5a2d;
+}
+
+@layer theme {
+    :root {
+        /* Button & Background Color */
+        --color-btn-bg-light: #f7f7fb;
+        --color-btn-bg-regular: #f1f1f5;
+        --color-btn-bg-disabled: #cccccc;
+    }
 }
 
 @theme inline {
     --color-black: var(--color-gray-01);
     --color-white: var(--color-gray-13);
+
+    --text-color-dark: var(--color-gray-03);
+    --text-color-regular: var(--color-gray-05);
+    --text-color-disabled: #afafaf;
+
+    --background-color-light: var(--color-btn-bg-light);
+    --background-color-regular: var(--color-btn-bg-regular);
+    --background-color-disabled: var(--color-btn-bg-disabled);
+
+    --color-button-light: var(--color-btn-bg-light);
+    --color-button-regular: var(--color-btn-bg-regular);
+    --color-button-disabled: var(--color-btn-bg-disabled);
 }
