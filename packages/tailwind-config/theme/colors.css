@@ -17,8 +17,8 @@
     --color-gray-13: #ffffff;
 
     /* Line Color */
-    --border-color-light: #f7f7fb;
-    --border-color-regular: #e5e5ec;
+    --border-color-gray-light: #f7f7fb;
+    --border-color-gray-regular: #e5e5ec;
     --border-color-disabled: #cacad7;
 
     /* Status Color */
@@ -42,15 +42,15 @@
     --color-black: var(--color-gray-01);
     --color-white: var(--color-gray-13);
 
-    --text-color-dark: var(--color-gray-03);
-    --text-color-regular: var(--color-gray-05);
+    --text-color-gray-dark: var(--color-gray-03);
+    --text-color-gray-regular: var(--color-gray-05);
     --text-color-disabled: #afafaf;
 
-    --background-color-light: var(--color-btn-bg-light);
-    --background-color-regular: var(--color-btn-bg-regular);
+    --background-color-gray-light: var(--color-btn-bg-light);
+    --background-color-gray-regular: var(--color-btn-bg-regular);
     --background-color-disabled: var(--color-btn-bg-disabled);
 
-    --color-button-light: var(--color-btn-bg-light);
-    --color-button-regular: var(--color-btn-bg-regular);
+    --color-button-gray-light: var(--color-btn-bg-light);
+    --color-button-gray-regular: var(--color-btn-bg-regular);
     --color-button-disabled: var(--color-btn-bg-disabled);
 }
