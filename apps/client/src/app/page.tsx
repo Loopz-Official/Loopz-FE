@@ -1,4 +1,5 @@
 import Header from '../components/common/Header';
+import NavigationBar from '../components/common/NavigationBar';
 
 export default function Page() {
     return (
@@ -8,6 +9,7 @@ export default function Page() {
             <div className="h-screen"></div>
             <div className="h-screen"></div>
             <div className="h-screen"></div>
+            <NavigationBar />
         </div>
     );
 }
