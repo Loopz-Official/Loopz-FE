@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import ProductList from './ProductList';
 
 export default function ObjectBoard() {
@@ -12,10 +13,13 @@ export default function ObjectBoard() {
                             최신순
                             <div className="h-4 w-4 bg-black" />
                         </button>
-                        <button className="flex items-center gap-0.5">
+                        <Link
+                            href={'/filter'}
+                            className="flex items-center gap-0.5"
+                        >
                             필터
                             <div className="h-4 w-4 bg-black" />
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
