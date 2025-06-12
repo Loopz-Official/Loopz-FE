@@ -1,15 +1,16 @@
 import Header from '../components/common/Header';
 import NavigationBar from '../components/common/NavigationBar';
 import Banner from '../components/features/main/Banner';
+import ObjectBoard from '../components/features/main/ObjectBoard';
 
 export default function Page() {
     return (
-        <div className="bg-gray-03">
+        <div>
             <Header type="title" title="텍스트" />
-            <Banner />
-            <div className="h-screen"></div>
-            <div className="h-screen"></div>
-            <div className="h-screen"></div>
+            <main className="flex flex-col gap-20">
+                <Banner />
+                <ObjectBoard />
+            </main>
             <NavigationBar />
         </div>
     );

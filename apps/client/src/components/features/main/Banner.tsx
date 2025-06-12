@@ -85,6 +85,7 @@ export default function Banner() {
 
                 {/* 배너 슬라이드 */}
                 {new Array(totalSlides).fill(null).map((item, i) => (
+                    // TODO: 타이틀 및 설명을 active 슬라이드에만 보이게 할지
                     <SwiperSlide key={i}>
                         <div
                             ref={i === 0 ? slideRef : undefined}
