@@ -1,6 +1,6 @@
 import Header from '../components/common/Header';
 import NavigationBar from '../components/common/NavigationBar';
-import Banner from '../components/features/objectBoard/Banner';
+import Banner from '../components/features/main/Banner';
 
 export default function Page() {
     return (
