@@ -88,9 +88,12 @@ export default function Banner() {
                     <SwiperSlide key={i}>
                         <div
                             ref={i === 0 ? slideRef : undefined}
-                            className="relative aspect-[4/5] h-auto w-full rounded-md bg-black text-white"
+                            className="relative flex aspect-[4/5] h-auto w-full flex-col justify-end gap-2 rounded-md bg-black px-5 py-8 text-white"
                         >
-                            {i + 1}
+                            <h3 className="text-headline-02 whitespace-pre">{`기억을 담은 물건들,\n다시 꺼냅니다`}</h3>
+                            <div className="text-body-03 font-normal">
+                                무드에 맞는 빈티지 오브제를 제안합니다
+                            </div>
                         </div>
                     </SwiperSlide>
                 ))}
