@@ -8,10 +8,11 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@repo/ui/*": ["../../packages/ui/src/*"]
+            "@/*": ["src/*"]
         }
     },
     "include": [
+        "svgr.d.ts",
         "**/*.ts",
         "**/*.tsx",
         "next-env.d.ts",
