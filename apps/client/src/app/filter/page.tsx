@@ -2,6 +2,7 @@
 
 import Header from '../../components/common/Header';
 import ChipList from '../../components/features/filter/ChipList';
+import PriceRange from '../../components/features/filter/PriceRange';
 
 const filterList = [
     {
@@ -49,13 +50,16 @@ export default function Page() {
         <div>
             <Header type="title" title="필터" />
             <div className="space-y-8 px-5 py-6">
-                {filterList.map(({ title, chips }) =>
-                    chips ? (
-                        <ChipList key={title} title={title} chips={chips} />
-                    ) : (
-                        <></>
-                    )
-                )}
+                {filterList.map(({ title, chips }) => (
+                    <div key={title}>
+                        <h3 className="text-body-03 font-semibold">{title}</h3>
+                        {chips ? (
+                            <ChipList key={title} chips={chips} />
+                        ) : (
+                            <PriceRange />
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );
