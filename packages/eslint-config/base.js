@@ -47,6 +47,19 @@ export const config = [
                         'type',
                     ],
                     'newlines-between': 'always',
+                    pathGroups: [
+                        {
+                            pattern: '@repo/**',
+                            group: 'external',
+                            position: 'after',
+                        },
+                        {
+                            pattern: '@/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                    ],
+                    pathGroupsExcludedImportTypes: ['builtin'],
                 },
             ],
         },
