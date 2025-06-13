@@ -31,7 +31,10 @@
 
 @layer theme {
     :root {
-        /* Button & Background Color */
+        /* Text */
+        --color-text-disabled: #afafaf;
+
+        /* Button & Background */
         --color-btn-bg-light: #f7f7fb;
         --color-btn-bg-regular: #f1f1f5;
         --color-btn-bg-disabled: #cccccc;
@@ -44,7 +47,7 @@
 
     --text-color-gray-dark: var(--color-gray-03);
     --text-color-gray-regular: var(--color-gray-05);
-    --text-color-disabled: #afafaf;
+    --text-color-disabled: var(--color-text-disabled);
 
     --background-color-gray-light: var(--color-btn-bg-light);
     --background-color-gray-regular: var(--color-btn-bg-regular);
