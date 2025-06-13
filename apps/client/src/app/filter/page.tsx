@@ -1,8 +1,8 @@
 'use client';
 
-import Header from '../../components/common/Header';
-import ChipList from '../../components/features/filter/ChipList';
-import PriceRange from '../../components/features/filter/PriceRange';
+import Header from '@/components/common/Header';
+import ChipList from '@/components/features/filter/ChipList';
+import PriceRange from '@/components/features/filter/PriceRange';
 
 const filterList = [
     {

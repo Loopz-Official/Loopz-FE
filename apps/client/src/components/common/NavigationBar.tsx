@@ -3,7 +3,8 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAVIGATION_BAR_OPTIONS } from '../../constants/navigationBar';
+
+import { NAVIGATION_BAR_OPTIONS } from '@/constants/navigationBar';
 
 export default function NavigationBar() {
     const pathname = usePathname();

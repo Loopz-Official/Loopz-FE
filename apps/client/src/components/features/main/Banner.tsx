@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import 'swiper/css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { calculatePeekWidth } from '../../../utils/calculatePeekWidth';
+
+import { calculatePeekWidth } from '@/utils/calculatePeekWidth';
 
 const swiperBreakpoints = {
     0: {
