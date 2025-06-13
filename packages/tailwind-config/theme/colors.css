@@ -17,24 +17,42 @@
     --color-gray-13: #ffffff;
 
     /* Line Color */
-    --color-line-light: #f7f7fb;
-    --color-line-regular: #e5e5ec;
-    --color-line-disabled: #cacad7;
-
-    /* Button & Background Color */
-    --color-btn-bg-light: #f7f7fb;
-    --color-btn-bg-regular: #f1f1f5;
-    --color-btn-bg-disabled: #cccccc;
+    --border-color-gray-light: #f1f1f5;
+    --border-color-gray-regular: #e5e5ec;
+    --border-color-disabled: #cacad7;
 
     /* Status Color */
     --color-status-red: #ff3d40;
     --color-status-blue: #247eed;
 
     /* Point Color */
-    --color-point-base: #ff5a2d;
+    --color-point: #ff5a2d;
+}
+
+@layer theme {
+    :root {
+        /* Text */
+        --color-text-disabled: #afafaf;
+
+        /* Button & Background */
+        --color-btn-bg-light: #f7f7fb;
+        --color-btn-bg-regular: #f1f1f5;
+        --color-btn-bg-disabled: #cccccc;
+    }
 }
 
 @theme inline {
     --color-black: var(--color-gray-01);
     --color-white: var(--color-gray-13);
+
+    --text-color-gray-dark: var(--color-gray-03);
+    --text-color-gray-regular: var(--color-gray-05);
+    --text-color-disabled: var(--color-text-disabled);
+
+    --background-color-gray-light: var(--color-btn-bg-light);
+    --background-color-gray-regular: var(--color-btn-bg-regular);
+
+    --color-button-gray-light: var(--color-btn-bg-light);
+    --color-button-gray-regular: var(--color-btn-bg-regular);
+    --color-button-disabled: var(--color-btn-bg-disabled);
 }
