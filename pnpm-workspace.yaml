@@ -1,11 +1,14 @@
 packages:
-  - apps/*
-  - packages/*
+    - apps/*
+    - packages/*
 
 engineStrict: true
 
 executionEnv:
-  nodeVersion: 22.16.0
-  
+    nodeVersion: 22.16.0
+
 ignoredBuiltDependencies:
-  - sharp
+    - sharp
+
+overrides:
+  'brace-expansion': '2.0.2'
