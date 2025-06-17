@@ -1,4 +1,5 @@
 import AddressSection from '@/components/features/order/form/AddressSection';
+import OrderItemsSection from '@/components/features/order/form/OrderItemsSection';
 
 export default function Page() {
     return (
@@ -12,7 +13,9 @@ export default function Page() {
                 </div>
 
                 {/* 주문 상품 */}
-                <div className="flex flex-col gap-3 border-t border-black pt-4"></div>
+                <div className="flex flex-col gap-3 border-t border-black pt-4">
+                    <OrderItemsSection />
+                </div>
 
                 {/* 결제 금액 */}
                 <div className="flex flex-col gap-3 border-t border-black pt-5"></div>
