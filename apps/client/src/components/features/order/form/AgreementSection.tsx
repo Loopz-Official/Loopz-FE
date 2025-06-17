@@ -1,22 +1,42 @@
-import Link from 'next/link';
+'use client';
 
-const agreementList = [
-    {
-        title: '개인정보 수집/이용 동의',
-        href: '',
-    },
-    {
-        title: '개인정보 제3자 제공 동의',
-        href: '',
-    },
-];
+import Link from 'next/link';
+import { useState } from 'react';
+
+import { Agreement, INITIAL_AGREEMENTS } from '@/constants/agreements';
 
 export default function AgreementSection() {
+    const [agreements, setAgreements] =
+        useState<Agreement[]>(INITIAL_AGREEMENTS);
+    const isAllChecked = agreements.every((agreement) => agreement.checked);
+
+    const handleAllCheckChange = () => {
+        const updatedChecked = !isAllChecked;
+        setAgreements(
+            agreements.map((agreement) => ({
+                ...agreement,
+                checked: updatedChecked,
+            }))
+        );
+    };
+
+    const handleSingleCheckChange = (index: number) => {
+        setAgreements(
+            agreements.map((agreement, i) =>
+                i === index
+                    ? { ...agreement, checked: !agreement.checked }
+                    : agreement
+            )
+        );
+    };
+
     return (
         <>
             <label className="flex items-center gap-3">
                 <input
                     type="checkbox"
+                    checked={isAllChecked}
+                    onChange={handleAllCheckChange}
                     className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                 />
                 <span className="text-caption-01 font-semibold">
@@ -27,10 +47,12 @@ export default function AgreementSection() {
             <hr className="border-gray-light mb-3 mt-4" />
 
             <div className="space-y-1.5 tracking-normal">
-                {agreementList.map(({ title, href }) => (
+                {agreements.map(({ title, href, checked }, index) => (
                     <label key={title} className="flex items-center gap-3">
                         <input
                             type="checkbox"
+                            checked={checked}
+                            onChange={() => handleSingleCheckChange(index)}
                             className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                         />
                         <span className="text-caption-01 text-gray-regular">
