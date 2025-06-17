@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import 'swiper/css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -88,15 +89,26 @@ export default function Banner() {
                 {new Array(totalSlides).fill(null).map((item, i) => (
                     // TODO: 타이틀 및 설명을 active 슬라이드에만 보이게 할지
                     <SwiperSlide key={i}>
-                        <div
-                            ref={i === 0 ? slideRef : undefined}
-                            className="relative flex aspect-[4/5] h-auto w-full flex-col justify-end gap-2 rounded-md bg-black px-5 py-8 text-white"
-                        >
-                            <h3 className="text-headline-02 whitespace-pre">{`기억을 담은 물건들,\n다시 꺼냅니다`}</h3>
-                            <div className="text-body-03 font-normal">
-                                무드에 맞는 빈티지 오브제를 제안합니다
+                        {({ isActive }) => (
+                            <div
+                                ref={i === 0 ? slideRef : undefined}
+                                className="bg-gray-regular relative flex aspect-[4/5] h-auto w-full flex-col justify-end gap-2 rounded-md px-5 py-8 before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-b before:from-transparent before:from-[40.97%] before:to-black/40 before:to-[99.92%]"
+                            >
+                                <div
+                                    className={clsx(
+                                        'pointer-events-none transition-colors',
+                                        isActive
+                                            ? 'text-white'
+                                            : 'text-white/40'
+                                    )}
+                                >
+                                    <h3 className="text-headline-02 relative z-10 whitespace-pre">{`기억을 담은 물건들,\n다시 꺼냅니다`}</h3>
+                                    <div className="text-body-03 relative z-10 font-normal">
+                                        무드에 맞는 빈티지 오브제를 제안합니다
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </SwiperSlide>
                 ))}
             </Swiper>
