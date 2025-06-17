@@ -1,3 +1,7 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import { LEFT_SIDE_OPTIONS, RIGHT_SIDE_OPTIONS } from '@/constants/header';
 
 export type HeaderType = 'main' | 'sub' | 'title' | 'pop-up';
@@ -10,11 +14,21 @@ export default function Header({
     title?: string;
 }) {
     const currentOption = LEFT_SIDE_OPTIONS[type];
+    const router = useRouter();
+
+    const handleLeftOptionClick = () => {
+        if (type === 'main') {
+            router.push('/main');
+        } else {
+            router.back();
+        }
+    };
 
     return (
         <div className="sticky top-0 z-10 grid h-14 w-full grid-cols-[1fr_auto_1fr] bg-white px-5 py-[0.875rem]">
             <div>
                 <button
+                    onClick={handleLeftOptionClick}
                     className="flex items-center gap-1"
                     aria-label={currentOption.label}
                 >
