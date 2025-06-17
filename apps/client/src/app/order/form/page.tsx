@@ -1,3 +1,6 @@
+'use client';
+
+import BottomButton from '@/components/features/order/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
 import OrderItemsSection from '@/components/features/order/form/OrderItemsSection';
@@ -28,10 +31,14 @@ export default function Page() {
                 <div className="flex flex-col border-t border-black pb-12 pt-5">
                     <AgreementSection />
                 </div>
-
-                {/* 버튼 */}
-                <div></div>
             </div>
+
+            {/* 버튼 */}
+            <BottomButton
+                text={'21,000원 결제하기'}
+                isDisabled={false}
+                onClick={() => {}}
+            />
         </div>
     );
 }
