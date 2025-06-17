@@ -67,6 +67,10 @@ export default function Banner() {
                 autoplay={{ delay: 5000 }}
                 onTouchStart={() => setIsSwiping(true)}
                 onTouchEnd={() => setIsSwiping(false)}
+                onActiveIndexChange={(swiper) => {
+                    if (isSwiping) return;
+                    setPrevCurrent(swiper.realIndex + 1);
+                }}
                 pagination={{
                     el: '.banner-swiper-pagination',
                     type: 'custom',
@@ -74,7 +78,6 @@ export default function Banner() {
                         if (isSwiping) {
                             return `<span class="current">${prevCurrent}</span><span class="total">/ ${total}</span>`;
                         }
-                        setPrevCurrent(current);
                         return `<span class="current">${current}</span><span class="total">/ ${total}</span>`;
                     },
                 }}
