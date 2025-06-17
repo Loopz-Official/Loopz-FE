@@ -1,3 +1,5 @@
+// TODO: range 커스텀 필요
+
 export default function PriceRange() {
     return (
         <div className="px-4 py-2">

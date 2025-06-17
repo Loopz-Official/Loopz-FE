@@ -1,16 +1,16 @@
 'use client';
-import Link from 'next/link';
-import { useState } from 'react';
+// import Link from 'next/link';
+// import { useState } from 'react';
 
-import * as I from '@/components/icons/ObjectBoard';
+// import * as I from '@/components/icons/ObjectBoard';
 
 export default function ProductListToolbar() {
-    const [isRotated, setIsRotated] = useState(false);
+    // const [isRotated, setIsRotated] = useState(false);
 
     return (
         <div className="text-caption-01 text-gray-dark flex justify-between py-3">
             <span>총 65개</span>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
                 <button
                     className="flex items-center"
                     onClick={() => setIsRotated(!isRotated)}
@@ -24,7 +24,7 @@ export default function ProductListToolbar() {
                     필터
                     <I.FilterIcon className="h-4 w-4" />
                 </Link>
-            </div>
+            </div> */}
         </div>
     );
 }
