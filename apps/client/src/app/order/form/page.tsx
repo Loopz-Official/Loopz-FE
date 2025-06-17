@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import BottomButton from '@/components/features/order/BottomButton';
@@ -14,6 +15,7 @@ export default function Page() {
         useState(false);
 
     const isDisabled = !(hasAddressInfo && hasAgreedToRequiredTerms);
+    const router = useRouter();
 
     return (
         <div>
@@ -49,7 +51,7 @@ export default function Page() {
             <BottomButton
                 text={'21,000원 결제하기'}
                 isDisabled={isDisabled}
-                onClick={() => {}}
+                onClick={() => router.push('/order/confirm')}
             />
         </div>
     );
