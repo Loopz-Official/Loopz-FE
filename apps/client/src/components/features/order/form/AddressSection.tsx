@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { PlusIcon } from '@/components/icons/Plus';
 
@@ -13,11 +13,19 @@ const DELIVERY_REQUESTS = [
     '직접 입력',
 ];
 
-export default function AddressSection() {
+export default function AddressSection({
+    setHasAddressInfo,
+}: {
+    setHasAddressInfo: Dispatch<SetStateAction<boolean>>;
+}) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [requestContent, setRequestContent] = useState<string | null>(null);
     const isTextareaOpen = requestContent === DELIVERY_REQUESTS.at(-1);
-    const hasAddressInfo = false;
+    const hasAddressInfo = true;
+
+    useEffect(() => {
+        setHasAddressInfo(hasAddressInfo);
+    }, [hasAddressInfo, setHasAddressInfo]);
 
     return (
         <>

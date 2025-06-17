@@ -1,14 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { Agreement, INITIAL_AGREEMENTS } from '@/constants/agreements';
 
-export default function AgreementSection() {
+export default function AgreementSection({
+    setHasAgreedToRequiredTerms,
+}: {
+    setHasAgreedToRequiredTerms: Dispatch<SetStateAction<boolean>>;
+}) {
     const [agreements, setAgreements] =
         useState<Agreement[]>(INITIAL_AGREEMENTS);
     const isAllChecked = agreements.every((agreement) => agreement.checked);
+
+    useEffect(() => {
+        setHasAgreedToRequiredTerms(isAllChecked);
+    }, [isAllChecked, setHasAgreedToRequiredTerms]);
 
     const handleAllCheckChange = () => {
         const updatedChecked = !isAllChecked;
@@ -39,7 +47,7 @@ export default function AgreementSection() {
                     onChange={handleAllCheckChange}
                     className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                 />
-                <span className="text-caption-01 font-semibold">
+                <span className="text-caption-01 cursor-pointer font-semibold">
                     주문 내용을 모두 확인했으며, 아래 내용에 모두 동의합니다.
                 </span>
             </label>
@@ -55,7 +63,7 @@ export default function AgreementSection() {
                             onChange={() => handleSingleCheckChange(index)}
                             className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                         />
-                        <span className="text-caption-01 text-gray-regular">
+                        <span className="text-caption-01 text-gray-regular cursor-pointer">
                             (필수) {title}
                             <Link
                                 href={href}

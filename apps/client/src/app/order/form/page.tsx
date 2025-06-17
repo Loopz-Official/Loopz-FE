@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import BottomButton from '@/components/features/order/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
@@ -7,6 +9,12 @@ import OrderItemsSection from '@/components/features/order/form/OrderItemsSectio
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 
 export default function Page() {
+    const [hasAddressInfo, setHasAddressInfo] = useState(false);
+    const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
+        useState(false);
+
+    const isDisabled = !(hasAddressInfo && hasAgreedToRequiredTerms);
+
     return (
         <div>
             {/* 헤더 */}
@@ -14,7 +22,7 @@ export default function Page() {
             <div className="flex flex-col px-5 pt-2">
                 {/* 배송지 정보 */}
                 <div className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <AddressSection />
+                    <AddressSection setHasAddressInfo={setHasAddressInfo} />
                 </div>
 
                 {/* 주문 상품 */}
@@ -29,14 +37,18 @@ export default function Page() {
 
                 {/* 약관 동의 */}
                 <div className="flex flex-col border-t border-black pb-12 pt-5">
-                    <AgreementSection />
+                    <AgreementSection
+                        setHasAgreedToRequiredTerms={
+                            setHasAgreedToRequiredTerms
+                        }
+                    />
                 </div>
             </div>
 
             {/* 버튼 */}
             <BottomButton
                 text={'21,000원 결제하기'}
-                isDisabled={false}
+                isDisabled={isDisabled}
                 onClick={() => {}}
             />
         </div>
