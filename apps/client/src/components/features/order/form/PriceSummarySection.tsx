@@ -12,7 +12,7 @@ export default function PriceSummarySection() {
                     onClick={() => setIsDetailOpen(!isDetailOpen)}
                     className="flex items-center gap-2"
                 >
-                    <span className="text-headline-04 text-point">
+                    <span className="text-headline-04 text-point tracking-normal">
                         24,000원
                     </span>
                     <div className="h-4 w-4 bg-black" />
@@ -39,7 +39,9 @@ export default function PriceSummarySection() {
 
                 <footer className="mb-2 flex justify-between">
                     <h2 className="text-body-01 font-semibold">총 결제 금액</h2>
-                    <span className="text-body-01 font-semibold">24,000원</span>
+                    <span className="text-body-01 font-semibold tracking-normal">
+                        24,000원
+                    </span>
                 </footer>
             </div>
         </>

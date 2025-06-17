@@ -5,7 +5,7 @@ export default function OrderItem() {
                 <h3 className="text-body-01 font-semibold">
                     빈티지 다이얼 전화기
                 </h3>
-                <span className="text-caption-01 text-gray-dark">
+                <span className="text-caption-01 text-gray-dark tracking-normal">
                     21,000원 / 수량 1개
                 </span>
             </div>

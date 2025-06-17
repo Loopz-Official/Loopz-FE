@@ -26,7 +26,7 @@ export default function AgreementSection() {
 
             <hr className="border-gray-light mb-3 mt-4" />
 
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 tracking-normal">
                 {agreementList.map(({ title, href }) => (
                     <label key={title} className="flex items-center gap-3">
                         <input
@@ -35,7 +35,10 @@ export default function AgreementSection() {
                         />
                         <span className="text-caption-01 text-gray-regular">
                             (필수) {title}
-                            <Link href={href} className="ml-1.5 underline">
+                            <Link
+                                href={href}
+                                className="ml-1.5 underline underline-offset-2"
+                            >
                                 보기
                             </Link>
                         </span>
