@@ -1,27 +1,29 @@
+import * as I from '@/components/icons/NavigationBar';
+
 export const NAVIGATION_BAR_OPTIONS = [
     {
         label: 'MAIN',
-        // icon: I.MainIcon,
+        icon: I.MainIcon,
         href: '/main',
     },
     {
         label: 'LOOPZ',
-        // icon: I.LoopzBookIcon,
+        icon: I.LoopzBookIcon,
         href: '/about',
     },
     {
         label: 'SHOT',
-        // icon: I.ShotIcon,
+        icon: I.ShotIcon,
         href: '/shot',
     },
     {
         label: 'LIKE',
-        // icon: I.LikeIcon,
+        icon: I.LikeIcon,
         href: '/like',
     },
     {
         label: 'MY',
-        // icon: I.MyIcon,
+        icon: I.MyIcon,
         href: '/mypage',
     },
 ];

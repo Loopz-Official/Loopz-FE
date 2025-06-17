@@ -11,19 +11,17 @@ export default function NavigationBar() {
 
     return (
         <div className="bg-gray-12 sticky bottom-0 z-10 grid h-14 w-full grid-cols-5">
-            {NAVIGATION_BAR_OPTIONS.map((option) => (
+            {NAVIGATION_BAR_OPTIONS.map(({ label, icon: Icon, href }) => (
                 <Link
-                    href={option.href}
-                    key={option.label}
+                    href={href}
+                    key={label}
                     className={clsx(
                         'max-w-22 m-auto flex h-full w-full flex-col items-center justify-center text-[10px] leading-[1.4]',
-                        pathname === option.href
-                            ? 'text-black'
-                            : 'text-disabled'
+                        pathname === href ? 'text-black' : 'text-disabled'
                     )}
                 >
-                    <div className="h-7 w-7 bg-black" />
-                    {option.label}
+                    <Icon />
+                    {label}
                 </Link>
             ))}
         </div>
