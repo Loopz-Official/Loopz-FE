@@ -18,7 +18,7 @@ export default function Page() {
             <div className="px-5">
                 {/* 아이콘 */}
                 <div className="mb-9 mt-12 flex flex-col items-center text-center">
-                    <GiftIcon className="h-40 w-40" />
+                    <GiftIcon className="mb-2 h-40 w-40" />
                     <h3 className="text-body-01 font-semibold">
                         주문이 완료되었어요!
                     </h3>
