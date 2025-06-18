@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { PlusIcon } from '@/components/icons/Plus';
@@ -22,6 +23,7 @@ export default function AddressSection({
     const [requestContent, setRequestContent] = useState<string | null>(null);
     const isTextareaOpen = requestContent === DELIVERY_REQUESTS.at(-1);
     const hasAddressInfo = true;
+    const router = useRouter();
 
     useEffect(() => {
         setHasAddressInfo(hasAddressInfo);
@@ -32,7 +34,10 @@ export default function AddressSection({
             <header className="flex items-center justify-between">
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
                 {hasAddressInfo && (
-                    <button className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1">
+                    <button
+                        onClick={() => router.push('/addresses')}
+                        className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
+                    >
                         변경
                     </button>
                 )}
