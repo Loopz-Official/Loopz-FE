@@ -21,13 +21,31 @@ export default function AddressSection({
 }) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [requestContent, setRequestContent] = useState<string | null>(null);
-    const isTextareaOpen = requestContent === DELIVERY_REQUESTS.at(-1);
+    const [textareaContent, setTextareaContent] = useState('');
+    const isTextareaOpen =
+        requestContent === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
     const hasAddressInfo = true;
     const router = useRouter();
 
     useEffect(() => {
         setHasAddressInfo(hasAddressInfo);
     }, [hasAddressInfo, setHasAddressInfo]);
+
+    // 직접 입력 textarea 내용 임시 저장
+    useEffect(() => {
+        sessionStorage.setItem('textareaContent', String(textareaContent));
+    }, [textareaContent]);
+
+    // 저장된 textarea 내용 불러오기
+    useEffect(() => {
+        if (!textareaContent) {
+            const savedTextareaContent =
+                sessionStorage.getItem('textareaContent');
+
+            if (!savedTextareaContent) return;
+            setTextareaContent(savedTextareaContent);
+        }
+    }, [isTextareaOpen, textareaContent]);
 
     return (
         <>
@@ -94,6 +112,10 @@ export default function AddressSection({
                         )}
                         {isTextareaOpen && (
                             <textarea
+                                value={textareaContent}
+                                onChange={(e) =>
+                                    setTextareaContent(e.target.value)
+                                }
                                 maxLength={50}
                                 placeholder="내용을 입력해 주세요. (최대 50자)"
                                 className="h-26 placeholder:text-disabled text-caption-01 border-gray-regular rounded-b-xs flex w-full resize-none flex-col border border-t-0 p-4 outline-none"
