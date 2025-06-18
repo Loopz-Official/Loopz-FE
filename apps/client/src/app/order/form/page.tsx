@@ -6,8 +6,8 @@ import { useState } from 'react';
 import BottomButton from '@/components/features/order/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
-import OrderItemsSection from '@/components/features/order/form/OrderItemsSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
+import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 
 export default function Page() {
     const [hasAddressInfo, setHasAddressInfo] = useState(false);
