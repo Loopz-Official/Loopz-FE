@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import BottomButton from '@/components/features/order/BottomButton';
+import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import { GiftIcon } from '@/components/icons/Gift';
 import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
@@ -37,7 +38,9 @@ export default function Page() {
                 </div>
 
                 {/* 결제 수단 */}
-                <div></div>
+                <div className="pb-13 flex flex-col border-t border-black pt-3">
+                    <PaymentMethodSection />
+                </div>
             </div>
 
             {/* 푸터 */}
