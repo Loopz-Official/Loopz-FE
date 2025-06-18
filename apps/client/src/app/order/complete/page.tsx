@@ -1,0 +1,62 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
+import BottomButton from '@/components/features/order/BottomButton';
+import { GiftIcon } from '@/components/icons/Gift';
+import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
+
+export default function Page() {
+    const router = useRouter();
+
+    return (
+        <div>
+            {/* 헤더 */}
+
+            <div className="px-5">
+                {/* 아이콘 */}
+                <div className="mb-9 mt-12 flex flex-col items-center text-center">
+                    <GiftIcon className="h-40 w-40" />
+                    <h3 className="text-body-01 font-semibold">
+                        주문이 완료되었어요!
+                    </h3>
+                    <span className="text-caption-01 text-gray-dark font-semibold">
+                        입금정보를 24시간 이내로 확인한 이후, 발송할 예정입니다.
+                    </span>
+                    <span className="text-caption-01 text-gray-regular mt-2.5">
+                        평균 배송 소요 기간은 2-3일이며,
+                        <br />
+                        배송 현황은 마이페이지에서 조회 가능합니다.
+                    </span>
+                </div>
+
+                {/* 주문 상품 */}
+                <div></div>
+
+                {/* 결제 수단 */}
+                <div></div>
+            </div>
+
+            {/* 푸터 */}
+            <footer className="border-gray-regular text-caption-02 text-gray-regular border-t p-5">
+                <div className="space-y-4">
+                    {ORDER_NOTIFICATIONS.map((notification) => (
+                        <div
+                            key={notification}
+                            className="grid grid-cols-[auto_1fr] gap-0.5"
+                        >
+                            <div className="w-4 text-center font-black">·</div>
+                            <div>{notification}</div>
+                        </div>
+                    ))}
+                </div>
+            </footer>
+
+            <BottomButton
+                text="다른 상품 둘러보러 가기"
+                isDisabled={false}
+                onClick={() => router.replace('/main')}
+            />
+        </div>
+    );
+}
