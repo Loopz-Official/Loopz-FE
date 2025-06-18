@@ -130,7 +130,10 @@ export default function AddressSection({
                         <br />
                         배송지를 신규입력 해주세요.
                     </div>
-                    <button className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3">
+                    <button
+                        onClick={() => router.push('/addresses/add')}
+                        className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3"
+                    >
                         <PlusIcon className="h-4 w-4" />
                         배송지 추가
                     </button>

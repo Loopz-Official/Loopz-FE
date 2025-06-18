@@ -21,16 +21,17 @@ export default function Page() {
 
     const handleSaveButtonClick = () => {
         // address 정보를 전역으로 저장 -> 주문/결제 페이지에서 사용
+        router.push('/order/form');
     };
 
     return (
         <div>
             {/* 헤더 */}
 
-            <div className="flex h-[calc(100vh-112px)] flex-col gap-6 px-5 py-2">
+            <div className="flex h-[calc(100vh-180px)] flex-col gap-6 px-5 py-2">
                 <button
                     onClick={handleAddButtonClick}
-                    className="border-gray-regular addresss-center flex w-full justify-center gap-1 rounded-[0.25rem] border py-3"
+                    className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3"
                 >
                     <PlusIcon className="h-4 w-4" />
                     배송지 추가
@@ -53,7 +54,7 @@ export default function Page() {
                             htmlFor={`${address}2345`}
                             className="flex flex-col"
                         >
-                            <div className="addresss-center flex gap-1 font-semibold">
+                            <div className="flex items-center gap-1 font-semibold">
                                 <span className="text-body-02">이예나</span>
                                 {i === 0 && (
                                     <span className="text-point text-caption-01">

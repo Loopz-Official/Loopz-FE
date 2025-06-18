@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound, useParams } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AddressSearchSection from '@/components/features/addresses/AddressSearchSection';
@@ -19,6 +19,7 @@ export default function Page() {
     const isValidPhoneNumber = phoneNumber.split('-').every((number) => number);
     const isDisabled = !(name && isValidPhoneNumber && address && zonecode);
 
+    const router = useRouter();
     const params = useParams();
     const type = params.type;
 
@@ -34,6 +35,7 @@ export default function Page() {
             defaultAddress: isDefaultAddress,
         };
         console.log(body);
+        router.push('/addresses');
     };
 
     return (
