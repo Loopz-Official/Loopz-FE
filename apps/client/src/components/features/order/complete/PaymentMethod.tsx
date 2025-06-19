@@ -1,4 +1,4 @@
-import { PAYMENT_MATHOD } from '@/constants/paymentMethod';
+import { PAYMENT_METHOD } from '@/constants/paymentMethod';
 
 export default function PaymentMethodSection() {
     return (
@@ -7,7 +7,7 @@ export default function PaymentMethodSection() {
                 <h2 className="text-body-01 font-semibold">결제 수단</h2>
             </header>
 
-            {PAYMENT_MATHOD.map(({ label, value }) => (
+            {PAYMENT_METHOD.map(({ label, value }) => (
                 <div key={label}>
                     <hr className="border-gray-regular my-3" />
 
