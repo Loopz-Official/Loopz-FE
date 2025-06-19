@@ -8,7 +8,7 @@ import { PlusIcon } from '@/components/icons/Plus';
 
 export default function Page() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const addresses = [0, 1, 2];
+    const addresses = [0, 1, 2, 3, 4];
     const router = useRouter();
 
     const handleAddButtonClick = () => {
@@ -25,10 +25,10 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <div className="pb-17">
             {/* 헤더 */}
 
-            <div className="flex h-[calc(100vh-180px)] flex-col gap-6 px-5 py-2">
+            <div className="flex flex-col gap-6 px-5 py-2">
                 <button
                     onClick={handleAddButtonClick}
                     className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3"
@@ -84,7 +84,7 @@ export default function Page() {
                 ))}
             </div>
 
-            <hr className="border-gray-light border-4" />
+            <hr className="border-gray-light mt-6 border-4" />
 
             <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
                 <div className="w-4 text-center font-black">·</div>

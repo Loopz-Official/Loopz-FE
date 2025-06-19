@@ -18,7 +18,7 @@ export default function Page() {
     const router = useRouter();
 
     return (
-        <div>
+        <div className="pb-17">
             {/* 헤더 */}
 
             <div className="flex flex-col px-5 pt-2">
@@ -38,7 +38,7 @@ export default function Page() {
                 </div>
 
                 {/* 약관 동의 */}
-                <div className="flex flex-col border-t border-black pb-12 pt-5">
+                <div className="flex flex-col border-t border-black pb-5 pt-5">
                     <AgreementSection
                         setHasAgreedToRequiredTerms={
                             setHasAgreedToRequiredTerms

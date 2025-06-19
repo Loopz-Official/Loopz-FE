@@ -36,10 +36,10 @@ export default function Page() {
     };
 
     return (
-        <div className="h-dvh">
+        <div className="pb-17">
             {/* 헤더 */}
 
-            <div className="h-[calc(100vh-112px)] space-y-[1.875rem] break-keep px-5 pt-[0.875rem]">
+            <div className="space-y-[1.875rem] break-keep px-5 pt-[0.875rem]">
                 <div className="text-caption-01 text-status-red font-medium">
                     *현재 결제 시스템 구축이 진행 중에 있어 부득이하게 계좌이체
                     방식으로 결제를 받고 있습니다. 이용에 불편을 드려 죄송하며,

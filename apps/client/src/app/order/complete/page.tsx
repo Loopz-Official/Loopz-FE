@@ -12,7 +12,7 @@ export default function Page() {
     const router = useRouter();
 
     return (
-        <div>
+        <div className="pb-17">
             {/* 헤더 */}
 
             <div className="px-5">

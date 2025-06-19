@@ -39,10 +39,10 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <div className="pb-17">
             {/* 헤더 */}
 
-            <div className="h-[calc(100vh-112px)] space-y-6 px-5 py-3">
+            <div className="space-y-6 px-5 py-3">
                 {/* 받으시는 분 (이름) */}
                 <div className="text-body-03 font-regular flex flex-col gap-2">
                     <NameSection name={name} setName={setName} />

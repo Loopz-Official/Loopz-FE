@@ -10,7 +10,7 @@ export default function BottomButton({
     onClick: () => void;
 }) {
     return (
-        <div className="sticky bottom-0 bg-white px-5 py-3 shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]">
+        <div className="fixed bottom-0 w-full bg-white px-5 py-3 shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]">
             <button
                 disabled={isDisabled}
                 onClick={onClick}
