@@ -3,10 +3,10 @@
 import { notFound, useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import BottomButton from '@/components/common/BottomButton';
 import AddressSearchSection from '@/components/features/addresses/AddressSearchSection';
 import NameSection from '@/components/features/addresses/NameSection';
 import PhoneNumberSection from '@/components/features/addresses/PhoneNumberSection';
-import BottomButton from '@/components/features/order/BottomButton';
 
 export default function Page() {
     const [name, setName] = useState('');

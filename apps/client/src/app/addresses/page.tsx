@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import BottomButton from '@/components/features/order/BottomButton';
+import BottomButton from '@/components/common/BottomButton';
 import { PlusIcon } from '@/components/icons/Plus';
 
 export default function Page() {

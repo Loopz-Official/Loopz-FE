@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import BottomButton from '@/components/features/order/BottomButton';
+import BottomButton from '@/components/common/BottomButton';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import { GiftIcon } from '@/components/icons/Gift';

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import BottomButton from '@/components/features/order/BottomButton';
+import BottomButton from '@/components/common/BottomButton';
 
 export default function Page() {
     const [agreements, setAgreements] = useState([false, false, false]);
