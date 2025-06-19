@@ -3,8 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
-
 export default function Page() {
     const [agreements, setAgreements] = useState([false, false, false]);
     const isAllChecked = agreements.every((agreement) => agreement);
@@ -36,7 +34,7 @@ export default function Page() {
     };
 
     return (
-        <div className="pb-17">
+        <div className="pb-27">
             {/* 헤더 */}
 
             <div className="space-y-[1.875rem] break-keep px-5 pt-[0.875rem]">
@@ -54,8 +52,7 @@ export default function Page() {
                     </h2>
                     <div className="text-body-03 text-gray-dark mt-1 font-normal">
                         배송지 정보에 있는 받으시는 분의 성함과 동일하게
-                        작성되어 있지 않다면, 확인이 매우 번거로워질 수
-                        있습니다.
+                        작성되어 있지 않다면, 확인이 매우 늦어질 수 있습니다.
                     </div>
                     {renderCheckbox(0)}
                 </div>
@@ -84,11 +81,15 @@ export default function Page() {
                 </div>
             </div>
 
-            <BottomButton
-                text="계속하기"
-                isDisabled={!isAllChecked}
-                onClick={() => router.push('/order/complete')}
-            />
+            <div className="fixed bottom-0 w-full bg-white p-5 pb-8">
+                <button
+                    disabled={!isAllChecked}
+                    onClick={() => router.push('/order/complete')}
+                    className="text-body-02 disabled:bg-button-disabled flex h-14 w-full items-center justify-center rounded-[0.25rem] bg-black text-white"
+                >
+                    계속하기
+                </button>
+            </div>
         </div>
     );
 }
