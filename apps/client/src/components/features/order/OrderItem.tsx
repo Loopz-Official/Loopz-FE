@@ -1,15 +1,18 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+export type OrderItemProps = {
+    variant?: 'default' | 'secondary';
+};
 
-export default function OrderItem() {
-    const pathname = usePathname();
-
+export default function OrderItem({
+    variant = 'default',
+}: {
+    variant?: 'default' | 'secondary';
+}) {
     // 주문 완료 페이지에서는 body-03-medium
     // 그 외 body-01-semibold
-    const titleClassName = pathname.split('/').includes('complete')
-        ? 'text-body-03'
-        : 'text-body-01 font-semibold';
+    const titleClassName =
+        variant === 'secondary' ? 'text-body-03' : 'text-body-01 font-semibold';
 
     return (
         <div className="flex justify-between">

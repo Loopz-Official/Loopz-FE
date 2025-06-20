@@ -34,7 +34,7 @@ export default function Page() {
 
                 {/* 주문 상품 */}
                 <div className="flex flex-col gap-3 border-t border-black pb-6 pt-3">
-                    <OrderItemsSection />
+                    <OrderItemsSection variant="secondary" />
                 </div>
 
                 {/* 결제 수단 */}

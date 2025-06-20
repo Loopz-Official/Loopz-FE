@@ -29,7 +29,7 @@ export default function Page() {
 
                 {/* 주문 상품 */}
                 <div className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <OrderItemsSection />
+                    <OrderItemsSection variant="default" />
                 </div>
 
                 {/* 결제 금액 */}

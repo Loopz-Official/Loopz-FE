@@ -1,6 +1,6 @@
-import OrderItem from './OrderItem';
+import OrderItem, { OrderItemProps } from './OrderItem';
 
-export default function OrderItemsSection() {
+export default function OrderItemsSection({ variant }: OrderItemProps) {
     return (
         <>
             <header>
@@ -13,7 +13,7 @@ export default function OrderItemsSection() {
                         key={i}
                         className="not-last:border-b not-last:border-gray-regular not-last:pb-3"
                     >
-                        <OrderItem />
+                        <OrderItem variant={variant} />
                     </div>
                 ))}
             </div>
