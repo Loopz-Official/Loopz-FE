@@ -4,13 +4,16 @@ export default function BottomButton({
     text,
     isDisabled,
     onClick,
+    children,
 }: {
     text: string;
     isDisabled: boolean;
     onClick: () => void;
+    children?: React.ReactNode;
 }) {
     return (
-        <div className="fixed bottom-0 w-full bg-white px-5 py-3 shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]">
+        <div className="fixed bottom-0 grid w-full grid-cols-[auto_1fr] bg-white px-5 py-3 shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]">
+            {children}
             <button
                 disabled={isDisabled}
                 onClick={onClick}
