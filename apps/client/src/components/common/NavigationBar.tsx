@@ -10,7 +10,7 @@ export default function NavigationBar() {
     const pathname = usePathname();
 
     return (
-        <div className="bg-gray-12 sticky bottom-0 z-10 grid h-14 w-full grid-cols-5">
+        <div className="bg-gray-12 fixed bottom-0 z-10 grid h-14 w-full max-w-2xl grid-cols-5">
             {NAVIGATION_BAR_OPTIONS.map(({ label, icon: Icon, href }) => (
                 <Link
                     href={href}
