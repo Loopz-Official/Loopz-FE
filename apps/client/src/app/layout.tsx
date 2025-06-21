@@ -1,5 +1,7 @@
 import localFont from 'next/font/local';
 
+import Frame from '@/components/layouts/Frame';
+
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -24,7 +26,7 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={`${pretendard.className} tracking-tight`}>
-                {children}
+                <Frame>{children}</Frame>
             </body>
         </html>
     );
