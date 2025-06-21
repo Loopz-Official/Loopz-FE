@@ -12,13 +12,13 @@ const swiperBreakpoints = {
     0: {
         slidesPerView: 1.1,
     },
-    376: {
+    460: {
         slidesPerView: 1.2,
     },
-    461: {
+    480: {
         slidesPerView: 1.3,
     },
-    481: {
+    512: {
         slidesPerView: 1.5,
     },
     600: {
