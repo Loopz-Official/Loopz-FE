@@ -1,5 +1,5 @@
-import Header from '@/components/common/Header';
-import NavigationBar from '@/components/common/NavigationBar';
+import Header from '@/components/layouts/Header';
+import NavigationBar from '@/components/layouts/NavigationBar';
 
 export default function Layout() {
     return (

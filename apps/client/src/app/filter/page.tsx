@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '@/components/common/Header';
+import Header from '@/components/layouts/Header';
 import ChipList from '@/components/features/filter/ChipList';
 import PriceRange from '@/components/features/filter/PriceRange';
 import { filterList } from '@/constants/filterList';

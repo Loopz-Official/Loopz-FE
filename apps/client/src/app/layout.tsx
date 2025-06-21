@@ -1,6 +1,6 @@
 import localFont from 'next/font/local';
 
-import Frame from '@/components/common/Frame';
+import Frame from '@/components/layouts/Frame';
 
 import type { Metadata } from 'next';
 
