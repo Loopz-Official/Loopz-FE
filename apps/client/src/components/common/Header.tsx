@@ -9,9 +9,11 @@ export type HeaderType = 'main' | 'sub' | 'title' | 'pop-up';
 export default function Header({
     type,
     title,
+    redirectUrl,
 }: {
     type: HeaderType;
     title?: string;
+    redirectUrl?: string;
 }) {
     const currentOption = LEFT_SIDE_OPTIONS[type];
     const router = useRouter();
@@ -19,6 +21,8 @@ export default function Header({
     const handleLeftOptionClick = () => {
         if (type === 'main') {
             router.push('/main');
+        } else if (type === 'pop-up') {
+            router.push(redirectUrl || '/');
         } else {
             router.back();
         }
