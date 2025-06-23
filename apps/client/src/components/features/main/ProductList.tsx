@@ -7,7 +7,7 @@ export default async function ProductList({
 }: {
     products: Product[];
 }) {
-    return (
+    return products.length > 0 ? (
         <div className="grid w-full grid-cols-2 pb-3 min-[481px]:grid-cols-3">
             {products.map((product) => (
                 <Link
@@ -31,6 +31,10 @@ export default async function ProductList({
                     </div>
                 </Link>
             ))}
+        </div>
+    ) : (
+        <div className="text-headline-04 pb-30 pt-20 text-center font-normal">
+            등록된 상품이 없습니다.
         </div>
     );
 }
