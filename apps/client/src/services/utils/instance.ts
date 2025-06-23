@@ -44,15 +44,12 @@ export const request: CustomInstance = axios.create({
     timeout: 20000,
     headers: {
         accept: 'application/json',
+        withCredentials: true,
     },
 });
 
 request.interceptors.request.use(
     (config) => {
-        // 헤더에 토큰 추가
-        // const jwt = window.localStorage.getItem("accessToken");
-        // config.headers.Authorization = `Bearer ${jwt}`;
-
         return config;
     },
     (error) => {
@@ -64,16 +61,14 @@ request.interceptors.response.use(
     (response) => {
         // 2XX 범위
         // response body 반환
-        console.log('network log', response);
         return response.data;
     },
     (error) => {
         // 그 외
-        // error로 AxiosError 타입 반환
+        // error throw
 
         // 인증 에러 시 로그인 화면으로 이동
         // if (error.status === 401 || error.status === 403) {
-        //   window.localStorage.removeItem("accessToken");
         //   window.location.href = "/login";
         // }
 
