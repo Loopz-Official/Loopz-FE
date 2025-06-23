@@ -7,13 +7,14 @@ import PaymentMethodSection from '@/components/features/order/complete/PaymentMe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import { GiftIcon } from '@/components/icons/Gift';
 import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
+import Header from '@/components/layouts/Header';
 
 export default function Page() {
     const router = useRouter();
 
     return (
         <div className="pb-17">
-            {/* 헤더 */}
+            <Header type="pop-up" title="주문완료" />
 
             <div className="px-5">
                 {/* 아이콘 */}

@@ -7,6 +7,7 @@ import BottomButton from '@/components/common/BottomButton';
 import AddressSearchSection from '@/components/features/addresses/AddressSearchSection';
 import NameSection from '@/components/features/addresses/NameSection';
 import PhoneNumberSection from '@/components/features/addresses/PhoneNumberSection';
+import Header from '@/components/layouts/Header';
 
 export default function Page() {
     const [name, setName] = useState('');
@@ -40,7 +41,7 @@ export default function Page() {
 
     return (
         <div className="pb-17">
-            {/* 헤더 */}
+            <Header type="title" title="배송지 수정" />
 
             <div className="space-y-6 px-5 py-3">
                 {/* 받으시는 분 (이름) */}

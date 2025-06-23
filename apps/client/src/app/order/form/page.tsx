@@ -8,6 +8,7 @@ import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
+import Header from '@/components/layouts/Header';
 
 export default function Page() {
     const [hasAddressInfo, setHasAddressInfo] = useState(false);
@@ -19,7 +20,7 @@ export default function Page() {
 
     return (
         <div className="pb-17">
-            {/* 헤더 */}
+            <Header type="title" title="주문/결제" />
 
             <div className="flex flex-col px-5 pt-2">
                 {/* 배송지 정보 */}

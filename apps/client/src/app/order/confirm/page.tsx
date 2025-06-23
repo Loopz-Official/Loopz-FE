@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import Header from '@/components/layouts/Header';
+
 export default function Page() {
     const [agreements, setAgreements] = useState([false, false, false]);
     const isAllChecked = agreements.every((agreement) => agreement);
@@ -35,7 +37,7 @@ export default function Page() {
 
     return (
         <div className="pb-27">
-            {/* 헤더 */}
+            <Header type="title" title="이체하기" />
 
             <div className="space-y-[1.875rem] break-keep px-5 pt-[0.875rem]">
                 <div className="text-caption-01 text-status-red font-medium">

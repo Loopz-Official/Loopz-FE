@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import { PlusIcon } from '@/components/icons/Plus';
+import Header from '@/components/layouts/Header';
 
 export default function Page() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -26,7 +27,7 @@ export default function Page() {
 
     return (
         <div className="pb-17">
-            {/* 헤더 */}
+            <Header type="title" title="배송지 정보" />
 
             <div className="flex flex-col gap-6 px-5 py-2">
                 <button
