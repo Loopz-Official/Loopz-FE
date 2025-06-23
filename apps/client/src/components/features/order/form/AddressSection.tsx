@@ -12,10 +12,10 @@ export default function AddressSection({
     setHasAddressInfo: Dispatch<SetStateAction<boolean>>;
 }) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-    const [requestContent, setRequestContent] = useState<string | null>(null);
+    const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
     const [textareaContent, setTextareaContent] = useState('');
     const isTextareaOpen =
-        requestContent === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
+        deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
     const hasAddressInfo = true;
     const router = useRouter();
 
@@ -80,9 +80,9 @@ export default function AddressSection({
                             className={`${isOptionsOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
                         >
                             <div
-                                className={`${requestContent ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
+                                className={`${deliveryRequest ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
                             >
-                                {requestContent || '배송 요청사항 선택'}
+                                {deliveryRequest || '배송 요청사항 선택'}
                                 <div className="h-4 w-4 bg-black" />
                             </div>
                         </button>
@@ -92,7 +92,7 @@ export default function AddressSection({
                                     <button
                                         key={request}
                                         onClick={() => {
-                                            setRequestContent(request);
+                                            setDeliveryRequest(request);
                                             setIsOptionsOpen(false);
                                         }}
                                         className="active:bg-gray-regular w-full px-4 py-2.5 text-left transition-colors"
