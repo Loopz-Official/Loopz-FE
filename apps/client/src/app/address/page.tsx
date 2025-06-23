@@ -7,7 +7,7 @@ import BottomButton from '@/components/common/BottomButton';
 import { PlusIcon } from '@/components/icons/Plus';
 import Header from '@/components/layouts/Header';
 import { Address } from '@/services/apis/address/types';
-import { getAddressList } from '@/services/apis/address';
+import { deleteAddress, getAddressList } from '@/services/apis/address';
 
 export default function Page() {
     const [addresses, setAddresses] = useState<Address[]>([]);
@@ -41,6 +41,18 @@ export default function Page() {
         router.push('/order/form');
     };
 
+    const handleDeleteButtonClick = async (addressId: number) => {
+        try {
+            await deleteAddress(addressId);
+            setAddresses(
+                addresses.filter((address) => address.addressId !== addressId)
+            );
+        } catch (error) {
+            alert('배송지를 삭제하는 중 에러가 발생했습니다.');
+            console.error('deleteAddress 실패: ', error);
+        }
+    };
+
     return (
         <div className="pb-17">
             <Header type="title" title="배송지 정보" />
@@ -54,28 +66,28 @@ export default function Page() {
                     배송지 추가
                 </button>
 
-                {addresses.map((item, i) => (
+                {addresses.map((address, i) => (
                     <div
-                        key={item.addressId}
+                        key={address.addressId}
                         className="grid grid-cols-[auto_1fr] gap-2"
                     >
                         <input
                             onChange={() => setActiveIndex(i)}
                             checked={activeIndex === i}
-                            id={String(item.addressId)}
+                            id={String(address.addressId)}
                             type="radio"
                             name="address"
                             className="border-gray-10 before:-translate-1/2 relative m-1 h-4 w-4 appearance-none rounded-full border before:absolute before:left-1/2 before:top-1/2 before:hidden before:h-2.5 before:w-2.5 before:rounded-full before:bg-black checked:border-black checked:before:block"
                         />
                         <label
-                            htmlFor={String(item.addressId)}
+                            htmlFor={String(address.addressId)}
                             className="flex flex-col"
                         >
                             <div className="flex items-center gap-1 font-semibold">
                                 <span className="text-body-02">
-                                    {item.recipientName}
+                                    {address.recipientName}
                                 </span>
-                                {item.defaultAddress && (
+                                {address.defaultAddress && (
                                     <span className="text-point text-caption-01">
                                         기본 배송지
                                     </span>
@@ -84,17 +96,25 @@ export default function Page() {
 
                             <div className="text-body-03 text-gray-dark mb-1.5 mt-1 flex flex-col gap-0.5 font-normal">
                                 <div>
-                                    [{item.zoneCode}] {item.address},
-                                    {item.addressDetail}
+                                    [{address.zoneCode}] {address.address}
+                                    ,&nbsp;
+                                    {address.addressDetail}
                                 </div>
-                                <div>{item.phoneNumber}</div>
+                                <div>{address.phoneNumber}</div>
                             </div>
 
                             <div className="flex gap-1">
-                                <button className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1">
+                                {/* <button className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1">
                                     수정
-                                </button>
-                                <button className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1">
+                                </button> */}
+                                <button
+                                    onClick={() =>
+                                        handleDeleteButtonClick(
+                                            address.addressId
+                                        )
+                                    }
+                                    className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
+                                >
                                     삭제
                                 </button>
                             </div>
@@ -103,11 +123,13 @@ export default function Page() {
                 ))}
             </div>
 
-            <hr className="border-gray-light mt-6 border-4" />
+            <div className="bottom-18 fixed w-full">
+                <hr className="border-gray-light mt-6 border-4" />
 
-            <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
-                <div className="w-4 text-center font-black">·</div>
-                <div>배송지는 최대 10개까지 등록하실 수 있습니다.</div>
+                <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
+                    <div className="w-4 text-center font-black">·</div>
+                    <div>배송지는 최대 10개까지 등록하실 수 있습니다.</div>
+                </div>
             </div>
 
             <BottomButton
