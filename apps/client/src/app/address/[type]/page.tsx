@@ -4,9 +4,9 @@ import { notFound, useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
-import AddressSearchSection from '@/components/features/addresses/AddressSearchSection';
-import NameSection from '@/components/features/addresses/NameSection';
-import PhoneNumberSection from '@/components/features/addresses/PhoneNumberSection';
+import AddressSearchSection from '@/components/features/address/AddressSearchSection';
+import NameSection from '@/components/features/address/NameSection';
+import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
@@ -36,7 +36,7 @@ export default function Page() {
             defaultAddress: isDefaultAddress,
         };
         console.log(body);
-        router.push('/addresses');
+        router.push('/address');
     };
 
     return (
