@@ -9,12 +9,18 @@ import { Address } from '@/services/apis/address/types';
 
 export default function AddressSection({
     addressInfo,
+    deliveryRequest,
+    setDeliveryRequest,
+    textareaContent,
+    setTextareaContent,
 }: {
     addressInfo: Address | null;
+    deliveryRequest: string | null;
+    setDeliveryRequest: (request: string | null) => void;
+    textareaContent: string;
+    setTextareaContent: (content: string) => void;
 }) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-    const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
-    const [textareaContent, setTextareaContent] = useState('');
     const isTextareaOpen =
         deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
 
@@ -31,7 +37,7 @@ export default function AddressSection({
 
         if (!savedTextareaContent) return;
         setTextareaContent(savedTextareaContent);
-    }, [isTextareaOpen]);
+    }, [isTextareaOpen, setTextareaContent]);
 
     return (
         <>

@@ -14,6 +14,9 @@ import { useSelectedAddressStore } from '@/store/useSelectedAddressStore';
 export default function Page() {
     const { selectedAddress } = useSelectedAddressStore();
 
+    const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
+    const [textareaContent, setTextareaContent] = useState('');
+
     const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
         useState(false);
 
@@ -27,7 +30,13 @@ export default function Page() {
             <div className="flex flex-col px-5 pt-2">
                 {/* 배송지 정보 */}
                 <div className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <AddressSection addressInfo={selectedAddress} />
+                    <AddressSection
+                        deliveryRequest={deliveryRequest}
+                        setDeliveryRequest={setDeliveryRequest}
+                        textareaContent={textareaContent}
+                        setTextareaContent={setTextareaContent}
+                        addressInfo={selectedAddress}
+                    />
                 </div>
 
                 {/* 주문 상품 */}
