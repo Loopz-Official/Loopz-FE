@@ -8,6 +8,7 @@ import AddressSearchSection from '@/components/features/address/AddressSearchSec
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
+import { createAddress } from '@/services/apis/address';
 
 export default function Page() {
     const [name, setName] = useState('');
@@ -26,17 +27,24 @@ export default function Page() {
 
     if (type !== 'add' && type !== 'edit') notFound();
 
-    const handleSaveButtonClick = () => {
+    const handleSaveButtonClick = async () => {
         const body = {
-            recipientName: name,
             phoneNumber,
-            zonecode,
             address,
             addressDetail,
+            recipientName: name,
+            zoneCode: zonecode,
             defaultAddress: isDefaultAddress,
         };
         console.log(body);
-        router.push('/address');
+
+        try {
+            await createAddress(body);
+            router.push('/address');
+        } catch (error) {
+            alert('배송지를 추가하는 중 문제가 발생했습니다.');
+            console.error('createAddress 실패: ', error);
+        }
     };
 
     return (
