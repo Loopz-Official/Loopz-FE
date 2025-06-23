@@ -40,14 +40,14 @@ export default function AgreementSection({
 
     return (
         <>
-            <label className="flex items-center gap-3">
+            <label className="flex w-fit cursor-pointer items-center gap-3">
                 <input
                     type="checkbox"
                     checked={isAllChecked}
                     onChange={handleAllCheckChange}
-                    className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                    className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 cursor-pointer appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                 />
-                <span className="text-caption-01 cursor-pointer font-semibold">
+                <span className="text-caption-01 font-semibold">
                     주문 내용을 모두 확인했으며, 아래 내용에 모두 동의합니다.
                 </span>
             </label>
@@ -56,14 +56,17 @@ export default function AgreementSection({
 
             <div className="space-y-1.5 tracking-normal">
                 {agreements.map(({ title, href, checked }, index) => (
-                    <label key={title} className="flex items-center gap-3">
+                    <label
+                        key={title}
+                        className="flex w-fit cursor-pointer items-center gap-3"
+                    >
                         <input
                             type="checkbox"
                             checked={checked}
                             onChange={() => handleSingleCheckChange(index)}
-                            className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                            className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 cursor-pointer appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                         />
-                        <span className="text-caption-01 text-gray-regular cursor-pointer">
+                        <span className="text-caption-01 text-gray-regular">
                             (필수) {title}
                             <Link
                                 href={href}

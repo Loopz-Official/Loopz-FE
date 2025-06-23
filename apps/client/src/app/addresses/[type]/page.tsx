@@ -69,16 +69,14 @@ export default function Page() {
                     />
                 </div>
 
-                <label className="flex items-center gap-2">
+                <label className="flex w-fit cursor-pointer items-center gap-2">
                     <input
                         onChange={() => setIsDefaultAddress(!isDefaultAddress)}
                         checked={isDefaultAddress}
                         type="checkbox"
-                        className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                        className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 cursor-pointer appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                     />
-                    <span className="text-body-03 cursor-pointer">
-                        기본 배송지로 설정
-                    </span>
+                    <span className="text-body-03">기본 배송지로 설정</span>
                 </label>
             </div>
 
