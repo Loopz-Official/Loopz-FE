@@ -1,16 +1,32 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import { PlusIcon } from '@/components/icons/Plus';
 import Header from '@/components/layouts/Header';
+import { Address } from '@/services/apis/address/types';
+import { getAddressList } from '@/services/apis/address';
 
 export default function Page() {
+    const [addresses, setAddresses] = useState<Address[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
-    const addresses = [0, 1, 2, 3, 4];
     const router = useRouter();
+
+    useEffect(() => {
+        const callGetAddressList = async () => {
+            try {
+                const response = await getAddressList();
+                setAddresses(response.data.addresses);
+            } catch (error) {
+                alert('배송지를 불러오는 중 문제가 발생했습니다.');
+                console.error('getAddressList 실패: ', error);
+            }
+        };
+
+        callGetAddressList();
+    }, []);
 
     const handleAddButtonClick = () => {
         if (addresses.length === 10) {
@@ -38,26 +54,28 @@ export default function Page() {
                     배송지 추가
                 </button>
 
-                {addresses.map((address, i) => (
+                {addresses.map((item, i) => (
                     <div
-                        key={address}
+                        key={item.addressId}
                         className="grid grid-cols-[auto_1fr] gap-2"
                     >
                         <input
                             onChange={() => setActiveIndex(i)}
                             checked={activeIndex === i}
-                            id={`${address}2345`}
+                            id={String(item.addressId)}
                             type="radio"
                             name="address"
                             className="border-gray-10 before:-translate-1/2 relative m-1 h-4 w-4 appearance-none rounded-full border before:absolute before:left-1/2 before:top-1/2 before:hidden before:h-2.5 before:w-2.5 before:rounded-full before:bg-black checked:border-black checked:before:block"
                         />
                         <label
-                            htmlFor={`${address}2345`}
+                            htmlFor={String(item.addressId)}
                             className="flex flex-col"
                         >
                             <div className="flex items-center gap-1 font-semibold">
-                                <span className="text-body-02">이예나</span>
-                                {i === 0 && (
+                                <span className="text-body-02">
+                                    {item.recipientName}
+                                </span>
+                                {item.defaultAddress && (
                                     <span className="text-point text-caption-01">
                                         기본 배송지
                                     </span>
@@ -66,10 +84,10 @@ export default function Page() {
 
                             <div className="text-body-03 text-gray-dark mb-1.5 mt-1 flex flex-col gap-0.5 font-normal">
                                 <div>
-                                    [09876] 서울특별시 영등포구 도신로 29길 28,
-                                    103동 801호
+                                    [{item.zoneCode}] {item.address},
+                                    {item.addressDetail}
                                 </div>
-                                <div>010-4804-8433</div>
+                                <div>{item.phoneNumber}</div>
                             </div>
 
                             <div className="flex gap-1">
