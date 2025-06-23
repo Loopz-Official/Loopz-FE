@@ -32,7 +32,7 @@ export default function Page() {
         if (addresses.length === 10) {
             alert('배송지는 최대 10개까지 등록하실 수 있습니다.');
         } else {
-            router.push('/addresses/add');
+            router.push('/address/add');
         }
     };
 

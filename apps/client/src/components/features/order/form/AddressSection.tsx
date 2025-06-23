@@ -42,7 +42,7 @@ export default function AddressSection({
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
                 {hasAddressInfo && (
                     <button
-                        onClick={() => router.push('/addresses')}
+                        onClick={() => router.push('/address')}
                         className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
                     >
                         변경
@@ -120,7 +120,7 @@ export default function AddressSection({
                         배송지를 신규입력 해주세요.
                     </div>
                     <button
-                        onClick={() => router.push('/addresses/add')}
+                        onClick={() => router.push('/address/add')}
                         className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3"
                     >
                         <PlusIcon className="h-4 w-4" />
