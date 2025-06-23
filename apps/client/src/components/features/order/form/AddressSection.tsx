@@ -30,14 +30,11 @@ export default function AddressSection({
 
     // 저장된 textarea 내용 불러오기
     useEffect(() => {
-        if (!textareaContent) {
-            const savedTextareaContent =
-                sessionStorage.getItem('textareaContent');
+        const savedTextareaContent = sessionStorage.getItem('textareaContent');
 
-            if (!savedTextareaContent) return;
-            setTextareaContent(savedTextareaContent);
-        }
-    }, [isTextareaOpen, textareaContent]);
+        if (!savedTextareaContent) return;
+        setTextareaContent(savedTextareaContent);
+    }, [isTextareaOpen]);
 
     return (
         <>
@@ -80,7 +77,7 @@ export default function AddressSection({
                             className={`${isOptionsOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
                         >
                             <div
-                                className={`${deliveryRequest ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
+                                className={`${deliveryRequest ? 'text-gray-dark' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
                             >
                                 {deliveryRequest || '배송 요청사항 선택'}
                                 <div className="h-4 w-4 bg-black" />
