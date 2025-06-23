@@ -40,12 +40,18 @@ export const request: CustomInstance = axios.create({
     timeout: 20000,
     headers: {
         accept: 'application/json',
-        withCredentials: true,
+        // withCredentials: true,
     },
 });
 
 request.interceptors.request.use(
     (config) => {
+        if (typeof window !== 'undefined') {
+            const accessToken = localStorage.getItem('accessToken');
+            if (accessToken) {
+                config.headers.Authorization = `Bearer ${accessToken}`;
+            }
+        }
         return config;
     },
     (error) => {
