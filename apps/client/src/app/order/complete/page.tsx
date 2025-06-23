@@ -46,17 +46,13 @@ export default function Page() {
 
             {/* 푸터 */}
             <footer className="border-gray-regular text-caption-02 text-gray-regular border-t p-5">
-                <div className="space-y-4">
+                <ul className="list-disc space-y-4 pl-5">
                     {ORDER_NOTIFICATIONS.map((notification) => (
-                        <div
-                            key={notification}
-                            className="grid grid-cols-[auto_1fr] gap-0.5"
-                        >
-                            <div className="w-4 text-center font-black">·</div>
-                            <div>{notification}</div>
-                        </div>
+                        <li key={notification} className="marker:text-[10px]">
+                            {notification}
+                        </li>
                     ))}
-                </div>
+                </ul>
             </footer>
 
             <BottomButton
