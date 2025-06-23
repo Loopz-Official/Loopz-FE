@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import clsx from 'clsx';
 
 import { Object as Product } from '@/services/apis/object/type';
 
@@ -15,8 +17,26 @@ export default async function ProductList({
                     key={product.objectId}
                     className="hover:bg-gray-12 active:bg-gray-12 flex w-full flex-col gap-4 pb-6 transition-colors"
                 >
-                    <div className="aspect-square h-auto w-full bg-black">
-                        {/* Note: product.imageUrl should be used here */}
+                    <div
+                        className={clsx(
+                            'relative aspect-square h-auto w-full bg-black',
+                            {
+                                "before:absolute before:z-10 before:h-full before:w-full before:bg-black/40 before:content-['']":
+                                    product.soldOut,
+                            }
+                        )}
+                    >
+                        {product.soldOut && (
+                            <div className="text-headline-04 -translate-1/2 absolute left-1/2 top-1/2 z-10 font-medium text-white">
+                                SOLD OUT
+                            </div>
+                        )}
+                        <Image
+                            src={product.imageUrl}
+                            alt="상품 이미지"
+                            fill
+                            className="h-full w-full object-cover"
+                        />
                     </div>
                     <div className="px-3">
                         <h3 className="text-caption-01 font-semibold">
