@@ -42,6 +42,7 @@ export type GetObjectListResponse = ApiResponse<GetObjectListDto>;
 export interface GetObjectListDto {
     objectCount: number;
     objects: Object[];
+    hasNext: boolean;
 }
 
 export interface Object {
