@@ -2,10 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 import { PlusIcon } from '@/components/icons/Plus';
 import { DELIVERY_REQUESTS } from '@/constants/deliveryRequests';
 import { Address } from '@/services/apis/address/types';
+import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 
 export default function AddressSection({
     addressInfo,
@@ -82,14 +84,21 @@ export default function AddressSection({
                             className={`${isOptionsOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
                         >
                             <div
-                                className={`${deliveryRequest ? 'text-gray-dark' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
+                                className={`${deliveryRequest ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
                             >
                                 {deliveryRequest || '배송 요청사항 선택'}
-                                <div className="h-4 w-4 bg-black" />
+                                <ChevronDownIcon
+                                    className={clsx(
+                                        'h-4 w-4 transition-all',
+                                        isOptionsOpen
+                                            ? 'rotate-180 text-black'
+                                            : 'text-gray-10'
+                                    )}
+                                />
                             </div>
                         </button>
                         {isOptionsOpen && (
-                            <div className="border-gray-regular rounded-b-xs text-caption-01 flex flex-col border border-t-0">
+                            <div className="border-gray-regular text-gray-dark rounded-b-xs text-caption-01 flex flex-col border border-t-0">
                                 {DELIVERY_REQUESTS.map((request) => (
                                     <button
                                         key={request}

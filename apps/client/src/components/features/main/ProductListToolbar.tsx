@@ -2,7 +2,8 @@
 // import Link from 'next/link';
 // import { useState } from 'react';
 
-// import * as I from '@/components/icons/ObjectBoard';
+// import { ChevronDownIcon } from '@/components/icons/ChevronDown';
+// import { FilterIcon } from '@/components/icons/Filter';
 
 export default function ProductListToolbar() {
     // const [isRotated, setIsRotated] = useState(false);
@@ -16,13 +17,13 @@ export default function ProductListToolbar() {
                     onClick={() => setIsRotated(!isRotated)}
                 >
                     최신순
-                    <I.ChevronIcon
-                        className={`h-4 w-4 transition-transform duration-200 ${isRotated ? 'rotate-180' : ''}`}
+                    <ChevronDownIcon
+                        className={`h-4 w-4 text-black transition-transform duration-200 ${isRotated ? 'rotate-180' : ''}`}
                     />
                 </button>
                 <Link href={'/filter'} className="flex items-center gap-0.5">
                     필터
-                    <I.FilterIcon className="h-4 w-4" />
+                    <FilterIcon className="h-4 w-4" />
                 </Link>
             </div> */}
         </div>
