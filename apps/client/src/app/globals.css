@@ -1,7 +1,10 @@
 @import '@repo/tailwind-config';
-@import '@repo/ui/styles.css';
 
 @layer base {
+    button {
+        cursor: pointer;
+    }
+
     input {
         outline: none;
     }
