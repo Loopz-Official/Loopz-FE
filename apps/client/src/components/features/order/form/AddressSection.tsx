@@ -1,27 +1,24 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { PlusIcon } from '@/components/icons/Plus';
 import { DELIVERY_REQUESTS } from '@/constants/deliveryRequests';
+import { Address } from '@/services/apis/address/types';
 
 export default function AddressSection({
-    setHasAddressInfo,
+    addressInfo,
 }: {
-    setHasAddressInfo: Dispatch<SetStateAction<boolean>>;
+    addressInfo: Address | null;
 }) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
     const [textareaContent, setTextareaContent] = useState('');
     const isTextareaOpen =
         deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
-    const hasAddressInfo = true;
-    const router = useRouter();
 
-    useEffect(() => {
-        setHasAddressInfo(hasAddressInfo);
-    }, [hasAddressInfo, setHasAddressInfo]);
+    const router = useRouter();
 
     // 직접 입력 textarea 내용 임시 저장
     useEffect(() => {
@@ -40,7 +37,7 @@ export default function AddressSection({
         <>
             <header className="flex items-center justify-between">
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
-                {hasAddressInfo && (
+                {addressInfo && (
                     <button
                         onClick={() => router.push('/address')}
                         className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
@@ -50,23 +47,25 @@ export default function AddressSection({
                 )}
             </header>
 
-            {hasAddressInfo ? (
+            {addressInfo ? (
                 <>
                     <div className="space-y-1.5">
                         <div className="flex items-center gap-1">
                             <span className="text-body-03 font-semibold">
-                                이예나
+                                {addressInfo.recipientName}
                             </span>
-                            <span className="text-caption-01 text-point font-semibold">
-                                기본 배송지
-                            </span>
+                            {addressInfo.defaultAddress && (
+                                <span className="text-caption-01 text-point font-semibold">
+                                    기본 배송지
+                                </span>
+                            )}
                         </div>
                         <div className="text-caption-01 tracking-normal">
-                            [09876] 서울특별시 영등포구 도신로 29길 28, 103동
-                            801호
+                            [{addressInfo.zoneCode}] {addressInfo.address}
+                            ,&nbsp;{addressInfo.addressDetail}
                         </div>
                         <div className="text-caption-01 tracking-normal">
-                            010-XXXX-XXXX
+                            {addressInfo.phoneNumber}
                         </div>
                     </div>
 

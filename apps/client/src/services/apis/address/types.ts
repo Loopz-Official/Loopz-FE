@@ -19,14 +19,7 @@ export interface Address {
 }
 
 // 배송지 추가 request body
-export interface CreateAddressRequest {
-    recipientName: string;
-    phoneNumber: string;
-    zoneCode: string;
-    address: string;
-    addressDetail: string;
-    defaultAddress: boolean;
-}
+export type CreateAddressRequest = Omit<Address, 'addressId' | 'userId'>;
 
 // 배송지 추가 response
 export type CreateAddressRespose = ApiResponse<CreateAddressDto>;

@@ -9,13 +9,15 @@ import AgreementSection from '@/components/features/order/form/AgreementSection'
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
+import { useSelectedAddressStore } from '@/store/useSelectedAddressStore';
 
 export default function Page() {
-    const [hasAddressInfo, setHasAddressInfo] = useState(false);
+    const { selectedAddress } = useSelectedAddressStore();
+
     const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
         useState(false);
 
-    const isDisabled = !(hasAddressInfo && hasAgreedToRequiredTerms);
+    const isDisabled = !(selectedAddress && hasAgreedToRequiredTerms);
     const router = useRouter();
 
     return (
@@ -25,7 +27,7 @@ export default function Page() {
             <div className="flex flex-col px-5 pt-2">
                 {/* 배송지 정보 */}
                 <div className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <AddressSection setHasAddressInfo={setHasAddressInfo} />
+                    <AddressSection addressInfo={selectedAddress} />
                 </div>
 
                 {/* 주문 상품 */}

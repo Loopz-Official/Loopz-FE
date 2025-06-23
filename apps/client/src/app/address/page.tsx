@@ -8,11 +8,14 @@ import { PlusIcon } from '@/components/icons/Plus';
 import Header from '@/components/layouts/Header';
 import { Address } from '@/services/apis/address/types';
 import { deleteAddress, getAddressList } from '@/services/apis/address';
+import { useSelectedAddressStore } from '@/store/useSelectedAddressStore';
 
 export default function Page() {
     const [addresses, setAddresses] = useState<Address[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const router = useRouter();
+
+    const { setSelectedAddress } = useSelectedAddressStore();
 
     useEffect(() => {
         const callGetAddressList = async () => {
@@ -37,8 +40,10 @@ export default function Page() {
     };
 
     const handleSaveButtonClick = () => {
-        // address 정보를 전역으로 저장 -> 주문/결제 페이지에서 사용
-        router.push('/order/form');
+        if (addresses[activeIndex]) {
+            setSelectedAddress(addresses[activeIndex]);
+            router.push('/order/form');
+        }
     };
 
     const handleDeleteButtonClick = async (addressId: number) => {
