@@ -11,7 +11,7 @@ export const getObjectBoardList = async (params?: ObjectBoardFilterRequest) => {
             params,
         });
 
-        console.log('Object Board 상품 리스트 조회', response.data.data);
+        // console.log('Object Board 상품 리스트 조회', response.data.data);
 
         return await validate(objectBoardResponse, response.data.data);
     } catch (error) {
