@@ -1,7 +1,7 @@
 {
     "$schema": "https://turborepo.com/schema.json",
     "ui": "tui",
-    "globalEnv": ["NEXT_LOOPZ_PROD_SERVER"],
+    "globalEnv": ["NEXT_PUBLIC_LOOPZ_PROD_SERVER"],
     "tasks": {
         "build": {
             "dependsOn": ["^build"],
