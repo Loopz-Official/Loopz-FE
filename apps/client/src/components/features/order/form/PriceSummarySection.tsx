@@ -1,6 +1,9 @@
 'use client';
 
+import clsx from 'clsx';
 import { useState } from 'react';
+
+import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 
 export default function PriceSummarySection() {
     const [isDetailOpen, setIsDetailOpen] = useState(true);
@@ -15,7 +18,12 @@ export default function PriceSummarySection() {
                     <span className="text-headline-04 text-point tracking-normal">
                         24,000원
                     </span>
-                    <div className="h-4 w-4 bg-black" />
+                    <ChevronDownIcon
+                        className={clsx(
+                            'h-4 w-4 text-black transition-[rotate]',
+                            { 'rotate-180': isDetailOpen }
+                        )}
+                    />
                 </button>
             </header>
 
