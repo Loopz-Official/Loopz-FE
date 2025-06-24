@@ -1,7 +1,7 @@
 import Banner from '@/components/features/main/Banner';
+import ObjectBoard from '@/components/features/main/ObjectBoard';
 import Header from '@/components/layouts/Header';
 import NavigationBar from '@/components/layouts/NavigationBar';
-// import ObjectBoard from '@/components/features/main/ObjectBoard';
 
 export default function Page() {
     return (
@@ -9,7 +9,7 @@ export default function Page() {
             <Header type="main" />
             <main className="flex flex-col gap-20">
                 <Banner />
-                {/* <ObjectBoard /> */}
+                <ObjectBoard />
             </main>
             <NavigationBar />
         </div>
