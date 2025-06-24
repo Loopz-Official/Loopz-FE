@@ -1,4 +1,5 @@
 import svgrConfig from '@repo/svgr-config';
+
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -17,6 +18,9 @@ const nextConfig: NextConfig = {
                 permanent: true,
             },
         ];
+    },
+    images: {
+        remotePatterns: [new URL('https://images.unsplash.com/**')],
     },
 };
 

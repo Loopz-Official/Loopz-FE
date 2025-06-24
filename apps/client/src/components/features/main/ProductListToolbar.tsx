@@ -4,12 +4,18 @@
 
 // import * as I from '@/components/icons/ObjectBoard';
 
-export default function ProductListToolbar() {
+type ProductListToolbarProps = {
+    productCount: number;
+};
+
+export default function ProductListToolbar({
+    productCount,
+}: ProductListToolbarProps) {
     // const [isRotated, setIsRotated] = useState(false);
 
     return (
         <div className="text-caption-01 text-gray-dark flex justify-between py-3">
-            <span>총 65개</span>
+            <span>총 {productCount}개</span>
             {/* <div className="flex gap-4">
                 <button
                     className="flex items-center"

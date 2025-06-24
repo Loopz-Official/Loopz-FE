@@ -5,8 +5,10 @@ import clsx from 'clsx';
 import 'swiper/css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Link from 'next/link';
 
 import { calculatePeekWidth } from '@/utils/calculatePeekWidth';
+import { MOCK_BANNER } from '@/constants/mockBanner';
 
 const swiperBreakpoints = {
     0: {
@@ -30,15 +32,14 @@ export default function Banner() {
     const [paginationStyle, setPaginationStyle] = useState({});
     const [isSwiping, setIsSwiping] = useState(false);
     const [prevCurrent, setPrevCurrent] = useState(1);
-    const totalSlides = 5;
     const swiperRef = useRef<HTMLDivElement>(null);
-    const slideRef = useRef<HTMLDivElement>(null);
+    const slideRef = useRef<HTMLAnchorElement>(null);
 
     // slide 기준으로 페이지네이션 위치 설정
     const calculatePaginationPosition = () => {
         if (!swiperRef?.current || !slideRef?.current) return;
         const peekWidth = calculatePeekWidth(
-            slideRef as React.RefObject<HTMLDivElement>
+            slideRef as React.RefObject<HTMLAnchorElement>
         );
 
         setPaginationStyle({
@@ -56,6 +57,7 @@ export default function Banner() {
     }, []);
 
     return (
+        // TODO: 드래그 시 이전 슬라이드가 먼저 사라지는 문제 해결
         <div className="relative h-fit w-full" ref={swiperRef}>
             <Swiper
                 loop
@@ -89,13 +91,17 @@ export default function Banner() {
                 ></div>
 
                 {/* 배너 슬라이드 */}
-                {new Array(totalSlides).fill(null).map((item, i) => (
-                    // TODO: 타이틀 및 설명을 active 슬라이드에만 보이게 할지
-                    <SwiperSlide key={i}>
+                {MOCK_BANNER.map((item, i) => (
+                    <SwiperSlide key={item.imageUrl}>
                         {({ isActive }) => (
-                            <div
+                            <Link
+                                target="_blank"
+                                href={item.embeddedUrl}
                                 ref={i === 0 ? slideRef : undefined}
-                                className="bg-gray-regular relative flex aspect-[4/5] h-auto w-full flex-col justify-end gap-2 rounded-md px-5 py-8 before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-b before:from-transparent before:from-[40.97%] before:to-black/40 before:to-[99.92%]"
+                                className="bg-gray-regular relative flex aspect-[4/5] h-auto w-full flex-col items-start justify-end gap-2 rounded-md bg-cover bg-no-repeat px-5 py-8 text-left before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-b before:from-transparent before:from-[40.97%] before:to-black/40 before:to-[99.92%]"
+                                style={{
+                                    backgroundImage: `url(${item.imageUrl})`,
+                                }}
                             >
                                 <div
                                     className={clsx(
@@ -105,12 +111,14 @@ export default function Banner() {
                                             : 'text-white/40'
                                     )}
                                 >
-                                    <h3 className="text-headline-02 relative z-10 whitespace-pre">{`기억을 담은 물건들,\n다시 꺼냅니다`}</h3>
+                                    <h3 className="text-headline-02 relative z-10 whitespace-pre">
+                                        {item.title}
+                                    </h3>
                                     <div className="text-body-03 relative z-10 font-normal">
-                                        무드에 맞는 빈티지 오브제를 제안합니다
+                                        {item.description}
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         )}
                     </SwiperSlide>
                 ))}
