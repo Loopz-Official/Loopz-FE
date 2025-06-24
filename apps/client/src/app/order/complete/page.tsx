@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import BottomButton from '@/components/common/BottomButton';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
-import { GiftIcon } from '@/components/icons/Gift';
-import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
 import Header from '@/components/layouts/Header';
+import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
+import { GiftIcon } from '@/icons/Gift';
 
 export default function Page() {
     const router = useRouter();
