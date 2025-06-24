@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/services/utils/types';
+import { ApiResponse } from '@/services/config/types';
 
 // 오브제 보드 상품 리스트 조회 query params
 export interface GetObjectListRequest {
