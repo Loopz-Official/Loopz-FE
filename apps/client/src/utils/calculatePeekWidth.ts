@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-export const calculatePeekWidth = (slideRef: RefObject<HTMLDivElement>) => {
+export const calculatePeekWidth = (slideRef: RefObject<HTMLAnchorElement>) => {
     // 뷰포트 길이
     const viewportWidth = window.innerWidth;
 
