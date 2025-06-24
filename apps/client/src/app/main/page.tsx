@@ -7,7 +7,7 @@ export default function Page() {
     return (
         <div className="pb-14">
             <Header type="main" />
-            <main className="flex flex-col gap-20">
+            <main className="flex flex-col gap-12">
                 <Banner />
                 <ObjectBoard />
             </main>
