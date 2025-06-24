@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import Image from 'next/image';
 import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { Object as Product } from '@/services/apis/object/type';
+import { ObjectInfo } from '@/schemas/object';
 
-export default async function ProductList({
-    products,
-}: {
-    products: Product[];
-}) {
+type ProductListProps = {
+    products: ObjectInfo[];
+};
+
+export default function ProductList({ products }: ProductListProps) {
     return products.length > 0 ? (
         <div className="grid w-full grid-cols-2 pb-3 min-[481px]:grid-cols-3">
             {products.map((product) => (

@@ -1,32 +1,37 @@
-// import { GetObjectListDto } from '@/services/apis/object/type';
-// import { getObjectList } from '@/services/apis/object';
+'use client';
 
-// import ProductList from './ProductList';
-// import ProductListToolbar from './ProductListToolbar';
+import { useEffect, useState } from 'react';
 
-// export default async function ObjectBoard() {
-//     let productData: GetObjectListDto | null = null;
+import { ObjectBoardResponse } from '@/schemas/object';
+import { getObjectBoardList } from '@/services/api/object';
 
-//     try {
-//         const response = await getObjectList();
-//         productData = response.data;
-//     } catch (error) {
-//         if (typeof window !== 'undefined') {
-//             alert('상품 리스트를 받아오는 중 문제가 발생했습니다.');
-//         } else {
-//             console.error('getObjectList 실패: ', error);
-//         }
-//     }
+import ProductList from './ProductList';
+import ProductListToolbar from './ProductListToolbar';
 
-//     return (
-//         <div>
-//             <div className="px-5">
-//                 <h2 className="text-headline-03">Object Board</h2>
-//                 <ProductListToolbar
-//                     productCount={productData?.objectCount ?? 0}
-//                 />
-//             </div>
-//             <ProductList products={productData?.objects ?? []} />
-//         </div>
-//     );
-// }
+export default function ObjectBoard() {
+    const [objectBoardData, setObjectBoardData] =
+        useState<ObjectBoardResponse>();
+
+    useEffect(() => {
+        const fetchObjectBoardData = async () => {
+            const response = await getObjectBoardList();
+            if (response) {
+                setObjectBoardData(response as ObjectBoardResponse);
+            }
+        };
+
+        fetchObjectBoardData();
+    }, []);
+
+    return (
+        <div>
+            <div className="px-5">
+                <h2 className="text-headline-03">Object Board</h2>
+                <ProductListToolbar
+                    productCount={objectBoardData?.objectCount ?? 0}
+                />
+            </div>
+            <ProductList products={objectBoardData?.objects ?? []} />
+        </div>
+    );
+}

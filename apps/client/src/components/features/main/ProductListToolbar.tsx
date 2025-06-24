@@ -4,11 +4,13 @@
 
 // import * as I from '@/components/icons/ObjectBoard';
 
+type ProductListToolbarProps = {
+    productCount: number;
+};
+
 export default function ProductListToolbar({
     productCount,
-}: {
-    productCount: number;
-}) {
+}: ProductListToolbarProps) {
     // const [isRotated, setIsRotated] = useState(false);
 
     return (
