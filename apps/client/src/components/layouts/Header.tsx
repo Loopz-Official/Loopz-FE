@@ -29,7 +29,7 @@ export default function Header({
     };
 
     return (
-        <div className="sticky top-0 z-10 grid h-14 w-full grid-cols-[1fr_auto_1fr] bg-white px-5 py-[0.875rem]">
+        <div className="sticky top-0 z-10 grid h-14 w-full grid-cols-[1fr_auto_1fr] bg-white py-[0.875rem]">
             <div>
                 <button
                     onClick={handleLeftOptionClick}
