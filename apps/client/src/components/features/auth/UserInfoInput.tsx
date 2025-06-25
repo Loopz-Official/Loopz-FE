@@ -13,7 +13,7 @@ const UserInfoInput = ({
 }: UserInfoInputProps) => {
     return (
         <div className="text-body-02 h-fit w-full">
-            <label className="mb-2 flex">
+            <label htmlFor={label} className="mb-2 flex">
                 {label === 'email' ? '이메일' : '닉네임'}
             </label>
             <input
@@ -27,7 +27,7 @@ const UserInfoInput = ({
                 value={userInfo}
                 onChange={(e) => setNickname && setNickname(e.target.value)}
                 readOnly={label === 'email'}
-                name={label}
+                id={label}
                 autoComplete="on"
             />
             {label === 'nickname' && (
