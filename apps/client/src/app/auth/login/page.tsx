@@ -1,9 +1,11 @@
+'use client';
+
 import { OAUTH_SERVICES } from '@/constants/auth';
 import { LoopzLogo } from '@/icons/Auth';
 
 export default function LoginPage() {
     return (
-        <div className="pt-70 flex h-screen w-full flex-col items-center justify-between pb-16">
+        <div className="flex h-full w-full flex-col items-center justify-between">
             <section className="flex w-full flex-col items-center gap-5">
                 <LoopzLogo />
                 <span className="text-body-02 text-gray-regular">
