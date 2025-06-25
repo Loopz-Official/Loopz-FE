@@ -1,5 +1,15 @@
 import * as I from '@/icons/Auth';
 
+const OAUTH_BASE_URL = {
+    google: 'https://accounts.google.com/o/oauth2/v2/auth',
+};
+
+export const OAUTH_REQUEST_URL = {
+    google: `${OAUTH_BASE_URL.google}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&scope=openid%20email%20profile&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}`,
+};
+
+export const OAUTH_GOOGLE_API = 'https://oauth2.googleapis.com';
+
 export const OAUTH_SERVICES = [
     {
         name: '카카오',
@@ -16,7 +26,7 @@ export const OAUTH_SERVICES = [
     {
         name: 'Google',
         icon: I.GoogleLogo,
-        url: '/api/auth/google',
+        url: OAUTH_REQUEST_URL.google,
         bgColor: '#FFFFFF',
         borderColor: '#E3E3E3',
     },
