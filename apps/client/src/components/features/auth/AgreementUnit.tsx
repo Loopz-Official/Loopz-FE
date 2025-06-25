@@ -25,28 +25,27 @@ const AgreementUnit = ({
         type === 'single' ? `agreement-checkbox-${index}` : 'agreement-all';
 
     return (
-        <div
+        <label
+            htmlFor={checkBoxInputId}
             className={clsx(
-                'flex w-full items-center gap-2 px-3',
-                type === 'all' ? 'bg-gray-12 py-4.5' : 'h-11'
+                'flex w-full cursor-pointer items-center gap-2 px-3',
+                type === 'all' ? 'bg-gray-12 py-4.5 mb-3' : 'h-11'
             )}
         >
-            <label htmlFor={checkBoxInputId} className="cursor-pointer">
-                <input
-                    type="checkbox"
-                    id={checkBoxInputId}
-                    className="hidden"
-                    checked={checked}
-                    onChange={(e) => onChange(e.target.checked)}
-                />
-                <CheckCircle
-                    style={
-                        {
-                            '--circle-fill': checked ? '#151515' : '#CCCCCC',
-                        } as React.CSSProperties
-                    }
-                />
-            </label>
+            <input
+                type="checkbox"
+                id={checkBoxInputId}
+                className="hidden"
+                checked={checked}
+                onChange={(e) => onChange(e.target.checked)}
+            />
+            <CheckCircle
+                style={
+                    {
+                        '--circle-fill': checked ? '#151515' : '#CCCCCC',
+                    } as React.CSSProperties
+                }
+            />
 
             <div className="text-body-03 flex items-center gap-1 text-black">
                 {type === 'single' && (
@@ -54,7 +53,7 @@ const AgreementUnit = ({
                 )}
                 <span>{title}</span>
             </div>
-        </div>
+        </label>
     );
 };
 

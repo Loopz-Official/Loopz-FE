@@ -6,6 +6,9 @@ import { useState } from 'react';
 import BottomButton from '@/components/common/BottomButton';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_AGREEMENTS } from '@/constants/agreements';
+import { TermsAgreement } from '@/schemas/auth';
+import { agreeSignupTerms } from '@/services/api/auth';
+import { useUserInfo } from '@/stores/userInfo';
 
 export default function TermsPage() {
     const router = useRouter();
@@ -15,6 +18,9 @@ export default function TermsPage() {
     );
 
     const isCheckedAll = agreements.every((agreement) => agreement.checked);
+    const isMandatoryAllChecked = agreements
+        .filter((agreement) => agreement.mandatory)
+        .every((agreement) => agreement.checked);
 
     const handleAllChange = (checked: boolean) => {
         setAgreements(
@@ -30,6 +36,25 @@ export default function TermsPage() {
         );
     };
 
+    const handleTermsAgreementSubmit = async () => {
+        const termsAgreement = agreements.reduce(
+            (acc, cur) => ({
+                ...acc,
+                [cur.id]: cur.checked,
+            }),
+            {} as TermsAgreement
+        );
+
+        // console.log('termsAgreement: ', termsAgreement);
+
+        const status = await agreeSignupTerms(termsAgreement);
+
+        if (status === 200) {
+            useUserInfo.getState().setUserInfo(termsAgreement);
+            router.push('/auth/complete');
+        }
+    };
+
     return (
         <>
             <section>
@@ -43,7 +68,7 @@ export default function TermsPage() {
                 {agreements.map((agreement, i) => (
                     <AgreementUnit
                         type="single"
-                        key={agreement.title}
+                        key={agreement.id}
                         index={i}
                         {...agreement}
                         checked={agreement.checked}
@@ -54,8 +79,8 @@ export default function TermsPage() {
             <BottomButton
                 position="static"
                 text="다음"
-                isDisabled={!isCheckedAll}
-                onClick={() => router.push('/auth/complete')}
+                isDisabled={!isMandatoryAllChecked}
+                onClick={handleTermsAgreementSubmit}
             />
         </>
     );

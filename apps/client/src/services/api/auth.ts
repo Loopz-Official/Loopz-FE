@@ -1,3 +1,5 @@
+import { TermsAgreement } from '@/schemas/auth';
+
 import { apiClient } from '../config/axios';
 
 // 닉네임 중복 검사
@@ -29,5 +31,23 @@ export const updateNickname = async (nickname: string) => {
         }
     } catch (error) {
         console.error('Error updating nickname:', error);
+    }
+};
+
+// Terms Agreement
+export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
+    try {
+        const response = await apiClient.patch(
+            '/user/v1/terms',
+            termsAgreement
+        );
+
+        console.log('Agree to terms Response: ', response);
+
+        if (response.data.status === 200) {
+            return response.data.status;
+        }
+    } catch (error) {
+        console.error('Error agreeing to terms:', error);
     }
 };

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { combine, createJSONStorage, persist } from 'zustand/middleware';
 
-import { UserInfo } from '@/schemas/oauth';
+import { UserInfo } from '@/schemas/auth';
 
 type UserInfoStore = UserInfo & {
     setUserInfo: (info: Partial<UserInfo>) => void;
@@ -14,6 +14,10 @@ const initialState: UserInfo = {
     realName: null,
     nickName: null,
     enabled: false,
+    over14: null,
+    agreedServiceTerms: null,
+    agreedMarketing: null,
+    agreedEventSMS: null,
 };
 
 export const useUserInfo = create<UserInfoStore>()(

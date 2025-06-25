@@ -21,4 +21,4 @@ export const serverAuthResponse = z.object({
     enabled: z.boolean(),
 });
 
-export type UserInfo = z.infer<typeof serverAuthResponse>;
+export type ServerAuthResponse = z.infer<typeof serverAuthResponse>;
