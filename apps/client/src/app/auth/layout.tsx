@@ -13,9 +13,11 @@ export default function AuthLayout({
     const isLoginPage = pathname === '/auth/login';
 
     return (
-        <div className="h-screen w-full px-5">
+        <div className="flex h-screen w-full flex-col px-5">
             {!isLoginPage && <Header type="title" title="회원가입" />}
-            {children}
+            <main className="flex grow flex-col justify-between pb-16 pt-8">
+                {children}
+            </main>
         </div>
     );
 }

@@ -25,7 +25,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="ko">
-            <body className={`${pretendard.className} tracking-tight`}>
+            <body
+                className={`${pretendard.className} tracking-tight text-black`}
+            >
                 <Frame>{children}</Frame>
             </body>
         </html>
