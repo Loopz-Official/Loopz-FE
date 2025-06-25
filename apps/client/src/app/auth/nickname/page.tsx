@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
-import { checkNicknameRedundancy } from '@/services/api/auth';
+import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
 import { useUserInfo } from '@/stores/userInfo';
 
 export default function NicknamePage() {
@@ -37,11 +37,15 @@ export default function NicknamePage() {
         }
     };
 
-    const handleNicknameSubmit = () => {
-        // useUserInfo.getState().setUserInfo({
-        //     nickName: nickname,
-        // });
-        router.push('/auth/terms');
+    const handleNicknameSubmit = async () => {
+        const status = await updateNickname(nickname);
+
+        if (status === 200) {
+            // useUserInfo.getState().setUserInfo({
+            //     nickName: nickname,
+            // });
+            router.push('/auth/terms');
+        }
     };
 
     return (
