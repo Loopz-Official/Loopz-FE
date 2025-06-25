@@ -1,12 +1,14 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { getGoogleToken, postGoogleToken } from '@/services/api/oauth';
+import { useUserInfo } from '@/stores/userInfo';
 
 export default function GoogleRedirectPage() {
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchGoogleToken = async () => {
@@ -18,16 +20,17 @@ export default function GoogleRedirectPage() {
                 const serverResponse = await postGoogleToken(tokenResponse);
                 if (!serverResponse) return;
 
-                const { status } = serverResponse;
+                const { status, data: userInfo } = serverResponse;
 
                 if (status === 200) {
-                    window.location.href = '/auth/nickname';
+                    useUserInfo.getState().setUserInfo(userInfo);
+                    router.push('/auth/nickname');
                 }
             }
         };
 
         fetchGoogleToken();
-    }, [searchParams]);
+    }, [searchParams, router]);
 
     return <div>Redirecting...</div>;
 }

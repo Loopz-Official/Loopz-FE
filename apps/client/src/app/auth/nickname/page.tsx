@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
+import { useUserInfo } from '@/stores/userInfo';
 
 export default function NicknamePage() {
     const router = useRouter();
@@ -14,7 +15,10 @@ export default function NicknamePage() {
     return (
         <>
             <section className="flex h-fit w-full flex-col gap-8">
-                <UserInfoInput label="email" userInfo="happyuri816@naver.com" />
+                <UserInfoInput
+                    label="email"
+                    userInfo={useUserInfo.getState().email}
+                />
                 <UserInfoInput
                     label="nickname"
                     userInfo={nickname}

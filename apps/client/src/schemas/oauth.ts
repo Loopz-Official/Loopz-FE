@@ -20,3 +20,5 @@ export const serverAuthResponse = z.object({
     nickName: z.nullable(z.string()),
     enabled: z.boolean(),
 });
+
+export type UserInfo = z.infer<typeof serverAuthResponse>;
