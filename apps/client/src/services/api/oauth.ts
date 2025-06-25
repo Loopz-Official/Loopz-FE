@@ -23,7 +23,7 @@ export const getGoogleToken = async (code: string) => {
     try {
         const response = await apiClientGoogleAuth.post('/token', params);
 
-        console.log('Google Token Response: ', response.data);
+        // console.log('Google Token Response: ', response.data);
         return validate(googleTokenResponse, response.data);
     } catch (error) {
         console.error('Error fetching Google token:', error);
