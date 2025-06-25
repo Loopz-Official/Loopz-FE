@@ -18,8 +18,11 @@ export default function LoginPage() {
                     <li key={service.name}>
                         <a
                             href={service.url}
-                            className={`text-body-01 flex h-[54px] w-full items-center justify-center gap-3 rounded-md font-normal ${service.name === '네이버' ? 'text-white' : ''} ${service.name === 'Google' ? `border-[${service.borderColor}] border border-solid` : ''}`}
-                            style={{ backgroundColor: service.bgColor }}
+                            className={`text-body-01 flex h-[54px] w-full items-center justify-center gap-3 rounded-md font-normal ${service.name === '네이버' ? 'text-white' : ''} ${service.name === 'Google' ? `border border-solid` : ''}`}
+                            style={{
+                                backgroundColor: service.bgColor,
+                                borderColor: service?.borderColor,
+                            }}
                         >
                             <service.icon />
                             {service.name}로 시작하기
