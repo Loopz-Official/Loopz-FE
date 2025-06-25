@@ -20,12 +20,11 @@ export default function GoogleRedirectPage() {
                 const serverResponse = await postGoogleToken(tokenResponse);
                 if (!serverResponse) return;
 
-                const { status, data: userInfo } = serverResponse;
+                const { data: userInfo, accessToken } = serverResponse;
 
-                if (status === 200) {
-                    useUserInfo.getState().setUserInfo(userInfo);
-                    router.push('/auth/nickname');
-                }
+                localStorage.setItem('access-token', accessToken);
+                useUserInfo.getState().setUserInfo(userInfo);
+                router.push('/auth/nickname');
             }
         };
 

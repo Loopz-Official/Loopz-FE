@@ -9,6 +9,21 @@ export const apiClient = axios.create({
     },
 });
 
+// Request Interceptor
+apiClient.interceptors.request.use(
+    (config) => {
+        const accessToken = localStorage.getItem('access-token');
+
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const apiClientGoogleAuth = axios.create({
     baseURL: OAUTH_GOOGLE_API,
 });

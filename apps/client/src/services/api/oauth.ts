@@ -37,11 +37,18 @@ export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
             idToken: tokenResponse.id_token,
         });
 
-        console.log('Service Server Response: ', response.data);
-        return {
-            status: response.data.status,
-            data: validate(serverAuthResponse, response.data.data),
-        };
+        console.log('Service Server Response: ', response);
+
+        if (response.data.status === 200) {
+            const authHeader = response.headers.authorization;
+            const accessToken =
+                authHeader.startsWith('Bearer ') && authHeader.split(' ')[1];
+
+            return {
+                data: validate(serverAuthResponse, response.data.data),
+                accessToken,
+            };
+        }
     } catch (error) {
         console.error('Error posting Google token :', error);
     }
