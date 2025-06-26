@@ -1,6 +1,6 @@
 'use client';
 
-import { OAUTH_SERVICES } from '@/constants/auth';
+import { OAUTH_SERVICES } from '@/constants/oauth';
 import { LoopzLogo } from '@/icons/Auth';
 
 export default function LoginPage() {
