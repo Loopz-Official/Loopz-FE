@@ -24,10 +24,10 @@ export const updateNickname = async (nickname: string) => {
             nickname,
         });
 
-        if (response.data.status === 200) {
+        if (response.status === 200) {
             console.log('Nickname updated successfully: ', response);
 
-            return response.data.status;
+            return response.status;
         }
     } catch (error) {
         console.error('Error updating nickname:', error);
@@ -44,8 +44,8 @@ export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
 
         console.log('Agree to terms Response: ', response);
 
-        if (response.data.status === 200) {
-            return response.data.status;
+        if (response.status === 200) {
+            return response.status;
         }
     } catch (error) {
         console.error('Error agreeing to terms:', error);

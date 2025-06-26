@@ -24,6 +24,7 @@ export const getGoogleToken = async (code: string) => {
         const response = await apiClientGoogleAuth.post('/token', params);
 
         // console.log('Google Token Response: ', response.data);
+
         return validate(googleTokenResponse, response.data);
     } catch (error) {
         console.error('Error fetching Google token:', error);
@@ -37,9 +38,9 @@ export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
             idToken: tokenResponse.id_token,
         });
 
-        console.log('Service Server Response: ', response);
+        // console.log('Service Server Response: ', response);
 
-        if (response.data.status === 200) {
+        if (response.status === 200) {
             const authHeader = response.headers.authorization;
             const accessToken =
                 authHeader.startsWith('Bearer ') && authHeader.split(' ')[1];
