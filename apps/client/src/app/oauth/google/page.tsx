@@ -11,7 +11,7 @@ export default function GoogleRedirectPage() {
     const router = useRouter();
 
     useEffect(() => {
-        const fetchGoogleToken = async () => {
+        const handleGoogleLogin = async () => {
             const code = searchParams.get('code');
             if (code) {
                 const tokenResponse = await getGoogleToken(code);
@@ -20,15 +20,22 @@ export default function GoogleRedirectPage() {
                 const serverResponse = await postGoogleToken(tokenResponse);
                 if (!serverResponse) return;
 
-                const { data: userInfo, accessToken } = serverResponse;
+                const { data: loginUserInfo, accessToken } = serverResponse;
 
                 localStorage.setItem('access-token', accessToken);
-                useUserInfo.getState().setUserInfo(userInfo);
-                router.push('/auth/nickname');
+                useUserInfo.getState().setUserInfo(loginUserInfo);
+
+                router.push(
+                    loginUserInfo.enabled
+                        ? '/main'
+                        : loginUserInfo.nickName
+                          ? '/auth/terms'
+                          : '/auth/nickname'
+                );
             }
         };
 
-        fetchGoogleToken();
+        handleGoogleLogin();
     }, [searchParams, router]);
 
     return <div>Redirecting...</div>;
