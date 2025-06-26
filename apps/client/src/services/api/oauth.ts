@@ -45,8 +45,8 @@ export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
 
         if (response.status === 200) {
             const authHeader = response.headers.authorization;
-            const accessToken =
-                authHeader.startsWith('Bearer ') && authHeader.split(' ')[1];
+            const accessToken = extractBearerToken(authHeader);
+            if (!accessToken) throw new Error('Failed to extract access token');
 
             return {
                 data: validate(serverAuthResponse, response.data.data),
@@ -68,9 +68,8 @@ export const postKakaoAuthCode = async (code: string) => {
         console.log('Posting Kakao Auth code response: ', response);
 
         if (response.status === 200) {
-            const accessToken = extractBearerToken(
-                response.headers.authorization
-            );
+            const authHeader = response.headers.authorization;
+            const accessToken = extractBearerToken(authHeader);
             if (!accessToken) throw new Error('Failed to extract access token');
 
             return {
