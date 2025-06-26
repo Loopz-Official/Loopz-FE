@@ -4,22 +4,19 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import OAuthRedirect from '@/components/features/oauth/OAuthRedirect';
-import { getGoogleToken, postGoogleToken } from '@/services/api/oauth';
+import { postKakaoAuthCode } from '@/services/api/oauth';
 import { useUserInfo } from '@/stores/userInfo';
 
-export default function GoogleRedirectPage() {
+export default function KakaoRedirectPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     useEffect(() => {
-        const handleGoogleLogin = async () => {
+        const handleKakaoLogin = async () => {
             const code = searchParams.get('code');
 
             if (code) {
-                const tokenResponse = await getGoogleToken(code);
-                if (!tokenResponse) return;
-
-                const serverResponse = await postGoogleToken(tokenResponse);
+                const serverResponse = await postKakaoAuthCode(code);
                 if (!serverResponse) return;
 
                 const { data: loginUserInfo, accessToken } = serverResponse;
@@ -37,7 +34,7 @@ export default function GoogleRedirectPage() {
             }
         };
 
-        handleGoogleLogin();
+        handleKakaoLogin();
     }, [searchParams, router]);
 
     return <OAuthRedirect />;

@@ -6,7 +6,9 @@ import {
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient, apiClientGoogleAuth } from '../config/axios';
+import { extractBearerToken } from '../utils/extractBearerToken';
 
+// Fetch Google Token after retrieving auth code
 export const getGoogleToken = async (code: string) => {
     const client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
     const client_secret = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!;
@@ -31,6 +33,7 @@ export const getGoogleToken = async (code: string) => {
     }
 };
 
+// Send Google Token to Server
 export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
     try {
         const response = await apiClient.post('/auth/v1/login/google', {
@@ -52,5 +55,30 @@ export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
         }
     } catch (error) {
         console.error('Error posting Google token :', error);
+    }
+};
+
+// Send Kakao Auth code to Server
+export const postKakaoAuthCode = async (code: string) => {
+    try {
+        const response = await apiClient.post(
+            `/auth/v1/login/kakao?code=${code}`
+        );
+
+        console.log('Posting Kakao Auth code response: ', response);
+
+        if (response.status === 200) {
+            const accessToken = extractBearerToken(
+                response.headers.authorization
+            );
+            if (!accessToken) throw new Error('Failed to extract access token');
+
+            return {
+                data: validate(serverAuthResponse, response.data.data),
+                accessToken,
+            };
+        }
+    } catch (error) {
+        console.error('Error posting Kakao Auth code:', error);
     }
 };
