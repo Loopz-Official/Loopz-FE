@@ -13,7 +13,7 @@ export default function ProductList({ products }: ProductListProps) {
         <div className="grid w-full grid-cols-2 pb-3 min-[481px]:grid-cols-3">
             {products.map((product) => (
                 <Link
-                    href={`/products/${product.objectId}`}
+                    href={`/obje/${product.objectId}`}
                     key={product.objectId}
                     className="hover:bg-gray-12 active:bg-gray-12 flex w-full flex-col gap-4 pb-6 transition-colors"
                 >
