@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { clearUserInfoCookie } from '@/auth/cookie/clearUserInfoCookie';
 import { OAUTH_GOOGLE_API } from '@/constants/oauth';
 
 export const apiClient = axios.create({
@@ -39,7 +40,7 @@ apiClient.interceptors.response.use(
 
         if (error?.response.status === 401 || error?.response.status === 403) {
             localStorage.clear();
-            sessionStorage.clear();
+            clearUserInfoCookie(); // 🍪 임시 쿠키 설정 (추후 refactor 필요)
             window.location.href = '/auth/login'; // 추후 가능하면 UX 보완
         }
 

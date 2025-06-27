@@ -5,8 +5,8 @@ import {
 } from '@/schemas/oauth';
 import { validate } from '@/schemas/utils/validate';
 
+import { extractBearerToken } from '../../auth/extractBearerToken';
 import { apiClient, apiClientGoogleAuth } from '../config/axios';
-import { extractBearerToken } from '../utils/extractBearerToken';
 
 // Fetch Google Token after retrieving auth code
 export const getGoogleToken = async (code: string) => {

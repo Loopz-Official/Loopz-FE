@@ -27,7 +27,7 @@ export const useUserInfo = create<UserInfoStore>()(
         })),
         {
             name: 'user-info',
-            storage: createJSONStorage(() => sessionStorage), // Session Storage 연동
+            storage: createJSONStorage(() => localStorage), // Session Storage 연동
         }
     )
 );
