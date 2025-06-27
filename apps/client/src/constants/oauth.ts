@@ -11,7 +11,7 @@ const OAUTH_BASE_URL = {
 };
 
 export const OAUTH_REQUEST_URL = {
-    kakao: `${OAUTH_BASE_URL.kakao}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&scope=profile_nickname,profile_image,account_email`,
+    kakao: `${OAUTH_BASE_URL.kakao}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code&scope=profile_nickname,profile_image,account_email&prompt=select_account`,
     google: `${OAUTH_BASE_URL.google}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&scope=openid%20email%20profile&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}`,
 };
 
