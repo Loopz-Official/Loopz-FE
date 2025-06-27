@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
@@ -14,7 +15,7 @@ const BottomPurchaseCTA = () => {
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
     const handleLike = () => setIsLiked((prev) => !prev);
-    const handleCart = () => setIsBottomSheetOpen(true); // Toast UI 구현 시 수정
+    const handleCart = () => toast('장바구니에 상품을 담았어요!');
 
     const likeIconStyling = isLiked
         ? { fill: '#FF5A2D', stroke: 'none' }
