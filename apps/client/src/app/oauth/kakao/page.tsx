@@ -22,7 +22,6 @@ export default function KakaoRedirectPage() {
 
                 const { data: loginUserInfo, accessToken } = serverResponse;
 
-                localStorage.setItem('access-token', accessToken);
                 useUserInfo.getState().setUserInfo(loginUserInfo);
                 setUserInfoCookie(loginUserInfo, accessToken); // 🍪 쿠키 관련 임시 설정 (추후 refactor 필요)
 

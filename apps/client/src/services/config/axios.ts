@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { clearUserInfoCookie } from '@/auth/cookie/clearUserInfoCookie';
+import { getCookie } from '@/auth/cookie/getCookie';
 import { OAUTH_GOOGLE_API } from '@/constants/oauth';
 
 export const apiClient = axios.create({
@@ -13,7 +14,7 @@ export const apiClient = axios.create({
 // Request Interceptor
 apiClient.interceptors.request.use(
     (config) => {
-        const accessToken = localStorage.getItem('access-token');
+        const accessToken = getCookie('access-token');
 
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
@@ -39,7 +40,6 @@ apiClient.interceptors.response.use(
         console.log('Request Error: ', error);
 
         if (error?.response.status === 401 || error?.response.status === 403) {
-            localStorage.clear();
             clearUserInfoCookie(); // 🍪 임시 쿠키 설정 (추후 refactor 필요)
             window.location.href = '/auth/login'; // 추후 가능하면 UX 보완
         }

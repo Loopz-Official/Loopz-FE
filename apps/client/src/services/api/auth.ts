@@ -1,4 +1,5 @@
-import { TermsAgreement } from '@/schemas/auth';
+import { logoutResponse, TermsAgreement } from '@/schemas/auth';
+import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
 
@@ -49,5 +50,23 @@ export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
         }
     } catch (error) {
         console.error('Error agreeing to terms:', error);
+    }
+};
+
+// Logout
+export const logout = async () => {
+    try {
+        const response = await apiClient.post('/auth/v1/logout');
+
+        console.log('Logout Response: ', response);
+
+        if (response.status === 200) {
+            return {
+                data: validate(logoutResponse, response.data.data),
+                status: response.status,
+            };
+        }
+    } catch (error) {
+        console.error('Error logging out:', error);
     }
 };

@@ -1,6 +1,5 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
-// 미가입 사용자에 대한 분기도 필요 (token 활용)
 export default function middleware(request: NextRequest) {
     const requestUrl = request.nextUrl;
     const enabled = request.cookies.get('enabled')?.value;

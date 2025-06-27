@@ -17,3 +17,7 @@ export const userInfo = z.object({
 });
 
 export type UserInfo = z.infer<typeof userInfo>;
+
+export const logoutResponse = z.object({
+    message: z.string(),
+});

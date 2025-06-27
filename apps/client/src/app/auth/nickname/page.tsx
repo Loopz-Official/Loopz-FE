@@ -41,9 +41,6 @@ export default function NicknamePage() {
         const status = await updateNickname(nickname);
 
         if (status === 200) {
-            // useUserInfo.getState().setUserInfo({
-            //     nickName: nickname,
-            // });
             router.push('/auth/terms');
         }
     };
