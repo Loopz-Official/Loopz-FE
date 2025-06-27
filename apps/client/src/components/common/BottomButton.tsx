@@ -8,21 +8,26 @@ export default function BottomButton({
     onClick,
     children,
     position = 'fixed',
+    isBottomSheetOpen,
 }: {
     text: string;
     isDisabled: boolean;
     onClick: () => void;
     children?: React.ReactNode;
     position?: 'fixed' | 'static';
+    isBottomSheetOpen?: boolean;
 }) {
     return (
         <div
             className={clsx(
-                `${position} bottom-0 grid w-full max-w-2xl grid-cols-[auto_1fr] bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
-                position === 'fixed' && 'px-5 py-3'
+                `${position} bottom-0 z-50 grid w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
+                position === 'fixed' && 'px-5 py-3',
+                isBottomSheetOpen
+                    ? 'border-gray-regular border-t border-solid'
+                    : 'gap-x-6'
             )}
         >
-            <div>{children}</div>
+            <div className="flex items-center gap-4">{children}</div>
             <button
                 disabled={isDisabled}
                 onClick={onClick}
