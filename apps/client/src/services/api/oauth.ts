@@ -65,7 +65,7 @@ export const postKakaoAuthCode = async (code: string) => {
             `/auth/v1/login/kakao?code=${code}`
         );
 
-        console.log('Posting Kakao Auth code response: ', response);
+        // console.log('Posting Kakao Auth code response: ', response);
 
         if (response.status === 200) {
             const authHeader = response.headers.authorization;

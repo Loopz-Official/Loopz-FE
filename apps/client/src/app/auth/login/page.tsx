@@ -1,5 +1,7 @@
 'use client';
 
+import clsx from 'clsx';
+
 import { OAUTH_SERVICES } from '@/constants/oauth';
 import { LoopzLogo } from '@/icons/Auth';
 
@@ -18,7 +20,12 @@ export default function LoginPage() {
                     <li key={service.name}>
                         <a
                             href={service.url}
-                            className={`text-body-01 flex h-[54px] w-full items-center justify-center gap-3 rounded-md font-normal ${service.name === '네이버' ? 'text-white' : ''} ${service.name === 'Google' ? `border border-solid` : ''}`}
+                            className={clsx(
+                                'text-body-01 flex h-[54px] w-full items-center justify-center gap-3 rounded-md font-normal',
+                                service.name === '네이버' && 'text-white',
+                                service.name === 'Google' &&
+                                    'border border-solid'
+                            )}
                             style={{
                                 backgroundColor: service.bgColor,
                                 borderColor: service?.borderColor,
