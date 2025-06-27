@@ -5,13 +5,13 @@ export const objectDetailInfo = z.object({
         objectId: z.string(),
         objectName: z.string(),
         intro: z.string(),
-        imageUrl: z.string(),
+        imageUrl: z.url(),
         objectPrice: z.number(),
         soldOut: z.boolean(),
         liked: z.boolean(),
     }),
     size: z.string(),
-    descriptionUrl: z.string(),
+    descriptionUrl: z.url(),
     stock: z.number(),
 });
 
