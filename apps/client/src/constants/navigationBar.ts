@@ -1,4 +1,4 @@
-import * as I from '@/components/icons/NavigationBar';
+import * as I from '@/icons/NavigationBar';
 
 export const NAVIGATION_BAR_OPTIONS = [
     {

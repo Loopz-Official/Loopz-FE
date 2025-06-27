@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { PlusIcon } from '@/components/icons/Plus';
 import { DELIVERY_REQUESTS } from '@/constants/deliveryRequests';
+import { PlusIcon } from '@/icons/Plus';
 
 export default function AddressSection({
     setHasAddressInfo,

@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
-import { PlusIcon } from '@/components/icons/Plus';
 import Header from '@/components/layouts/Header';
+import { PlusIcon } from '@/icons/Plus';
 
 export default function Page() {
     const [activeIndex, setActiveIndex] = useState(0);

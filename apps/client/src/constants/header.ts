@@ -1,4 +1,4 @@
-import * as I from '@/components/icons/Header';
+import * as I from '@/icons/Header';
 
 const BACK_BUTTON = {
     label: '뒤로가기',
