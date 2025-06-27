@@ -6,6 +6,8 @@ import { apiClient } from '../config/axios';
 // 닉네임 중복 검사
 export const checkNicknameRedundancy = async (nickname: string) => {
     try {
+        // console.log('Nickname: ', nickname);
+
         const response = await apiClient.get(
             `/user/v1/nickname/validate?nickname=${nickname}`
         );

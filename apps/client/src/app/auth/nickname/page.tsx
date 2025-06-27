@@ -14,6 +14,7 @@ export default function NicknamePage() {
 
     const [nickname, setNickname] = useState<string>('');
     const [isChecking, setIsChecking] = useState<boolean>(false);
+    const [isNicknameValid, setIsNicknameValid] = useState<boolean>(false);
 
     useEffect(() => {
         if (!nickname) return;
@@ -29,11 +30,14 @@ export default function NicknamePage() {
 
     const handleNicknameValidation = async (nickname: string) => {
         setIsChecking(true);
+        setIsNicknameValid(false);
+
         const response = await checkNicknameRedundancy(nickname);
 
         // console.log('checkNicknameRedundancy Response: ', response);
 
         if (response.usable) {
+            setIsNicknameValid(true);
             setIsChecking(false);
         }
     };
@@ -61,12 +65,17 @@ export default function NicknamePage() {
                 <UserInfoInput
                     label="nickname"
                     userInfo={nickname}
+                    nickname={nickname}
                     setNickname={setNickname}
+                    isChecking={isChecking}
+                    isNicknameValid={isNicknameValid}
                 />
             </section>
             <BottomButton
                 text="다음"
-                isDisabled={nickname.length === 0 || isChecking}
+                isDisabled={
+                    nickname.length === 0 || (isChecking && !isNicknameValid)
+                }
                 position="static"
                 onClick={handleNicknameSubmit}
             />
