@@ -11,7 +11,7 @@ export default function ObjectDetailLayout({
     return (
         <>
             <Header type="sub" />
-            <main>{children}</main>
+            <main className="pb-17">{children}</main>
             <Toaster
                 toastOptions={{
                     style: {
@@ -24,7 +24,6 @@ export default function ObjectDetailLayout({
                         color: '#ffffff',
                     },
                 }}
-                className="bg-gray-03 rounded-sm text-white"
                 position="bottom-center"
                 offset={{ bottom: '84px' }}
                 mobileOffset={{ bottom: '84px' }}
