@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { CheckCircle } from '@/icons/Auth';
+import { CheckCircleComplete } from '@/icons/Auth';
 
 export default function SignupComplete() {
     const router = useRouter();
@@ -17,7 +17,7 @@ export default function SignupComplete() {
 
     return (
         <div className="flex flex-col items-center">
-            <CheckCircle />
+            <CheckCircleComplete />
             <span className="text-headline-02 mt-6">가입이 완료되었어요!</span>
         </div>
     );
