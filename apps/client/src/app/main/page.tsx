@@ -1,7 +1,6 @@
 import Banner from '@/components/features/main/Banner';
 import ObjectBoard from '@/components/features/main/ObjectBoard';
 import Header from '@/components/layouts/Header';
-import NavigationBar from '@/components/layouts/NavigationBar';
 
 export default function Page() {
     return (
@@ -11,7 +10,6 @@ export default function Page() {
                 <Banner />
                 <ObjectBoard />
             </main>
-            <NavigationBar />
         </div>
     );
 }
