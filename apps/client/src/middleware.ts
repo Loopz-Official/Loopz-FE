@@ -2,8 +2,8 @@ import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
 export default function middleware(request: NextRequest) {
     const requestUrl = request.nextUrl;
-    const enabled = request.cookies.get('enabled')?.value;
-    const nickname = request.cookies.get('nickname')?.value;
+    const enabled = request.cookies.get('enabled')?.value === 'true';
+    // const nickname = request.cookies.get('nickname')?.value !== 'null';
     const accessToken = request.cookies.get('access-token')?.value;
 
     const isAuthRoute = requestUrl.pathname.startsWith('/auth');
@@ -11,11 +11,13 @@ export default function middleware(request: NextRequest) {
     const isLoginPage = requestUrl.pathname === '/auth/login';
     const isTermsPage = requestUrl.pathname === '/auth/terms';
     const isNicknamePage = requestUrl.pathname === '/auth/nickname';
+    const isCompletePage = requestUrl.pathname === '/auth/complete';
     const isMainPage = requestUrl.pathname === '/main';
 
-    // 1. accessToken, enabled 모두 있을 때 /auth 경로 접근 시 /main으로
-    if (accessToken && enabled && isAuthRoute && !isMainPage) {
-        return NextResponse.redirect(new URL('/main', request.url));
+    // 1. accessToken, enabled 모두 있을 때 /auth 경로 접근 시 /main으로 (/aut/complete 제외)
+    if (accessToken && enabled) {
+        if (isAuthRoute && !isMainPage && !isCompletePage)
+            return NextResponse.redirect(new URL('/main', request.url));
     }
 
     // 2. accessToken 없을 때, OAuth 경로가 아니고, 로그인 페이지가 아니면 /auth/login으로
@@ -23,12 +25,20 @@ export default function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/auth/login', request.url));
     }
 
-    // 3. accessToken은 있는데 enabled가 없을 때, 약관/닉네임 페이지가 아니면 해당 페이지로
+    // 3. accessToken은 있는데 enabled가 없을 때 (회원가입 미완료)
     if (accessToken && !enabled) {
+        // 회원가입 페이지(terms, nickname)에 있는 경우가 아니라면 로그인 페이지로 리다이렉트
         if (!isTermsPage && !isNicknamePage) {
-            // enabled 값에 따라 terms 또는 nickname으로 분기
-            const redirectPath = nickname ? '/auth/terms' : '/auth/nickname';
-            return NextResponse.redirect(new URL(redirectPath, request.url));
+            const response = NextResponse.redirect(
+                new URL('/auth/login', request.url)
+            );
+
+            // 회원가입 미완료 사용자의 쿠키를 삭제하여 로그아웃 처리
+            response.cookies.delete('access-token');
+            response.cookies.delete('nickname');
+            response.cookies.delete('enabled');
+
+            return response;
         }
     }
 

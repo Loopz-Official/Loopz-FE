@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { setUserInfoCookie } from '@/auth/cookie/setUserInfoCookie';
+import { setTokenCookie, setUserInfoCookie } from '@/auth/cookie/setCookie';
 import OAuthRedirect from '@/components/features/oauth/OAuthRedirect';
 import { getGoogleToken, postGoogleToken } from '@/services/api/oauth';
 import { useUserInfo } from '@/stores/userInfo';
@@ -26,7 +26,10 @@ export default function GoogleRedirectPage() {
                 const { data: loginUserInfo, accessToken } = serverResponse;
 
                 useUserInfo.getState().setUserInfo(loginUserInfo);
-                setUserInfoCookie(loginUserInfo, accessToken); // 🍪 쿠키 관련 임시 설정 (추후 refactor 필요)
+
+                // 🍪 쿠키 관련 임시 설정 (추후 refactor 필요)
+                setTokenCookie(accessToken);
+                setUserInfoCookie();
 
                 router.push(
                     loginUserInfo.enabled

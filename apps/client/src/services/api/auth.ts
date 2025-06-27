@@ -1,4 +1,4 @@
-import { logoutResponse, TermsAgreement } from '@/schemas/auth';
+import { logoutResponse, TermsAgreement, userInfo } from '@/schemas/auth';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -10,7 +10,7 @@ export const checkNicknameRedundancy = async (nickname: string) => {
             `/user/v1/nickname/validate?nickname=${nickname}`
         );
 
-        console.log('checkNicknameRedundancy Response: ', response);
+        // console.log('checkNicknameRedundancy Response: ', response);
 
         return response.data.data;
     } catch (error) {
@@ -26,9 +26,9 @@ export const updateNickname = async (nickname: string) => {
         });
 
         if (response.status === 200) {
-            console.log('Nickname updated successfully: ', response);
+            // console.log('Nickname updated successfully: ', response);
 
-            return response.status;
+            return { data: response.data.data, status: response.status };
         }
     } catch (error) {
         console.error('Error updating nickname:', error);
@@ -43,10 +43,13 @@ export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
             termsAgreement
         );
 
-        console.log('Agree to terms Response: ', response);
+        // console.log('Agree to terms Response: ', response);
 
         if (response.status === 200) {
-            return response.status;
+            return {
+                data: validate(userInfo, response.data.data),
+                status: response.status,
+            };
         }
     } catch (error) {
         console.error('Error agreeing to terms:', error);
@@ -58,7 +61,7 @@ export const logout = async () => {
     try {
         const response = await apiClient.post('/auth/v1/logout');
 
-        console.log('Logout Response: ', response);
+        // console.log('Logout Response: ', response);
 
         if (response.status === 200) {
             return {

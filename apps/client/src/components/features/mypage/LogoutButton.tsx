@@ -1,6 +1,6 @@
 'use client';
 
-import { clearUserInfoCookie } from '@/auth/cookie/clearUserInfoCookie';
+import { clearUserInfoCookie } from '@/auth/cookie/clearCookie';
 import { logout } from '@/services/api/auth';
 
 const LogoutButton = () => {
@@ -8,8 +8,8 @@ const LogoutButton = () => {
         const response = await logout();
 
         if (response?.status === 200) {
-            localStorage.clear();
             clearUserInfoCookie();
+            localStorage.clear();
             alert(response?.data.message);
             window.location.href = '/';
         }

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { setUserInfoCookie } from '@/auth/cookie/setCookie';
 import BottomButton from '@/components/common/BottomButton';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_AGREEMENTS } from '@/constants/agreements';
@@ -47,10 +48,14 @@ export default function TermsPage() {
 
         // console.log('termsAgreement: ', termsAgreement);
 
-        const status = await agreeSignupTerms(termsAgreement);
+        const termsResponse = await agreeSignupTerms(termsAgreement);
+        if (!termsResponse) return;
+
+        const { data: termsUserInfo, status } = termsResponse;
 
         if (status === 200) {
-            useUserInfo.getState().setUserInfo(termsAgreement);
+            useUserInfo.getState().setUserInfo(termsUserInfo);
+            setUserInfoCookie();
             router.push('/auth/complete');
         }
     };

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { setUserInfoCookie } from '@/auth/cookie/setCookie';
 import BottomButton from '@/components/common/BottomButton';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
 import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
@@ -38,9 +39,14 @@ export default function NicknamePage() {
     };
 
     const handleNicknameSubmit = async () => {
-        const status = await updateNickname(nickname);
+        const nicknameResponse = await updateNickname(nickname);
+        if (!nicknameResponse) return;
+
+        const { data: nicknameUserInfo, status } = nicknameResponse;
 
         if (status === 200) {
+            useUserInfo.getState().setUserInfo(nicknameUserInfo);
+            setUserInfoCookie();
             router.push('/auth/terms');
         }
     };
