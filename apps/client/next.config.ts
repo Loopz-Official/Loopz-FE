@@ -3,6 +3,7 @@ import svgrConfig from '@repo/svgr-config';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+    webpack: svgrConfig.webpack,
     turbopack: svgrConfig.turbopack,
     typescript: {
         ignoreBuildErrors: true,
@@ -20,7 +21,7 @@ const nextConfig: NextConfig = {
         ];
     },
     images: {
-        remotePatterns: [new URL('https://images.unsplash.com/**')],
+        remotePatterns: [new URL('https://loopz.co.kr/**')],
     },
 };
 
