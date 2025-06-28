@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
         ];
     },
     images: {
-        remotePatterns: [new URL('https://loopz.co.kr/**')],
+        remotePatterns: [new URL('https://static.loopz.co.kr/**')],
     },
 };
 
