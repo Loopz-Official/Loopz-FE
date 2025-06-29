@@ -7,8 +7,8 @@ import { LoopzLogo } from '@/icons/Auth';
 
 export default function LoginPage() {
     return (
-        <div className="flex h-full w-full flex-col items-center justify-between">
-            <section className="flex w-full flex-col items-center gap-5">
+        <div className="relative flex h-full w-full flex-col items-center justify-end">
+            <section className="top-7/24 absolute flex w-full flex-col items-center gap-5">
                 <LoopzLogo />
                 <span className="text-body-02 text-gray-regular">
                     한시적 연출물, 지속가능한 공간으로 이어지다
