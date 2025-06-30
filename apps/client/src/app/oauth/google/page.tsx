@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 
 import { setTokenCookie, setUserInfoCookie } from '@/auth/cookie/setCookie';
 import OAuthRedirect from '@/components/features/oauth/OAuthRedirect';
+import { useUserInfo } from '@/hooks/stores/userInfo';
 import { getGoogleToken, postGoogleToken } from '@/services/api/oauth';
-import { useUserInfo } from '@/stores/userInfo';
 
 export default function GoogleRedirectPage() {
     const searchParams = useSearchParams();

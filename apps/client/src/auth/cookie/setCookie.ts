@@ -1,4 +1,4 @@
-import { useUserInfo } from '@/stores/userInfo';
+import { useUserInfo } from '@/hooks/stores/userInfo';
 
 export const setUserInfoCookie = () => {
     document.cookie = `enabled=${useUserInfo.getState().enabled}; path=/;`;

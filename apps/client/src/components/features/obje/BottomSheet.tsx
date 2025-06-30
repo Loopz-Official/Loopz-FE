@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
-import { usePurchaseCountStore } from '@/stores/usePurchaseCount';
+import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from './OrderQuantity';

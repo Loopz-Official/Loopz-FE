@@ -1,5 +1,5 @@
+import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { MinusIcon, PlusIcon } from '@/icons/ObjectDetail';
-import { usePurchaseCountStore } from '@/stores/usePurchaseCount';
 
 const OrderQuantity = ({ stock }: { stock: number }) => {
     const { count, increaseCount, decreaseCount } = usePurchaseCountStore();
