@@ -8,7 +8,7 @@ import AddressSearchSection from '@/components/features/address/AddressSearchSec
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
-import { CreateAddressRequest } from '@/schemas/address';
+import { AddressCURequest } from '@/schemas/address';
 import { createAddress } from '@/services/api/address';
 
 export default function AddAddressPage() {
@@ -17,7 +17,7 @@ export default function AddAddressPage() {
 
     if (type !== 'add' && type !== 'edit') notFound();
 
-    const [newAddress, setNewAddress] = useState<CreateAddressRequest>({
+    const [newAddress, setNewAddress] = useState<AddressCURequest>({
         recipientName: '',
         phoneNumber: '',
         zoneCode: '',
@@ -46,7 +46,7 @@ export default function AddAddressPage() {
     };
 
     const handleFieldChange = (
-        field: keyof CreateAddressRequest,
+        field: keyof AddressCURequest,
         value: string | boolean
     ) => {
         setNewAddress((prev) => ({

@@ -1,8 +1,4 @@
-import {
-    addressInfo,
-    addressList,
-    CreateAddressRequest,
-} from '@/schemas/address';
+import { AddressCURequest, addressInfo, addressList } from '@/schemas/address';
 import { validate } from '@/schemas/utils/validate';
 import { apiClient } from '@/services/config/axios';
 
@@ -14,7 +10,7 @@ export const getAddressList = async () => {
         console.log('Address List Response: ', response);
 
         if (response.status === 200) {
-            return validate(addressList, response.data.data);
+            return validate(addressList, response.data.data.addresses);
         }
     } catch (error) {
         console.error('Error fetching address list:', error);
@@ -23,7 +19,7 @@ export const getAddressList = async () => {
 };
 
 // 배송지 추가
-export const createAddress = async (address: CreateAddressRequest) => {
+export const createAddress = async (address: AddressCURequest) => {
     try {
         const response = await apiClient.post('/user/v1/address', address);
 
@@ -38,6 +34,27 @@ export const createAddress = async (address: CreateAddressRequest) => {
     } catch (error) {
         console.error('Error creating address:', error);
         throw error;
+    }
+};
+
+// 배송지 수정 (Also used by checking default address)
+export const updateAddress = async (
+    addressId: number,
+    newAddress: AddressCURequest
+) => {
+    try {
+        const response = await apiClient.patch(
+            `/user/v1/address/${addressId}`,
+            newAddress
+        );
+
+        console.log('Update Address Response: ', response);
+
+        if (response.status === 200) {
+            return validate(addressInfo, response.data.data);
+        }
+    } catch (error) {
+        console.error('Error updating address:', error);
     }
 };
 

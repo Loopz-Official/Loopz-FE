@@ -5,53 +5,86 @@ import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import Header from '@/components/layouts/Header';
+import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';
-import { deleteAddress, getAddressList } from '@/services/apis/address';
-import { Address } from '@/services/apis/address/types';
-import { useSelectedAddressStore } from '@/store/useSelectedAddressStore';
+import { AddressList } from '@/schemas/address';
+import {
+    deleteAddress,
+    getAddressList,
+    updateAddress,
+} from '@/services/api/address';
 
-export default function Page() {
-    const [addresses, setAddresses] = useState<Address[]>([]);
-    const [activeIndex, setActiveIndex] = useState(0);
+export default function AddressPage() {
     const router = useRouter();
+
+    const [addresses, setAddresses] = useState<AddressList>([]);
+    const [activeId, setActiveId] = useState<number | undefined>(undefined);
 
     const { setSelectedAddress } = useSelectedAddressStore();
 
-    useEffect(() => {
-        const callGetAddressList = async () => {
-            try {
-                const response = await getAddressList();
-                setAddresses(response.data.addresses);
-            } catch (error) {
-                alert('배송지를 불러오는 중 문제가 발생했습니다.');
-                console.error('getAddressList 실패: ', error);
-            }
-        };
+    // Also triggered when delete API call successed
+    const fetchAddressList = async () => {
+        try {
+            const addressList = await getAddressList();
+            setAddresses(addressList ?? []);
 
-        callGetAddressList();
+            // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
+            if (addressList && addressList.length > 0) {
+                const defaultAddress = addressList.find(
+                    (addr) => addr.defaultAddress
+                );
+                setActiveId(
+                    defaultAddress
+                        ? defaultAddress.addressId
+                        : addressList[0]?.addressId
+                );
+            }
+        } catch {
+            alert('배송지 목록을 불러오는 중 문제가 발생했습니다.');
+        }
+    };
+
+    useEffect(() => {
+        fetchAddressList();
     }, []);
 
     const handleAddButtonClick = () => {
         if (addresses.length === 10) {
             alert('배송지는 최대 10개까지 등록하실 수 있습니다.');
+            return;
         } else {
             router.push('/address/add');
         }
     };
 
-    const handleSaveButtonClick = () => {
-        if (addresses[activeIndex]) {
-            setSelectedAddress(addresses[activeIndex]);
-            router.push('/order/form');
+    const handleSaveButtonClick = async () => {
+        const selectedAddress = addresses.find(
+            (address) => address.addressId === activeId
+        );
+
+        if (selectedAddress) {
+            const updatedAddress = {
+                ...selectedAddress,
+                defaultAddress: true,
+            };
+
+            try {
+                await updateAddress(updatedAddress.addressId, updatedAddress);
+                setSelectedAddress(updatedAddress);
+                router.push('/order/form');
+            } catch {
+                alert('배송지 업데이트 중 에러가 발생했습니다.');
+            }
+        } else {
+            alert('선택된 배송지가 없습니다.');
         }
     };
 
     const handleDeleteButtonClick = async (addressId: number) => {
         try {
+            // 추후 Mutation or Refresh 사용 예정
             await deleteAddress(addressId);
-            setAddresses(
-                addresses.filter((address) => address.addressId !== addressId)
-            );
+            await fetchAddressList();
         } catch (error) {
             alert('배송지를 삭제하는 중 에러가 발생했습니다.');
             console.error('deleteAddress 실패: ', error);
@@ -71,14 +104,14 @@ export default function Page() {
                     배송지 추가
                 </button>
 
-                {addresses.map((address, i) => (
+                {addresses.map((address) => (
                     <div
                         key={address.addressId}
                         className="grid grid-cols-[auto_1fr] gap-2"
                     >
                         <input
-                            onChange={() => setActiveIndex(i)}
-                            checked={activeIndex === i}
+                            onChange={() => setActiveId(address.addressId)}
+                            checked={activeId === address.addressId}
                             id={String(address.addressId)}
                             type="radio"
                             name="address"
@@ -128,7 +161,7 @@ export default function Page() {
                 ))}
             </div>
 
-            <div className="bottom-18 fixed w-full">
+            <div className="bottom-18 fixed w-full max-w-2xl">
                 <hr className="border-gray-light mt-6 border-4" />
 
                 <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
