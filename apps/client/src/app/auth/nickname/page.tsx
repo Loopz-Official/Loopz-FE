@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { setUserInfoCookie } from '@/auth/cookie/setCookie';
 import BottomButton from '@/components/common/BottomButton';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
+import { useUserInfo } from '@/hooks/stores/userInfo';
 import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
-import { useUserInfo } from '@/stores/userInfo';
 
 export default function NicknamePage() {
     const router = useRouter();
