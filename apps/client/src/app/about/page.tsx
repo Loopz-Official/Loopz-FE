@@ -1,62 +1,78 @@
-import Header from '@/components/layouts/Header';
-import NavigationBar from '@/components/layouts/NavigationBar';
-
 export default function Page() {
     return (
-        <div>
-            <Header type="main" />
-
-            <div>Recommerce Platform</div>
+        <div className="mt-16 flex flex-col items-center">
+            <div className="text-gray-regular text-caption-01 tracking-normal">
+                Recommerce Platform
+            </div>
             <div>로고 이미지</div>
 
-            <div>구분선</div>
+            <div className="h-16 w-[1px] bg-[var(--border-color-disabled)]" />
 
-            <div>Loop: 고리나 반복,</div>
-            <div>새로운 이야기를 만들어 내는 연결</div>
+            <div className="text-body-03 text-center font-normal">
+                Loop: 고리나 반복,
+                <br />
+                새로운 이야기를 만들어 내는 연결
+            </div>
 
             <div>로고 이미지</div>
-            <div>우리는 한 번만 쓰이던 이야기에 다음 장을 엽니다.</div>
+            <div className="text-body-03 font-normal">
+                우리는 한 번만 쓰이던 이야기에 다음 장을 엽니다.
+            </div>
             <div>타원형 도형</div>
 
-            <div>Point 1.</div>
-            <div>
-                팝업스토어 한 곳당 <span>평균 3t,</span>
-            </div>
-            <div>
-                <span>최대 30t의 폐기물</span> 발생
+            <div className="text-body-01 font-normal">
+                <div className="text-caption-01 text-point font-medium">
+                    Point 1.
+                </div>
+                <div>
+                    팝업스토어 한 곳당{' '}
+                    <span className="font-semibold">평균 3t,</span>
+                </div>
+                <div>
+                    <span className="font-semibold">최대 30t의 폐기물</span>{' '}
+                    발생
+                </div>
+
+                <div className="text-caption-01 text-point font-medium">
+                    Point 2.
+                </div>
+                <div>연간 소규모 작품</div>
+                <div>
+                    1t 트럭 <span className="font-semibold">1000대 규모</span>
+                </div>
+                <div>
+                    <span className="font-semibold">폐기물</span> 발생
+                </div>
+
+                <div>이미지</div>
             </div>
 
-            <div>Point 2.</div>
-            <div>연간 소규모 작품</div>
-            <div>
-                1t 트럭 <span>1000대 규모</span>
-            </div>
-            <div>
-                <span>폐기물</span> 발생
-            </div>
-
-            <div>이미지</div>
-
-            <div>
+            <div className="text-body-01 w-full text-center font-semibold text-white">
                 <div className="bg-[url('/banner-01.png')]">
                     Loopz는 순환 유통을 기반으로
                     <br />
                     새로운 가치를 창출합니다
                 </div>
-                <div>
-                    <div className="bg-[url('/banner-01.png')]">
+                <div className="relative flex w-full">
+                    <div className="flex-1 bg-[url('/banner-01.png')]">
                         FLOW
-                        <div>이미지</div>
                     </div>
-                    +<div className="bg-[url('/banner-01.png')]">Re:Place</div>
+                    <div className="-translate-1/2 absolute left-1/2 top-1/2">
+                        +
+                    </div>
+                    <div className="flex-1 bg-[url('/banner-01.png')]">
+                        Re:Place
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <div>Project 1.</div>
-                <div>Project FLOW</div>
+            <div className="text-body-03 font-normal">
+                <div className="text-caption-01 text-point font-medium">
+                    Project 1.
+                </div>
+                <div className="text-headline-02">Project FLOW</div>
 
-                <div>
+                <div className="font-medium">
                     한 번의 전시로 사라지는
                     <br />
                     대형 구축물과 가구에 주목합니다.
@@ -76,11 +92,13 @@ export default function Page() {
                 </div>
             </div>
 
-            <div>
-                <div>Project 2.</div>
-                <div>Project Re:Place</div>
+            <div className="text-body-03 font-normal">
+                <div className="text-caption-01 text-point font-medium">
+                    Project 2.
+                </div>
+                <div className="text-headline-02">Project Re:Place</div>
 
-                <div>
+                <div className="font-medium">
                     일반 소비자가 활용할 수 있는
                     <br />
                     소품과 오브제를 수집합니다.
@@ -100,20 +118,20 @@ export default function Page() {
                 </div>
             </div>
 
-            <div>
-                <div>협력 문의하기</div>
+            <div className="text-white">
+                <div className="text-headline-04">협력 문의하기</div>
 
-                <div>
+                <div className="text-body-03 font-normal">
                     제품 업로드는 Loopz가 전담합니다.
                     <br />
                     업로드 예정 물품의 신속한 등록을 위해 24시간 전담인력이
                     상주하고 있습니다. 언제든 편하게 연락 부탁드립니다.
                 </div>
 
-                <button>Contact us</button>
+                <button className="text-gray-dark text-caption-01 rounded-full bg-white font-medium tracking-normal">
+                    Contact us
+                </button>
             </div>
-
-            <NavigationBar />
         </div>
     );
 }
