@@ -4,13 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 
 import SectionTitle from './SectionTitle';
 
+interface PhoneNumberSectionProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
 export default function PhoneNumberSection({
-    phoneNumber,
-    setPhoneNumber,
-}: {
-    phoneNumber: string;
-    setPhoneNumber: (phoneNumber: string) => void;
-}) {
+    value,
+    onChange,
+}: PhoneNumberSectionProps) {
     const maxLengths = [3, 4, 4];
     const phoneInputRefs = [
         useRef<HTMLInputElement>(null),
@@ -20,17 +22,17 @@ export default function PhoneNumberSection({
 
     // XXX-XXXX-XXXX 형식을 배열로 변환
     const [phoneNumberArray, setPhoneNumberArray] = useState<string[]>(() => {
-        if (!phoneNumber) return ['', '', ''];
-        return phoneNumber.split('-');
+        if (!value) return ['', '', ''];
+        return value.split('-');
     });
 
     // 배열을 XXX-XXXX-XXXX 형식으로 변환
     useEffect(() => {
         const formattedNumber = phoneNumberArray.join('-');
-        if (formattedNumber !== phoneNumber) {
-            setPhoneNumber(formattedNumber);
+        if (formattedNumber !== value) {
+            onChange(formattedNumber);
         }
-    }, [phoneNumberArray, phoneNumber, setPhoneNumber]);
+    }, [phoneNumberArray, value, onChange]);
 
     const handleKeydown = (index: number, e: React.KeyboardEvent) => {
         if (!phoneNumberArray[index] && e.key === 'Backspace') {

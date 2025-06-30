@@ -8,43 +8,51 @@ import AddressSearchSection from '@/components/features/address/AddressSearchSec
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
-import { createAddress } from '@/services/apis/address';
+import { CreateAddressRequest } from '@/schemas/address';
+import { createAddress } from '@/services/api/address';
 
-export default function Page() {
-    const [name, setName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [address, setAddress] = useState('');
-    const [zonecode, setZonecode] = useState('');
-    const [addressDetail, setAddressDetail] = useState('');
-    const [isDefaultAddress, setIsDefaultAddress] = useState(false);
-
-    const isValidPhoneNumber = phoneNumber.split('-').every((number) => number);
-    const isDisabled = !(name && isValidPhoneNumber && address && zonecode);
-
+export default function AddAddressPage() {
     const router = useRouter();
-    const params = useParams();
-    const type = params.type;
+    const { type } = useParams();
 
     if (type !== 'add' && type !== 'edit') notFound();
 
-    const handleSaveButtonClick = async () => {
-        const body = {
-            phoneNumber,
-            address,
-            addressDetail,
-            recipientName: name,
-            zoneCode: zonecode,
-            defaultAddress: isDefaultAddress,
-        };
-        console.log(body);
+    const [newAddress, setNewAddress] = useState<CreateAddressRequest>({
+        recipientName: '',
+        phoneNumber: '',
+        zoneCode: '',
+        address: '',
+        addressDetail: '',
+        defaultAddress: false,
+    });
 
+    const isValidPhoneNumber = newAddress.phoneNumber
+        .split('-')
+        .every((number) => number);
+    const isDisabled = !(
+        newAddress.recipientName &&
+        isValidPhoneNumber &&
+        newAddress.address &&
+        newAddress.zoneCode
+    );
+
+    const handleSaveButtonClick = async () => {
         try {
-            await createAddress(body);
+            await createAddress(newAddress);
             router.push('/address');
-        } catch (error) {
-            alert('배송지를 추가하는 중 문제가 발생했습니다.');
-            console.error('createAddress 실패: ', error);
+        } catch {
+            alert('주소 등록에 실패했습니다.');
         }
+    };
+
+    const handleFieldChange = (
+        field: keyof CreateAddressRequest,
+        value: string | boolean
+    ) => {
+        setNewAddress((prev) => ({
+            ...prev,
+            [field]: value,
+        }));
     };
 
     return (
@@ -54,33 +62,43 @@ export default function Page() {
             <div className="space-y-6 px-5 py-3">
                 {/* 받으시는 분 (이름) */}
                 <div className="text-body-03 font-regular flex flex-col gap-2">
-                    <NameSection name={name} setName={setName} />
+                    <NameSection
+                        value={newAddress.recipientName}
+                        onChange={(value) =>
+                            handleFieldChange('recipientName', value)
+                        }
+                    />
                 </div>
 
                 {/* 연락처 */}
                 <div className="text-body-03 font-regular flex flex-col gap-2">
                     <PhoneNumberSection
-                        phoneNumber={phoneNumber}
-                        setPhoneNumber={setPhoneNumber}
+                        value={newAddress.phoneNumber}
+                        onChange={(value) =>
+                            handleFieldChange('phoneNumber', value)
+                        }
                     />
                 </div>
 
                 {/* 주소 */}
                 <div className="text-body-03 font-regular flex flex-col gap-2">
                     <AddressSearchSection
-                        address={address}
-                        setAddress={setAddress}
-                        zonecode={zonecode}
-                        setZonecode={setZonecode}
-                        addressDetail={addressDetail}
-                        setAddressDetail={setAddressDetail}
+                        address={newAddress.address}
+                        zoneCode={newAddress.zoneCode}
+                        addressDetail={newAddress.addressDetail}
+                        onFieldChange={handleFieldChange}
                     />
                 </div>
 
                 <label className="flex w-fit cursor-pointer items-center gap-2">
                     <input
-                        onChange={() => setIsDefaultAddress(!isDefaultAddress)}
-                        checked={isDefaultAddress}
+                        onChange={(e) =>
+                            handleFieldChange(
+                                'defaultAddress',
+                                e.target.checked
+                            )
+                        }
+                        checked={newAddress.defaultAddress}
                         type="checkbox"
                         className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 cursor-pointer appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                     />
