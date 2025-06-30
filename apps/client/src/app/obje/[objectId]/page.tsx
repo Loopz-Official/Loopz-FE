@@ -17,7 +17,6 @@ export default function ObjectDetailPage() {
 
     useEffect(() => {
         const objectId = pathname.split('/')[2];
-        console.log('objectId', objectId);
 
         const fetchObjectDetail = async () => {
             if (!objectId) return;

@@ -1,6 +1,7 @@
 'use client';
 
 import { clsx } from 'clsx';
+import { usePathname } from 'next/navigation';
 
 export default function BottomButton({
     text,
@@ -17,6 +18,9 @@ export default function BottomButton({
     position?: 'fixed' | 'static';
     isBottomSheetOpen?: boolean;
 }) {
+    const pathname = usePathname();
+    const isAuthPages = pathname.startsWith('/auth');
+
     return (
         <div
             className={clsx(
@@ -24,7 +28,7 @@ export default function BottomButton({
                 position === 'fixed' && 'px-5 py-3',
                 isBottomSheetOpen
                     ? 'border-gray-regular border-t border-solid'
-                    : 'gap-x-6'
+                    : !isAuthPages && 'gap-x-6'
             )}
         >
             <div className="flex items-center gap-4">{children}</div>

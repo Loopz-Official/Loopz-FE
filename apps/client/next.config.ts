@@ -21,7 +21,15 @@ const nextConfig: NextConfig = {
         ];
     },
     images: {
-        remotePatterns: [new URL('https://static.loopz.co.kr/**')],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'static.loopz.co.kr',
+                port: '',
+                pathname: '/**',
+                search: '',
+            },
+        ],
     },
 };
 
