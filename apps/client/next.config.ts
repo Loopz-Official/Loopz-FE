@@ -20,7 +20,15 @@ const nextConfig: NextConfig = {
         ];
     },
     images: {
-        remotePatterns: [new URL('https://images.unsplash.com/**')],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'static.loopz.co.kr',
+                port: '',
+                pathname: '/**',
+                search: '',
+            },
+        ],
     },
 };
 

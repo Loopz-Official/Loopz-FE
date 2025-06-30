@@ -23,7 +23,7 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
     const { count } = usePurchaseCountStore();
 
     return (
-        <div className="bottom-17 absolute z-50 h-fit w-full rounded-t-2xl bg-white px-5 pb-7">
+        <div className="bottom-17 border-gray-regular absolute z-50 h-fit w-full rounded-t-2xl border-b border-solid bg-white px-5 pb-7">
             <section className="mb-3 flex h-7 w-full items-center justify-center">
                 <div className="bg-gray-11 h-1 w-10 rounded-full" />
             </section>
