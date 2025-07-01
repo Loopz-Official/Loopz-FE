@@ -16,7 +16,9 @@ export default function ProjectSection() {
                     Project {project.projectTitle}
                 </div>
 
-                <div className="mb-4 font-medium">{project.title}</div>
+                <div className="mb-4 whitespace-pre-line font-medium">
+                    {project.title}
+                </div>
             </div>
 
             <div className="relative mb-6 aspect-[9/5] h-auto">
