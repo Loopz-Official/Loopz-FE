@@ -1,14 +1,23 @@
 'use client';
 
-import { notFound, useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import {
+    notFound,
+    useParams,
+    useRouter,
+    useSearchParams,
+} from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import AddressSearchSection from '@/components/features/address/AddressSearchSection';
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
-import { useCreateAddressMutation } from '@/hooks/mutations/useAddressMutation';
+import {
+    useCreateAddressMutation,
+    useUpdateAddressMutation,
+} from '@/hooks/mutations/useAddressMutation';
+import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { AddressCURequest } from '@/schemas/address';
 
 export default function AddressTypePageContent() {
@@ -16,6 +25,31 @@ export default function AddressTypePageContent() {
     const { type } = useParams();
 
     if (type !== 'add' && type !== 'edit') notFound();
+
+    const { data: addressList } = useAddressListQuery();
+    const updateAddressMutation = useUpdateAddressMutation();
+
+    const searchParams = useSearchParams();
+    const addressId = type === 'edit' ? searchParams.get('addressId') : null;
+
+    // 배송지 수정 시 기존 배송지 정보 불러오기
+    useEffect(() => {
+        if (type === 'edit' && addressList && addressId) {
+            const target = addressList.find(
+                (addr) => addr.addressId === Number(addressId)
+            );
+            if (target) {
+                setNewAddress({
+                    recipientName: target.recipientName,
+                    phoneNumber: target.phoneNumber,
+                    zoneCode: target.zoneCode,
+                    address: target.address,
+                    addressDetail: target.addressDetail,
+                    defaultAddress: target.defaultAddress,
+                });
+            }
+        }
+    }, [type, addressList, addressId]);
 
     const [newAddress, setNewAddress] = useState<AddressCURequest>({
         recipientName: '',
@@ -38,12 +72,23 @@ export default function AddressTypePageContent() {
 
     const { mutateAsync: createAddressMutation } = useCreateAddressMutation();
 
-    const handleSaveButtonClick = async () => {
+    const handleSubmitButtonClick = async () => {
         try {
-            await createAddressMutation(newAddress);
+            if (type === 'edit' && addressId) {
+                await updateAddressMutation.mutateAsync({
+                    addressId: Number(addressId),
+                    updatedAddress: newAddress,
+                });
+            } else {
+                await createAddressMutation(newAddress);
+            }
             router.push('/address');
         } catch {
-            alert('주소 등록에 실패했습니다.');
+            alert(
+                type === 'edit'
+                    ? '주소 수정에 실패했습니다.'
+                    : '주소 등록에 실패했습니다.'
+            );
         }
     };
 
@@ -109,9 +154,9 @@ export default function AddressTypePageContent() {
             </div>
 
             <BottomButton
-                text="저장하기"
+                text={type === 'add' ? '저장하기' : '수정하기'}
                 isDisabled={isDisabled}
-                onClick={handleSaveButtonClick}
+                onClick={handleSubmitButtonClick}
             />
         </div>
     );

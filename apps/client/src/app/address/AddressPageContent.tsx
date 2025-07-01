@@ -141,9 +141,16 @@ export default function AddressPageContent() {
                                 </div>
 
                                 <div className="flex gap-1">
-                                    {/* <button className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1">
-                                    수정
-                                </button> */}
+                                    <button
+                                        onClick={() => {
+                                            router.push(
+                                                `/address/edit?addressId=${address.addressId}`
+                                            );
+                                        }}
+                                        className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
+                                    >
+                                        수정
+                                    </button>
                                     <button
                                         onClick={() =>
                                             handleDeleteButtonClick(
