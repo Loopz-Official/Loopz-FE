@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import ContactButton from '@/components/features/about/ContactButton';
+
 export default function Page() {
     return (
         <div className="mt-16 flex w-full flex-col items-center break-keep">
@@ -8,6 +10,7 @@ export default function Page() {
                     Recommerce Platform
                 </div>
                 <Image
+                    priority
                     src={'/about/logo.svg'}
                     width={130}
                     height={56}
@@ -23,6 +26,7 @@ export default function Page() {
                 </div>
 
                 <Image
+                    priority
                     src={'/about/loop.svg'}
                     alt=""
                     width={104}
@@ -185,9 +189,7 @@ export default function Page() {
                     상주하고 있습니다. 언제든 편하게 연락 부탁드립니다.
                 </div>
 
-                <button className="text-gray-dark text-caption-01 rounded-full bg-white px-3 py-2 font-medium tracking-normal">
-                    Contact us
-                </button>
+                <ContactButton />
             </div>
         </div>
     );
