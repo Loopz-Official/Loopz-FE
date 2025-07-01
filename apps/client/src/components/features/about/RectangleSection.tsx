@@ -1,6 +1,6 @@
 export default function RectangleSection() {
     return (
-        <section className="text-body-01 min-[480]:mt-40 relative mt-20 w-full text-center font-semibold text-white">
+        <section className="text-body-01 relative mt-20 w-full text-center font-semibold text-white">
             <div className="bg-point flex aspect-[13/5] h-auto w-full items-center justify-center rounded-t-[clamp(30px,8vw,50px)] bg-[url('/about/loopz-rectangle.png')] bg-cover bg-no-repeat bg-blend-multiply">
                 Loopz는 순환 유통을 기반으로
                 <br />

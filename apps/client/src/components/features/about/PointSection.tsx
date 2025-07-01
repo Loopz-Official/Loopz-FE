@@ -36,7 +36,7 @@ export default function PointSection() {
                 alt="물품 더미 이미지"
                 width={450}
                 height={516}
-                className="h-129 absolute -right-20 top-0 w-[28.125rem] object-contain"
+                className="h-129 -right-25 absolute top-0 w-[28.125rem] object-contain"
             />
         </section>
     );
