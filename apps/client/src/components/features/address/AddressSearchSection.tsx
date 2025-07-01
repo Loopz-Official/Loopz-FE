@@ -2,26 +2,27 @@
 
 import SectionTitle from './SectionTitle';
 
+interface AddressSearchSectionProps {
+    address: string;
+    zoneCode: string;
+    addressDetail: string;
+    onFieldChange: (
+        field: 'address' | 'zoneCode' | 'addressDetail',
+        value: string
+    ) => void;
+}
+
 export default function AddressSearchSection({
     address,
-    setAddress,
-    zonecode,
-    setZonecode,
+    zoneCode,
     addressDetail,
-    setAddressDetail,
-}: {
-    address: string;
-    setAddress: (address: string) => void;
-    zonecode: string;
-    setZonecode: (zonecode: string) => void;
-    addressDetail: string;
-    setAddressDetail: (addressDetail: string) => void;
-}) {
+    onFieldChange,
+}: AddressSearchSectionProps) {
     const execDaumPostcode = () => {
         new window.daum.Postcode({
             oncomplete: (data) => {
-                setAddress(data.address);
-                setZonecode(data.zonecode);
+                onFieldChange('address', data.address);
+                onFieldChange('zoneCode', data.zonecode);
             },
         }).open();
     };
@@ -33,7 +34,7 @@ export default function AddressSearchSection({
             <div className="flex gap-1.5">
                 <input
                     readOnly
-                    value={zonecode}
+                    value={zoneCode}
                     className="border-gray-regular grow rounded-[0.25rem] border px-3 py-2.5 tracking-normal"
                 />
                 <button
@@ -52,7 +53,7 @@ export default function AddressSearchSection({
 
             <input
                 value={addressDetail}
-                onChange={(e) => setAddressDetail(e.target.value)}
+                onChange={(e) => onFieldChange('addressDetail', e.target.value)}
                 placeholder="상세 주소를 입력해 주세요."
                 className="border-gray-regular rounded-[0.25rem] border px-3 py-2.5 tracking-normal"
             />

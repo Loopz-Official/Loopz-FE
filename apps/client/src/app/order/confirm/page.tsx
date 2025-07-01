@@ -83,7 +83,7 @@ export default function Page() {
                 </div>
             </div>
 
-            <div className="fixed bottom-0 w-full bg-white p-5 pb-8">
+            <div className="fixed bottom-0 w-full max-w-2xl bg-white p-5 pb-8">
                 <button
                     disabled={!isAllChecked}
                     onClick={() => router.push('/order/complete')}

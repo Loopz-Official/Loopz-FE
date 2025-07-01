@@ -19,7 +19,7 @@ export default function BottomButton({
     isBottomSheetOpen?: boolean;
 }) {
     const pathname = usePathname();
-    const isAuthPages = pathname.startsWith('/auth');
+    const isObjeDetailPage = pathname.startsWith('/obje');
 
     return (
         <div
@@ -28,7 +28,9 @@ export default function BottomButton({
                 position === 'fixed' && 'px-5 py-3',
                 isBottomSheetOpen
                     ? 'border-gray-regular border-t border-solid'
-                    : !isAuthPages && 'gap-x-6'
+                    : isObjeDetailPage
+                      ? 'gap-x-6'
+                      : ''
             )}
         >
             <div className="flex items-center gap-4">{children}</div>
