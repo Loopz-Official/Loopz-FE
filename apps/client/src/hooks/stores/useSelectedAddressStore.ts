@@ -9,7 +9,7 @@ interface SelectedAddressStore {
     clearSelectedAddress: () => void;
 }
 
-// TODO: 주문 결제 연결 후 selectedAddress default 값을 기본배송지로 수정
+// 📌 주문 완료 시에 clearSelectedAddress 실행 필요 (상태 값 초기화)
 export const useSelectedAddressStore = create<SelectedAddressStore>()(
     persist(
         (set) => ({
@@ -18,7 +18,7 @@ export const useSelectedAddressStore = create<SelectedAddressStore>()(
             clearSelectedAddress: () => set({ selectedAddress: null }),
         }),
         {
-            name: 'selected-address', // localStorage key
+            name: 'LOOPZ-USER-SELECTED-ADDRESS',
         }
     )
 );

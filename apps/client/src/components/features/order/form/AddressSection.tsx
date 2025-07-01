@@ -6,27 +6,54 @@ import { useEffect, useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { DELIVERY_REQUESTS } from '@/constants/deliveryRequests';
+import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
+import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';
-import { Address } from '@/services/apis/address/types';
+import { AddressInfo } from '@/schemas/address';
 
-export default function AddressSection({
-    addressInfo,
-    deliveryRequest,
-    setDeliveryRequest,
-    textareaContent,
-    setTextareaContent,
-}: {
-    addressInfo: Address | null;
+type AddressSectionProps = {
+    onActiveAddressInfoChange: (info: AddressInfo | undefined) => void;
     deliveryRequest: string | null;
     setDeliveryRequest: (request: string | null) => void;
     textareaContent: string;
     setTextareaContent: (content: string) => void;
-}) {
+};
+
+export default function AddressSection({
+    onActiveAddressInfoChange,
+    deliveryRequest,
+    setDeliveryRequest,
+    textareaContent,
+    setTextareaContent,
+}: AddressSectionProps) {
+    const router = useRouter();
+
+    const { selectedAddress } = useSelectedAddressStore();
+    const { data: addressList, isLoading, error } = useAddressListQuery();
+    const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
+
+    // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
+    useEffect(() => {
+        if (addressList && addressList.length > 0) {
+            const defaultAddress = addressList.find(
+                (addr) => addr.defaultAddress
+            );
+            const info = selectedAddress
+                ? selectedAddress
+                : defaultAddress
+                  ? defaultAddress
+                  : addressList[0];
+            setActiveAddressInfo(info);
+            onActiveAddressInfoChange(info);
+        } else {
+            setActiveAddressInfo(undefined);
+            onActiveAddressInfoChange(undefined);
+        }
+    }, [addressList, onActiveAddressInfoChange, selectedAddress]);
+
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const isTextareaOpen =
         deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
-
-    const router = useRouter();
 
     // 직접 입력 textarea 내용 임시 저장
     useEffect(() => {
@@ -43,9 +70,9 @@ export default function AddressSection({
 
     return (
         <>
-            <header className="flex items-center justify-between">
+            <header className="h-7.5 flex items-center justify-between">
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
-                {addressInfo && (
+                {activeAddressInfo && (
                     <button
                         onClick={() => router.push('/address')}
                         className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
@@ -55,25 +82,36 @@ export default function AddressSection({
                 )}
             </header>
 
-            {addressInfo ? (
+            {error ? (
+                <div className="flex h-32 items-center justify-center">
+                    <span className="text-red-500">
+                        주소 정보를 불러오지 못했습니다.
+                    </span>
+                </div>
+            ) : isLoading ? (
+                <div className="flex h-32 items-center justify-center">
+                    <span>주소 정보를 불러오는 중입니다...</span>
+                </div>
+            ) : activeAddressInfo ? (
                 <>
                     <div className="space-y-1.5">
                         <div className="flex items-center gap-1">
                             <span className="text-body-03 font-semibold">
-                                {addressInfo.recipientName}
+                                {activeAddressInfo.recipientName}
                             </span>
-                            {addressInfo.defaultAddress && (
+                            {activeAddressInfo.defaultAddress && (
                                 <span className="text-caption-01 text-point font-semibold">
                                     기본 배송지
                                 </span>
                             )}
                         </div>
                         <div className="text-caption-01 tracking-normal">
-                            [{addressInfo.zoneCode}] {addressInfo.address}
-                            ,&nbsp;{addressInfo.addressDetail}
+                            [{activeAddressInfo.zoneCode}]{' '}
+                            {activeAddressInfo.address}
+                            ,&nbsp;{activeAddressInfo.addressDetail}
                         </div>
                         <div className="text-caption-01 tracking-normal">
-                            {addressInfo.phoneNumber}
+                            {activeAddressInfo.phoneNumber}
                         </div>
                     </div>
 
@@ -135,7 +173,7 @@ export default function AddressSection({
                     </div>
                     <button
                         onClick={() => router.push('/address/add')}
-                        className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-[0.25rem] border py-3"
+                        className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-sm border py-3"
                     >
                         <PlusIcon className="h-4 w-4" />
                         배송지 추가
