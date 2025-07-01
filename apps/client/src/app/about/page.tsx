@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Page() {
     return (
         <div className="mt-16 flex w-full flex-col items-center break-keep">
@@ -5,7 +7,12 @@ export default function Page() {
                 <div className="text-gray-regular text-caption-01 mb-1 tracking-normal">
                     Recommerce Platform
                 </div>
-                <div className="h-14 w-[130px] bg-black" />
+                <Image
+                    src={'/about/logo.svg'}
+                    width={130}
+                    height={56}
+                    alt="Loopz"
+                />
 
                 <div className="mb-2.5 mt-[2.375rem] h-16 w-[1px] bg-[var(--border-color-disabled)]" />
 
@@ -15,7 +22,13 @@ export default function Page() {
                     새로운 이야기를 만들어 내는 연결
                 </div>
 
-                <div className="w-26 mb-[2.375rem] mt-[2.125rem] h-[55px] bg-black" />
+                <Image
+                    src={'/about/loop.svg'}
+                    alt=""
+                    width={104}
+                    height={55}
+                    className="w-26 mb-[2.375rem] mt-[2.125rem] h-[55px]"
+                />
 
                 <div className="text-body-03 relative pb-[clamp(130px,30vw,180px)] font-normal">
                     우리는 한 번만 쓰이던 이야기에 다음 장을 엽니다.
@@ -23,7 +36,7 @@ export default function Page() {
                 </div>
             </div>
 
-            <div className="h-128 text-body-01 pt-15 h-fix relative w-full space-y-8 overflow-hidden pl-8 font-normal">
+            <div className="h-128 text-body-01 pt-19 h-fix relative w-full space-y-8 overflow-hidden pl-8 font-normal">
                 <div className="space-y-1.5">
                     <div className="text-caption-01 text-point font-medium">
                         Point 1.
@@ -53,11 +66,17 @@ export default function Page() {
                     </div>
                 </div>
 
-                <div className="h-129 -right-33 absolute top-5 -z-10 w-[450px] bg-black" />
+                <Image
+                    src={'/about/point.svg'}
+                    alt="물품 더미 이미지"
+                    width={450}
+                    height={516}
+                    className="h-129 absolute -right-20 top-0 w-[28.125rem] object-contain"
+                />
             </div>
 
-            <div className="text-body-01 relative mt-20 w-full max-w-lg text-center font-semibold text-white">
-                <div className="flex aspect-[13/5] h-auto w-full items-center justify-center rounded-t-[clamp(30px,8vw,50px)] bg-[url('/banner-01.png')]">
+            <div className="text-body-01 min-[480]:mt-40 relative mt-20 w-full text-center font-semibold text-white">
+                <div className="bg-point flex aspect-[13/5] h-auto w-full items-center justify-center rounded-t-[clamp(30px,8vw,50px)] bg-[url('/about/loopz-rectangle.png')] bg-cover bg-no-repeat bg-blend-multiply">
                     Loopz는 순환 유통을 기반으로
                     <br />
                     새로운 가치를 창출합니다
@@ -65,14 +84,14 @@ export default function Page() {
                 <div className="text-caption-02 text-point -translate-1/2 absolute left-1/2 top-1/2 z-10">
                     Project Loopz
                 </div>
-                <div className="relative flex aspect-[15/7] h-auto w-full">
-                    <div className="flex flex-1 items-center justify-center rounded-bl-[clamp(30px,8vw,50px)] bg-[url('/banner-01.png')]">
+                <div className="relative flex aspect-[2/1] h-auto w-full">
+                    <div className="flex flex-1 items-center justify-center rounded-bl-[clamp(30px,8vw,50px)] bg-[url('/about/flow-rectangle.png')] bg-cover bg-no-repeat">
                         FLOW
                     </div>
                     <div className="-translate-1/2 absolute left-1/2 top-1/2">
                         +
                     </div>
-                    <div className="flex flex-1 items-center justify-center rounded-br-[clamp(30px,8vw,50px)] bg-[url('/banner-01.png')]">
+                    <div className="flex flex-1 items-center justify-center rounded-br-[clamp(30px,8vw,50px)] bg-[url('/about/replace-rectangle.png')] bg-cover bg-no-repeat">
                         Re:Place
                     </div>
                 </div>
@@ -81,7 +100,7 @@ export default function Page() {
             <div className="text-body-03 mt-25 text-gray-dark font-normal">
                 <div className="px-8">
                     <div className="text-caption-01 text-point mb-0.5 font-medium">
-                        Project 1.
+                        Project 1
                     </div>
                     <div className="text-headline-02 mb-5 text-black">
                         Project FLOW
@@ -94,7 +113,14 @@ export default function Page() {
                     </div>
                 </div>
 
-                <div className="mb-6 aspect-[9/5] h-auto w-full bg-black" />
+                <div className="relative mb-6 aspect-[9/5] h-auto">
+                    <Image
+                        src={'/about/project-01.svg'}
+                        alt="목업 이미지 1"
+                        fill
+                        className="h-full w-full"
+                    />
+                </div>
 
                 <div className="space-y-4 px-8">
                     <div>
@@ -113,7 +139,7 @@ export default function Page() {
             <div className="text-body-03 text-gray-dark mt-24 font-normal">
                 <div className="px-8">
                     <div className="text-caption-01 text-point mb-0.5 font-medium">
-                        Project 2.
+                        Project 2
                     </div>
                     <div className="text-headline-02 mb-5 text-black">
                         Project Re:Place
@@ -126,7 +152,14 @@ export default function Page() {
                     </div>
                 </div>
 
-                <div className="mb-6 aspect-[9/5] h-auto w-full bg-black" />
+                <div className="relative mb-6 aspect-[9/5] h-auto">
+                    <Image
+                        src={'/about/project-02.svg'}
+                        alt="목업 이미지 2"
+                        fill
+                        className="h-full w-full"
+                    />
+                </div>
 
                 <div className="space-y-4 px-8">
                     <div>
@@ -142,7 +175,7 @@ export default function Page() {
                 </div>
             </div>
 
-            <div className="mt-25 bg-black px-8 pb-11 pt-10 text-white">
+            <div className="mt-25 w-full bg-black bg-[url('/about/contact.png')] bg-cover bg-no-repeat px-8 pb-11 pt-10 text-white">
                 <div className="text-headline-04 mb-2">협력 문의하기</div>
 
                 <div className="text-body-03 mb-10 font-normal opacity-80">
