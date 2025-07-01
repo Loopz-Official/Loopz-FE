@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import BottomButton from '@/components/common/BottomButton';
@@ -7,7 +8,6 @@ import PaymentMethodSection from '@/components/features/order/complete/PaymentMe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { ORDER_NOTIFICATIONS } from '@/constants/orderNotifications';
-import { GiftIcon } from '@/icons/Gift';
 
 export default function Page() {
     const router = useRouter();
@@ -19,7 +19,14 @@ export default function Page() {
             <div className="px-5">
                 {/* 아이콘 */}
                 <div className="mb-9 mt-12 flex flex-col items-center text-center">
-                    <GiftIcon className="mb-2 h-40 w-40" />
+                    <Image
+                        priority
+                        src={'/gift.svg'}
+                        alt="gift"
+                        width={160}
+                        height={160}
+                        className="mb-2"
+                    />
                     <h3 className="text-body-01 font-semibold">
                         주문이 완료되었어요!
                     </h3>
