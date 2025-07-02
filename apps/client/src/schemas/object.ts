@@ -43,7 +43,7 @@ export const objectInfos = z.object({
     imageUrl: z.url(),
     objectPrice: z.int32(),
     soldOut: z.boolean(),
-    liked: z.boolean(),
+    liked: z.nullable(z.boolean()),
 });
 
 export type ObjectInfo = z.infer<typeof objectInfos>;

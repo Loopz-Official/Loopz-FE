@@ -2,10 +2,10 @@
 
 import { usePathname } from 'next/navigation';
 
+import VerticalDivider from '@/components/common/VerticalDivider';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { formatPrice } from '@/utils/formatPrice';
-import VerticalDivider from '@/components/common/VerticalDivider';
 
 import OrderQuantity from './OrderQuantity';
 
