@@ -19,6 +19,19 @@ export default function ProjectSection() {
                 <div className="mb-4 whitespace-pre-line font-medium">
                     {project.title}
                 </div>
+
+                {project.projectTitle === 'FLOW' && (
+                    <div className="text-caption-01 mb-4 w-fit rounded-full bg-black px-3 py-2 text-white">
+                        <a
+                            href="https://loopz-flow.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-fit"
+                        >
+                            바로가기 &nbsp; &gt;
+                        </a>
+                    </div>
+                )}
             </div>
 
             <div className="relative mb-6 aspect-[9/5] h-auto">
