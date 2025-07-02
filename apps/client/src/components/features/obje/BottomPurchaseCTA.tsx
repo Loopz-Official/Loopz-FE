@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
+import { useAddCartMutation } from '@/hooks/mutations/useCartMutation';
+import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
 
 import BottomSheet from './BottomSheet';
@@ -14,8 +16,20 @@ const BottomPurchaseCTA = () => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
+    const addCartMutation = useAddCartMutation();
+
     const handleLike = () => setIsLiked((prev) => !prev);
-    const handleCart = () => toast('장바구니에 상품을 담았어요!');
+    const handleCart = async () => {
+        try {
+            await addCartMutation.mutateAsync({
+                objectId: useToAddObjectStore.getState().objectId,
+                quantity: 1,
+            });
+            toast('장바구니에 상품을 담았어요!');
+        } catch {
+            toast('장바구니 담기에 실패했어요.');
+        }
+    };
 
     const likeIconStyling = isLiked
         ? { fill: '#FF5A2D', stroke: 'none' }

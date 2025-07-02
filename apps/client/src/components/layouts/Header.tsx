@@ -1,9 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { LEFT_SIDE_OPTIONS, RIGHT_SIDE_OPTIONS } from '@/constants/header';
+import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 
 import CartCount from '../features/cart/CartCount';
 
@@ -18,8 +20,12 @@ export default function Header({
     title?: string;
     redirectUrl?: string;
 }) {
-    const currentOption = LEFT_SIDE_OPTIONS[type];
     const router = useRouter();
+
+    const currentOption = LEFT_SIDE_OPTIONS[type];
+    const isOptionsAvailable = type === 'main' || 'sub';
+
+    const [cartCount, setCartCount] = useState<number>(0);
 
     const handleLeftOptionClick = () => {
         if (type === 'main') {
@@ -30,6 +36,20 @@ export default function Header({
             router.back();
         }
     };
+
+    // Header 마운트 시 장바구니 상품 개수를 가져오기 위함
+    const { data: cartInfos } = useCartInquiryQuery();
+
+    useEffect(() => {
+        if (isOptionsAvailable) {
+            const cartCount = cartInfos?.availableItems.reduce(
+                (acc, item) => acc + item.quantity,
+                0
+            );
+
+            setCartCount(cartCount || 0);
+        }
+    }, [cartInfos, isOptionsAvailable]);
 
     return (
         <div
@@ -46,7 +66,7 @@ export default function Header({
             </div>
             <div className="text-headline-04">{title}</div>
             <div className="flex gap-4 place-self-end">
-                {(type === 'main' || type === 'sub') && (
+                {isOptionsAvailable && (
                     <>
                         {RIGHT_SIDE_OPTIONS.map(
                             ({ label, icon: Icon, route }) => (
@@ -61,7 +81,7 @@ export default function Header({
                                 >
                                     <Icon className="h-7 w-7" />
                                     {label === '장바구니' && (
-                                        <CartCount count={2} />
+                                        <CartCount count={cartCount} />
                                     )}
                                 </button>
                             )

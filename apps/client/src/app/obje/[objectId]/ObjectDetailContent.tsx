@@ -1,12 +1,23 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 import ObjectMetadataUnit from '@/components/features/obje/ObjectMetadataUnit';
 import PurchaseNotice from '@/components/features/obje/PurchaseNotice';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
+import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
+import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { formatPrice } from '@/utils/formatPrice';
 
 const ObjectDetailContent = ({ objectId }: { objectId: string }) => {
     const { objectDetail, isLoading, error } = useObjectDetailQuery(objectId);
+
+    // 구매 상품 ID 및 수량 저장 (전역 상태)
+    useEffect(() => {
+        useToAddObjectStore.setState({
+            objectId: objectDetail?.objectResponse?.objectId ?? '',
+            quantity: usePurchaseCountStore.getState().count ?? 1,
+        });
+    }, [objectDetail]);
 
     // Loading 및 Error UI 컴포넌트 필요
     if (isLoading) {
