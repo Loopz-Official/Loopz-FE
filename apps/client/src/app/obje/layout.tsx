@@ -19,10 +19,9 @@ export default function ObjectDetailLayout({
                         borderRadius: '4px',
                         padding: '16px 20px',
                         fontSize: '14px',
-                        fontWeight: '400',
-                        fontFamily: 'Pretendard Variable',
                         color: '#ffffff',
                     },
+                    duration: 2500,
                 }}
                 position="bottom-center"
                 offset={{ bottom: '84px' }}

@@ -24,10 +24,21 @@ export const addCartItem = async (objectId: string, quantity: number) => {
             quantity,
         });
 
-        if (response.status === 200) {
-            return validate(cartItemUpdateResponse, response.data.data);
+        switch (response.status) {
+            case 200:
+                return validate(cartItemUpdateResponse, response.data.data);
+            case 400:
+                throw new Error('Invalid request');
+            default:
+                throw new Error(
+                    'Unexpected response status: ' + response.status
+                );
         }
     } catch (error) {
-        console.error('Error adding cart item:', error);
+        throw new Error(
+            error instanceof Error
+                ? '선택하신 수량이 현재 재고를 초과했어요'
+                : 'Unknown error'
+        );
     }
 };
