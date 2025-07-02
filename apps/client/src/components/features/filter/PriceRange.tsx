@@ -3,15 +3,27 @@
 
 import { useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function PriceRange() {
     const STEP = 1000;
     const MIN = 0;
     const MAX = 700000;
     const [values, setValues] = useState([MIN, MAX]);
+    const [inputValues, setInputValues] = useState([
+        MIN.toLocaleString(),
+        MAX.toLocaleString(),
+    ]);
 
-    const minInput = (values[0] ?? MIN).toLocaleString();
-    const maxInput = (values[1] ?? MAX).toLocaleString();
+    // range 슬라이더 디바운스
+    // min이 max보다 크면 슬라이더 조작 시 swap
+    const debouncedSetValues = useDebouncedCallback(
+        (minNum: number, maxNum: number) => {
+            if (minNum > maxNum) [minNum, maxNum] = [maxNum, minNum];
+            setValues([minNum, maxNum]);
+        },
+        300
+    );
 
     const handlePriceInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -19,28 +31,40 @@ export default function PriceRange() {
     ) => {
         // 숫자와 쉼표(,) 이외 입력이 있으면 return
         if (/[^0-9,]/.test(e.target.value)) return;
-
         // 입력값에서 숫자만 추출
         const raw = e.target.value.replace(/[^0-9]/g, '');
 
+        // inputValues는 즉시 업데이트
+        const newInputValues = [...inputValues];
+        newInputValues[index] = Number(raw || '0').toLocaleString();
+        setInputValues([newInputValues[0] || '0', newInputValues[1] || '0']);
+
+        if (raw === '') return;
         let num = Number(raw);
 
         // num이 범위 내에 있도록 보정
         if (num < MIN) num = MIN;
         if (num > MAX) num = MAX;
 
-        const newValues =
-            index === 0 ? [num, values[1] ?? MAX] : [values[0] ?? MIN, num];
+        const minNum =
+            index === 0
+                ? num
+                : Number((inputValues[0] ?? '0').replace(/,/g, ''));
+        const maxNum =
+            index === 1
+                ? num
+                : Number((inputValues[1] ?? '0').replace(/,/g, ''));
 
-        // min이 max보다 커지지 않도록 보정
-        let safeMin = newValues[0] ?? MIN;
-        let safeMax = newValues[1] ?? MAX;
-        if (safeMin > safeMax) {
-            if (index === 0) safeMax = safeMin;
-            else safeMin = safeMax;
-        }
+        debouncedSetValues(minNum, maxNum);
+    };
 
-        setValues([safeMin, safeMax]);
+    // 슬라이더 조작 시 inputValues도 동기화
+    const handleRangeChange = (vals: number[]) => {
+        setValues([vals[0] ?? MIN, vals[1] ?? MAX]);
+        setInputValues([
+            (vals[0] ?? MIN).toLocaleString(),
+            (vals[1] ?? MAX).toLocaleString(),
+        ]);
     };
 
     return (
@@ -54,7 +78,7 @@ export default function PriceRange() {
                 step={STEP}
                 min={MIN}
                 max={MAX}
-                onChange={(values) => setValues(values)}
+                onChange={handleRangeChange}
                 renderTrack={({ props, children }) => (
                     <div
                         onMouseDown={props.onMouseDown}
@@ -104,7 +128,7 @@ export default function PriceRange() {
                 <div className="flex h-9 items-center gap-1.5 rounded-sm border border-[#d9d9d9] px-4">
                     <input
                         onChange={(e) => handlePriceInputChange(e, 0)}
-                        value={minInput}
+                        value={inputValues[0]}
                         type="text"
                         className="text-gray-dark w-full text-right"
                         inputMode="numeric"
@@ -116,7 +140,7 @@ export default function PriceRange() {
                 <div className="flex h-9 items-center gap-1.5 rounded-sm border border-[#d9d9d9] px-4">
                     <input
                         onChange={(e) => handlePriceInputChange(e, 1)}
-                        value={maxInput}
+                        value={inputValues[1]}
                         type="text"
                         className="text-gray-dark w-full text-right"
                         inputMode="numeric"
