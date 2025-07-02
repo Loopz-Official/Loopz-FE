@@ -10,31 +10,43 @@ export default function PriceRange() {
     const MAX = 700000;
     const [values, setValues] = useState([MIN, MAX]);
 
-    const minPrice = (
-        Math.floor((values[0] ?? MIN) / 1000) * 1000
-    )?.toLocaleString();
-    const maxPrice = (
-        Math.ceil((values[1] ?? MAX) / 1000) * 1000
-    )?.toLocaleString();
+    const minInput = (values[0] ?? MIN).toLocaleString();
+    const maxInput = (values[1] ?? MAX).toLocaleString();
 
     const handlePriceInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         index: number
     ) => {
-        // TODO: 숫자 외 입력 예외처리 필요
+        // 숫자와 쉼표(,) 이외 입력이 있으면 return
+        if (/[^0-9,]/.test(e.target.value)) return;
+
+        // 입력값에서 숫자만 추출
+        const raw = e.target.value.replace(/[^0-9]/g, '');
+
+        let num = Number(raw);
+
+        // num이 범위 내에 있도록 보정
+        if (num < MIN) num = MIN;
+        if (num > MAX) num = MAX;
 
         const newValues =
-            index === 0
-                ? [Number(e.target.value.replace(/,/g, '')), values[1] ?? MAX]
-                : [values[0] ?? MIN, Number(e.target.value.replace(/,/g, ''))];
+            index === 0 ? [num, values[1] ?? MAX] : [values[0] ?? MIN, num];
 
-        setValues(newValues);
+        // min이 max보다 커지지 않도록 보정
+        let safeMin = newValues[0] ?? MIN;
+        let safeMax = newValues[1] ?? MAX;
+        if (safeMin > safeMax) {
+            if (index === 0) safeMax = safeMin;
+            else safeMin = safeMax;
+        }
+
+        setValues([safeMin, safeMax]);
     };
 
     return (
         <div className="py-2">
             <div className="text-caption-01 text-gray-regular mb-4">
-                가격은 천 원 단위로 입력해 주세요.
+                최대 700,000원까지 입력 가능해요.
             </div>
 
             <Range
@@ -42,9 +54,7 @@ export default function PriceRange() {
                 step={STEP}
                 min={MIN}
                 max={MAX}
-                onChange={(values) => {
-                    setValues(values);
-                }}
+                onChange={(values) => setValues(values)}
                 renderTrack={({ props, children }) => (
                     <div
                         onMouseDown={props.onMouseDown}
@@ -59,9 +69,11 @@ export default function PriceRange() {
                         <div
                             ref={props.ref}
                             style={{
+                                position: 'relative',
                                 height: '4px',
                                 width: '100%',
                                 borderRadius: '2px',
+                                margin: '0 10px',
                                 background: getTrackBackground({
                                     values,
                                     colors: ['#ccc', '#000', '#ccc'],
@@ -70,6 +82,7 @@ export default function PriceRange() {
                                 }),
                                 alignSelf: 'center',
                             }}
+                            className="before:absolute before:-left-3 before:-right-3 before:bottom-0 before:top-0 before:-z-10 before:rounded-full before:bg-[#ccc]"
                         >
                             {children}
                         </div>
@@ -87,13 +100,15 @@ export default function PriceRange() {
                 )}
             />
 
-            <div className="text-caption-01 text-gray-dark grid grid-cols-[1fr_auto_1fr] items-center gap-2.5">
+            <div className="text-caption-01 grid grid-cols-[1fr_auto_1fr] items-center gap-2.5">
                 <div className="flex h-9 items-center gap-1.5 rounded-sm border border-[#d9d9d9] px-4">
                     <input
                         onChange={(e) => handlePriceInputChange(e, 0)}
-                        value={minPrice}
+                        value={minInput}
                         type="text"
-                        className="w-full text-right"
+                        className="text-gray-dark w-full text-right"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                     />
                     원
                 </div>
@@ -101,9 +116,11 @@ export default function PriceRange() {
                 <div className="flex h-9 items-center gap-1.5 rounded-sm border border-[#d9d9d9] px-4">
                     <input
                         onChange={(e) => handlePriceInputChange(e, 1)}
-                        value={maxPrice}
+                        value={maxInput}
                         type="text"
-                        className="w-full text-right"
+                        className="text-gray-dark w-full text-right"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                     />
                     원
                 </div>
