@@ -51,7 +51,10 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                         </span>
                     </div>
 
-                    <OrderQuantity stock={objectDetail?.stock ?? 0} />
+                    <OrderQuantity
+                        type="bottomSheet"
+                        stock={objectDetail?.stock ?? 0}
+                    />
                 </section>
 
                 <div className="border-gray-regular h-[0px] w-full border-[0.5px] border-solid" />
