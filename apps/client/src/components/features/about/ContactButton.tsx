@@ -4,7 +4,7 @@ export default function ContactButton() {
     const handleButtonClick = () => {
         if (typeof window === 'undefined') return;
 
-        window.open('https://tr.ee/9KOLZHgod4', '_black');
+        window.open('https://open.kakao.com/o/sfx6Rvyh', '_blank');
     };
 
     return (
