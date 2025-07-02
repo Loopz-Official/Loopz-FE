@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
+import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
@@ -142,26 +143,22 @@ export default function AddressPageContent() {
                                 </div>
 
                                 <div className="flex gap-1">
-                                    <button
+                                    <EditDeleteButton
+                                        type="edit"
                                         onClick={() => {
                                             router.push(
                                                 `/address/edit?addressId=${address.addressId}`
                                             );
                                         }}
-                                        className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
-                                    >
-                                        수정
-                                    </button>
-                                    <button
+                                    />
+                                    <EditDeleteButton
+                                        type="delete"
                                         onClick={() =>
                                             handleDeleteButtonClick(
                                                 address.addressId
                                             )
                                         }
-                                        className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
-                                    >
-                                        삭제
-                                    </button>
+                                    />
                                 </div>
                             </label>
                         </div>
