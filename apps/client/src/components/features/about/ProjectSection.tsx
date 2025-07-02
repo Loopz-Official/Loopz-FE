@@ -1,16 +1,8 @@
-'use client';
-
 import Image from 'next/image';
 
 import { PROJECTS } from '@/constants/projects';
 
 export default function ProjectSection() {
-    const handleButtonClick = () => {
-        if (typeof window === 'undefined') return;
-
-        window.open('https://loopz-flow.com', '_blank');
-    };
-
     return PROJECTS.map((project) => (
         <div
             key={project.projectTitle}
@@ -29,12 +21,16 @@ export default function ProjectSection() {
                 </div>
 
                 {project.projectTitle === 'FLOW' && (
-                    <button
-                        onClick={handleButtonClick}
-                        className="text-caption-01 mb-4 rounded-full bg-black px-3 py-2 text-white"
-                    >
-                        바로가기 &nbsp; &gt;
-                    </button>
+                    <div className="text-caption-01 mb-4 w-fit rounded-full bg-black px-3 py-2 text-white">
+                        <a
+                            href="https://loopz-flow.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-fit"
+                        >
+                            바로가기 &nbsp; &gt;
+                        </a>
+                    </div>
                 )}
             </div>
 
