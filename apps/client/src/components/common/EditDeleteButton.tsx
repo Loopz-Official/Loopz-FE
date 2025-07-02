@@ -1,6 +1,6 @@
 type EditDeleteButtonProps = {
     type: 'edit' | 'delete';
-    onClick: () => void;
+    onClick?: () => void;
 };
 
 const EditDeleteButton = ({ type, onClick }: EditDeleteButtonProps) => {
