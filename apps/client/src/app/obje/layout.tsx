@@ -2,7 +2,6 @@ import { Toaster } from 'sonner';
 
 import BottomPurchaseCTA from '@/components/features/obje/BottomPurchaseCTA';
 import Header from '@/components/layouts/Header';
-import ReactQueryProvider from '@/providers/QueryProvider';
 
 export default function ObjectDetailLayout({
     children,
@@ -11,28 +10,26 @@ export default function ObjectDetailLayout({
 }) {
     return (
         <>
-            <ReactQueryProvider>
-                <Header type="sub" />
-                <main className="pb-17">{children}</main>
-                <Toaster
-                    toastOptions={{
-                        style: {
-                            background: '#505050',
-                            borderRadius: '4px',
-                            padding: '16px 20px',
-                            fontSize: '14px',
-                            fontWeight: '400',
-                            fontFamily: 'Pretendard Variable',
-                            color: '#ffffff',
-                        },
-                    }}
-                    position="bottom-center"
-                    offset={{ bottom: '84px' }}
-                    mobileOffset={{ bottom: '84px' }}
-                    expand={false}
-                />
-                <BottomPurchaseCTA />
-            </ReactQueryProvider>
+            <Header type="sub" />
+            <main className="pb-17">{children}</main>
+            <Toaster
+                toastOptions={{
+                    style: {
+                        background: '#505050',
+                        borderRadius: '4px',
+                        padding: '16px 20px',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        fontFamily: 'Pretendard Variable',
+                        color: '#ffffff',
+                    },
+                }}
+                position="bottom-center"
+                offset={{ bottom: '84px' }}
+                mobileOffset={{ bottom: '84px' }}
+                expand={false}
+            />
+            <BottomPurchaseCTA />
         </>
     );
 }

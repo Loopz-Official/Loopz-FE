@@ -8,7 +8,7 @@ import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { formatPrice } from '@/utils/formatPrice';
 
-const ObjectDetailContent = ({ objectId }: { objectId: string }) => {
+export default function ObjectDetailPage({ objectId }: { objectId: string }) {
     const { objectDetail, isLoading, error } = useObjectDetailQuery(objectId);
 
     // 구매 상품 ID 및 수량 저장 (전역 상태)
@@ -95,6 +95,4 @@ const ObjectDetailContent = ({ objectId }: { objectId: string }) => {
             <PurchaseNotice />
         </>
     );
-};
-
-export default ObjectDetailContent;
+}
