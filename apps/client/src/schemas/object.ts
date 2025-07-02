@@ -35,7 +35,6 @@ export const objectBoardFilterRequest = z.object({
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;
 
 // Response DTO
-
 export const objectInfos = z.object({
     objectId: z.string(), // 추후에 uuid로 수정 (test data 때문에 임시 처리)
     objectName: z.string(),

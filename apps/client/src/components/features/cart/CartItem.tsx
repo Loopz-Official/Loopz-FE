@@ -1,11 +1,33 @@
 import Image from 'next/image';
+import { useState } from 'react';
 
 import CheckBox from '@/components/common/CheckBox';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
+import { ObjectInfo } from '@/schemas/object';
+import { formatPrice } from '@/utils/formatPrice';
+
+import OrderQuantity from '../obje/OrderQuantity';
 
 import PurchaseNowButton from './PurchaseNowButton';
 
-const CartItem = () => {
+type CartItemProps = {
+    itemInfo: ObjectInfo;
+    quantity: number;
+};
+
+const CartItem = ({ itemInfo, quantity }: CartItemProps) => {
+    const formattedPrice = formatPrice(itemInfo.objectPrice);
+    const [itemQuantity, setItemQuantity] = useState<number>(quantity);
+
+    // stock을 2로 가정 (추후 itemInfo.stock으로 변경 필요)
+    const handleIncrease = () => {
+        if (itemQuantity < 2) setItemQuantity(itemQuantity + 1);
+    };
+
+    const handleDecrease = () => {
+        if (itemQuantity > 1) setItemQuantity(itemQuantity - 1);
+    };
+
     return (
         <div className="flex flex-col gap-2 border-b border-solid border-black pb-6">
             <section className="flex items-center justify-between">
@@ -16,27 +38,35 @@ const CartItem = () => {
             <section className="flex justify-between">
                 <div className="flex flex-col gap-0.5">
                     <span className="text-body-01 font-semibold">
-                        빈티지 다이얼 전화기
+                        {itemInfo.objectName}
                     </span>
                     <span className="text-caption-01 text-gray-dark">
-                        21,000원
+                        {formattedPrice}원
                     </span>
                 </div>
                 <Image
                     priority
-                    src="/cart-item.jpg"
+                    src={itemInfo.imageUrl}
                     alt="cart-item"
                     width={70}
                     height={70}
                 />
             </section>
 
+            <OrderQuantity
+                type="cart"
+                stock={2} // 추후 itemInfo.stock으로 변경 필요
+                count={itemQuantity}
+                onIncrease={handleIncrease}
+                onDecrease={handleDecrease}
+            />
+
             <section className="flex items-end justify-between">
                 <div className="flex flex-col gap-0.5">
                     <span className="text-caption-02 text-gray-regular">
                         최종 상품 금액
                     </span>
-                    <span className="text-headline-04">21,000원</span>
+                    <span className="text-headline-04">{formattedPrice}원</span>
                 </div>
                 <PurchaseNowButton />
             </section>

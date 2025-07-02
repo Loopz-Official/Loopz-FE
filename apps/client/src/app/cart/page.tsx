@@ -8,11 +8,17 @@ import CartItem from '@/components/features/cart/CartItem';
 import CartSummary from '@/components/features/cart/CartSummary';
 import EmptyCart from '@/components/features/cart/EmptyCart';
 import ObjectSelectBar from '@/components/features/cart/ObjeSelectBar';
+import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 
 export default function CartPage() {
     const router = useRouter();
 
-    const isCartEmpty = false;
+    const { data: cartData } = useCartInquiryQuery();
+    const availableItems = cartData?.availableItems;
+    // const outOfStock = cartData?.outOfStock;
+
+    const isCartEmpty =
+        availableItems?.length === 0 && cartData?.outOfStock.length === 0;
 
     return (
         <>
@@ -22,7 +28,14 @@ export default function CartPage() {
                 <>
                     <ObjectSelectBar />
                     <div className="flex flex-col gap-6 px-5 pt-6">
-                        <CartItem />
+                        {availableItems?.map(({ object, quantity }) => (
+                            <CartItem
+                                key={object.objectId}
+                                itemInfo={object}
+                                quantity={quantity}
+                            />
+                        ))}
+
                         <CartSummary />
                     </div>
                     <BottomNotice type="cart" />
