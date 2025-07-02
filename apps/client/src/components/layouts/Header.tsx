@@ -45,15 +45,18 @@ export default function Header({
             <div className="flex gap-4 place-self-end">
                 {(type === 'main' || type === 'sub') && (
                     <>
-                        {RIGHT_SIDE_OPTIONS.map(({ label, icon: Icon }) => (
-                            <button
-                                key={label}
-                                className="flex items-center gap-1"
-                                aria-label={label}
-                            >
-                                <Icon className="h-7 w-7" />
-                            </button>
-                        ))}
+                        {RIGHT_SIDE_OPTIONS.map(
+                            ({ label, icon: Icon, route }) => (
+                                <button
+                                    key={label}
+                                    className="flex items-center gap-1"
+                                    aria-label={label}
+                                    onClick={() => router.push(route)}
+                                >
+                                    <Icon className="h-7 w-7" />
+                                </button>
+                            )
+                        )}
                     </>
                 )}
             </div>

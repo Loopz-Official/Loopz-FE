@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
+import BottomNotice from '@/components/common/BottomNotice';
+import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
@@ -141,26 +143,22 @@ export default function AddressPageContent() {
                                 </div>
 
                                 <div className="flex gap-1">
-                                    <button
+                                    <EditDeleteButton
+                                        type="edit"
                                         onClick={() => {
                                             router.push(
                                                 `/address/edit?addressId=${address.addressId}`
                                             );
                                         }}
-                                        className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
-                                    >
-                                        수정
-                                    </button>
-                                    <button
+                                    />
+                                    <EditDeleteButton
+                                        type="delete"
                                         onClick={() =>
                                             handleDeleteButtonClick(
                                                 address.addressId
                                             )
                                         }
-                                        className="border-gray-regular rounded-xs text-caption-01 border px-4 py-1"
-                                    >
-                                        삭제
-                                    </button>
+                                    />
                                 </div>
                             </label>
                         </div>
@@ -168,14 +166,7 @@ export default function AddressPageContent() {
                 )}
             </div>
 
-            <div className="bottom-18 fixed w-full max-w-2xl">
-                <hr className="border-gray-light mt-6 border-4" />
-
-                <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
-                    <div className="w-4 text-center font-black">·</div>
-                    <div>배송지는 최대 10개까지 등록하실 수 있습니다.</div>
-                </div>
-            </div>
+            <BottomNotice type="address" />
 
             <BottomButton
                 text="선택하기"
