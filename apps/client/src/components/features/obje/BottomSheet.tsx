@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { formatPrice } from '@/utils/formatPrice';
+import VerticalDivider from '@/components/common/VerticalDivider';
 
 import OrderQuantity from './OrderQuantity';
 
@@ -44,7 +45,7 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                 <section className="flex items-center justify-between">
                     <div className="text-caption-01 flex items-center gap-2">
                         <span className="font-semibold">구매 수량</span>
-                        <div className="border-gray-regular h-3 w-[0px] border-[0.5px] border-solid" />
+                        <VerticalDivider />
                         <span className="text-point font-medium">
                             {objectDetail?.stock}개 남음
                         </span>
