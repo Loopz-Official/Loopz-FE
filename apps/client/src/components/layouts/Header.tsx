@@ -1,8 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
 
 import { LEFT_SIDE_OPTIONS, RIGHT_SIDE_OPTIONS } from '@/constants/header';
+
+import CartCount from '../features/cart/CartCount';
 
 export type HeaderType = 'main' | 'sub' | 'title' | 'pop-up';
 
@@ -49,11 +52,17 @@ export default function Header({
                             ({ label, icon: Icon, route }) => (
                                 <button
                                     key={label}
-                                    className="flex items-center gap-1"
+                                    className={clsx(
+                                        'flex items-center gap-1',
+                                        label === '장바구니' && 'relative'
+                                    )}
                                     aria-label={label}
                                     onClick={() => router.push(route)}
                                 >
                                     <Icon className="h-7 w-7" />
+                                    {label === '장바구니' && (
+                                        <CartCount count={2} />
+                                    )}
                                 </button>
                             )
                         )}
