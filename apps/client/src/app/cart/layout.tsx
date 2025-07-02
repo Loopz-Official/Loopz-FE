@@ -8,9 +8,9 @@ export default function CartLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
+        <div className="flex min-h-screen w-full flex-col">
             <Header type="title" title="장바구니" />
-            <main>{children}</main>
-        </>
+            <main className="grow">{children}</main>
+        </div>
     );
 }
