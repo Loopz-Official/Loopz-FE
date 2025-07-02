@@ -2,8 +2,8 @@ const CheckBox = ({
     isChecked,
     onChange,
 }: {
-    isChecked: boolean;
-    onChange: () => void;
+    isChecked?: boolean;
+    onChange?: () => void;
 }) => {
     return (
         <input
