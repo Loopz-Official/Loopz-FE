@@ -51,7 +51,7 @@ const BottomPurchaseCTA = () => {
     ];
 
     return (
-        <div className="fixed bottom-0 z-10 w-full max-w-2xl bg-white">
+        <div className="fixed bottom-0 z-50 w-full max-w-2xl bg-white">
             <BottomButton
                 text="구매하기"
                 isDisabled={false}
