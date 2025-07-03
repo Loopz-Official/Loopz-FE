@@ -22,7 +22,7 @@ export const getCartInquiry = async () => {
     }
 };
 
-export const addCartItem = async (objectId: string, quantity: number) => {
+export const updateCartItem = async (objectId: string, quantity: number) => {
     try {
         const response = await apiClient.patch('/object/v1/cart', {
             objectId,

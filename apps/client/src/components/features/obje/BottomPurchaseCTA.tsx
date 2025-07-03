@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
-import { useAddCartMutation } from '@/hooks/mutations/useCartMutation';
+import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
 
@@ -16,7 +16,7 @@ const BottomPurchaseCTA = () => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
-    const addCartMutation = useAddCartMutation();
+    const addCartMutation = useUpdateCartItem();
 
     const handleLike = () => setIsLiked((prev) => !prev);
     const handleCart = async () => {

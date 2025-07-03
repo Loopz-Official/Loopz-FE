@@ -20,6 +20,7 @@ import * as U from '@/utils/cart/getCart';
 export default function CartPage() {
     const router = useRouter();
 
+    const updateCartItemMutation = M.useUpdateCartItem();
     const deleteSingleItemMutation = M.useCartItemDelete();
     const deleteSelectedItemsMutation = M.useSelectedCartItemsDelete();
 
@@ -51,6 +52,10 @@ export default function CartPage() {
         toast.success(`${checked.length}개의 상품을 삭제했어요!`);
     };
 
+    const handleEditQuantity = (objectId: ObjectId, quantity: number) => {
+        updateCartItemMutation.mutateAsync({ objectId, quantity });
+    };
+
     return (
         <>
             {isCartEmpty ? (
@@ -80,6 +85,12 @@ export default function CartPage() {
                                         key={object.objectId}
                                         itemInfo={object}
                                         quantity={quantity}
+                                        onEditQuantity={(delta) =>
+                                            handleEditQuantity(
+                                                object.objectId,
+                                                delta
+                                            )
+                                        }
                                         onDelete={() =>
                                             handleDeleteItem(object.objectId)
                                         }

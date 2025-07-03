@@ -1,24 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ObjectId, ObjectIdArray } from '@/schemas/cart';
 import {
-    addCartItem,
+    CartItemUpdateResponse,
+    ObjectId,
+    ObjectIdArray,
+} from '@/schemas/cart';
+import {
     deleteSelectedCartItems,
     deleteSingleCartItem,
+    updateCartItem,
 } from '@/services/api/cart';
 import { handleMutationError } from '@/utils/error/handleMutationError';
 
-type AddCartMutationProps = {
-    objectId: string;
-    quantity: number;
+type AddCartMutationProps = CartItemUpdateResponse & {
+    objectId: ObjectId;
 };
 
-export const useAddCartMutation = () => {
+export const useUpdateCartItem = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: ({ objectId, quantity }: AddCartMutationProps) =>
-            addCartItem(objectId, quantity),
+            updateCartItem(objectId, quantity),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         },

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useState } from 'react';
 
 import CheckBox from '@/components/common/CheckBox';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
@@ -15,6 +14,7 @@ type CartItemProps = {
     quantity: number;
     isChecked: boolean;
     toggleCheck: () => void;
+    onEditQuantity: (delta: number) => void;
     onDelete: () => void;
 };
 
@@ -23,20 +23,20 @@ const CartItem = ({
     quantity,
     isChecked,
     toggleCheck,
+    onEditQuantity,
     onDelete,
 }: CartItemProps) => {
     const formattedPrice = formatPrice(itemInfo.objectPrice);
-    const [itemQuantity, setItemQuantity] = useState<number>(quantity);
+    const formattedTotalPrice = formatPrice(itemInfo.objectPrice * quantity);
 
     const objeStock = itemInfo.stock ?? 0;
 
-    // stock을 2로 가정 (추후 itemInfo.stock으로 변경 필요)
     const handleIncrease = () => {
-        if (itemQuantity < objeStock) setItemQuantity(itemQuantity + 1);
+        if (quantity < objeStock) onEditQuantity(1);
     };
 
     const handleDecrease = () => {
-        if (itemQuantity > 1) setItemQuantity(itemQuantity - 1);
+        if (quantity > 1) onEditQuantity(-1);
     };
 
     return (
@@ -67,7 +67,7 @@ const CartItem = ({
             <OrderQuantity
                 type="cart"
                 stock={itemInfo.stock ?? 0} // 추후 itemInfo.stock으로 변경 필요
-                count={itemQuantity}
+                count={quantity}
                 onIncrease={handleIncrease}
                 onDecrease={handleDecrease}
             />
@@ -77,7 +77,9 @@ const CartItem = ({
                     <span className="text-caption-02 text-gray-regular">
                         최종 상품 금액
                     </span>
-                    <span className="text-headline-04">{formattedPrice}원</span>
+                    <span className="text-headline-04">
+                        {formattedTotalPrice}원
+                    </span>
                 </div>
                 <PurchaseNowButton />
             </section>
