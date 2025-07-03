@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 import { LEFT_SIDE_OPTIONS, RIGHT_SIDE_OPTIONS } from '@/constants/header';
 import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
-import { getCartItemCount } from '@/utils/cart/getCart';
 
 import CartCount from '../features/cart/CartCount';
 
@@ -43,7 +42,7 @@ export default function Header({
 
     useEffect(() => {
         if (isOptionsAvailable) {
-            setCartCount(getCartItemCount(cartInfos));
+            setCartCount(cartInfos?.availableItems.length || 0);
         }
     }, [cartInfos, isOptionsAvailable]);
 
