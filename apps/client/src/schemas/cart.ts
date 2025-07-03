@@ -21,3 +21,7 @@ export const cartItemUpdateResponse = z.object({
 });
 
 export type CartItemUpdateResponse = z.infer<typeof cartItemUpdateResponse>;
+
+// 장바구니 내 선택된 상품의 아이디 배열 타입
+export const objectIdArraySchema = z.array(z.uuid());
+export type ObjectIdArray = z.infer<typeof objectIdArraySchema>;

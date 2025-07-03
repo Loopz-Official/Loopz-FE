@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
-import { DELIVERY_REQUESTS } from '@/constants/deliveryRequests';
+import { DELIVERY_REQUESTS } from '@/constants/delivery';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';

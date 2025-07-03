@@ -43,6 +43,7 @@ export const objectInfos = z.object({
     objectPrice: z.int32(),
     soldOut: z.boolean(),
     liked: z.nullable(z.boolean()),
+    stock: z.optional(z.int32()), // 장바구니에서 사용
 });
 
 export type ObjectInfo = z.infer<typeof objectInfos>;

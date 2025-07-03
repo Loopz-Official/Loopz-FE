@@ -13,15 +13,24 @@ import PurchaseNowButton from './PurchaseNowButton';
 type CartItemProps = {
     itemInfo: ObjectInfo;
     quantity: number;
+    isChecked: boolean;
+    toggleCheck: () => void;
 };
 
-const CartItem = ({ itemInfo, quantity }: CartItemProps) => {
+const CartItem = ({
+    itemInfo,
+    quantity,
+    isChecked,
+    toggleCheck,
+}: CartItemProps) => {
     const formattedPrice = formatPrice(itemInfo.objectPrice);
     const [itemQuantity, setItemQuantity] = useState<number>(quantity);
 
+    const objeStock = itemInfo.stock ?? 0;
+
     // stock을 2로 가정 (추후 itemInfo.stock으로 변경 필요)
     const handleIncrease = () => {
-        if (itemQuantity < 2) setItemQuantity(itemQuantity + 1);
+        if (itemQuantity < objeStock) setItemQuantity(itemQuantity + 1);
     };
 
     const handleDecrease = () => {
@@ -31,7 +40,7 @@ const CartItem = ({ itemInfo, quantity }: CartItemProps) => {
     return (
         <div className="flex flex-col gap-2 border-b border-solid border-black pb-6">
             <section className="flex items-center justify-between">
-                <CheckBox />
+                <CheckBox isChecked={isChecked} onChange={toggleCheck} />
                 <EditDeleteButton type="delete" />
             </section>
 
@@ -55,7 +64,7 @@ const CartItem = ({ itemInfo, quantity }: CartItemProps) => {
 
             <OrderQuantity
                 type="cart"
-                stock={2} // 추후 itemInfo.stock으로 변경 필요
+                stock={itemInfo.stock ?? 0} // 추후 itemInfo.stock으로 변경 필요
                 count={itemQuantity}
                 onIncrease={handleIncrease}
                 onDecrease={handleDecrease}

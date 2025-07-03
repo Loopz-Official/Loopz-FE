@@ -1,4 +1,9 @@
-import { CartInquiryResponse } from '@/schemas/cart';
+import {
+    CartInquiryResponse,
+    CartItemInfo,
+    ObjectIdArray,
+    objectIdArraySchema,
+} from '@/schemas/cart';
 
 // 장바구니의 전체 상품 개수를 계산하는 함수
 export function getCartItemCount(cartInfos?: CartInquiryResponse): number {
@@ -26,4 +31,11 @@ export function getCartFinalPrice(
     deliveryFee: number = 3000
 ): number {
     return totalPrice + deliveryFee;
+}
+
+// apps/client/src/utils/cart/getObjectIdsFromCart.ts
+export function getObjectIdsFromCart(cart: CartItemInfo[]): ObjectIdArray {
+    const ids = cart.map((item) => item.object.objectId);
+    objectIdArraySchema.safeParse(ids);
+    return ids;
 }
