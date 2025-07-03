@@ -92,6 +92,10 @@ export default function Page() {
         router.replace(`/main${params}`);
     };
 
+    const handleClearbuttonClick = () => {
+        setSelectedFilter([]);
+    };
+
     return (
         <div>
             <Header type="title" title="필터" />
@@ -136,7 +140,10 @@ export default function Page() {
                 isDisabled={false}
                 onClick={handleConfirmButtonClick}
             >
-                <button className="text-body-03 border-button-gray-regular mr-2 h-full w-[6.875rem] items-center justify-center rounded-sm border">
+                <button
+                    onClick={handleClearbuttonClick}
+                    className="text-body-03 border-button-gray-regular mr-2 h-full w-[6.875rem] items-center justify-center rounded-sm border"
+                >
                     초기화
                 </button>
             </BottomButton>
