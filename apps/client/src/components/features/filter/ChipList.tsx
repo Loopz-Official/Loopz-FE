@@ -1,15 +1,26 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-export default function ChipList({ chips: chipsData }: { chips: string[] }) {
+interface Chip {
+    label: string;
+    value: string;
+}
+
+export default function ChipList({
+    chips: chipsData,
+    onClick,
+}: {
+    chips: Chip[];
+    onClick: (chip: string) => void;
+}) {
     const [chips, setChips] = useState(
         chipsData.map((chip) => ({ chip, isActive: false }))
     );
 
-    const handleChipClick = (chip: string) => {
+    const handleChipClick = (chip: Chip) => {
         setChips(
             chips.map((prevChip) =>
-                prevChip.chip === chip
+                prevChip.chip.label === chip.label
                     ? {
                           ...prevChip,
                           isActive: !prevChip.isActive,
@@ -17,6 +28,7 @@ export default function ChipList({ chips: chipsData }: { chips: string[] }) {
                     : { ...prevChip }
             )
         );
+        onClick(chip.value);
     };
 
     return (
@@ -26,7 +38,7 @@ export default function ChipList({ chips: chipsData }: { chips: string[] }) {
                     onClick={() => {
                         handleChipClick(chip);
                     }}
-                    key={chip}
+                    key={chip.label}
                     className={clsx(
                         'text-body-03 rounded-full border px-[0.875rem] py-1 tracking-normal',
                         isActive
@@ -34,7 +46,7 @@ export default function ChipList({ chips: chipsData }: { chips: string[] }) {
                             : 'border-gray-regular text-gray-dark bg-white'
                     )}
                 >
-                    {chip}
+                    {chip.label}
                 </button>
             ))}
         </div>
