@@ -53,7 +53,7 @@ export default function ProductList({ products }: ProductListProps) {
             ))}
         </div>
     ) : (
-        <div className="text-headline-04 pb-30 pt-20 text-center font-normal">
+        <div className="text-body-01 pb-30 pt-20 text-center font-normal">
             등록된 상품이 없습니다.
         </div>
     );

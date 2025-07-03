@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -17,12 +18,19 @@ export default function ObjectBoard() {
         useState<ObjectBoardResponse>();
     const [ref, inView] = useInView();
     const pageRef = useRef(0);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const fetchObjectBoardData = async () => {
+            const filterSearchParams: Record<string, string> = {};
+            searchParams.forEach(
+                (value, key) => (filterSearchParams[key] = value)
+            );
+
             const params: ObjectBoardFilterRequest = {
                 page: pageRef.current,
                 size: 10,
+                ...filterSearchParams,
             };
             const response = await getObjectBoardList(params);
 
@@ -41,7 +49,7 @@ export default function ObjectBoard() {
         if (!objectBoardData || (inView && objectBoardData.hasNext)) {
             fetchObjectBoardData();
         }
-    }, [inView, objectBoardData]);
+    }, [inView, objectBoardData, searchParams]);
 
     return (
         <div>
