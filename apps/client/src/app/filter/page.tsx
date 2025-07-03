@@ -7,7 +7,7 @@ import BottomButton from '@/components/common/BottomButton';
 import ChipList from '@/components/features/filter/ChipList';
 import PriceRange from '@/components/features/filter/PriceRange';
 import Header from '@/components/layouts/Header';
-import { filterList } from '@/constants/filterList';
+import { FILTER_LIST, PRICE_MAX, PRICE_MIN } from '@/constants/filter';
 
 export interface SelectedFilter {
     title: string;
@@ -68,7 +68,7 @@ export default function Page() {
 
         const price: SelectedFilter[] = [];
 
-        if (priceMin !== 0) {
+        if (priceMin !== PRICE_MIN) {
             // 최솟값이 아닐 때에만 추가
             price.push({
                 title: 'priceMin',
@@ -76,7 +76,7 @@ export default function Page() {
             });
         }
 
-        if (priceMax !== 700000) {
+        if (priceMax !== PRICE_MAX) {
             // 최댓값이 아닐 때에만 추가
             price.push({
                 title: 'priceMax',
@@ -96,7 +96,7 @@ export default function Page() {
         <div>
             <Header type="title" title="필터" />
             <div className="space-y-8 px-5 py-6 pb-24">
-                {filterList.map(({ title, chips }) => (
+                {FILTER_LIST.map(({ title, chips }) => (
                     <div key={title.label}>
                         <h3 className="text-body-03 font-semibold">
                             {title.label}

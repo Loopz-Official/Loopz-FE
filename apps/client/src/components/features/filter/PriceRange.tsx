@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { useDebouncedCallback } from 'use-debounce';
 
-const STEP = 1000;
-const MIN = 0;
-const MAX = 700000;
+import { PRICE_MAX, PRICE_MIN, RANGE_STEP } from '@/constants/filter';
 
 export default function PriceRange({
     initialMin,
@@ -18,14 +16,14 @@ export default function PriceRange({
     initialMax: number;
     setPriceFilter: (priceMin: number, priceMax: number) => void;
 }) {
-    const [values, setValues] = useState([MIN, MAX]);
+    const [values, setValues] = useState([PRICE_MIN, PRICE_MAX]);
     const [inputValues, setInputValues] = useState([
-        MIN.toLocaleString(),
-        MAX.toLocaleString(),
+        PRICE_MIN.toLocaleString(),
+        PRICE_MAX.toLocaleString(),
     ]);
 
     useEffect(() => {
-        const initialPrice = [MIN, MAX];
+        const initialPrice = [PRICE_MIN, PRICE_MAX];
 
         if (!isNaN(initialMin)) {
             initialPrice[0] = initialMin;
@@ -72,8 +70,8 @@ export default function PriceRange({
         let num = Number(raw);
 
         // num이 범위 내에 있도록 보정
-        if (num < MIN) num = MIN;
-        if (num > MAX) num = MAX;
+        if (num < PRICE_MIN) num = PRICE_MIN;
+        if (num > PRICE_MAX) num = PRICE_MAX;
 
         const minNum =
             index === 0
@@ -89,8 +87,8 @@ export default function PriceRange({
 
     // 슬라이더 조작 시 inputValues도 동기화
     const handleRangeChange = (vals: number[]) => {
-        const minNum = vals[0] ?? MIN;
-        const maxNum = vals[1] ?? MAX;
+        const minNum = vals[0] ?? PRICE_MIN;
+        const maxNum = vals[1] ?? PRICE_MAX;
 
         setValues([minNum, maxNum]);
         setInputValues([minNum.toLocaleString(), maxNum.toLocaleString()]);
@@ -106,9 +104,9 @@ export default function PriceRange({
 
             <Range
                 values={values}
-                step={STEP}
-                min={MIN}
-                max={MAX}
+                step={RANGE_STEP}
+                min={PRICE_MIN}
+                max={PRICE_MAX}
                 onChange={handleRangeChange}
                 renderTrack={({ props, children }) => (
                     <div
@@ -132,8 +130,8 @@ export default function PriceRange({
                                 background: getTrackBackground({
                                     values,
                                     colors: ['#ccc', '#000', '#ccc'],
-                                    min: MIN,
-                                    max: MAX,
+                                    min: PRICE_MIN,
+                                    max: PRICE_MAX,
                                 }),
                                 alignSelf: 'center',
                             }}

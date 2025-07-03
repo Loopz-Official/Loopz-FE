@@ -1,4 +1,8 @@
-export const filterList = [
+export const PRICE_MIN = 0;
+export const PRICE_MAX = 700000;
+export const RANGE_STEP = 1000;
+
+export const FILTER_LIST = [
     {
         title: { label: '상품 정보', value: 'excludeSoldOut' },
         chips: [{ label: '품절상품 제외', value: 'true' }],
