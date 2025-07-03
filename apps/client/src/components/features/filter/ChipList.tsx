@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+
+import { SelectedFilter } from '@/app/filter/page';
 
 interface Chip {
     label: string;
@@ -7,41 +8,29 @@ interface Chip {
 }
 
 export default function ChipList({
-    chips: chipsData,
+    chips,
+    selectedChips,
     onClick,
 }: {
     chips: Chip[];
+    selectedChips: SelectedFilter[];
     onClick: (chip: string) => void;
 }) {
-    const [chips, setChips] = useState(
-        chipsData.map((chip) => ({ chip, isActive: false }))
-    );
-
-    const handleChipClick = (chip: Chip) => {
-        setChips(
-            chips.map((prevChip) =>
-                prevChip.chip.label === chip.label
-                    ? {
-                          ...prevChip,
-                          isActive: !prevChip.isActive,
-                      }
-                    : { ...prevChip }
-            )
-        );
-        onClick(chip.value);
+    const isActive = (chip: Chip) => {
+        return selectedChips.some((item) => item.chip === chip.value);
     };
 
     return (
         <div className="mt-2 flex flex-wrap gap-x-1.5 gap-y-2">
-            {chips.map(({ chip, isActive }) => (
+            {chips.map((chip) => (
                 <button
                     onClick={() => {
-                        handleChipClick(chip);
+                        onClick(chip.value);
                     }}
                     key={chip.label}
                     className={clsx(
                         'text-body-03 rounded-full border px-[0.875rem] py-1 tracking-normal',
-                        isActive
+                        isActive(chip)
                             ? 'border-black bg-black text-white'
                             : 'border-gray-regular text-gray-dark bg-white'
                     )}

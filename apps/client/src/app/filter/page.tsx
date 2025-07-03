@@ -9,7 +9,7 @@ import PriceRange from '@/components/features/filter/PriceRange';
 import Header from '@/components/layouts/Header';
 import { filterList } from '@/constants/filterList';
 
-interface SelectedFilter {
+export interface SelectedFilter {
     title: string;
     chip: string;
 }
@@ -26,8 +26,21 @@ export default function Page() {
     };
 
     const handleChipClick = (title: string, chip: string) => {
-        const newSelected = { title, chip };
-        setSelectedFilter([...selectedFilter, newSelected]);
+        const doesExist = selectedFilter.some(
+            (item) => item.title === title && item.chip === chip
+        );
+
+        if (doesExist) {
+            // 이미 있으면 제거
+            setSelectedFilter(
+                selectedFilter.filter(
+                    (item) => !(item.title === title && item.chip === chip)
+                )
+            );
+        } else {
+            // 없으면 추가
+            setSelectedFilter([...selectedFilter, { title, chip }]);
+        }
     };
 
     const handleConfirmButtonClick = () => {
@@ -50,6 +63,9 @@ export default function Page() {
                                     handleChipClick(title.value, chip)
                                 }
                                 key={title.label}
+                                selectedChips={selectedFilter.filter(
+                                    (item) => item.title === title.value
+                                )}
                                 chips={chips}
                             />
                         ) : (
