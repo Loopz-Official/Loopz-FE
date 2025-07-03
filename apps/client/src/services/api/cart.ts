@@ -1,4 +1,8 @@
-import { cartInquiryResponse, cartItemUpdateResponse } from '@/schemas/cart';
+import {
+    cartInquiryResponse,
+    cartItemUpdateResponse,
+    ObjectId,
+} from '@/schemas/cart';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -42,3 +46,30 @@ export const addCartItem = async (objectId: string, quantity: number) => {
         );
     }
 };
+
+export const deleteSingleCartItem = async (objectId: ObjectId) => {
+    try {
+        const response = await apiClient.delete(`/object/v1/cart/${objectId}`);
+
+        console.log('Delete single cart item response:', response);
+
+        switch (response.status) {
+            case 204:
+                return response.status;
+        }
+    } catch (error) {
+        console.error('Error deleting cart item:', error);
+    }
+};
+
+// export const deleteSelectedCartItems = async (objectIds: ObjectIdArray) => {
+//     try {
+//         const response = await apiClient.delete('/object/v1/cart', {
+//             data: {
+//                 objectIds,
+//             },
+//         });
+//     } catch (error) {
+//         console.error('Error deleting cart items:', error);
+//     }
+// };

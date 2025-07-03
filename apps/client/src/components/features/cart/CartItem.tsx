@@ -15,6 +15,7 @@ type CartItemProps = {
     quantity: number;
     isChecked: boolean;
     toggleCheck: () => void;
+    onDelete: () => void;
 };
 
 const CartItem = ({
@@ -22,6 +23,7 @@ const CartItem = ({
     quantity,
     isChecked,
     toggleCheck,
+    onDelete,
 }: CartItemProps) => {
     const formattedPrice = formatPrice(itemInfo.objectPrice);
     const [itemQuantity, setItemQuantity] = useState<number>(quantity);
@@ -41,7 +43,7 @@ const CartItem = ({
         <div className="flex flex-col gap-2 border-b border-solid border-black pb-6">
             <section className="flex items-center justify-between">
                 <CheckBox isChecked={isChecked} onChange={toggleCheck} />
-                <EditDeleteButton type="delete" />
+                <EditDeleteButton type="delete" onClick={onDelete} />
             </section>
 
             <section className="flex justify-between">
