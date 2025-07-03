@@ -6,6 +6,7 @@ type ObjectSelectBarProps = {
     selectedCount: number;
     isAllChecked: boolean;
     toggleAll: () => void;
+    onDeleteSelected: () => void;
 };
 
 const ObjectSelectBar = ({
@@ -13,6 +14,7 @@ const ObjectSelectBar = ({
     selectedCount,
     isAllChecked,
     toggleAll,
+    onDeleteSelected,
 }: ObjectSelectBarProps) => {
     return (
         <div className="text-caption-01 text-gray-dark border-gray-regular flex items-center gap-2 border-b border-solid px-5 py-4">
@@ -23,7 +25,7 @@ const ObjectSelectBar = ({
 
             <VerticalDivider />
 
-            <button>선택삭제</button>
+            <button onClick={onDeleteSelected}>선택삭제</button>
         </div>
     );
 };

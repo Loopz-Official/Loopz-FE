@@ -2,6 +2,7 @@ import {
     cartInquiryResponse,
     cartItemUpdateResponse,
     ObjectId,
+    ObjectIdArray,
 } from '@/schemas/cart';
 import { validate } from '@/schemas/utils/validate';
 
@@ -62,14 +63,19 @@ export const deleteSingleCartItem = async (objectId: ObjectId) => {
     }
 };
 
-// export const deleteSelectedCartItems = async (objectIds: ObjectIdArray) => {
-//     try {
-//         const response = await apiClient.delete('/object/v1/cart', {
-//             data: {
-//                 objectIds,
-//             },
-//         });
-//     } catch (error) {
-//         console.error('Error deleting cart items:', error);
-//     }
-// };
+export const deleteSelectedCartItems = async (objectIdList: ObjectIdArray) => {
+    try {
+        const response = await apiClient.delete('/object/v1/cart/selected', {
+            data: objectIdList,
+        });
+
+        console.log('Delete selected cart items response:', response);
+
+        switch (response.status) {
+            case 204:
+                return response.status;
+        }
+    } catch (error) {
+        console.error('Error deleting cart items:', error);
+    }
+};

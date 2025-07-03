@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ObjectId } from '@/schemas/cart';
-import { addCartItem, deleteSingleCartItem } from '@/services/api/cart';
+import { ObjectId, ObjectIdArray } from '@/schemas/cart';
+import {
+    addCartItem,
+    deleteSelectedCartItems,
+    deleteSingleCartItem,
+} from '@/services/api/cart';
 
 type AddCartMutationProps = {
     objectId: string;
@@ -20,12 +24,24 @@ export const useAddCartMutation = () => {
     });
 };
 
-export const useDeleteSingleCartItemMutation = () => {
+export const useCartItemDelete = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: ({ objectId }: { objectId: ObjectId }) =>
             deleteSingleCartItem(objectId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
+};
+
+export const useSelectedCartItemsDelete = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (objectIdList: ObjectIdArray) =>
+            deleteSelectedCartItems(objectIdList),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         },

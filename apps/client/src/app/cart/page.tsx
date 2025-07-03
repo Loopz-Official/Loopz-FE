@@ -11,7 +11,10 @@ import CartSummary from '@/components/features/cart/CartSummary';
 import EmptyCart from '@/components/features/cart/EmptyCart';
 import ObjectSelectBar from '@/components/features/cart/ObjeSelectBar';
 import { DELIVERY_FEE } from '@/constants/delivery';
-import { useDeleteSingleCartItemMutation } from '@/hooks/mutations/useCartMutation';
+import {
+    useCartItemDelete,
+    useSelectedCartItemsDelete,
+} from '@/hooks/mutations/useCartMutation';
 import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 import { useCheckGroup } from '@/hooks/useCheckGroup';
 import { ObjectId } from '@/schemas/cart';
@@ -20,7 +23,8 @@ import * as U from '@/utils/cart/getCart';
 export default function CartPage() {
     const router = useRouter();
 
-    const deleteSingleItemMutation = useDeleteSingleCartItemMutation();
+    const deleteSingleItemMutation = useCartItemDelete();
+    const deleteSelectedItemsMutation = useSelectedCartItemsDelete();
 
     const { data: cartData, isLoading, error } = useCartInquiryQuery();
     const availableItems = cartData?.availableItems;
@@ -49,6 +53,15 @@ export default function CartPage() {
         }
     };
 
+    const handleDeleteSelectedItems = () => {
+        try {
+            deleteSelectedItemsMutation.mutateAsync(checked);
+            toast.success(`${checked.length}개의 상품을 삭제했어요!`);
+        } catch {
+            toast.error('상품 삭제에 실패했어요.');
+        }
+    };
+
     return (
         <>
             {isCartEmpty ? (
@@ -66,6 +79,7 @@ export default function CartPage() {
                                 selectedCount={checked.length}
                                 isAllChecked={isAllChecked}
                                 toggleAll={toggleAll}
+                                onDeleteSelected={handleDeleteSelectedItems}
                             />
                             <div className="flex flex-col gap-6 px-5 pt-6">
                                 {availableItems?.map(({ object, quantity }) => (
