@@ -1,5 +1,7 @@
 'use client';
+
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
@@ -14,6 +16,10 @@ export default function ProductListToolbar({
 }: ProductListToolbarProps) {
     const [isRotated, setIsRotated] = useState(false);
 
+    const searchParams = useSearchParams();
+    const queryString = searchParams.toString();
+    const filterUrl = `/filter${queryString ? `?${queryString}` : ''}`;
+
     return (
         <div className="text-caption-01 text-gray-dark flex justify-between py-3">
             <span>총 {productCount}개</span>
@@ -27,7 +33,7 @@ export default function ProductListToolbar({
                         className={`h-4 w-4 text-black transition-transform duration-200 ${isRotated ? 'rotate-180' : ''}`}
                     />
                 </button>
-                <Link href={'/filter'} className="flex items-center gap-0.5">
+                <Link href={filterUrl} className="flex items-center gap-0.5">
                     필터
                     <FilterIcon className="h-4 w-4" />
                 </Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -47,9 +47,11 @@ export default function ObjectBoard() {
         <div>
             <div className="px-5">
                 <h2 className="text-headline-03">Object Board</h2>
-                <ProductListToolbar
-                    productCount={objectBoardData?.objectCount ?? 0}
-                />
+                <Suspense>
+                    <ProductListToolbar
+                        productCount={objectBoardData?.objectCount ?? 0}
+                    />
+                </Suspense>
             </div>
             <ProductList products={objectBoardData?.objects ?? []} />
             <div ref={ref} />

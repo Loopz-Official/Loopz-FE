@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import ChipList from '@/components/features/filter/ChipList';
@@ -17,6 +17,23 @@ export interface SelectedFilter {
 export default function Page() {
     const [selectedFilter, setSelectedFilter] = useState<SelectedFilter[]>([]);
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const queryString = searchParams.toString();
+        if (queryString === '') return;
+
+        const titleChipMap = queryString
+            .split('&')
+            .map((item) => item.split('='));
+
+        const initialSelectedFilter = titleChipMap.map((item) => ({
+            title: item[0] ?? '',
+            chip: item[1] ?? '',
+        }));
+
+        setSelectedFilter(initialSelectedFilter);
+    }, [searchParams]);
 
     const toQueryParams = (selected: SelectedFilter[]) => {
         const params = selected
@@ -73,7 +90,7 @@ export default function Page() {
     return (
         <div>
             <Header type="title" title="필터" />
-            <div className="space-y-8 px-5 py-6">
+            <div className="space-y-8 px-5 py-6 pb-24">
                 {filterList.map(({ title, chips }) => (
                     <div key={title.label}>
                         <h3 className="text-body-03 font-semibold">
@@ -96,6 +113,7 @@ export default function Page() {
                     </div>
                 ))}
             </div>
+
             <BottomButton
                 text="결과보기"
                 isDisabled={false}
