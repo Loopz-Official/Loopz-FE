@@ -5,7 +5,11 @@ import { useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { useDebouncedCallback } from 'use-debounce';
 
-export default function PriceRange() {
+export default function PriceRange({
+    setPriceFilter,
+}: {
+    setPriceFilter: (priceMin: number, priceMax: number) => void;
+}) {
     const STEP = 1000;
     const MIN = 0;
     const MAX = 700000;
@@ -21,7 +25,13 @@ export default function PriceRange() {
         (minNum: number, maxNum: number) => {
             if (minNum > maxNum) [minNum, maxNum] = [maxNum, minNum];
             setValues([minNum, maxNum]);
+            setPriceFilter(minNum, maxNum);
         },
+        300
+    );
+
+    const debouncedSetPriceFilter = useDebouncedCallback(
+        (minNum: number, maxNum: number) => setPriceFilter(minNum, maxNum),
         300
     );
 
@@ -60,11 +70,13 @@ export default function PriceRange() {
 
     // 슬라이더 조작 시 inputValues도 동기화
     const handleRangeChange = (vals: number[]) => {
-        setValues([vals[0] ?? MIN, vals[1] ?? MAX]);
-        setInputValues([
-            (vals[0] ?? MIN).toLocaleString(),
-            (vals[1] ?? MAX).toLocaleString(),
-        ]);
+        const minNum = vals[0] ?? MIN;
+        const maxNum = vals[1] ?? MAX;
+
+        setValues([minNum, maxNum]);
+        setInputValues([minNum.toLocaleString(), maxNum.toLocaleString()]);
+
+        debouncedSetPriceFilter(minNum, maxNum);
     };
 
     return (

@@ -43,6 +43,28 @@ export default function Page() {
         }
     };
 
+    const setPriceFilter = (priceMin: number, priceMax: number) => {
+        // 기존에 price 관련 필터가 있다면 제거
+        const filterWithoutPrice = selectedFilter.filter(
+            (item) => item.title !== 'priceMin' && item.title !== 'priceMax'
+        );
+
+        const priceMinFilter: SelectedFilter = {
+            title: 'priceMin',
+            chip: priceMin.toString(),
+        };
+        const priceMaxFilter: SelectedFilter = {
+            title: 'priceMax',
+            chip: priceMax.toString(),
+        };
+
+        setSelectedFilter([
+            ...filterWithoutPrice,
+            priceMinFilter,
+            priceMaxFilter,
+        ]);
+    };
+
     const handleConfirmButtonClick = () => {
         const params = toQueryParams(selectedFilter);
         router.push(`/main${params}`);
@@ -69,7 +91,7 @@ export default function Page() {
                                 chips={chips}
                             />
                         ) : (
-                            <PriceRange />
+                            <PriceRange setPriceFilter={setPriceFilter} />
                         )}
                     </div>
                 ))}
