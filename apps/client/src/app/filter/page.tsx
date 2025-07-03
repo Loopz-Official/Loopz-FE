@@ -66,25 +66,30 @@ export default function Page() {
             (item) => item.title !== 'priceMin' && item.title !== 'priceMax'
         );
 
-        const priceMinFilter: SelectedFilter = {
-            title: 'priceMin',
-            chip: priceMin.toString(),
-        };
-        const priceMaxFilter: SelectedFilter = {
-            title: 'priceMax',
-            chip: priceMax.toString(),
-        };
+        const price: SelectedFilter[] = [];
 
-        setSelectedFilter([
-            ...filterWithoutPrice,
-            priceMinFilter,
-            priceMaxFilter,
-        ]);
+        if (priceMin !== 0) {
+            // 최솟값이 아닐 때에만 추가
+            price.push({
+                title: 'priceMin',
+                chip: priceMin.toString(),
+            });
+        }
+
+        if (priceMax !== 700000) {
+            // 최댓값이 아닐 때에만 추가
+            price.push({
+                title: 'priceMax',
+                chip: priceMax.toString(),
+            });
+        }
+
+        setSelectedFilter([...filterWithoutPrice, ...price]);
     };
 
     const handleConfirmButtonClick = () => {
         const params = toQueryParams(selectedFilter);
-        router.push(`/main${params}`);
+        router.replace(`/main${params}`);
     };
 
     return (
