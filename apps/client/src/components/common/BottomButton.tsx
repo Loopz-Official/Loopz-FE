@@ -33,7 +33,7 @@ export default function BottomButton({
                       : ''
             )}
         >
-            <div className="flex items-center gap-4">{children}</div>
+            <div className="flex h-full items-center gap-4">{children}</div>
             <button
                 disabled={isDisabled}
                 onClick={onClick}

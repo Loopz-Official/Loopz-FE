@@ -1,8 +1,9 @@
 'use client';
 
-import Header from '@/components/layouts/Header';
+import BottomButton from '@/components/common/BottomButton';
 import ChipList from '@/components/features/filter/ChipList';
 import PriceRange from '@/components/features/filter/PriceRange';
+import Header from '@/components/layouts/Header';
 import { filterList } from '@/constants/filterList';
 
 export default function Page() {
@@ -21,6 +22,11 @@ export default function Page() {
                     </div>
                 ))}
             </div>
+            <BottomButton text="결과보기" isDisabled={false} onClick={() => {}}>
+                <button className="text-body-03 border-button-gray-regular mr-2 h-full w-[6.875rem] items-center justify-center rounded-sm border">
+                    초기화
+                </button>
+            </BottomButton>
         </div>
     );
 }
