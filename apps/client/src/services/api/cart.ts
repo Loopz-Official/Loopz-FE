@@ -12,13 +12,13 @@ export const getCartInquiry = async () => {
     try {
         const response = await apiClient.get('/object/v1/cart');
 
-        console.log('Cart inquiry response:', response);
-
         if (response.status === 200) {
             return validate(cartInquiryResponse, response.data.data);
         }
-    } catch (error) {
-        console.error('Error fetching cart inquiry:', error);
+
+        throw new Error('장바구니 조회에 실패했습니다');
+    } catch {
+        throw new Error('장바구니 조회 중 오류가 발생했습니다');
     }
 };
 
@@ -31,19 +31,18 @@ export const addCartItem = async (objectId: string, quantity: number) => {
 
         switch (response.status) {
             case 200:
-                return validate(cartItemUpdateResponse, response.data.data);
+                validate(cartItemUpdateResponse, response.data.data);
+                return;
             case 400:
-                throw new Error('Invalid request');
+                throw new Error('잘못된 요청입니다');
             default:
-                throw new Error(
-                    'Unexpected response status: ' + response.status
-                );
+                throw new Error('알 수 없는 오류가 발생했습니다');
         }
     } catch (error) {
         throw new Error(
             error instanceof Error
-                ? '선택하신 수량이 현재 재고를 초과했어요'
-                : 'Unknown error'
+                ? '선택한 상품 수량이 현재 재고를 초과했어요'
+                : '장바구니 추가/수정 중 네트워크 오류가 발생했습니다'
         );
     }
 };
@@ -52,14 +51,13 @@ export const deleteSingleCartItem = async (objectId: ObjectId) => {
     try {
         const response = await apiClient.delete(`/object/v1/cart/${objectId}`);
 
-        console.log('Delete single cart item response:', response);
-
-        switch (response.status) {
-            case 204:
-                return response.status;
+        if (response.status === 204) {
+            return;
         }
-    } catch (error) {
-        console.error('Error deleting cart item:', error);
+
+        throw new Error('상품 삭제에 실패했습니다');
+    } catch {
+        throw new Error('상품 삭제 중 오류가 발생했습니다');
     }
 };
 
@@ -69,13 +67,12 @@ export const deleteSelectedCartItems = async (objectIdList: ObjectIdArray) => {
             data: objectIdList,
         });
 
-        console.log('Delete selected cart items response:', response);
-
-        switch (response.status) {
-            case 204:
-                return response.status;
+        if (response.status === 204) {
+            return;
         }
-    } catch (error) {
-        console.error('Error deleting cart items:', error);
+
+        throw new Error('선택한 상품 삭제에 실패했습니다');
+    } catch {
+        throw new Error('선택한 상품 삭제 중 오류가 발생했습니다');
     }
 };

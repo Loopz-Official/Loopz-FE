@@ -11,10 +11,7 @@ import CartSummary from '@/components/features/cart/CartSummary';
 import EmptyCart from '@/components/features/cart/EmptyCart';
 import ObjectSelectBar from '@/components/features/cart/ObjeSelectBar';
 import { DELIVERY_FEE } from '@/constants/delivery';
-import {
-    useCartItemDelete,
-    useSelectedCartItemsDelete,
-} from '@/hooks/mutations/useCartMutation';
+import * as M from '@/hooks/mutations/useCartMutation';
 import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 import { useCheckGroup } from '@/hooks/useCheckGroup';
 import { ObjectId } from '@/schemas/cart';
@@ -23,8 +20,8 @@ import * as U from '@/utils/cart/getCart';
 export default function CartPage() {
     const router = useRouter();
 
-    const deleteSingleItemMutation = useCartItemDelete();
-    const deleteSelectedItemsMutation = useSelectedCartItemsDelete();
+    const deleteSingleItemMutation = M.useCartItemDelete();
+    const deleteSelectedItemsMutation = M.useSelectedCartItemsDelete();
 
     const { data: cartData, isLoading, error } = useCartInquiryQuery();
     const availableItems = cartData?.availableItems;
@@ -45,21 +42,13 @@ export default function CartPage() {
         useCheckGroup(objectIds, true);
 
     const handleDeleteItem = (objectId: ObjectId) => {
-        try {
-            deleteSingleItemMutation.mutateAsync({ objectId });
-            toast.success('상품을 삭제했어요!');
-        } catch {
-            toast.error('상품 삭제에 실패했어요.');
-        }
+        deleteSingleItemMutation.mutateAsync({ objectId });
+        toast.success('상품을 삭제했어요!');
     };
 
     const handleDeleteSelectedItems = () => {
-        try {
-            deleteSelectedItemsMutation.mutateAsync(checked);
-            toast.success(`${checked.length}개의 상품을 삭제했어요!`);
-        } catch {
-            toast.error('상품 삭제에 실패했어요.');
-        }
+        deleteSelectedItemsMutation.mutateAsync(checked);
+        toast.success(`${checked.length}개의 상품을 삭제했어요!`);
     };
 
     return (

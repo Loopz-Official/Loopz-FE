@@ -6,6 +6,7 @@ import {
     deleteSelectedCartItems,
     deleteSingleCartItem,
 } from '@/services/api/cart';
+import { handleMutationError } from '@/utils/error/handleMutationError';
 
 type AddCartMutationProps = {
     objectId: string;
@@ -21,6 +22,7 @@ export const useAddCartMutation = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         },
+        onError: handleMutationError,
     });
 };
 
@@ -33,6 +35,7 @@ export const useCartItemDelete = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         },
+        onError: handleMutationError,
     });
 };
 
@@ -45,5 +48,6 @@ export const useSelectedCartItemsDelete = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         },
+        onError: handleMutationError,
     });
 };

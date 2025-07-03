@@ -20,19 +20,11 @@ const BottomPurchaseCTA = () => {
 
     const handleLike = () => setIsLiked((prev) => !prev);
     const handleCart = async () => {
-        try {
-            await addCartMutation.mutateAsync({
-                objectId: useToAddObjectStore.getState().objectId,
-                quantity: 1,
-            });
-            toast.success('장바구니에 상품을 담았어요!');
-        } catch (error) {
-            toast.error(
-                error instanceof Error
-                    ? error.message
-                    : '장바구니 담기에 실패했어요.'
-            );
-        }
+        await addCartMutation.mutateAsync({
+            objectId: useToAddObjectStore.getState().objectId,
+            quantity: 1,
+        });
+        toast.success('장바구니에 상품을 담았어요!');
     };
 
     const likeIconStyling = isLiked
