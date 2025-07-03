@@ -108,7 +108,19 @@ export default function Page() {
                                 chips={chips}
                             />
                         ) : (
-                            <PriceRange setPriceFilter={setPriceFilter} />
+                            <PriceRange
+                                initialMin={Number(
+                                    selectedFilter.find(
+                                        (item) => item.title === 'priceMin'
+                                    )?.chip
+                                )}
+                                initialMax={Number(
+                                    selectedFilter.find(
+                                        (item) => item.title === 'priceMax'
+                                    )?.chip
+                                )}
+                                setPriceFilter={setPriceFilter}
+                            />
                         )}
                     </div>
                 ))}

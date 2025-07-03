@@ -1,23 +1,42 @@
 /* eslint-disable react/prop-types */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { useDebouncedCallback } from 'use-debounce';
 
+const STEP = 1000;
+const MIN = 0;
+const MAX = 700000;
+
 export default function PriceRange({
+    initialMin,
+    initialMax,
     setPriceFilter,
 }: {
+    initialMin: number;
+    initialMax: number;
     setPriceFilter: (priceMin: number, priceMax: number) => void;
 }) {
-    const STEP = 1000;
-    const MIN = 0;
-    const MAX = 700000;
     const [values, setValues] = useState([MIN, MAX]);
     const [inputValues, setInputValues] = useState([
         MIN.toLocaleString(),
         MAX.toLocaleString(),
     ]);
+
+    useEffect(() => {
+        const initialPrice = [MIN, MAX];
+
+        if (!isNaN(initialMin)) {
+            initialPrice[0] = initialMin;
+        }
+        if (!isNaN(initialMax)) {
+            initialPrice[1] = initialMax;
+        }
+
+        setValues(initialPrice);
+        setInputValues(initialPrice.map((price) => price.toLocaleString()));
+    }, [initialMin, initialMax]);
 
     // range 슬라이더 디바운스
     // min이 max보다 크면 슬라이더 조작 시 swap
