@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
@@ -59,7 +59,7 @@ export default function CartPage() {
 
     const { setProducts } = useSelectedProductsStore();
 
-    useEffect(() => {
+    const handleBottomButtonClick = () => {
         if (!availableItems) return;
 
         const filteredItems = availableItems.filter(({ object }) =>
@@ -74,9 +74,10 @@ export default function CartPage() {
             quantity: filteredItems[i]?.quantity ?? 0,
         }));
 
-        console.log(selected);
         setProducts(selected);
-    }, [checked, availableItems, setProducts]);
+
+        router.push('/order/form/cart');
+    };
 
     return (
         <>
@@ -132,7 +133,7 @@ export default function CartPage() {
                     <BottomButton
                         text="구매하기"
                         isDisabled={false}
-                        onClick={() => router.push('/order/form/cart')}
+                        onClick={handleBottomButtonClick}
                     />
                 </>
             )}
