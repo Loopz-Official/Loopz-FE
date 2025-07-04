@@ -4,9 +4,18 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 
 export default function PriceSummarySection() {
     const [isDetailOpen, setIsDetailOpen] = useState(true);
+    const { products } = useSelectedProductsStore();
+
+    const productPrice = products.reduce(
+        (acc, product) => acc + product.objectPrice * product.quantity,
+        0
+    );
+    const totalPrice = productPrice + 3000;
+
     return (
         <>
             <header className="flex justify-between">
@@ -16,7 +25,7 @@ export default function PriceSummarySection() {
                     className="flex items-center gap-2"
                 >
                     <span className="text-headline-04 text-point tracking-normal">
-                        24,000원
+                        {totalPrice.toLocaleString()}원
                     </span>
                     <ChevronDownIcon
                         className={clsx(
@@ -35,7 +44,7 @@ export default function PriceSummarySection() {
                 <div className="text-body-03 text-gray-dark space-y-1.5 font-normal">
                     <div className="flex justify-between">
                         <span>총 상품 금액</span>
-                        <span>21,000원</span>
+                        <span>{productPrice.toLocaleString()}원</span>
                     </div>
                     <div className="flex justify-between">
                         <span>배송비</span>
@@ -48,7 +57,7 @@ export default function PriceSummarySection() {
                 <footer className="mb-2 flex justify-between">
                     <h2 className="text-body-01 font-semibold">총 결제 금액</h2>
                     <span className="text-body-01 font-semibold tracking-normal">
-                        24,000원
+                        {totalPrice.toLocaleString()}원
                     </span>
                 </footer>
             </div>
