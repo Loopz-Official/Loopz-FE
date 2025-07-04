@@ -21,6 +21,7 @@ import * as U from '@/utils/cart/getCart';
 export default function CartPage() {
     const router = useRouter();
 
+    const { setProducts } = useSelectedProductsStore();
     const updateCartItemMutation = M.useUpdateCartItem();
     const deleteSingleItemMutation = M.useCartItemDelete();
     const deleteSelectedItemsMutation = M.useSelectedCartItemsDelete();
@@ -67,23 +68,19 @@ export default function CartPage() {
         updateCartItemMutation.mutateAsync({ objectId, quantity });
     };
 
-    const { setProducts } = useSelectedProductsStore();
-
     const handleBottomButtonClick = () => {
-        if (!availableItems) return;
+        if (checked.length === 0) {
+            toast('구매할 상품을 선택해주세요!');
+            return;
+        }
 
-        const filteredItems = availableItems.filter(({ object }) =>
-            checked.includes(object.objectId)
-        );
-
-        const selected = filteredItems.map(({ object }, i) => ({
+        const selected = selectedItems.map(({ object, quantity }) => ({
             objectId: object.objectId,
             objectName: object.objectName,
             objectPrice: object.objectPrice,
             imageUrl: object.imageUrl,
-            quantity: filteredItems[i]?.quantity ?? 0,
+            quantity,
         }));
-
         setProducts(selected);
 
         router.push('/order/form?orderFrom=cart');
