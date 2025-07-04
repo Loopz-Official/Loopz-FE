@@ -32,11 +32,11 @@ const CartItem = ({
     const objeStock = itemInfo.stock ?? 0;
 
     const handleIncrease = () => {
-        if (quantity < objeStock) onEditQuantity(1);
+        if (quantity < objeStock) onEditQuantity(quantity + 1);
     };
 
     const handleDecrease = () => {
-        if (quantity > 1) onEditQuantity(-1);
+        if (quantity > 1) onEditQuantity(quantity - 1);
     };
 
     return (

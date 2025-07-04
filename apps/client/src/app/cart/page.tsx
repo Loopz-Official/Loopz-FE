@@ -108,10 +108,10 @@ export default function CartPage() {
                                         key={object.objectId}
                                         itemInfo={object}
                                         quantity={quantity}
-                                        onEditQuantity={(delta) =>
+                                        onEditQuantity={(newQuantity) =>
                                             handleEditQuantity(
                                                 object.objectId,
-                                                delta
+                                                newQuantity
                                             )
                                         }
                                         onDelete={() =>
