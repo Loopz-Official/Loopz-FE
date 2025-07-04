@@ -39,10 +39,10 @@ export default function ProductList({ products }: ProductListProps) {
                         />
                     </div>
                     <div className="px-3">
-                        <h3 className="text-caption-01 font-semibold">
+                        <h3 className="text-caption-01 truncate font-semibold">
                             {product.objectName}
                         </h3>
-                        <p className="text-caption-01 text-gray-regular break-keep">
+                        <p className="text-caption-01 text-gray-regular line-clamp-2 h-9 truncate whitespace-pre-line">
                             {product.intro}
                         </p>
                         <p className="text-body-03 mt-2 font-semibold tracking-normal">
@@ -53,7 +53,7 @@ export default function ProductList({ products }: ProductListProps) {
             ))}
         </div>
     ) : (
-        <div className="text-headline-04 pb-30 pt-20 text-center font-normal">
+        <div className="text-body-01 pb-30 pt-20 text-center font-normal">
             등록된 상품이 없습니다.
         </div>
     );
