@@ -2,10 +2,10 @@
 
 import { usePathname } from 'next/navigation';
 
+import VerticalDivider from '@/components/common/VerticalDivider';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { formatPrice } from '@/utils/formatPrice';
-import VerticalDivider from '@/components/common/VerticalDivider';
 
 import OrderQuantity from './OrderQuantity';
 
@@ -51,7 +51,10 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                         </span>
                     </div>
 
-                    <OrderQuantity stock={objectDetail?.stock ?? 0} />
+                    <OrderQuantity
+                        type="bottomSheet"
+                        stock={objectDetail?.stock ?? 0}
+                    />
                 </section>
 
                 <div className="border-gray-regular h-[0px] w-full border-[0.5px] border-solid" />

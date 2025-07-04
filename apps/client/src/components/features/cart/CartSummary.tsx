@@ -46,7 +46,7 @@ const CartSummaryRow = ({
 const CartSummary = ({
     itemCount,
     totalPrice,
-    deliveryFee,
+    deliveryFee = 3000,
     finalPrice,
 }: CartSummaryProps) => {
     return (

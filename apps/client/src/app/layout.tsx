@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 
 import Frame from '@/components/layouts/Frame';
+import ReactQueryProviderWrapper from '@/providers/QueryProviderWrapper';
 
 import type { Metadata } from 'next';
 
@@ -28,7 +29,9 @@ export default function RootLayout({
             <body
                 className={`${pretendard.className} tracking-tight text-black`}
             >
-                <Frame>{children}</Frame>
+                <ReactQueryProviderWrapper>
+                    <Frame>{children}</Frame>
+                </ReactQueryProviderWrapper>
             </body>
         </html>
     );

@@ -6,3 +6,5 @@ export const DELIVERY_REQUESTS = [
     '배송 전에 꼭 연락 주세요.',
     '직접 입력',
 ];
+
+export const DELIVERY_FEE = 3000;

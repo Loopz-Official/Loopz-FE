@@ -35,7 +35,6 @@ export const objectBoardFilterRequest = z.object({
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;
 
 // Response DTO
-
 export const objectInfos = z.object({
     objectId: z.string(), // 추후에 uuid로 수정 (test data 때문에 임시 처리)
     objectName: z.string(),
@@ -43,7 +42,8 @@ export const objectInfos = z.object({
     imageUrl: z.url(),
     objectPrice: z.int32(),
     soldOut: z.boolean(),
-    liked: z.boolean(),
+    liked: z.nullable(z.boolean()),
+    stock: z.optional(z.int32()), // 장바구니에서 사용
 });
 
 export type ObjectInfo = z.infer<typeof objectInfos>;
