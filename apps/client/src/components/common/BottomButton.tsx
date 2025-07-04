@@ -25,7 +25,7 @@ export default function BottomButton({
         <div
             className={clsx(
                 `${position} h-18 bottom-0 z-50 grid w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
-                position === 'fixed' && 'px-5 py-3',
+                position === 'fixed' && 'left-1/2 -translate-x-1/2 px-5 py-3',
                 isBottomSheetOpen
                     ? 'border-gray-regular border-t border-solid'
                     : isObjeDetailPage
