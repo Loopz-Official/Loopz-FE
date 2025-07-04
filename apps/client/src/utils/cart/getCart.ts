@@ -1,25 +1,17 @@
 import {
-    CartInquiryResponse,
     CartItemInfo,
     ObjectIdArray,
     objectIdArraySchema,
 } from '@/schemas/cart';
 
 // 장바구니의 전체 상품 개수를 계산하는 함수
-export function getCartItemCount(cartInfos?: CartInquiryResponse): number {
-    if (!cartInfos?.availableItems) return 0;
-
-    return cartInfos.availableItems.reduce(
-        (acc, item) => acc + item.quantity,
-        0
-    );
+export function getCartItemCount(items: CartItemInfo[]): number {
+    return items.reduce((acc, item) => acc + item.quantity, 0);
 }
 
 // 장바구니의 전체 상품 금액을 계산하는 함수
-export function getCartTotalPrice(cartInfos?: CartInquiryResponse): number {
-    if (!cartInfos?.availableItems) return 0;
-
-    return cartInfos.availableItems.reduce(
+export function getCartTotalPrice(items: CartItemInfo[]): number {
+    return items.reduce(
         (acc, item) => acc + item.object.objectPrice * item.quantity,
         0
     );

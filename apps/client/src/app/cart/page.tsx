@@ -31,17 +31,23 @@ export default function CartPage() {
 
     const isCartEmpty = availableItems?.length === 0;
 
-    const itemCount = U.getCartItemCount(cartData);
-    const totalPrice = U.getCartTotalPrice(cartData);
-    const finalPrice = U.getCartFinalPrice(totalPrice, DELIVERY_FEE);
-
     // 장바구니 내 상품 선택 관련 로직
     const objectIds = useMemo(
         () => U.getObjectIdsFromCart(availableItems ?? []),
         [availableItems]
     );
+
     const { checked, isChecked, isAllChecked, toggle, toggleAll } =
         useCheckGroup(objectIds, true);
+
+    const selectedItems =
+        availableItems?.filter(({ object }) =>
+            checked.includes(object.objectId)
+        ) ?? [];
+
+    const itemCount = U.getCartItemCount(selectedItems);
+    const totalPrice = U.getCartTotalPrice(selectedItems);
+    const finalPrice = U.getCartFinalPrice(totalPrice, DELIVERY_FEE);
 
     const handleDeleteItem = (objectId: ObjectId) => {
         deleteSingleItemMutation.mutateAsync({ objectId });
@@ -49,6 +55,10 @@ export default function CartPage() {
     };
 
     const handleDeleteSelectedItems = () => {
+        if (checked.length === 0) {
+            toast('삭제할 상품을 선택해주세요');
+            return;
+        }
         deleteSelectedItemsMutation.mutateAsync(checked);
         toast.success(`${checked.length}개의 상품을 삭제했어요!`);
     };
