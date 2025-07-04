@@ -36,7 +36,7 @@ export default function AddressTypePageContent() {
     useEffect(() => {
         if (type === 'edit' && addressList && addressId) {
             const target = addressList.find(
-                (addr) => addr.addressId === Number(addressId)
+                (addr) => addr.addressId === addressId
             );
             if (target) {
                 setNewAddress({
@@ -76,7 +76,7 @@ export default function AddressTypePageContent() {
         try {
             if (type === 'edit' && addressId) {
                 await updateAddressMutation.mutateAsync({
-                    addressId: Number(addressId),
+                    addressId: addressId,
                     updatedAddress: newAddress,
                 });
             } else {
@@ -104,7 +104,10 @@ export default function AddressTypePageContent() {
 
     return (
         <div className="pb-17">
-            <Header type="title" title="배송지 수정" />
+            <Header
+                type="title"
+                title={type === 'add' ? '배송지 추가' : '배송지 수정'}
+            />
 
             <div className="space-y-6 px-5 py-3">
                 {/* 받으시는 분 (이름) */}

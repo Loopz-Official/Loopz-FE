@@ -58,17 +58,15 @@ const BottomPurchaseCTA = () => {
                 onClick={() => setIsBottomSheetOpen(true)}
                 isBottomSheetOpen={isBottomSheetOpen}
             >
-                {!isBottomSheetOpen && (
-                    <ul className="flex items-center gap-4">
-                        {CTA_ICONS.map((item) => (
-                            <li key={item.name}>
-                                <button onClick={item.onClick}>
-                                    {item.icon()}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <ul className="flex items-center gap-4">
+                    {CTA_ICONS.map((item) => (
+                        <li key={item.name}>
+                            <button onClick={item.onClick}>
+                                {item.icon()}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </BottomButton>
             {isBottomSheetOpen && (
                 <>
