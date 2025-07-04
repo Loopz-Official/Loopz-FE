@@ -2,10 +2,8 @@
 
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 import { LEFT_SIDE_OPTIONS, RIGHT_SIDE_OPTIONS } from '@/constants/header';
-import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 
 import CartCount from '../features/cart/CartCount';
 
@@ -23,9 +21,7 @@ export default function Header({
     const router = useRouter();
 
     const currentOption = LEFT_SIDE_OPTIONS[type];
-    const isOptionsAvailable = type === 'main' || 'sub';
-
-    const [cartCount, setCartCount] = useState<number>(0);
+    const isOptionsAvailable = type === 'main' || type === 'sub';
 
     const handleLeftOptionClick = () => {
         if (type === 'main') {
@@ -36,15 +32,6 @@ export default function Header({
             router.back();
         }
     };
-
-    // Header 마운트 시 장바구니 상품 개수를 가져오기 위함
-    const { data: cartInfos } = useCartInquiryQuery();
-
-    useEffect(() => {
-        if (isOptionsAvailable) {
-            setCartCount(cartInfos?.availableItems.length || 0);
-        }
-    }, [cartInfos, isOptionsAvailable]);
 
     return (
         <div
@@ -75,9 +62,7 @@ export default function Header({
                                     onClick={() => router.push(route)}
                                 >
                                     <Icon className="h-7 w-7" />
-                                    {label === '장바구니' && (
-                                        <CartCount count={cartCount} />
-                                    )}
+                                    {label === '장바구니' && <CartCount />}
                                 </button>
                             )
                         )}
