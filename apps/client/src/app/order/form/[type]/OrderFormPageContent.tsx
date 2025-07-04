@@ -1,15 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import BottomButton from '@/components/common/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
-import CartBottomButton from '@/components/features/order/form/CartBottomButton';
-import DetailBottomButton from '@/components/features/order/form/DetailBottomButton';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
+import { getTotalPrice } from '@/utils/order/getPrice';
 
 export default function OrderFormPageContent({
     type,
@@ -23,6 +25,10 @@ export default function OrderFormPageContent({
         useState(false);
 
     const isDisabled = !(activeAddressInfo && hasAgreedToRequiredTerms);
+    const router = useRouter();
+
+    const { products } = useSelectedProductsStore();
+    const totalPrice = getTotalPrice(products);
 
     return (
         <div className="pb-17">
@@ -61,11 +67,11 @@ export default function OrderFormPageContent({
             </div>
 
             {/* 버튼 */}
-            {type === 'cart' ? (
-                <CartBottomButton isDisabled={isDisabled} />
-            ) : (
-                <DetailBottomButton isDisabled={isDisabled} />
-            )}
+            <BottomButton
+                text={`${totalPrice.toLocaleString()}원 결제하기`}
+                isDisabled={isDisabled}
+                onClick={() => router.push(`/order/confirm/${type}`)}
+            />
         </div>
     );
 }

@@ -5,16 +5,14 @@ import { useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
+import { getProductPrice, getTotalPrice } from '@/utils/order/getPrice';
 
 export default function PriceSummarySection() {
     const [isDetailOpen, setIsDetailOpen] = useState(true);
     const { products } = useSelectedProductsStore();
 
-    const productPrice = products.reduce(
-        (acc, product) => acc + product.objectPrice * product.quantity,
-        0
-    );
-    const totalPrice = productPrice + 3000;
+    const productPrice = getProductPrice(products);
+    const totalPrice = getTotalPrice(products);
 
     return (
         <>
