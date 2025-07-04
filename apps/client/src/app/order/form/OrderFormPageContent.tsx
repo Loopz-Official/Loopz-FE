@@ -16,19 +16,30 @@ import { AddressInfo } from '@/schemas/address';
 import { formatPrice } from '@/utils/formatPrice';
 import { getTotalPrice } from '@/utils/order/getPrice';
 
+export type DeliveryRequest = {
+    option: string | null;
+    customText: string;
+};
+
 export default function OrderFormPageContent({
     orderFrom,
 }: {
     orderFrom: OrderFrom;
 }) {
+    const router = useRouter();
+
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
-    const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
-    const [textareaContent, setTextareaContent] = useState('');
+
+    // deliveryRequest로 네이밍 변경
+    const [deliveryRequest, setDeliveryRequest] = useState<DeliveryRequest>({
+        option: null,
+        customText: '',
+    });
+
     const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
         useState(false);
 
     const isDisabled = !(activeAddressInfo && hasAgreedToRequiredTerms);
-    const router = useRouter();
 
     const { products } = useSelectedProductsStore();
     const totalPrice = getTotalPrice(products);
@@ -44,15 +55,17 @@ export default function OrderFormPageContent({
 
     // 배송 요청사항 저장
     useEffect(() => {
-        if (!deliveryRequest) return;
-
-        let request = deliveryRequest;
-        if (textareaContent) {
-            request = textareaContent;
+        let request = deliveryRequest.option;
+        if (
+            deliveryRequest.option === '직접 입력' &&
+            deliveryRequest.customText
+        ) {
+            request = deliveryRequest.customText;
         }
-
-        setBaseOrderRequest({ deliveryRequest: request });
-    }, [deliveryRequest, textareaContent, setBaseOrderRequest]);
+        if (request) {
+            setBaseOrderRequest({ deliveryRequest: request });
+        }
+    }, [deliveryRequest, setBaseOrderRequest]);
 
     // 약관 동의 저장
     useEffect(() => {
@@ -60,6 +73,17 @@ export default function OrderFormPageContent({
             setBaseOrderRequest({ agreedToTerms: hasAgreedToRequiredTerms });
         }
     }, [hasAgreedToRequiredTerms, setBaseOrderRequest]);
+
+    // Delivery request handler
+    const onDeliveryRequestChange = <K extends keyof DeliveryRequest>(
+        key: K,
+        value: DeliveryRequest[K]
+    ) => {
+        setDeliveryRequest((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
 
     return (
         <div className="pb-17">
@@ -72,9 +96,7 @@ export default function OrderFormPageContent({
                         orderFrom={orderFrom}
                         onActiveAddressInfoChange={setActiveAddressInfo}
                         deliveryRequest={deliveryRequest}
-                        setDeliveryRequest={setDeliveryRequest}
-                        textareaContent={textareaContent}
-                        setTextareaContent={setTextareaContent}
+                        onDeliveryRequestChange={onDeliveryRequestChange}
                     />
                 </section>
 

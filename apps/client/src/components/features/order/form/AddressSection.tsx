@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { DeliveryRequest } from '@/app/order/form/OrderFormPageContent';
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
 import { OrderFrom } from '@/constants/order';
@@ -15,20 +16,19 @@ import { getOrderFromQueryString } from '@/utils/route';
 
 type AddressSectionProps = {
     onActiveAddressInfoChange: (info: AddressInfo | undefined) => void;
-    deliveryRequest: string | null;
-    setDeliveryRequest: (request: string | null) => void;
-    textareaContent: string;
-    setTextareaContent: (content: string) => void;
+    deliveryRequest: DeliveryRequest;
+    onDeliveryRequestChange: <K extends keyof DeliveryRequest>(
+        key: K,
+        value: DeliveryRequest[K]
+    ) => void;
     orderFrom: OrderFrom;
 };
 
 export default function AddressSection({
+    orderFrom,
     onActiveAddressInfoChange,
     deliveryRequest,
-    setDeliveryRequest,
-    textareaContent,
-    setTextareaContent,
-    orderFrom,
+    onDeliveryRequestChange,
 }: AddressSectionProps) {
     const router = useRouter();
 
@@ -57,20 +57,7 @@ export default function AddressSection({
 
     const [isOptionOpen, setIsOptionOpen] = useState(false);
     const isTextareaOpen =
-        deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionOpen;
-
-    // 직접 입력 textarea 내용 임시 저장
-    useEffect(() => {
-        sessionStorage.setItem('textareaContent', String(textareaContent));
-    }, [textareaContent]);
-
-    // 저장된 textarea 내용 불러오기
-    useEffect(() => {
-        const savedTextareaContent = sessionStorage.getItem('textareaContent');
-
-        if (!savedTextareaContent) return;
-        setTextareaContent(savedTextareaContent);
-    }, [isTextareaOpen, setTextareaContent]);
+        deliveryRequest.option === DELIVERY_REQUESTS.at(-1) && !isOptionOpen;
 
     return (
         <>
@@ -132,9 +119,9 @@ export default function AddressSection({
                             className={`${isOptionOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
                         >
                             <div
-                                className={`${deliveryRequest ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
+                                className={`${deliveryRequest.option ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
                             >
-                                {deliveryRequest || '배송 요청사항 선택'}
+                                {deliveryRequest.option || '배송 요청사항 선택'}
                                 <ChevronDownIcon
                                     className={clsx(
                                         'h-4 w-4 transition-all',
@@ -151,7 +138,10 @@ export default function AddressSection({
                                     <button
                                         key={request}
                                         onClick={() => {
-                                            setDeliveryRequest(request);
+                                            onDeliveryRequestChange(
+                                                'option',
+                                                request
+                                            );
                                             setIsOptionOpen(false);
                                         }}
                                         className="active:bg-gray-regular w-full px-4 py-2.5 text-left transition-colors"
@@ -163,9 +153,12 @@ export default function AddressSection({
                         )}
                         {isTextareaOpen && (
                             <textarea
-                                value={textareaContent}
+                                value={deliveryRequest.customText}
                                 onChange={(e) =>
-                                    setTextareaContent(e.target.value)
+                                    onDeliveryRequestChange(
+                                        'customText',
+                                        e.target.value
+                                    )
                                 }
                                 maxLength={50}
                                 placeholder="내용을 입력해 주세요. (최대 50자)"
