@@ -6,6 +6,7 @@ import BottomButton from '@/components/common/BottomButton';
 import VerticalDivider from '@/components/common/VerticalDivider';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from './OrderQuantity';
@@ -24,6 +25,21 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
     const { objectDetail } = useObjectDetailQuery(objectId);
     const { count } = usePurchaseCountStore();
     const router = useRouter();
+
+    const { setProducts } = useSelectedProductsStore();
+
+    const handleBottomButtonClick = () => {
+        const product = {
+            objectId,
+            objectName: objectDetail?.objectResponse?.objectName ?? '',
+            objectPrice: objectDetail?.objectResponse?.objectPrice ?? 0,
+            imageUrl: objectDetail?.objectResponse?.imageUrl ?? '',
+            quantity: count,
+        };
+        setProducts([product]);
+
+        router.push('/order/form/detail');
+    };
 
     return (
         <div className="border-gray-regular pb-25 absolute bottom-0 z-50 h-fit w-full rounded-t-2xl border-b border-solid bg-white px-5">
@@ -78,7 +94,7 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
             <BottomButton
                 text="구매하기"
                 isDisabled={false}
-                onClick={() => router.push('/order/form/detail')}
+                onClick={handleBottomButtonClick}
                 isBottomSheetOpen={true}
             />
         </div>
