@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
+import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
+import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
 
 import BottomSheet from './BottomSheet';
@@ -14,8 +16,16 @@ const BottomPurchaseCTA = () => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
+    const addCartMutation = useUpdateCartItem();
+
     const handleLike = () => setIsLiked((prev) => !prev);
-    const handleCart = () => toast('장바구니에 상품을 담았어요!');
+    const handleCart = async () => {
+        await addCartMutation.mutateAsync({
+            objectId: useToAddObjectStore.getState().objectId,
+            quantity: 1,
+        });
+        toast.success('장바구니에 상품을 담았어요!');
+    };
 
     const likeIconStyling = isLiked
         ? { fill: '#FF5A2D', stroke: 'none' }
@@ -41,7 +51,7 @@ const BottomPurchaseCTA = () => {
     ];
 
     return (
-        <div className="fixed bottom-0 z-10 w-full max-w-2xl bg-white">
+        <div className="fixed bottom-0 z-50 w-full max-w-2xl bg-white">
             <BottomButton
                 text="구매하기"
                 isDisabled={false}

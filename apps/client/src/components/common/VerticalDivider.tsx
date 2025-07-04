@@ -1,5 +1,5 @@
 const VerticalDivider = ({
-    height = '3',
+    height = '12',
     borderWidth = '0.5',
 }: {
     height?: string;
@@ -7,7 +7,11 @@ const VerticalDivider = ({
 }) => {
     return (
         <span
-            className={`border-gray-regular h-${height} w-[0px] border-[${borderWidth}px] border-solid`}
+            className="border-gray-regular w-[0px] border-solid"
+            style={{
+                height: `${height}px`,
+                borderWidth: `${borderWidth}px`,
+            }}
         ></span>
     );
 };

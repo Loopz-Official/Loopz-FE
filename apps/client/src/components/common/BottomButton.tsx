@@ -24,7 +24,7 @@ export default function BottomButton({
     return (
         <div
             className={clsx(
-                `${position} bottom-0 z-50 grid w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
+                `${position} h-18 bottom-0 z-50 grid w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
                 position === 'fixed' && 'px-5 py-3',
                 isBottomSheetOpen
                     ? 'border-gray-regular border-t border-solid'
@@ -38,10 +38,10 @@ export default function BottomButton({
                 disabled={isDisabled}
                 onClick={onClick}
                 className={clsx(
-                    'disabled:bg-button-disabled w-full rounded-[0.25rem] bg-black font-semibold text-white',
+                    'disabled:bg-button-disabled h-full w-full rounded-[0.25rem] bg-black font-semibold text-white',
                     position === 'fixed'
                         ? 'text-body-03 py-3'
-                        : 'text-headline-04 h-14'
+                        : 'text-headline-04'
                 )}
             >
                 {text}

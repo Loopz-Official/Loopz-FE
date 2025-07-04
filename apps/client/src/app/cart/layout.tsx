@@ -10,7 +10,7 @@ export default function CartLayout({
     return (
         <div className="flex min-h-screen w-full flex-col">
             <Header type="title" title="장바구니" />
-            <main className="grow">{children}</main>
+            <main className="pb-42 grow">{children}</main>
         </div>
     );
 }
