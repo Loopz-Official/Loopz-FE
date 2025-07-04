@@ -1,19 +1,24 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
+import { OrderFrom } from '@/constants/order';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';
+import { getOrderFromQueryString } from '@/utils/route';
 
 export default function AddressPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
+    const orderFromQueryString = getOrderFromQueryString(orderFrom);
 
     const [activeId, setActiveId] = useState<string | undefined>(undefined);
     const { selectedAddress, setSelectedAddress } = useSelectedAddressStore();
@@ -49,7 +54,7 @@ export default function AddressPage() {
             alert('배송지는 최대 10개까지 등록하실 수 있습니다.');
             return;
         } else {
-            router.push('/address/add');
+            router.push(`/address/add?${orderFromQueryString}`);
         }
     };
 
@@ -59,18 +64,9 @@ export default function AddressPage() {
         );
 
         if (selectedAddress) {
-            // const updatedAddress = {
-            //     ...selectedAddress,
-            //     defaultAddress: true,
-            // };
-
             try {
-                // await updateAddressMutation.mutateAsync({
-                //     addressId: updatedAddress.addressId,
-                //     updatedAddress,
-                // });
                 setSelectedAddress(selectedAddress);
-                router.push('/order/form');
+                router.push(`/order/form?${orderFromQueryString}`);
             } catch {
                 alert('배송지 업데이트 중 에러가 발생했습니다.');
             }
@@ -148,7 +144,7 @@ export default function AddressPage() {
                                         type="edit"
                                         onClick={() => {
                                             router.push(
-                                                `/address/edit?addressId=${address.addressId}`
+                                                `/address/edit?addressId=${address.addressId}&${orderFromQueryString}`
                                             );
                                         }}
                                     />

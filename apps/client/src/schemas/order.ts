@@ -1,9 +1,12 @@
 import * as z from 'zod/v4';
 
+export const orderFrom = z.enum(['cart', 'detail']);
+export type OrderFrom = z.infer<typeof orderFrom>;
+
 // 상세보기에서 주문
 export const detailOrderRequest = z.object({
-    quantity: z.number(),
-    addressId: z.string(),
+    quantity: z.int32(),
+    addressId: z.uuid(),
     paymentMethod: z.string(),
     deliveryRequest: z.string(),
     agreedToTerms: z.boolean(),
@@ -13,7 +16,7 @@ export type DetailOrderRequest = z.infer<typeof detailOrderRequest>;
 
 // 장바구니에서 주문
 export const cartOrderRequest = z.object({
-    addressId: z.string(),
+    addressId: z.uuid(),
     paymentMethod: z.string(),
     deliveryRequest: z.string(),
     objectIds: z.array(z.string()),

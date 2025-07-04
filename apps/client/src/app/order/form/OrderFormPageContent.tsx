@@ -9,15 +9,17 @@ import AgreementSection from '@/components/features/order/form/AgreementSection'
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
+import { OrderFrom } from '@/constants/order';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
+import { formatPrice } from '@/utils/formatPrice';
 import { getTotalPrice } from '@/utils/order/getPrice';
 
 export default function OrderFormPageContent({
-    type,
+    orderFrom,
 }: {
-    type: 'cart' | 'detail';
+    orderFrom: OrderFrom;
 }) {
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
     const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
@@ -67,6 +69,7 @@ export default function OrderFormPageContent({
                 {/* 배송지 정보 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <AddressSection
+                        orderFrom={orderFrom}
                         onActiveAddressInfoChange={setActiveAddressInfo}
                         deliveryRequest={deliveryRequest}
                         setDeliveryRequest={setDeliveryRequest}
@@ -97,9 +100,11 @@ export default function OrderFormPageContent({
 
             {/* 버튼 */}
             <BottomButton
-                text={`${totalPrice.toLocaleString()}원 결제하기`}
+                text={`${formatPrice(totalPrice)} 원 결제하기`}
                 isDisabled={isDisabled}
-                onClick={() => router.push(`/order/confirm/${type}`)}
+                onClick={() =>
+                    router.push(`/order/confirm?orderFrom=${orderFrom}`)
+                }
             />
         </div>
     );

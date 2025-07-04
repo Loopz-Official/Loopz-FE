@@ -76,7 +76,7 @@ export default function CartPage() {
 
         setProducts(selected);
 
-        router.push('/order/form/cart');
+        router.push('/order/form?orderFrom=cart');
     };
 
     return (

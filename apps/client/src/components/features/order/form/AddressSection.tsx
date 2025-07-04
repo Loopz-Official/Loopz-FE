@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
+import { OrderFrom } from '@/constants/order';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';
 import { AddressInfo } from '@/schemas/address';
+import { getOrderFromQueryString } from '@/utils/route';
 
 type AddressSectionProps = {
     onActiveAddressInfoChange: (info: AddressInfo | undefined) => void;
@@ -17,6 +19,7 @@ type AddressSectionProps = {
     setDeliveryRequest: (request: string | null) => void;
     textareaContent: string;
     setTextareaContent: (content: string) => void;
+    orderFrom: OrderFrom;
 };
 
 export default function AddressSection({
@@ -25,6 +28,7 @@ export default function AddressSection({
     setDeliveryRequest,
     textareaContent,
     setTextareaContent,
+    orderFrom,
 }: AddressSectionProps) {
     const router = useRouter();
 
@@ -74,7 +78,11 @@ export default function AddressSection({
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
                 {activeAddressInfo && (
                     <button
-                        onClick={() => router.push('/address')}
+                        onClick={() =>
+                            router.push(
+                                `/address?${getOrderFromQueryString(orderFrom)}`
+                            )
+                        }
                         className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
                     >
                         변경

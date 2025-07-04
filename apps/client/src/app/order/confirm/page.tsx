@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound, useParams, useRouter } from 'next/navigation';
+import { notFound, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import Header from '@/components/layouts/Header';
@@ -9,17 +9,18 @@ import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStor
 import { CartOrderRequest, DetailOrderRequest } from '@/schemas/order';
 import { createCartOrder, createDetailOrder } from '@/services/api/order';
 
-export default function Page() {
+export default function OrderConfirmPage() {
     const [agreements, setAgreements] = useState([false, false, false]);
     const isAllChecked = agreements.every((agreement) => agreement);
 
     const router = useRouter();
-    const { type } = useParams();
+    const searchParams = useSearchParams();
+    const orderFrom = searchParams.get('orderFrom');
     const { products } = useSelectedProductsStore();
     const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
         useBaseOrderRequestStore();
 
-    if (type !== 'cart' && type !== 'detail') notFound();
+    if (orderFrom !== 'cart' && orderFrom !== 'detail') notFound();
 
     const handleBottomButtonClick = async () => {
         try {
@@ -30,7 +31,7 @@ export default function Page() {
                 agreedToTerms: agreedToTerms,
             };
 
-            if (type === 'cart') {
+            if (orderFrom === 'cart') {
                 const body: CartOrderRequest = {
                     ...baseRequest,
                     objectIds: products.map((product) => product.objectId),
