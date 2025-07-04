@@ -17,10 +17,10 @@ export const MOCK_BANNER = [
         description: 'Loopz의 철학이 궁금하다면',
         embeddedUrl: 'https://loopz.co.kr/about',
     },
-    // {
-    //     imageUrl: '/banner-04.png',
-    //     title: '지속 가능한 흐름을 위해\nLOOPZ와 함께하세요.',
-    //     description: '유휴 자원, 폐기가 아닌 선택하세요.',
-    //     embeddedUrl: 'https://loopz-flow.com/ContactUs',
-    // },
+    {
+        imageUrl: '/banner/04.png',
+        title: '파브리카, 자유가 시작되는 곳',
+        description: '일상의 감각을 디자인하는 라이프스타일 브랜드',
+        embeddedUrl: 'https://fabrika.kr',
+    },
 ];
