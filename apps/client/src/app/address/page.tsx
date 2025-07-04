@@ -136,8 +136,9 @@ export default function AddressPage() {
                                 <div className="text-body-03 text-gray-dark mb-1.5 mt-1 flex flex-col gap-0.5 font-normal">
                                     <div>
                                         [{address.zoneCode}] {address.address}
-                                        ,&nbsp;
-                                        {address.addressDetail}
+                                        {address.addressDetail
+                                            ? `, ${address.addressDetail}`
+                                            : ''}
                                     </div>
                                     <div>{address.phoneNumber}</div>
                                 </div>

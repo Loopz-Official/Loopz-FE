@@ -108,7 +108,9 @@ export default function AddressSection({
                         <div className="text-caption-01 tracking-normal">
                             [{activeAddressInfo.zoneCode}]{' '}
                             {activeAddressInfo.address}
-                            ,&nbsp;{activeAddressInfo.addressDetail}
+                            {activeAddressInfo.addressDetail
+                                ? `, ${activeAddressInfo.addressDetail}`
+                                : ''}
                         </div>
                         <div className="text-caption-01 tracking-normal">
                             {activeAddressInfo.phoneNumber}
