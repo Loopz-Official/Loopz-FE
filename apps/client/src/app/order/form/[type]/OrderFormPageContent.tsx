@@ -1,19 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import AgreementSection from '@/components/features/order/form/AgreementSection';
+import CartBottomButton from '@/components/features/order/form/CartBottomButton';
+import DetailBottomButton from '@/components/features/order/form/DetailBottomButton';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { AddressInfo } from '@/schemas/address';
 
-export default function OrderFormPageContent() {
-    const router = useRouter();
-
+export default function OrderFormPageContent({
+    type,
+}: {
+    type: 'cart' | 'detail';
+}) {
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
     const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
     const [textareaContent, setTextareaContent] = useState('');
@@ -59,11 +61,11 @@ export default function OrderFormPageContent() {
             </div>
 
             {/* 버튼 */}
-            <BottomButton
-                text={'21,000원 결제하기'}
-                isDisabled={isDisabled}
-                onClick={() => router.push('/order/confirm')}
-            />
+            {type === 'cart' ? (
+                <CartBottomButton isDisabled={isDisabled} />
+            ) : (
+                <DetailBottomButton isDisabled={isDisabled} />
+            )}
         </div>
     );
 }

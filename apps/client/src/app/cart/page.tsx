@@ -110,7 +110,7 @@ export default function CartPage() {
                     <BottomButton
                         text="구매하기"
                         isDisabled={false}
-                        onClick={() => router.push('/order/form')}
+                        onClick={() => router.push('/order/form/cart')}
                     />
                 </>
             )}
