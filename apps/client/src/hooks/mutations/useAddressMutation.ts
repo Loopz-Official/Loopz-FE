@@ -4,7 +4,7 @@ import { AddressCURequest } from '@/schemas/address';
 import * as apiFn from '@/services/api/address';
 
 type UpdateAddressMutationProps = {
-    addressId: number;
+    addressId: string;
     updatedAddress: AddressCURequest;
 };
 

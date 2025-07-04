@@ -15,7 +15,7 @@ import { PlusIcon } from '@/icons/Plus';
 export default function AddressPage() {
     const router = useRouter();
 
-    const [activeId, setActiveId] = useState<number | undefined>(undefined);
+    const [activeId, setActiveId] = useState<string | undefined>(undefined);
     const { selectedAddress, setSelectedAddress } = useSelectedAddressStore();
 
     const { data: addressList, isLoading, error } = useAddressListQuery();
@@ -79,7 +79,7 @@ export default function AddressPage() {
         }
     };
 
-    const handleDeleteButtonClick = async (addressId: number) => {
+    const handleDeleteButtonClick = async (addressId: string) => {
         try {
             await deleteAddressMutation.mutateAsync(addressId);
         } catch {

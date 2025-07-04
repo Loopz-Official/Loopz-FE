@@ -36,7 +36,7 @@ export default function AddressTypePageContent() {
     useEffect(() => {
         if (type === 'edit' && addressList && addressId) {
             const target = addressList.find(
-                (addr) => addr.addressId === Number(addressId)
+                (addr) => addr.addressId === addressId
             );
             if (target) {
                 setNewAddress({
@@ -76,7 +76,7 @@ export default function AddressTypePageContent() {
         try {
             if (type === 'edit' && addressId) {
                 await updateAddressMutation.mutateAsync({
-                    addressId: Number(addressId),
+                    addressId: addressId,
                     updatedAddress: newAddress,
                 });
             } else {
