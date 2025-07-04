@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
@@ -9,6 +9,7 @@ import AgreementSection from '@/components/features/order/form/AgreementSection'
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
+import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
 import { getTotalPrice } from '@/utils/order/getPrice';
@@ -29,6 +30,34 @@ export default function OrderFormPageContent({
 
     const { products } = useSelectedProductsStore();
     const totalPrice = getTotalPrice(products);
+
+    const { setBaseOrderRequest } = useBaseOrderRequestStore();
+
+    // 배송지 저장
+    useEffect(() => {
+        if (activeAddressInfo) {
+            setBaseOrderRequest({ addressId: activeAddressInfo.addressId });
+        }
+    }, [activeAddressInfo, setBaseOrderRequest]);
+
+    // 배송 요청사항 저장
+    useEffect(() => {
+        if (!deliveryRequest) return;
+
+        let request = deliveryRequest;
+        if (textareaContent) {
+            request = textareaContent;
+        }
+
+        setBaseOrderRequest({ deliveryRequest: request });
+    }, [deliveryRequest, textareaContent, setBaseOrderRequest]);
+
+    // 약관 동의 저장
+    useEffect(() => {
+        if (hasAgreedToRequiredTerms) {
+            setBaseOrderRequest({ agreedToTerms: hasAgreedToRequiredTerms });
+        }
+    }, [hasAgreedToRequiredTerms, setBaseOrderRequest]);
 
     return (
         <div className="pb-17">
