@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
-import AgreementSection from '@/components/features/order/form/AgreementSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
+import AgreementSection from '@/components/features/order/form/TermsSection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { OrderFrom } from '@/constants/order';
