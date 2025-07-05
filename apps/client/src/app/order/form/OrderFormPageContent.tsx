@@ -10,7 +10,9 @@ import PriceSummarySection from '@/components/features/order/form/PriceSummarySe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { OrderFrom } from '@/constants/order';
+import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
+import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
 import { formatPrice } from '@/utils/formatPrice';
@@ -29,6 +31,8 @@ export default function OrderFormPageContent({
     const router = useRouter();
 
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
+    const { selectedAddressId, setSelectedAddressId } =
+        useSelectedAddressIdStore();
 
     // deliveryRequest로 네이밍 변경
     const [deliveryRequest, setDeliveryRequest] = useState<DeliveryRequest>({
@@ -45,6 +49,29 @@ export default function OrderFormPageContent({
     const totalPrice = getTotalPrice(products);
 
     const { setBaseOrderRequest } = useBaseOrderRequestStore();
+
+    // 주소 관련 쿼리 및 전역 상태 관리
+    const { data: addressList, isLoading, error } = useAddressListQuery();
+
+    // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
+    useEffect(() => {
+        const info: AddressInfo | undefined =
+            (selectedAddressId &&
+                addressList?.find(
+                    (addr) => addr.addressId === selectedAddressId
+                )) ||
+            addressList?.find((addr) => addr.defaultAddress) ||
+            addressList?.[0];
+
+        if (info) {
+            setActiveAddressInfo(info);
+            if (!selectedAddressId || info.addressId !== selectedAddressId) {
+                setSelectedAddressId(info.addressId);
+            }
+        } else {
+            setActiveAddressInfo(undefined);
+        }
+    }, [addressList, selectedAddressId, setSelectedAddressId]);
 
     // 배송지 저장
     useEffect(() => {
@@ -94,9 +121,12 @@ export default function OrderFormPageContent({
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <AddressSection
                         orderFrom={orderFrom}
-                        onActiveAddressInfoChange={setActiveAddressInfo}
+                        activeAddressInfo={activeAddressInfo ?? undefined}
+                        addressList={addressList ?? []}
                         deliveryRequest={deliveryRequest}
                         onDeliveryRequestChange={onDeliveryRequestChange}
+                        isLoading={isLoading}
+                        error={error}
                     />
                 </section>
 

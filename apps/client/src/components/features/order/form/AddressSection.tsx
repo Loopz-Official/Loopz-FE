@@ -2,58 +2,38 @@
 
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { DeliveryRequest } from '@/app/order/form/OrderFormPageContent';
 import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
 import { OrderFrom } from '@/constants/order';
-import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
-import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
 import { PlusIcon } from '@/icons/Plus';
 import { AddressInfo } from '@/schemas/address';
 import { getOrderFromQueryString } from '@/utils/route';
 
 type AddressSectionProps = {
-    onActiveAddressInfoChange: (info: AddressInfo | undefined) => void;
+    activeAddressInfo: AddressInfo | undefined;
+    addressList: AddressInfo[];
     deliveryRequest: DeliveryRequest;
     onDeliveryRequestChange: <K extends keyof DeliveryRequest>(
         key: K,
         value: DeliveryRequest[K]
     ) => void;
     orderFrom: OrderFrom;
+    isLoading: boolean;
+    error: unknown;
 };
 
 export default function AddressSection({
     orderFrom,
-    onActiveAddressInfoChange,
+    activeAddressInfo,
+    isLoading,
+    error,
     deliveryRequest,
     onDeliveryRequestChange,
 }: AddressSectionProps) {
     const router = useRouter();
-
-    const { selectedAddress } = useSelectedAddressStore();
-    const { data: addressList, isLoading, error } = useAddressListQuery();
-    const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
-
-    // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
-    useEffect(() => {
-        if (addressList && addressList.length > 0) {
-            const defaultAddress = addressList.find(
-                (addr) => addr.defaultAddress
-            );
-            const info = selectedAddress
-                ? selectedAddress
-                : defaultAddress
-                  ? defaultAddress
-                  : addressList[0];
-            setActiveAddressInfo(info);
-            onActiveAddressInfoChange(info);
-        } else {
-            setActiveAddressInfo(undefined);
-            onActiveAddressInfoChange(undefined);
-        }
-    }, [addressList, onActiveAddressInfoChange, selectedAddress]);
 
     const [isOptionOpen, setIsOptionOpen] = useState(false);
     const isTextareaOpen =

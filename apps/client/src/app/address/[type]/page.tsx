@@ -13,9 +13,11 @@ import AddressSearchSection from '@/components/features/address/AddressSearchSec
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
+import { OrderFrom } from '@/constants/order';
 import * as M from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { AddressCURequest } from '@/schemas/address';
+import { getOrderFromQueryString } from '@/utils/route';
 
 export default function AddressCUPage() {
     const router = useRouter();
@@ -23,6 +25,7 @@ export default function AddressCUPage() {
     if (type !== 'add' && type !== 'edit') notFound();
 
     const searchParams = useSearchParams();
+    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
     const addressId = type === 'edit' ? searchParams.get('addressId') : null;
 
     const { data: addressList } = useAddressListQuery();
@@ -78,7 +81,7 @@ export default function AddressCUPage() {
             } else {
                 await createAddressMutation(newAddress);
             }
-            router.push('/address');
+            router.push(`/address?${getOrderFromQueryString(orderFrom)}`);
         } catch {
             alert(
                 type === 'edit'
