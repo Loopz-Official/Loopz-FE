@@ -81,7 +81,7 @@ export default function AddressCUPage() {
             } else {
                 await createAddressMutation(newAddress);
             }
-            router.push(`/address?${getOrderFromQueryString(orderFrom)}`);
+            router.replace(`/address?${getOrderFromQueryString(orderFrom)}`);
         } catch {
             alert(
                 type === 'edit'
