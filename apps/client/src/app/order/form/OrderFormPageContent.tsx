@@ -16,7 +16,8 @@ import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdSt
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
 import { formatPrice } from '@/utils/formatPrice';
-import { getTotalPrice } from '@/utils/order/getPrice';
+import { getPriceSummary } from '@/utils/order/getPrice';
+import { getOrderFromQueryString } from '@/utils/route';
 
 export type DeliveryRequest = {
     option: string | null;
@@ -46,7 +47,7 @@ export default function OrderFormPageContent({
     const isDisabled = !(activeAddressInfo && hasAgreedToRequiredTerms);
 
     const { products } = useSelectedProductsStore();
-    const totalPrice = getTotalPrice(products);
+    const { productPrice, totalPrice } = getPriceSummary(products);
 
     const { setBaseOrderRequest } = useBaseOrderRequestStore();
 
@@ -137,7 +138,10 @@ export default function OrderFormPageContent({
 
                 {/* 결제 금액 */}
                 <section className="flex flex-col border-t border-black pb-5 pt-5">
-                    <PriceSummarySection />
+                    <PriceSummarySection
+                        productPrice={productPrice}
+                        totalPrice={totalPrice}
+                    />
                 </section>
 
                 {/* 약관 동의 */}
@@ -155,7 +159,9 @@ export default function OrderFormPageContent({
                 text={`${formatPrice(totalPrice)} 원 결제하기`}
                 isDisabled={isDisabled}
                 onClick={() =>
-                    router.push(`/order/confirm?orderFrom=${orderFrom}`)
+                    router.push(
+                        `/order/confirm?${getOrderFromQueryString(orderFrom)}`
+                    )
                 }
             />
         </div>
