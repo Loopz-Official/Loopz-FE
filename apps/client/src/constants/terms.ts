@@ -2,10 +2,9 @@ import { Term } from '@/schemas/terms';
 
 export interface SignupTerm extends Term {
     id: 'over14' | 'agreedServiceTerms' | 'agreedMarketing' | 'agreedEventSMS';
-    checked: boolean;
 }
 
-// 주문 및 결제 약관 데이터 (추후 서버 데이터 기준 사용 수정 필요 -> 사용 x)
+// 주문 관련 약관
 export const ORDER_TERMS: Term[] = [
     {
         id: 'privacy-collection',
@@ -27,27 +26,23 @@ export const SIGN_UP_TERMS: SignupTerm[] = [
         title: '만 14세 이상입니다.',
         mandatory: true,
         href: '',
-        checked: false,
     },
     {
         id: 'agreedServiceTerms',
         title: 'Loopz 이용약관 동의',
         mandatory: true,
         href: '',
-        checked: false,
     },
     {
         id: 'agreedMarketing',
         title: '개인정보 마케팅 활용 동의',
         mandatory: false,
         href: '',
-        checked: false,
     },
     {
         id: 'agreedEventSMS',
         title: '이벤트 및 혜택 안내 메일 및 SMS 수신 동의',
         mandatory: false,
         href: '',
-        checked: false,
     },
 ];

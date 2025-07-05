@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { setUserInfoCookie } from '@/auth/cookie/setCookie';
 import BottomButton from '@/components/common/BottomButton';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
-import { SIGN_UP_AGREEMENTS } from '@/constants/agreements';
+import { SIGN_UP_TERMS } from '@/constants/agreements';
 import { useUserInfo } from '@/hooks/stores/userInfo';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
@@ -15,7 +15,7 @@ export default function TermsPage() {
     const router = useRouter();
 
     const [agreements, setAgreements] = useState(
-        SIGN_UP_AGREEMENTS.map((a) => ({ ...a }))
+        SIGN_UP_TERMS.map((a) => ({ ...a }))
     );
 
     const isCheckedAll = agreements.every((agreement) => agreement.checked);

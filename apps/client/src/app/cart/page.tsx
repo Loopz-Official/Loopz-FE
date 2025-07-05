@@ -11,10 +11,10 @@ import CartSummary from '@/components/features/cart/CartSummary';
 import EmptyCart from '@/components/features/cart/EmptyCart';
 import ObjectSelectBar from '@/components/features/cart/ObjeSelectBar';
 import { DELIVERY_FEE } from '@/constants/delivery';
+import { useCheckGroup } from '@/hooks/check';
 import * as M from '@/hooks/mutations/useCartMutation';
 import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { useCheckGroup } from '@/hooks/useCheckGroup';
 import { ObjectId } from '@/schemas/cart';
 import * as U from '@/utils/cart/getCart';
 

@@ -10,6 +10,8 @@ import PriceSummarySection from '@/components/features/order/form/PriceSummarySe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { OrderFrom } from '@/constants/order';
+import { ORDER_TERMS } from '@/constants/terms';
+import { useTermsCheck } from '@/hooks/check';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
@@ -41,10 +43,11 @@ export default function OrderFormPageContent({
         customText: '',
     });
 
-    const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
-        useState(false);
+    // 약관 체크 상태 관리
+    const termsCheck = useTermsCheck(ORDER_TERMS);
+    const isAllTermsChecked = termsCheck.isAllMandatoryChecked;
 
-    const isDisabled = !(activeAddressInfo && hasAgreedToRequiredTerms);
+    const isDisabled = !(activeAddressInfo && isAllTermsChecked);
 
     const { products } = useSelectedProductsStore();
     const { productPrice, totalPrice } = getPriceSummary(products);
@@ -97,10 +100,12 @@ export default function OrderFormPageContent({
 
     // 약관 동의 저장
     useEffect(() => {
-        if (hasAgreedToRequiredTerms) {
-            setBaseOrderRequest({ agreedToTerms: hasAgreedToRequiredTerms });
+        if (isAllTermsChecked) {
+            setBaseOrderRequest({
+                agreedToTerms: isAllTermsChecked,
+            });
         }
-    }, [hasAgreedToRequiredTerms, setBaseOrderRequest]);
+    }, [isAllTermsChecked, setBaseOrderRequest]);
 
     // Delivery request handler
     const onDeliveryRequestChange = <K extends keyof DeliveryRequest>(
@@ -146,11 +151,7 @@ export default function OrderFormPageContent({
 
                 {/* 약관 동의 */}
                 <section className="flex flex-col border-t border-black pb-5 pt-5">
-                    <AgreementSection
-                        setHasAgreedToRequiredTerms={
-                            setHasAgreedToRequiredTerms
-                        }
-                    />
+                    <AgreementSection termsCheck={termsCheck} />
                 </section>
             </div>
 
