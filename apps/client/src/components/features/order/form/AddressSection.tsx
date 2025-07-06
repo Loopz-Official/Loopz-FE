@@ -51,9 +51,9 @@ export default function AddressSection({
         }
     }, [addressList, onActiveAddressInfoChange, selectedAddress]);
 
-    const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+    const [isOptionOpen, setIsOptionOpen] = useState(false);
     const isTextareaOpen =
-        deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionsOpen;
+        deliveryRequest === DELIVERY_REQUESTS.at(-1) && !isOptionOpen;
 
     // 직접 입력 textarea 내용 임시 저장
     useEffect(() => {
@@ -120,8 +120,8 @@ export default function AddressSection({
                     {/* 배송 요청사항  */}
                     <div>
                         <button
-                            onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-                            className={`${isOptionsOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
+                            onClick={() => setIsOptionOpen(!isOptionOpen)}
+                            className={`${isOptionOpen || isTextareaOpen ? 'rounded-t-xs' : 'rounded-xs'} border-gray-regular text-caption-01 w-full border transition-[max-height]`}
                         >
                             <div
                                 className={`${deliveryRequest ? 'text-black' : 'text-disabled'} flex items-center justify-between px-3 py-2.5`}
@@ -130,21 +130,21 @@ export default function AddressSection({
                                 <ChevronDownIcon
                                     className={clsx(
                                         'h-4 w-4 transition-all',
-                                        isOptionsOpen
+                                        isOptionOpen
                                             ? 'rotate-180 text-black'
                                             : 'text-gray-10'
                                     )}
                                 />
                             </div>
                         </button>
-                        {isOptionsOpen && (
+                        {isOptionOpen && (
                             <div className="border-gray-regular text-gray-dark rounded-b-xs text-caption-01 flex flex-col border border-t-0">
                                 {DELIVERY_REQUESTS.map((request) => (
                                     <button
                                         key={request}
                                         onClick={() => {
                                             setDeliveryRequest(request);
-                                            setIsOptionsOpen(false);
+                                            setIsOptionOpen(false);
                                         }}
                                         className="active:bg-gray-regular w-full px-4 py-2.5 text-left transition-colors"
                                     >

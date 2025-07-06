@@ -1,6 +1,10 @@
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
+
 import OrderItem, { OrderItemProps } from './OrderItem';
 
 export default function OrderItemsSection({ variant }: OrderItemProps) {
+    const { products } = useSelectedProductsStore();
+
     return (
         <>
             <header>
@@ -8,12 +12,12 @@ export default function OrderItemsSection({ variant }: OrderItemProps) {
             </header>
 
             <div className="space-y-3">
-                {new Array(3).fill(null).map((_, i) => (
+                {products.map((product, i) => (
                     <div
                         key={i}
                         className="not-last:border-b not-last:border-gray-regular not-last:pb-3"
                     >
-                        <OrderItem variant={variant} />
+                        <OrderItem item={product} variant={variant} />
                     </div>
                 ))}
             </div>

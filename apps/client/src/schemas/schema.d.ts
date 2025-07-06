@@ -328,8 +328,7 @@ export interface components {
             defaultAddress?: boolean;
         };
         AddressResponse: {
-            /** Format: int64 */
-            addressId?: number;
+            addressId?: string;
             userId?: string;
             recipientName?: string;
             phoneNumber?: string;
@@ -711,7 +710,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                addressId: number;
+                addressId: string;
             };
             cookie?: never;
         };
@@ -731,7 +730,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                addressId: number;
+                addressId: string;
             };
             cookie?: never;
         };

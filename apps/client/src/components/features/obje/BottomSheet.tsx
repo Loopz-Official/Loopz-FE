@@ -1,10 +1,12 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
+import BottomButton from '@/components/common/BottomButton';
 import VerticalDivider from '@/components/common/VerticalDivider';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from './OrderQuantity';
@@ -22,9 +24,25 @@ const BottomSheet = () => {
 const BottomSheetContent = ({ objectId }: { objectId: string }) => {
     const { objectDetail } = useObjectDetailQuery(objectId);
     const { count } = usePurchaseCountStore();
+    const router = useRouter();
+
+    const { setProducts } = useSelectedProductsStore();
+
+    const handleBottomButtonClick = () => {
+        const product = {
+            objectId,
+            objectName: objectDetail?.objectResponse?.objectName ?? '',
+            objectPrice: objectDetail?.objectResponse?.objectPrice ?? 0,
+            imageUrl: objectDetail?.objectResponse?.imageUrl ?? '',
+            quantity: count,
+        };
+        setProducts([product]);
+
+        router.push('/order/form/detail');
+    };
 
     return (
-        <div className="bottom-17 border-gray-regular absolute z-50 h-fit w-full rounded-t-2xl border-b border-solid bg-white px-5 pb-7">
+        <div className="border-gray-regular pb-25 absolute bottom-0 z-50 h-fit w-full rounded-t-2xl border-b border-solid bg-white px-5">
             <section className="mb-3 flex h-7 w-full items-center justify-center">
                 <div className="bg-gray-11 h-1 w-10 rounded-full" />
             </section>
@@ -72,6 +90,13 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                     </span>
                 </section>
             </section>
+
+            <BottomButton
+                text="구매하기"
+                isDisabled={false}
+                onClick={handleBottomButtonClick}
+                isBottomSheetOpen={true}
+            />
         </div>
     );
 };

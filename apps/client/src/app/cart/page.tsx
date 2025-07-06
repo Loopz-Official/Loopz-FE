@@ -13,6 +13,7 @@ import ObjectSelectBar from '@/components/features/cart/ObjeSelectBar';
 import { DELIVERY_FEE } from '@/constants/delivery';
 import * as M from '@/hooks/mutations/useCartMutation';
 import { useCartInquiryQuery } from '@/hooks/queries/useCartQuery';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { useCheckGroup } from '@/hooks/useCheckGroup';
 import { ObjectId } from '@/schemas/cart';
 import * as U from '@/utils/cart/getCart';
@@ -54,6 +55,28 @@ export default function CartPage() {
 
     const handleEditQuantity = (objectId: ObjectId, quantity: number) => {
         updateCartItemMutation.mutateAsync({ objectId, quantity });
+    };
+
+    const { setProducts } = useSelectedProductsStore();
+
+    const handleBottomButtonClick = () => {
+        if (!availableItems) return;
+
+        const filteredItems = availableItems.filter(({ object }) =>
+            checked.includes(object.objectId)
+        );
+
+        const selected = filteredItems.map(({ object }, i) => ({
+            objectId: object.objectId,
+            objectName: object.objectName,
+            objectPrice: object.objectPrice,
+            imageUrl: object.imageUrl,
+            quantity: filteredItems[i]?.quantity ?? 0,
+        }));
+
+        setProducts(selected);
+
+        router.push('/order/form/cart');
     };
 
     return (
@@ -110,7 +133,7 @@ export default function CartPage() {
                     <BottomButton
                         text="구매하기"
                         isDisabled={false}
-                        onClick={() => router.push('/order/form')}
+                        onClick={handleBottomButtonClick}
                     />
                 </>
             )}

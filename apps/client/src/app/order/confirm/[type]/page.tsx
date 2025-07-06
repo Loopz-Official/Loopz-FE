@@ -1,15 +1,60 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Header from '@/components/layouts/Header';
+import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
+import { CartOrderRequest, DetailOrderRequest } from '@/schemas/order';
+import { createCartOrder, createDetailOrder } from '@/services/api/order';
 
 export default function Page() {
     const [agreements, setAgreements] = useState([false, false, false]);
     const isAllChecked = agreements.every((agreement) => agreement);
 
     const router = useRouter();
+    const { type } = useParams();
+    const { products } = useSelectedProductsStore();
+    const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
+        useBaseOrderRequestStore();
+
+    if (type !== 'cart' && type !== 'detail') notFound();
+
+    const handleBottomButtonClick = async () => {
+        try {
+            const baseRequest = {
+                addressId: addressId,
+                paymentMethod: 'BANK_TRANSFER',
+                deliveryRequest: deliveryRequest,
+                agreedToTerms: agreedToTerms,
+            };
+
+            if (type === 'cart') {
+                const body: CartOrderRequest = {
+                    ...baseRequest,
+                    objectIds: products.map((product) => product.objectId),
+                };
+
+                await createCartOrder(body);
+            } else {
+                const body: DetailOrderRequest = {
+                    ...baseRequest,
+                    quantity: products[0]?.quantity ?? 0,
+                };
+
+                await createDetailOrder(products[0]?.objectId ?? '', body);
+            }
+
+            router.push('/order/complete');
+            clearBaseOrderRequest();
+        } catch (error) {
+            console.error(error);
+            alert(
+                '주문 확인 중 문제가 발생했습니다.\n잠시 후 다시 시도해 주세요.'
+            );
+        }
+    };
 
     const handleSingleCheckChange = (index: number) => {
         setAgreements(
@@ -86,7 +131,7 @@ export default function Page() {
             <div className="fixed bottom-0 w-full max-w-2xl bg-white p-5 pb-8">
                 <button
                     disabled={!isAllChecked}
-                    onClick={() => router.push('/order/complete')}
+                    onClick={handleBottomButtonClick}
                     className="text-body-02 disabled:bg-button-disabled flex h-14 w-full items-center justify-center rounded-[0.25rem] bg-black text-white"
                 >
                     계속하기
