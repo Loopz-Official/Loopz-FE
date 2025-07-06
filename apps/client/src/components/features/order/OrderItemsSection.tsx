@@ -1,4 +1,5 @@
 import { OrderItemVariant } from '@/constants/order';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { OrderedObjectInfo } from '@/schemas/order';
 
 import OrderItem from './OrderItem';
@@ -12,6 +13,15 @@ export default function OrderItemsSection({
     orderItems,
     variant,
 }: OrderItemsSectionProps) {
+    const { products } = useSelectedProductsStore();
+    const items: OrderedObjectInfo[] =
+        variant === 'form'
+            ? products.map((product) => ({
+                  ...product,
+                  totalPrice: product.objectPrice * product.quantity,
+              }))
+            : (orderItems ?? []);
+
     return (
         <>
             <header>
@@ -19,12 +29,12 @@ export default function OrderItemsSection({
             </header>
 
             <div className="space-y-3">
-                {orderItems?.map((orderItem) => (
+                {items.map((item) => (
                     <div
-                        key={orderItem.objectId}
+                        key={item.objectId}
                         className="not-last:border-b not-last:border-gray-regular not-last:pb-3"
                     >
-                        <OrderItem item={orderItem} variant={variant} />
+                        <OrderItem item={item} variant={variant} />
                     </div>
                 ))}
             </div>
