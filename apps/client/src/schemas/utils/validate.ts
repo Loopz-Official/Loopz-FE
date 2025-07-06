@@ -1,11 +1,16 @@
 import { ZodType } from 'zod/v4';
 
-export const validate = <T>(schema: ZodType<T>, data: unknown): T => {
+// 통합된 검증 함수
+export const validate = <T>(
+    schema: ZodType<T>,
+    data: unknown,
+    context: string = 'Data'
+): T => {
     const result = schema.safeParse(data);
 
     if (!result.success) {
-        console.error('Invalid Type', result.error); // ZodError instance
-        throw new Error('Validation failed');
+        console.error(`${context} Validation Failed:`, result.error);
+        throw new Error(`${context} validation failed`);
     }
 
     return result.data;

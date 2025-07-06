@@ -39,7 +39,7 @@ export const createAddress = async (address: AddressCURequest) => {
 
 // 배송지 수정 (Also used by checking default address)
 export const updateAddress = async (
-    addressId: number,
+    addressId: string,
     newAddress: AddressCURequest
 ) => {
     try {
@@ -59,7 +59,7 @@ export const updateAddress = async (
 };
 
 // 배송지 삭제
-export const deleteAddress = async (addressId: number) => {
+export const deleteAddress = async (addressId: string) => {
     try {
         const response = await apiClient.delete(
             `/user/v1/address/${addressId}`

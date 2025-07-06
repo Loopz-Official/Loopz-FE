@@ -1,68 +1,135 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import AddressSection from '@/components/features/order/form/AddressSection';
-import AgreementSection from '@/components/features/order/form/AgreementSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
+import AgreementSection from '@/components/features/order/form/TermsSection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
+import { ORDER_TERMS } from '@/constants/terms';
+import { useTermsCheck } from '@/hooks/check';
+import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
+import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
+import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
+import { useValidOrderFrom } from '@/hooks/useValidOrderFrom';
 import { AddressInfo } from '@/schemas/address';
+import { formatPrice } from '@/utils/formatPrice';
+import { getPriceSummary } from '@/utils/order/getPrice';
+import { getOrderFromQueryString } from '@/utils/route';
+
+export type DeliveryRequest = {
+    option: string | null;
+    customText: string;
+};
 
 export default function OrderFormPageContent() {
     const router = useRouter();
-
+    const { orderFrom, isValid } = useValidOrderFrom();
+    // 모든 훅은 여기서 호출
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
-    const [deliveryRequest, setDeliveryRequest] = useState<string | null>(null);
-    const [textareaContent, setTextareaContent] = useState('');
-    const [hasAgreedToRequiredTerms, setHasAgreedToRequiredTerms] =
-        useState(false);
+    const { selectedAddressId, setSelectedAddressId } =
+        useSelectedAddressIdStore();
+    const [deliveryRequest, setDeliveryRequest] = useState<DeliveryRequest>({
+        option: null,
+        customText: '',
+    });
+    const termsCheck = useTermsCheck(ORDER_TERMS);
+    const isAllTermsChecked = termsCheck.isAllMandatoryChecked;
+    const { products } = useSelectedProductsStore();
+    const { productPrice, totalPrice } = getPriceSummary(products);
+    const { setBaseOrderRequest } = useBaseOrderRequestStore();
+    const { data: addressList, isLoading, error } = useAddressListQuery();
 
-    const isDisabled = !(activeAddressInfo && hasAgreedToRequiredTerms);
+    const isDisabled = !(activeAddressInfo && isAllTermsChecked);
+
+    useEffect(() => {
+        const info =
+            !addressList || addressList.length === 0
+                ? undefined
+                : (selectedAddressId &&
+                      addressList.find(
+                          (addr) => addr.addressId === selectedAddressId
+                      )) ||
+                  addressList.find((addr) => addr.defaultAddress) ||
+                  addressList[0];
+
+        if (info) {
+            setActiveAddressInfo(info);
+            if (!selectedAddressId || info.addressId !== selectedAddressId) {
+                setSelectedAddressId(info.addressId);
+            }
+        } else {
+            setActiveAddressInfo(undefined);
+        }
+    }, [addressList, selectedAddressId, setSelectedAddressId]);
+
+    const onDeliveryRequestChange = <K extends keyof DeliveryRequest>(
+        key: K,
+        value: DeliveryRequest[K]
+    ) => {
+        setDeliveryRequest((prev) => ({ ...prev, [key]: value }));
+    };
+
+    if (!isValid) {
+        return <div>잘못된 접근입니다. 홈으로 이동합니다...</div>;
+    }
+
+    const handleOrderButtonClick = () => {
+        if (!activeAddressInfo) return;
+        const request =
+            deliveryRequest.option === '직접 입력'
+                ? deliveryRequest.customText
+                : deliveryRequest.option;
+        setBaseOrderRequest({
+            addressId: activeAddressInfo.addressId,
+            deliveryRequest: request ?? '',
+            agreedToTerms: isAllTermsChecked,
+        });
+        // isValid가 true → orderFrom은 OrderFrom 타입임이 보장됨
+        router.push(`/order/confirm?${getOrderFromQueryString(orderFrom)}`);
+    };
 
     return (
         <div className="pb-17">
             <Header type="title" title="주문/결제" />
-
             <div className="flex flex-col px-5 pt-2">
                 {/* 배송지 정보 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <AddressSection
-                        onActiveAddressInfoChange={setActiveAddressInfo}
+                        orderFrom={orderFrom}
+                        activeAddressInfo={activeAddressInfo}
+                        addressList={addressList ?? []}
                         deliveryRequest={deliveryRequest}
-                        setDeliveryRequest={setDeliveryRequest}
-                        textareaContent={textareaContent}
-                        setTextareaContent={setTextareaContent}
+                        onDeliveryRequestChange={onDeliveryRequestChange}
+                        isLoading={isLoading}
+                        error={error}
                     />
                 </section>
-
                 {/* 주문 상품 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <OrderItemsSection variant="default" />
+                    <OrderItemsSection variant="form" />
                 </section>
-
                 {/* 결제 금액 */}
                 <section className="flex flex-col border-t border-black pb-5 pt-5">
-                    <PriceSummarySection />
-                </section>
-
-                {/* 약관 동의 */}
-                <section className="flex flex-col border-t border-black pb-5 pt-5">
-                    <AgreementSection
-                        setHasAgreedToRequiredTerms={
-                            setHasAgreedToRequiredTerms
-                        }
+                    <PriceSummarySection
+                        productPrice={productPrice}
+                        totalPrice={totalPrice}
                     />
                 </section>
+                {/* 약관 동의 */}
+                <section className="flex flex-col border-t border-black pb-5 pt-5">
+                    <AgreementSection termsCheck={termsCheck} />
+                </section>
             </div>
-
             {/* 버튼 */}
             <BottomButton
-                text={'21,000원 결제하기'}
+                text={`${formatPrice(totalPrice)} 원 결제하기`}
                 isDisabled={isDisabled}
-                onClick={() => router.push('/order/confirm')}
+                onClick={handleOrderButtonClick}
             />
         </div>
     );

@@ -1,7 +1,11 @@
-'use client';
+import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 
-import OrderFormContent from './OrderFormPageContent';
+import OrderFormPageContent from './OrderFormPageContent';
 
 export default function OrderFormPage() {
-    return <OrderFormContent />;
+    return (
+        <SuspenseWrapper>
+            <OrderFormPageContent />
+        </SuspenseWrapper>
+    );
 }
