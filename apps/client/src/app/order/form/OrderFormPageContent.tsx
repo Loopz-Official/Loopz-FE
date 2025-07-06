@@ -59,13 +59,15 @@ export default function OrderFormPageContent({
 
     // 페이지 진입 시 기본 배송지 설정
     useEffect(() => {
-        const info: AddressInfo | undefined =
-            (selectedAddressId &&
-                addressList?.find(
-                    (addr) => addr.addressId === selectedAddressId
-                )) ||
-            addressList?.find((addr) => addr.defaultAddress) ||
-            addressList?.[0];
+        const info =
+            !addressList || addressList.length === 0
+                ? undefined
+                : (selectedAddressId &&
+                      addressList.find(
+                          (addr) => addr.addressId === selectedAddressId
+                      )) ||
+                  addressList.find((addr) => addr.defaultAddress) ||
+                  addressList[0];
 
         if (info) {
             setActiveAddressInfo(info);
