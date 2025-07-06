@@ -1,7 +1,10 @@
+'use client'; // remove after creation of order create API
+
 import Image from 'next/image';
 
 import CheckBox from '@/components/common/CheckBox';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
+import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { ObjectInfo } from '@/schemas/object';
 import { formatPrice } from '@/utils/formatPrice';
 
@@ -37,6 +40,20 @@ const CartItem = ({
 
     const handleDecrease = () => {
         if (quantity > 1) onEditQuantity(quantity - 1);
+    };
+
+    const handlePurchaseNowClick = () => {
+        // 주문 생성 API가 없어서 임시방편 (수정될 로직 - 서버 기준 데이터 fetching 필요 (for data intergrity))
+        const selectedProduct = [
+            {
+                objectId: itemInfo.objectId,
+                objectName: itemInfo.objectName,
+                objectPrice: itemInfo.objectPrice,
+                imageUrl: itemInfo.imageUrl,
+                quantity,
+            },
+        ];
+        useSelectedProductsStore.getState().setProducts(selectedProduct);
     };
 
     return (
@@ -81,7 +98,7 @@ const CartItem = ({
                         {formattedTotalPrice}원
                     </span>
                 </div>
-                <PurchaseNowButton />
+                <PurchaseNowButton onClick={handlePurchaseNowClick} />
             </section>
         </div>
     );
