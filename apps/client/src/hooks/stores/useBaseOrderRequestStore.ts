@@ -10,7 +10,7 @@ type Actions = {
 
 const intitalState: BaseOrderRequest = {
     addressId: undefined,
-    paymentMethod: 'BANK_TRANSFER',
+    paymentMethod: undefined,
     deliveryRequest: undefined,
     agreedToTerms: false,
 };
@@ -19,7 +19,9 @@ export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
     persist(
         combine(intitalState, (set) => ({
             setBaseOrderRequest: (req) => set((prev) => ({ ...prev, ...req })),
-            clearBaseOrderRequest: () => set(intitalState),
+            clearBaseOrderRequest: () => {
+                sessionStorage.removeItem('LOOPZ-ORDER-REQUEST');
+            },
         })),
         {
             name: 'LOOPZ-ORDER-REQUEST',

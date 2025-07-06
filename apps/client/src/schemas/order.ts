@@ -16,7 +16,8 @@ export const selectedProduct = z.object({
 
 export type SelectedProduct = z.infer<typeof selectedProduct>;
 
-export const paymentMethod = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
+export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
+export const paymentMethod = z.optional(paymentMethodEnum);
 export type PaymentMethod = z.infer<typeof paymentMethod>;
 
 export const baseOrderRequest = z.object({

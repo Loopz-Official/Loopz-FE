@@ -12,9 +12,9 @@ export default function OrderItemsSection({ variant }: OrderItemProps) {
             </header>
 
             <div className="space-y-3">
-                {products.map((product, i) => (
+                {products.map((product) => (
                     <div
-                        key={i}
+                        key={product.objectId}
                         className="not-last:border-b not-last:border-gray-regular not-last:pb-3"
                     >
                         <OrderItem item={product} variant={variant} />

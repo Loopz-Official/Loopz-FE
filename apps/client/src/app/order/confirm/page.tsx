@@ -6,49 +6,70 @@ import { useState } from 'react';
 import Header from '@/components/layouts/Header';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { CartOrderRequest, DetailOrderRequest } from '@/schemas/order';
-import { createCartOrder, createDetailOrder } from '@/services/api/order';
+import {
+    cartOrderRequest,
+    detailOrderRequest,
+    paymentMethodEnum,
+} from '@/schemas/order';
+import { validate } from '@/schemas/utils/validate';
+import { placeCartOrder, placeDetailOrder } from '@/services/api/order';
 
 export default function OrderConfirmPage() {
+    const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const orderFrom = searchParams.get('orderFrom');
+    if (orderFrom !== 'cart' && orderFrom !== 'detail') notFound();
+
     const [agreements, setAgreements] = useState([false, false, false]);
     const isAllChecked = agreements.every((agreement) => agreement);
 
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const orderFrom = searchParams.get('orderFrom');
     const { products } = useSelectedProductsStore();
     const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
         useBaseOrderRequestStore();
 
-    if (orderFrom !== 'cart' && orderFrom !== 'detail') notFound();
-
     const handleBottomButtonClick = async () => {
         try {
             const baseRequest = {
-                addressId: addressId,
-                paymentMethod: 'BANK_TRANSFER',
-                deliveryRequest: deliveryRequest,
-                agreedToTerms: agreedToTerms,
+                addressId,
+                paymentMethod: paymentMethodEnum.enum.BANK_TRANSFER,
+                deliveryRequest,
+                agreedToTerms,
             };
 
-            if (orderFrom === 'cart') {
-                const body: CartOrderRequest = {
-                    ...baseRequest,
-                    objectIds: products.map((product) => product.objectId),
-                };
+            const productIds = products.map((product) => product.objectId);
 
-                await createCartOrder(body);
+            // 주문 타입에 따른 분리된 처리
+            if (orderFrom === 'cart') {
+                const cartRequestData = {
+                    ...baseRequest,
+                    objectIds: productIds,
+                };
+                const validatedCartRequest = validate(
+                    cartOrderRequest,
+                    cartRequestData,
+                    'Cart Order Request'
+                );
+                await placeCartOrder(validatedCartRequest);
             } else {
-                const body: DetailOrderRequest = {
+                const detailRequestData = {
                     ...baseRequest,
                     quantity: products[0]?.quantity ?? 0,
                 };
-
-                await createDetailOrder(products[0]?.objectId ?? '', body);
+                const validatedDetailRequest = validate(
+                    detailOrderRequest,
+                    detailRequestData,
+                    'Detail Order Request'
+                );
+                const singleProduct = products[0]!;
+                await placeDetailOrder(
+                    singleProduct.objectId,
+                    validatedDetailRequest
+                );
             }
 
-            router.push('/order/complete');
             clearBaseOrderRequest();
+            router.push('/order/complete');
         } catch (error) {
             console.error(error);
             alert(
