@@ -1,15 +1,11 @@
-'use client';
+import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 
-import { notFound, useSearchParams } from 'next/navigation';
+import OrderFormPageContent from './OrderFormPageContent';
 
-import { OrderFrom } from '@/constants/order';
-
-import OrderFormContent from './OrderFormPageContent';
-
-export default function Page() {
-    const searchParams = useSearchParams();
-    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
-    if (orderFrom !== 'cart' && orderFrom !== 'detail') notFound();
-
-    return <OrderFormContent orderFrom={orderFrom} />;
+export default function OrderFormPage() {
+    return (
+        <SuspenseWrapper>
+            <OrderFormPageContent />
+        </SuspenseWrapper>
+    );
 }
