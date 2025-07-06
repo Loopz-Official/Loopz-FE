@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
@@ -14,6 +15,12 @@ export default function OrderCompletePage() {
     const router = useRouter();
 
     const { data: orderData, isLoading, error } = useOrderCompleteQuery();
+
+    useEffect(() => {
+        if (error) {
+            router.replace('/main'); // 추후에는 push로 history 남길 것
+        }
+    }, [error, router]);
 
     return (
         <div className="pb-17">
