@@ -28,10 +28,10 @@ type AddressSectionProps = {
 export default function AddressSection({
     orderFrom,
     activeAddressInfo,
-    isLoading,
-    error,
     deliveryRequest,
     onDeliveryRequestChange,
+    isLoading,
+    error,
 }: AddressSectionProps) {
     const router = useRouter();
 
@@ -155,7 +155,11 @@ export default function AddressSection({
                         배송지를 신규입력 해주세요.
                     </div>
                     <button
-                        onClick={() => router.push('/address/add')}
+                        onClick={() =>
+                            router.push(
+                                `/address/add?${getOrderFromQueryString(orderFrom)}`
+                            )
+                        }
                         className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-sm border py-3"
                     >
                         <PlusIcon className="h-4 w-4" />

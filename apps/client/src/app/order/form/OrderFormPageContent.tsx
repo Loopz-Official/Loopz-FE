@@ -54,10 +54,10 @@ export default function OrderFormPageContent({
 
     const { setBaseOrderRequest } = useBaseOrderRequestStore();
 
-    // 주소 관련 쿼리 및 전역 상태 관리
+    // 배송지 목록 쿼리
     const { data: addressList, isLoading, error } = useAddressListQuery();
 
-    // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
+    // 페이지 진입 시 기본 배송지 설정
     useEffect(() => {
         const info: AddressInfo | undefined =
             (selectedAddressId &&
@@ -77,36 +77,6 @@ export default function OrderFormPageContent({
         }
     }, [addressList, selectedAddressId, setSelectedAddressId]);
 
-    // 배송지 저장
-    useEffect(() => {
-        if (activeAddressInfo) {
-            setBaseOrderRequest({ addressId: activeAddressInfo.addressId });
-        }
-    }, [activeAddressInfo, setBaseOrderRequest]);
-
-    // 배송 요청사항 저장
-    useEffect(() => {
-        let request = deliveryRequest.option;
-        if (
-            deliveryRequest.option === '직접 입력' &&
-            deliveryRequest.customText
-        ) {
-            request = deliveryRequest.customText;
-        }
-        if (request) {
-            setBaseOrderRequest({ deliveryRequest: request });
-        }
-    }, [deliveryRequest, setBaseOrderRequest]);
-
-    // 약관 동의 저장
-    useEffect(() => {
-        if (isAllTermsChecked) {
-            setBaseOrderRequest({
-                agreedToTerms: isAllTermsChecked,
-            });
-        }
-    }, [isAllTermsChecked, setBaseOrderRequest]);
-
     // Delivery request handler
     const onDeliveryRequestChange = <K extends keyof DeliveryRequest>(
         key: K,
@@ -118,6 +88,24 @@ export default function OrderFormPageContent({
         }));
     };
 
+    // 결제 버튼 클릭 핸들러 분리
+    const handleOrderButtonClick = () => {
+        if (!activeAddressInfo) return;
+
+        const request =
+            deliveryRequest.option === '직접 입력'
+                ? deliveryRequest.customText
+                : deliveryRequest.option;
+
+        setBaseOrderRequest({
+            addressId: activeAddressInfo.addressId,
+            deliveryRequest: request ?? '',
+            agreedToTerms: isAllTermsChecked,
+        });
+
+        router.push(`/order/confirm?${getOrderFromQueryString(orderFrom)}`);
+    };
+
     return (
         <div className="pb-17">
             <Header type="title" title="주문/결제" />
@@ -127,7 +115,7 @@ export default function OrderFormPageContent({
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <AddressSection
                         orderFrom={orderFrom}
-                        activeAddressInfo={activeAddressInfo ?? undefined}
+                        activeAddressInfo={activeAddressInfo}
                         addressList={addressList ?? []}
                         deliveryRequest={deliveryRequest}
                         onDeliveryRequestChange={onDeliveryRequestChange}
@@ -159,11 +147,7 @@ export default function OrderFormPageContent({
             <BottomButton
                 text={`${formatPrice(totalPrice)} 원 결제하기`}
                 isDisabled={isDisabled}
-                onClick={() =>
-                    router.push(
-                        `/order/confirm?${getOrderFromQueryString(orderFrom)}`
-                    )
-                }
+                onClick={handleOrderButtonClick}
             />
         </div>
     );
