@@ -1,8 +1,7 @@
 import {
-    cartOrderRequest,
     CartOrderRequest,
-    detailOrderRequest,
     DetailOrderRequest,
+    orderResponse,
 } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
 
@@ -23,7 +22,7 @@ export const placeDetailOrder = async (
 
         if (response.status === 200) {
             return validate(
-                detailOrderRequest, // 수정 필요 (Response 스키마 사용)
+                orderResponse,
                 response.data.data,
                 'Detail Order Response'
             );
@@ -45,7 +44,7 @@ export const placeCartOrder = async (orderRequest: CartOrderRequest) => {
 
         if (response.status === 200) {
             return validate(
-                cartOrderRequest, // 수정 필요 (Response 스키마 사용)
+                orderResponse,
                 response.data.data,
                 'Cart Order Response'
             );

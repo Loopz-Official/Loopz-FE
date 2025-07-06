@@ -43,3 +43,19 @@ export const cartOrderRequest = z.object({
 });
 
 export type CartOrderRequest = z.infer<typeof cartOrderRequest>;
+
+const orderedObjectInfo = z.object({
+    ...selectedProduct.shape,
+    totalPrice: z.int32().nonnegative(),
+});
+export const orderResponse = z.object({
+    orderId: z.uuid(),
+    status: z.enum(['PENDING', 'ORDERED', 'SHIPPING', 'DELIVERED', 'CANCELED']),
+    paymentMethod: paymentMethodEnum,
+    objects: z.array(orderedObjectInfo),
+    shippingFee: z.int32().nonnegative(),
+    totalProductPrice: z.int32().nonnegative(),
+    totalPayment: z.int32().nonnegative(),
+});
+
+export type OrderResponse = z.infer<typeof orderResponse>;
