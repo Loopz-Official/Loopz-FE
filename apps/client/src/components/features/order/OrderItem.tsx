@@ -1,22 +1,18 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import { SelectedProduct } from '@/schemas/order';
+import { OrderItemVariant } from '@/constants/order';
+import { OrderedObjectInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 
-export type OrderItemProps = {
-    variant?: 'default' | 'secondary';
+type OrderItemProps = {
+    item: OrderedObjectInfo;
+    variant: OrderItemVariant;
 };
 
-export default function OrderItem({
-    item,
-    variant = 'default',
-}: {
-    item: SelectedProduct;
-    variant?: 'default' | 'secondary';
-}) {
+export default function OrderItem({ item, variant }: OrderItemProps) {
     const titleClassName =
-        variant === 'secondary' ? 'text-body-03' : 'text-body-01 font-semibold';
+        variant === 'complete' ? 'text-body-03' : 'text-body-01 font-semibold';
 
     return (
         <div className="grid grid-cols-[1fr_auto] justify-between">

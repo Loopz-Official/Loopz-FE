@@ -128,7 +128,7 @@ export default function OrderFormPageContent({
 
                 {/* 주문 상품 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <OrderItemsSection variant="default" />
+                    <OrderItemsSection variant="form" />
                 </section>
 
                 {/* 결제 금액 */}
