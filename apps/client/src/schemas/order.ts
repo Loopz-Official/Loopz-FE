@@ -2,6 +2,24 @@ import * as z from 'zod/v4';
 
 import { objectInfos } from './object';
 
+// Enum
+export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
+export type PaymentMethodEnum = z.infer<typeof paymentMethodEnum>;
+export const paymentMethod = z.optional(paymentMethodEnum);
+export type PaymentMethod = z.infer<typeof paymentMethod>;
+
+const orderStatusEnum = z.enum([
+    'PENDING',
+    'ORDERED',
+    'SHIPPING',
+    'DELIVERED',
+    'CANCELED',
+]);
+export type OrderStatusEnum = z.infer<typeof orderStatusEnum>;
+export const orderStatus = z.optional(orderStatusEnum);
+export type OrderStatus = z.infer<typeof orderStatus>;
+
+// Request Schema
 const selectedObjectInfo = objectInfos.pick({
     objectId: true,
     objectName: true,
@@ -15,10 +33,6 @@ export const selectedProduct = z.object({
 });
 
 export type SelectedProduct = z.infer<typeof selectedProduct>;
-
-export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
-export const paymentMethod = z.optional(paymentMethodEnum);
-export type PaymentMethod = z.infer<typeof paymentMethod>;
 
 export const baseOrderRequest = z.object({
     addressId: z.optional(z.uuid()),
@@ -48,9 +62,13 @@ const orderedObjectInfo = z.object({
     ...selectedProduct.shape,
     totalPrice: z.int32().nonnegative(),
 });
+export type OrderedObjectInfo = z.infer<typeof orderedObjectInfo>;
+
+// Response Schema
+
 export const orderResponse = z.object({
     orderId: z.uuid(),
-    status: z.enum(['PENDING', 'ORDERED', 'SHIPPING', 'DELIVERED', 'CANCELED']),
+    status: orderStatus,
     paymentMethod: paymentMethodEnum,
     objects: z.array(orderedObjectInfo),
     shippingFee: z.int32().nonnegative(),

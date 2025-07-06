@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import { notFound, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { toast } from 'sonner';
 
 import Header from '@/components/layouts/Header';
 import {
@@ -10,6 +11,7 @@ import {
     ORDER_CONFIRM_NOTICE,
 } from '@/constants/orderConfirm';
 import { useCheckGroup } from '@/hooks/check/useCheckGroup';
+import { usePlaceOrderMutation } from '@/hooks/mutations/useOrderMutation';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
@@ -19,7 +21,6 @@ import {
     paymentMethodEnum,
 } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
-import { placeCartOrder, placeDetailOrder } from '@/services/api/order';
 
 export default function OrderConfirmPage() {
     const router = useRouter();
@@ -39,6 +40,8 @@ export default function OrderConfirmPage() {
     const { clearSelectedAddressId } = useSelectedAddressIdStore();
     const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
         useBaseOrderRequestStore();
+
+    const placeOrderMutation = usePlaceOrderMutation();
 
     const handleBottomButtonClick = async () => {
         try {
@@ -62,22 +65,33 @@ export default function OrderConfirmPage() {
                     cartRequestData,
                     'Cart Order Request'
                 );
-                await placeCartOrder(validatedCartRequest);
+                await placeOrderMutation.mutateAsync({
+                    orderFrom: 'cart',
+                    data: validatedCartRequest,
+                });
             } else {
+                const [singleProduct] = products;
+                if (!singleProduct) {
+                    toast.error('주문할 상품이 없습니다');
+                    return;
+                }
+
                 const detailRequestData = {
                     ...baseRequest,
-                    quantity: products[0]?.quantity ?? 0,
+                    quantity: singleProduct.quantity,
                 };
                 const validatedDetailRequest = validate(
                     detailOrderRequest,
                     detailRequestData,
                     'Detail Order Request'
                 );
-                const singleProduct = products[0]!;
-                await placeDetailOrder(
-                    singleProduct.objectId,
-                    validatedDetailRequest
-                );
+                await placeOrderMutation.mutateAsync({
+                    orderFrom: 'detail',
+                    data: {
+                        ...validatedDetailRequest,
+                        objectId: singleProduct.objectId,
+                    },
+                });
             }
 
             // 주문 완료 후 관련 모든 전역 상태 스토리지 내 제거
@@ -85,7 +99,7 @@ export default function OrderConfirmPage() {
             clearProducts();
             clearSelectedAddressId();
 
-            router.push('/order/complete');
+            router.replace('/order/complete');
         } catch (error) {
             console.error(error);
             alert(
