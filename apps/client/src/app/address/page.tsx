@@ -1,81 +1,69 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
+import { OrderFrom } from '@/constants/order';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
-import { useSelectedAddressStore } from '@/hooks/stores/useSelectedAddressStore';
+import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { PlusIcon } from '@/icons/Plus';
+import { getOrderFromQueryString } from '@/utils/route';
 
 export default function AddressPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
+    const orderFromQueryString = getOrderFromQueryString(orderFrom);
 
     const [activeId, setActiveId] = useState<string | undefined>(undefined);
-    const { selectedAddress, setSelectedAddress } = useSelectedAddressStore();
+    const { selectedAddressId, setSelectedAddressId } =
+        useSelectedAddressIdStore();
 
     const { data: addressList, isLoading, error } = useAddressListQuery();
     const deleteAddressMutation = useDeleteAddressMutation();
     // const updateAddressMutation = useUpdateAddressMutation();
 
     useEffect(() => {
-        try {
-            // 주소가 있을 때, 기본 배송지 선택 (or 첫 번째 배송지 선택)
-            if (addressList && addressList.length > 0) {
-                const defaultAddress = addressList.find(
-                    (addr) => addr.defaultAddress
-                );
+        if (!addressList || addressList.length === 0) return;
 
-                // 주문 완료 시 selectedAddress clear 필요! (기본 배송지 기준으로 기본 세팅되게끔)
-                setActiveId(
-                    selectedAddress
-                        ? selectedAddress.addressId
-                        : defaultAddress
-                          ? defaultAddress.addressId
-                          : addressList[0]?.addressId
-                );
-            }
-        } catch {
-            alert('배송지를 자동 선택하는 중 문제가 발생했습니다.');
+        const info =
+            (selectedAddressId &&
+                addressList.find(
+                    (addr) => addr.addressId === selectedAddressId
+                )) ||
+            addressList.find((addr) => addr.defaultAddress) ||
+            addressList[0];
+
+        if (info) {
+            setActiveId(info.addressId);
         }
-    }, [addressList, selectedAddress]);
+    }, [addressList, selectedAddressId]);
 
     const handleAddButtonClick = () => {
         if (addressList?.length === 10) {
-            alert('배송지는 최대 10개까지 등록하실 수 있습니다.');
+            toast('배송지는 최대 10개까지 등록할 수 있습니다');
             return;
         } else {
-            router.push('/address/add');
+            router.push(`/address/add?${orderFromQueryString}`);
         }
     };
 
     const handleSaveButtonClick = () => {
-        const selectedAddress = addressList?.find(
-            (address) => address.addressId === activeId
-        );
-
-        if (selectedAddress) {
-            // const updatedAddress = {
-            //     ...selectedAddress,
-            //     defaultAddress: true,
-            // };
-
+        if (activeId) {
             try {
-                // await updateAddressMutation.mutateAsync({
-                //     addressId: updatedAddress.addressId,
-                //     updatedAddress,
-                // });
-                setSelectedAddress(selectedAddress);
-                router.push('/order/form');
+                setSelectedAddressId(activeId);
+                router.push(`/order/form?${orderFromQueryString}`);
             } catch {
-                alert('배송지 업데이트 중 에러가 발생했습니다.');
+                toast.error('배송지 업데이트 중 에러가 발생했습니다.');
             }
         } else {
-            alert('선택된 배송지가 없습니다.');
+            toast('배송지를 선택해주세요');
         }
     };
 
@@ -148,7 +136,7 @@ export default function AddressPage() {
                                         type="edit"
                                         onClick={() => {
                                             router.push(
-                                                `/address/edit?addressId=${address.addressId}`
+                                                `/address/edit?addressId=${address.addressId}&${orderFromQueryString}`
                                             );
                                         }}
                                     />

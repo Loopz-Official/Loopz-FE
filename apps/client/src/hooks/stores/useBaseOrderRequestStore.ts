@@ -1,33 +1,32 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { combine, createJSONStorage, persist } from 'zustand/middleware';
 
-interface BaseOrderRequest {
-    addressId: string;
-    paymentMethod: string;
-    deliveryRequest: string;
-    agreedToTerms: boolean;
+import { BaseOrderRequest } from '@/schemas/order';
+
+type Actions = {
     setBaseOrderRequest: (req: Partial<BaseOrderRequest>) => void;
     clearBaseOrderRequest: () => void;
-}
+};
 
-export const useBaseOrderRequestStore = create<BaseOrderRequest>()(
+const intitalState: BaseOrderRequest = {
+    addressId: undefined,
+    paymentMethod: undefined,
+    deliveryRequest: undefined,
+    agreedToTerms: false,
+};
+
+// 주문 완료 시 자동으로 clearBaseOrderRequest 호출
+export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
     persist(
-        (set) => ({
-            addressId: '',
-            paymentMethod: '',
-            deliveryRequest: '',
-            agreedToTerms: false,
+        combine(intitalState, (set) => ({
             setBaseOrderRequest: (req) => set((prev) => ({ ...prev, ...req })),
-            clearBaseOrderRequest: () =>
-                set({
-                    addressId: '',
-                    paymentMethod: '',
-                    deliveryRequest: '',
-                    agreedToTerms: false,
-                }),
-        }),
+            clearBaseOrderRequest: () => {
+                sessionStorage.removeItem('LOOPZ-ORDER-REQUEST');
+            },
+        })),
         {
-            name: 'base-order-request-storage',
+            name: 'LOOPZ-ORDER-REQUEST',
+            storage: createJSONStorage(() => sessionStorage),
         }
     )
 );

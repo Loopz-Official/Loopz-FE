@@ -1,48 +1,58 @@
 import {
-    cartOrderRequest,
     CartOrderRequest,
-    detailOrderRequest,
     DetailOrderRequest,
+    orderResponse,
 } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
 
 // 상세보기에서 주문
-export const createDetailOrder = async (
+export const placeDetailOrder = async (
     objectId: string,
-    body: DetailOrderRequest
+    orderRequest: DetailOrderRequest
 ) => {
     try {
-        const response = await apiClient.post(`/order/v1/${objectId}`, body);
+        const response = await apiClient.post(
+            `/order/v1/${objectId}`,
+            orderRequest
+        );
 
-        console.log('Create Detail Order Response: ', response);
+        console.log('Place Detail Order Response: ', response);
 
         if (response.status === 200) {
-            return validate(detailOrderRequest, response.data.data);
+            return validate(
+                orderResponse,
+                response.data.data,
+                'Detail Order Response'
+            );
         }
 
-        throw new Error('Failed to create address');
+        throw new Error('Failed to place order');
     } catch (error) {
-        console.error('Error creating detail order:', error);
+        console.error('Error placing detail order:', error);
         throw error;
     }
 };
 
 // 장바구니에서 주문
-export const createCartOrder = async (body: CartOrderRequest) => {
+export const placeCartOrder = async (orderRequest: CartOrderRequest) => {
     try {
-        const response = await apiClient.post('/order/v1/cart', body);
+        const response = await apiClient.post('/order/v1/cart', orderRequest);
 
-        console.log('Create Cart Order Response: ', response);
+        console.log('Place Cart Order Response: ', response);
 
         if (response.status === 200) {
-            return validate(cartOrderRequest, response.data.data);
+            return validate(
+                orderResponse,
+                response.data.data,
+                'Cart Order Response'
+            );
         }
 
-        throw new Error('Failed to create address');
+        throw new Error('Failed to place order');
     } catch (error) {
-        console.error('Error creating cart order:', error);
+        console.error('Error placing cart order:', error);
         throw error;
     }
 };

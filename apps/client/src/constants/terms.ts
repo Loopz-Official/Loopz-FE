@@ -1,28 +1,27 @@
-export interface Agreement {
-    title: string;
-    href: string;
+import { Term } from '@/schemas/terms';
+
+export interface SignupTerm extends Term {
+    id: 'over14' | 'agreedServiceTerms' | 'agreedMarketing' | 'agreedEventSMS';
     checked: boolean;
 }
 
-export interface SignupAgreement extends Agreement {
-    id: 'over14' | 'agreedServiceTerms' | 'agreedMarketing' | 'agreedEventSMS';
-    mandatory: boolean;
-}
-
-export const INITIAL_AGREEMENTS: Agreement[] = [
+// 주문 관련 약관
+export const ORDER_TERMS: Term[] = [
     {
+        id: 'privacy-collection',
         title: '개인정보 수집/이용 동의',
         href: '',
-        checked: false,
+        mandatory: true,
     },
     {
+        id: 'privacy-third-party',
         title: '개인정보 제3자 제공 동의',
         href: '',
-        checked: false,
+        mandatory: true,
     },
 ];
 
-export const SIGN_UP_AGREEMENTS: SignupAgreement[] = [
+export const SIGN_UP_TERMS: SignupTerm[] = [
     {
         id: 'over14',
         title: '만 14세 이상입니다.',

@@ -1,41 +1,30 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { combine, persist } from 'zustand/middleware';
 
-import { ObjectInfo } from '@/schemas/object';
-
-export interface Product
-    extends Pick<
-        ObjectInfo,
-        'objectId' | 'objectName' | 'objectPrice' | 'imageUrl'
-    > {
-    quantity: number;
-}
+import { SelectedProduct } from '@/schemas/order';
 
 interface SelectedProducts {
-    products: Product[];
-    setProducts: (products: Product[]) => void;
-    addProduct: (product: Product) => void;
-    removeProduct: (objectId: string) => void;
+    products: SelectedProduct[];
+    setProducts: (products: SelectedProduct[]) => void;
     clearProducts: () => void;
 }
 
+const initialState = {
+    products: [] as SelectedProduct[],
+};
+
+// 주문 완료 시 자동으로 clearProducts 호출
 export const useSelectedProductsStore = create<SelectedProducts>()(
     persist(
-        (set) => ({
-            products: [],
+        combine(initialState, (set) => ({
             setProducts: (products) => set({ products }),
-            addProduct: (product) =>
-                set((state) => ({ products: [...state.products, product] })),
-            removeProduct: (objectId) =>
-                set((state) => ({
-                    products: state.products.filter(
-                        (p) => p.objectId !== objectId
-                    ),
-                })),
-            clearProducts: () => set({ products: [] }),
-        }),
+            clearProducts: () => {
+                localStorage.removeItem('SELECTED_PRODUCTS');
+            },
+        })),
+
         {
-            name: 'selected-products-storage',
+            name: 'SELECTED_PRODUCTS',
         }
     )
 );
