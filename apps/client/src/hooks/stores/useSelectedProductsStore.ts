@@ -13,11 +13,14 @@ const initialState = {
     products: [] as SelectedProduct[],
 };
 
+// 주문 완료 시 자동으로 clearProducts 호출
 export const useSelectedProductsStore = create<SelectedProducts>()(
     persist(
         combine(initialState, (set) => ({
             setProducts: (products) => set({ products }),
-            clearProducts: () => set(initialState),
+            clearProducts: () => {
+                localStorage.removeItem('SELECTED_PRODUCTS');
+            },
         })),
 
         {

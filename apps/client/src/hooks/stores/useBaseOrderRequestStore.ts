@@ -15,6 +15,7 @@ const intitalState: BaseOrderRequest = {
     agreedToTerms: false,
 };
 
+// 주문 완료 시 자동으로 clearBaseOrderRequest 호출
 export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
     persist(
         combine(intitalState, (set) => ({

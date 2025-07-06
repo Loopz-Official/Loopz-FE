@@ -11,6 +11,7 @@ import {
 } from '@/constants/orderConfirm';
 import { useCheckGroup } from '@/hooks/check/useCheckGroup';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
+import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import {
     cartOrderRequest,
@@ -34,7 +35,8 @@ export default function OrderConfirmPage() {
     );
     const { isChecked, isAllChecked, toggle } = useCheckGroup(checkKeys, false);
 
-    const { products } = useSelectedProductsStore();
+    const { products, clearProducts } = useSelectedProductsStore();
+    const { clearSelectedAddressId } = useSelectedAddressIdStore();
     const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
         useBaseOrderRequestStore();
 
@@ -78,7 +80,11 @@ export default function OrderConfirmPage() {
                 );
             }
 
+            // 주문 완료 후 관련 모든 전역 상태 스토리지 내 제거
             clearBaseOrderRequest();
+            clearProducts();
+            clearSelectedAddressId();
+
             router.push('/order/complete');
         } catch (error) {
             console.error(error);

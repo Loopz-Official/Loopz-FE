@@ -9,7 +9,7 @@ import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { ORDER_NOTIFICATIONS } from '@/constants/order';
 
-export default function Page() {
+export default function OrderCompletePage() {
     const router = useRouter();
 
     return (

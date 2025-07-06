@@ -7,14 +7,16 @@ interface SelectedAddressIdStore {
     clearSelectedAddressId: () => void;
 }
 
-// 📌 주문 완료 시에 clearSelectedAddress 실행 필요 (상태 값 초기화)
+// 주문 완료 시 자동으로 clearSelectedAddressId 호출
 export const useSelectedAddressIdStore = create<SelectedAddressIdStore>()(
     persist(
         (set) => ({
             selectedAddressId: null,
             setSelectedAddressId: (addressId) =>
                 set({ selectedAddressId: addressId }),
-            clearSelectedAddressId: () => set({ selectedAddressId: null }),
+            clearSelectedAddressId: () => {
+                localStorage.removeItem('LOOPZ_USER_SELECTED_ADDRESS_ID');
+            },
         }),
         {
             name: 'LOOPZ_USER_SELECTED_ADDRESS_ID',
