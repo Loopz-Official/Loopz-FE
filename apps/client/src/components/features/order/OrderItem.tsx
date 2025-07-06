@@ -1,9 +1,8 @@
-'use client';
-
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import { Product } from '@/hooks/stores/useSelectedProductsStore';
+import { SelectedProduct } from '@/schemas/order';
+import { formatPrice } from '@/utils/formatPrice';
 
 export type OrderItemProps = {
     variant?: 'default' | 'secondary';
@@ -13,11 +12,9 @@ export default function OrderItem({
     item,
     variant = 'default',
 }: {
-    item: Product;
+    item: SelectedProduct;
     variant?: 'default' | 'secondary';
 }) {
-    // 주문 완료 페이지에서는 body-03-medium
-    // 그 외 body-01-semibold
     const titleClassName =
         variant === 'secondary' ? 'text-body-03' : 'text-body-01 font-semibold';
 
@@ -28,8 +25,7 @@ export default function OrderItem({
                     {item.objectName}
                 </h3>
                 <span className="text-caption-01 text-gray-dark tracking-normal">
-                    {item.objectPrice.toLocaleString()}원 / 수량 {item.quantity}
-                    개
+                    {formatPrice(item.objectPrice)}원 / 수량 {item.quantity}개
                 </span>
             </div>
             <div className="bg-gray-regular relative aspect-square h-auto w-[clamp(70px,20vw,100px)]">
