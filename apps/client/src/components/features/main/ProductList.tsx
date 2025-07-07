@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { ObjectCommonInfo } from '@/schemas/object';
+import { formatPrice } from '@/utils/formatPrice';
 
 type ProductListProps = {
     products: ObjectCommonInfo[];
@@ -49,7 +50,7 @@ export default function ProductList({ products }: ProductListProps) {
                                 {product.intro}
                             </p>
                             <p className="text-body-03 mt-2 font-semibold tracking-normal">
-                                {product.objectPrice.toLocaleString()}원
+                                {formatPrice(product.objectPrice)}원
                             </p>
                         </div>
                     </Link>
