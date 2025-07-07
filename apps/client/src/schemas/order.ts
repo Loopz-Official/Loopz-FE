@@ -1,6 +1,6 @@
 import * as z from 'zod/v4';
 
-import { objectInfos } from './object';
+import { objectBasicInfo } from './object';
 
 // Enum
 export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
@@ -20,15 +20,9 @@ export const orderStatus = z.optional(orderStatusEnum);
 export type OrderStatus = z.infer<typeof orderStatus>;
 
 // Request Schema
-const selectedObjectInfo = objectInfos.pick({
-    objectId: true,
-    objectName: true,
-    objectPrice: true,
-    imageUrl: true,
-});
 
 export const selectedProduct = z.object({
-    ...selectedObjectInfo.shape,
+    ...objectBasicInfo.shape,
     quantity: z.int32().nonnegative(),
 });
 

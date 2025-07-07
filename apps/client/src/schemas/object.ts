@@ -35,23 +35,43 @@ export const objectBoardFilterRequest = z.object({
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;
 
 // Response DTO
-export const objectInfos = z.object({
-    objectId: z.uuid(), // 추후에 uuid로 수정 (test data 때문에 임시 처리)
+// Basic Info
+export const objectBasicInfo = z.object({
+    objectId: z.uuid(),
     objectName: z.string(),
-    intro: z.string(),
     imageUrl: z.url(),
-    objectPrice: z.int32(),
-    soldOut: z.boolean(),
-    liked: z.nullable(z.boolean()),
-    stock: z.optional(z.int32()), // 장바구니에서 사용
+    objectPrice: z.int32().nonnegative(),
 });
 
-export type ObjectInfo = z.infer<typeof objectInfos>;
+// Object Board & Detail common
+export const objectCommonInfo = z.object({
+    ...objectBasicInfo.shape,
+    intro: z.string(),
+    liked: z.boolean(),
+    stock: z.int32().nonnegative(),
+});
+export type ObjectCommonInfo = z.infer<typeof objectCommonInfo>;
 
+// Cart
+export const cartObjectInfo = z.object({
+    ...objectBasicInfo.shape,
+    quantity: z.int32().nonnegative(),
+    totalPrice: z.int32().nonnegative(),
+});
+export type CartObjectInfo = z.infer<typeof cartObjectInfo>;
+
+// Object Board
 export const objectBoardResponse = z.object({
-    objectCount: z.int32(),
-    objects: z.array(objectInfos),
+    objectCount: z.int32().nonnegative(),
+    objects: z.array(objectCommonInfo),
     hasNext: z.boolean(),
 });
-
 export type ObjectBoardResponse = z.infer<typeof objectBoardResponse>;
+
+// Object Detail
+export const objectDetailInfo = z.object({
+    ...objectCommonInfo.shape,
+    size: z.string(),
+    descriptionUrl: z.nullable(z.url()),
+});
+export type ObjectDetailInfo = z.infer<typeof objectDetailInfo>;

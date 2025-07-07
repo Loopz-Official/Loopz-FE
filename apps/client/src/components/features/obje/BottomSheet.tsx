@@ -22,18 +22,21 @@ const BottomSheet = () => {
 };
 
 const BottomSheetContent = ({ objectId }: { objectId: string }) => {
-    const { objectDetail } = useObjectDetailQuery(objectId);
-    const { count } = usePurchaseCountStore();
     const router = useRouter();
 
+    const { data: objectDetail } = useObjectDetailQuery(objectId);
+    const { count } = usePurchaseCountStore();
     const { setProducts } = useSelectedProductsStore();
+
+    if (!objectDetail)
+        return <div>오브제에 상세 정보가 존재하지 않습니다.</div>;
 
     const handleBottomButtonClick = () => {
         const product = {
             objectId,
-            objectName: objectDetail?.objectResponse?.objectName ?? '',
-            objectPrice: objectDetail?.objectResponse?.objectPrice ?? 0,
-            imageUrl: objectDetail?.objectResponse?.imageUrl ?? '',
+            objectName: objectDetail.objectName,
+            objectPrice: objectDetail.objectPrice,
+            imageUrl: objectDetail.imageUrl,
             quantity: count,
         };
         setProducts([product]);
@@ -50,11 +53,10 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
             <section className="flex w-full flex-col gap-4">
                 <section className="flex w-fit flex-col gap-1">
                     <span className="text-body-02 font-semibold">
-                        {objectDetail?.objectResponse?.objectName}
+                        {objectDetail?.objectName}
                     </span>
                     <span className="text-caption-01 font-semibold">
-                        {formatPrice(objectDetail?.objectResponse?.objectPrice)}
-                        원
+                        {formatPrice(objectDetail?.objectPrice)}원
                     </span>
                 </section>
 
@@ -83,8 +85,7 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                     </span>
                     <span className="text-body-01 font-semibold">
                         {(
-                            (objectDetail?.objectResponse?.objectPrice ?? 0) *
-                            count
+                            (objectDetail?.objectPrice ?? 0) * count
                         ).toLocaleString()}
                         원
                     </span>

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import CheckBox from '@/components/common/CheckBox';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { ObjectInfo } from '@/schemas/object';
+import { ObjectCommonInfo } from '@/schemas/object';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from '../obje/OrderQuantity';
@@ -13,7 +13,7 @@ import OrderQuantity from '../obje/OrderQuantity';
 import PurchaseNowButton from './PurchaseNowButton';
 
 type CartItemProps = {
-    itemInfo: ObjectInfo;
+    itemInfo: ObjectCommonInfo;
     quantity: number;
     isChecked: boolean;
     toggleCheck: () => void;

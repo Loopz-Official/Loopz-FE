@@ -1,9 +1,9 @@
 import * as z from 'zod/v4';
 
-import { objectInfos } from './object';
+import { objectCommonInfo } from './object';
 
 export const cartItemInfo = z.object({
-    object: objectInfos,
+    object: objectCommonInfo,
     quantity: z.int32().nonnegative(),
 });
 
