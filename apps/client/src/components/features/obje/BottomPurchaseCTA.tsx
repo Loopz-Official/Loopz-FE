@@ -6,18 +6,25 @@ import { toast } from 'sonner';
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
-import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
+import { ObjectDetailInfo } from '@/schemas/object';
 
 import BottomSheet from './BottomSheet';
 
-const BottomPurchaseCTA = ({ objectId }: { objectId: string }) => {
+type BottomPurchaseCTAProps = {
+    objectId: string;
+    objectDetail: ObjectDetailInfo;
+};
+
+const BottomPurchaseCTA = ({
+    objectId,
+    objectDetail,
+}: BottomPurchaseCTAProps) => {
     const [isLiked, setIsLiked] = useState(false);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
-    const { data: objectDetail } = useObjectDetailQuery(objectId);
     const addCartMutation = useUpdateCartItem();
 
     if (!objectDetail) return <div>오브제 상세 정보가 존재하지 않습니다.</div>;

@@ -89,7 +89,10 @@ export default function ObjectDetailPage({ objectId }: { objectId: string }) {
             <div className="border-gray-light h-0 w-full border border-solid"></div>
 
             <PurchaseNotice />
-            <BottomPurchaseCTA objectId={objectId} />
+            <BottomPurchaseCTA
+                objectId={objectId}
+                objectDetail={objectDetail}
+            />
         </>
     );
 }
