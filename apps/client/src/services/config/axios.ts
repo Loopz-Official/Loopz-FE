@@ -37,7 +37,7 @@ apiClient.interceptors.response.use(
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
 
-        // console.log('Request Error: ', error);
+        // // console.log('Request Error: ', error);
 
         if (error?.response.status === 401 || error?.response.status === 403) {
             clearUserInfoCookie(); // 🍪 임시 쿠키 설정 (추후 refactor 필요)
