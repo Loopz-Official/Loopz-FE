@@ -1,8 +1,8 @@
 import {
     ObjectBoardFilterRequest,
     objectBoardResponse,
+    objectDetailInfo,
 } from '@/schemas/object';
-import { objectDetailInfo } from '@/schemas/objectDetail';
 import { validate } from '@/schemas/utils/validate';
 import { apiClient } from '@/services/config/axios';
 
@@ -14,7 +14,9 @@ export const getObjectBoardList = async (params?: ObjectBoardFilterRequest) => {
 
         // console.log('Object Board 상품 리스트 조회', response.data.data);
 
-        return validate(objectBoardResponse, response.data.data);
+        if (response.status === 200) {
+            return validate(objectBoardResponse, response.data.data);
+        }
     } catch (error) {
         console.error('Object Board  상품 리스트 조회 실패', error);
     }

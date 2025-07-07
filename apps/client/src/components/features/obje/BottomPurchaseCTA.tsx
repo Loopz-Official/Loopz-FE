@@ -8,15 +8,28 @@ import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
+import { ObjectDetailInfo } from '@/schemas/object';
 
 import BottomSheet from './BottomSheet';
 
-const BottomPurchaseCTA = () => {
+type BottomPurchaseCTAProps = {
+    objectId: string;
+    objectDetail: ObjectDetailInfo;
+};
+
+const BottomPurchaseCTA = ({
+    objectId,
+    objectDetail,
+}: BottomPurchaseCTAProps) => {
     const [isLiked, setIsLiked] = useState(false);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
     // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
     const addCartMutation = useUpdateCartItem();
+
+    if (!objectDetail) return <div>오브제 상세 정보가 존재하지 않습니다.</div>;
+
+    const isSoldOut = objectDetail.stock === 0;
 
     const handleLike = () => setIsLiked((prev) => !prev);
     const handleCart = async () => {
@@ -53,15 +66,15 @@ const BottomPurchaseCTA = () => {
     return (
         <div className="fixed bottom-0 z-50 w-full max-w-2xl bg-white">
             <BottomButton
-                text="구매하기"
-                isDisabled={false}
+                text={isSoldOut ? '판매 완료' : '구매하기'}
+                isDisabled={isSoldOut}
                 onClick={() => setIsBottomSheetOpen(true)}
                 isBottomSheetOpen={isBottomSheetOpen}
             >
                 <ul className="flex items-center gap-4">
                     {CTA_ICONS.map((item) => (
                         <li key={item.name}>
-                            <button onClick={item.onClick}>
+                            <button onClick={item.onClick} disabled={isSoldOut}>
                                 {item.icon()}
                             </button>
                         </li>
@@ -70,7 +83,10 @@ const BottomPurchaseCTA = () => {
             </BottomButton>
             {isBottomSheetOpen && (
                 <>
-                    <BottomSheet />
+                    <BottomSheet
+                        objectId={objectId}
+                        objectDetail={objectDetail}
+                    />
                     <div
                         className="fixed inset-0 z-10 bg-[#111111]/60 bg-opacity-50 transition-opacity"
                         onClick={() => setIsBottomSheetOpen(false)}

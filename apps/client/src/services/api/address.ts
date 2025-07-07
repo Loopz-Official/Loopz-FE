@@ -7,7 +7,7 @@ export const getAddressList = async () => {
     try {
         const response = await apiClient.get('/user/v1/address');
 
-        console.log('Address List Response: ', response);
+        // console.log('Address List Response: ', response);
 
         if (response.status === 200) {
             return validate(addressList, response.data.data.addresses);
@@ -23,7 +23,7 @@ export const createAddress = async (address: AddressCURequest) => {
     try {
         const response = await apiClient.post('/user/v1/address', address);
 
-        console.log('Create Address Response: ', response);
+        // console.log('Create Address Response: ', response);
 
         // 추후 HTTP Status code 201로 수정 요청
         if (response.status === 200) {
@@ -48,7 +48,7 @@ export const updateAddress = async (
             newAddress
         );
 
-        console.log('Update Address Response: ', response);
+        // console.log('Update Address Response: ', response);
 
         if (response.status === 200) {
             return validate(addressInfo, response.data.data);
@@ -65,7 +65,7 @@ export const deleteAddress = async (addressId: string) => {
             `/user/v1/address/${addressId}`
         );
 
-        console.log('Delete Address Response: ', response);
+        // console.log('Delete Address Response: ', response);
 
         if (response.status === 200) {
             return response.data.data;

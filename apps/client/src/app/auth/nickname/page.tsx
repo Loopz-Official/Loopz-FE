@@ -33,7 +33,7 @@ export default function NicknamePage() {
 
         const response = await checkNicknameRedundancy(nickname);
 
-        // console.log('checkNicknameRedundancy Response: ', response);
+        // // console.log('checkNicknameRedundancy Response: ', response);
 
         if (response.usable) {
             setIsNicknameValid(true);

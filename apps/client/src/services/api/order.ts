@@ -18,7 +18,7 @@ export const placeDetailOrder = async (
             orderRequest
         );
 
-        console.log('Place Detail Order Response: ', response);
+        // console.log('Place Detail Order Response: ', response);
 
         if (response.status === 200) {
             return validate(
@@ -40,7 +40,7 @@ export const placeCartOrder = async (orderRequest: CartOrderRequest) => {
     try {
         const response = await apiClient.post('/order/v1/cart', orderRequest);
 
-        console.log('Place Cart Order Response: ', response);
+        // console.log('Place Cart Order Response: ', response);
 
         if (response.status === 200) {
             return validate(

@@ -14,9 +14,10 @@ export default function ObjectBoard() {
 
     useEffect(() => {
         const fetchObjectBoardData = async () => {
-            const response = await getObjectBoardList();
-            if (response) {
-                setObjectBoardData(response as ObjectBoardResponse);
+            const objectBoardData = await getObjectBoardList();
+
+            if (objectBoardData) {
+                setObjectBoardData(objectBoardData);
             }
         };
 
