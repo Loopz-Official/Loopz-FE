@@ -35,10 +35,8 @@ export default function NicknamePage() {
 
         // // console.log('checkNicknameRedundancy Response: ', response);
 
-        if (response.usable) {
-            setIsNicknameValid(true);
-            setIsChecking(false);
-        }
+        setIsNicknameValid(!!response.usable);
+        setIsChecking(false);
     };
 
     const handleNicknameSubmit = async () => {
