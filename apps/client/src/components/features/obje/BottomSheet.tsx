@@ -1,35 +1,32 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import BottomButton from '@/components/common/BottomButton';
 import VerticalDivider from '@/components/common/VerticalDivider';
-import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
+import { ObjectDetailInfo } from '@/schemas/object';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from './OrderQuantity';
 
-const BottomSheet = () => {
-    const pathname = usePathname();
-    const objectId = pathname.split('/')[2];
-
-    // objectId가 없는 경우 아무것도 렌더링하지 않음
-    if (!objectId) return null;
-
-    return <BottomSheetContent objectId={objectId} />;
+type BottomSheetProps = {
+    objectId: string;
+    objectDetail: ObjectDetailInfo;
 };
 
-const BottomSheetContent = ({ objectId }: { objectId: string }) => {
+const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
     const router = useRouter();
 
-    const { data: objectDetail } = useObjectDetailQuery(objectId);
     const { count } = usePurchaseCountStore();
     const { setProducts } = useSelectedProductsStore();
 
+    if (!objectId) return <div>오브제가 존재하지 않습니다.</div>;
     if (!objectDetail)
         return <div>오브제에 상세 정보가 존재하지 않습니다.</div>;
+
+    const stock = objectDetail.stock;
 
     const handleBottomButtonClick = () => {
         const product = {
@@ -56,7 +53,7 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                         {objectDetail?.objectName}
                     </span>
                     <span className="text-caption-01 font-semibold">
-                        {formatPrice(objectDetail?.objectPrice)}원
+                        {formatPrice(objectDetail.objectPrice)}원
                     </span>
                 </section>
 
@@ -67,14 +64,11 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                         <span className="font-semibold">구매 수량</span>
                         <VerticalDivider />
                         <span className="text-point font-medium">
-                            {objectDetail?.stock}개 남음
+                            {stock}개 남음
                         </span>
                     </div>
 
-                    <OrderQuantity
-                        type="bottomSheet"
-                        stock={objectDetail?.stock ?? 0}
-                    />
+                    <OrderQuantity type="bottomSheet" stock={stock} />
                 </section>
 
                 <div className="border-gray-regular h-[0px] w-full border-[0.5px] border-solid" />
@@ -84,17 +78,14 @@ const BottomSheetContent = ({ objectId }: { objectId: string }) => {
                         총 상품 금액 ({count}개)
                     </span>
                     <span className="text-body-01 font-semibold">
-                        {(
-                            (objectDetail?.objectPrice ?? 0) * count
-                        ).toLocaleString()}
-                        원
+                        {formatPrice(objectDetail.objectPrice * count)}원
                     </span>
                 </section>
             </section>
 
             <BottomButton
                 text="구매하기"
-                isDisabled={false}
+                isDisabled={stock === 0}
                 onClick={handleBottomButtonClick}
                 isBottomSheetOpen={true}
             />

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useEffect } from 'react';
 
+import BottomPurchaseCTA from '@/components/features/obje/BottomPurchaseCTA';
 import ObjectMetadataUnit from '@/components/features/obje/ObjectMetadataUnit';
 import PurchaseNotice from '@/components/features/obje/PurchaseNotice';
 import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
@@ -88,6 +89,7 @@ export default function ObjectDetailPage({ objectId }: { objectId: string }) {
             <div className="border-gray-light h-0 w-full border border-solid"></div>
 
             <PurchaseNotice />
+            <BottomPurchaseCTA objectId={objectId} />
         </>
     );
 }
