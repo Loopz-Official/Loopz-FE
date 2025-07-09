@@ -1,40 +1,41 @@
 import clsx from 'clsx';
-import { useState } from 'react';
 
-export default function ChipList({ chips: chipsData }: { chips: string[] }) {
-    const [chips, setChips] = useState(
-        chipsData.map((chip) => ({ chip, isActive: false }))
-    );
+import { SelectedFilter } from '@/app/filter/page';
 
-    const handleChipClick = (chip: string) => {
-        setChips(
-            chips.map((prevChip) =>
-                prevChip.chip === chip
-                    ? {
-                          ...prevChip,
-                          isActive: !prevChip.isActive,
-                      }
-                    : { ...prevChip }
-            )
-        );
+interface Chip {
+    label: string;
+    value: string;
+}
+
+export default function ChipList({
+    chips,
+    selectedChips,
+    onClick,
+}: {
+    chips: Chip[];
+    selectedChips: SelectedFilter[];
+    onClick: (chip: string) => void;
+}) {
+    const isActive = (chip: Chip) => {
+        return selectedChips.some((item) => item.chip === chip.value);
     };
 
     return (
         <div className="mt-2 flex flex-wrap gap-x-1.5 gap-y-2">
-            {chips.map(({ chip, isActive }) => (
+            {chips.map((chip) => (
                 <button
                     onClick={() => {
-                        handleChipClick(chip);
+                        onClick(chip.value);
                     }}
-                    key={chip}
+                    key={chip.label}
                     className={clsx(
                         'text-body-03 rounded-full border px-[0.875rem] py-1 tracking-normal',
-                        isActive
+                        isActive(chip)
                             ? 'border-black bg-black text-white'
                             : 'border-gray-regular text-gray-dark bg-white'
                     )}
                 >
-                    {chip}
+                    {chip.label}
                 </button>
             ))}
         </div>
