@@ -8,6 +8,7 @@ import AddressSection from '@/components/features/order/form/AddressSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import AgreementSection from '@/components/features/order/form/TermsSection';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
+import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
 import { ORDER_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check';
@@ -125,6 +126,11 @@ export default function OrderFormPageContent() {
                     <AgreementSection termsCheck={termsCheck} />
                 </section>
             </div>
+
+            <div className="mt-20">
+                <Footer />
+            </div>
+
             {/* 버튼 */}
             <BottomButton
                 text={`${formatPrice(totalPrice)} 원 결제하기`}

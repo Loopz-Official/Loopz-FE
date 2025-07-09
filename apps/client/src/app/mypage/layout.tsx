@@ -1,3 +1,4 @@
+import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
 
 export default function MyPageLayout({
@@ -9,6 +10,7 @@ export default function MyPageLayout({
         <>
             <Header type="main" />
             <main className="px-5">{children}</main>
+            <Footer />
         </>
     );
 }
