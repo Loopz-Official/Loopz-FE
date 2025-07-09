@@ -1,9 +1,18 @@
 import Header from '@/components/layouts/Header';
 
 const THIRD_PARTY_ITEM = [
-    '제공받는 자: LOOPStory 이용 항목: 받는 사람 이름, 주소, 우편 번호, 휴대폰 전화번호, 배송 메모, ID(이메일)',
-    '이용 목적: 구매한 제품의 배송, 반품, 고객 상담, AS 등 불만 처리, 혜택 제공, 상품 및 판매 관리 업무 등',
-    '보유 및 이용기간: 서비스 제공 기간 (단, 관련 법령에 의거하여 보존할 필요가 있는 경우 사전 동의를 득한 해당 보존 기간)',
+    {
+        id: 'provider',
+        text: '제공받는 자: LOOPStory 이용 항목: 받는 사람 이름, 주소, 우편 번호, 휴대폰 전화번호, 배송 메모, ID(이메일)',
+    },
+    {
+        id: 'purpose',
+        text: '이용 목적: 구매한 제품의 배송, 반품, 고객 상담, AS 등 불만 처리, 혜택 제공, 상품 및 판매 관리 업무 등',
+    },
+    {
+        id: 'retention',
+        text: '보유 및 이용기간: 서비스 제공 기간 (단, 관련 법령에 의거하여 보존할 필요가 있는 경우 사전 동의를 득한 해당 보존 기간)',
+    },
 ];
 
 export default function Page() {
@@ -23,7 +32,7 @@ export default function Page() {
 
                 <ul className="ml-3 list-disc space-y-6 marker:text-[8px]">
                     {THIRD_PARTY_ITEM.map((item) => (
-                        <li key={item}>{item}</li>
+                        <li key={item.id}>{item.text}</li>
                     ))}
                 </ul>
 
