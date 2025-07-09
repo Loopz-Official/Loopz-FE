@@ -10,13 +10,13 @@ export const ORDER_TERMS: Term[] = [
     {
         id: 'privacy-collection',
         title: '개인정보 수집/이용 동의',
-        href: '',
+        href: '/agreement/privacy',
         mandatory: true,
     },
     {
         id: 'privacy-third-party',
         title: '개인정보 제3자 제공 동의',
-        href: '',
+        href: '/agreement/third-party',
         mandatory: true,
     },
 ];
