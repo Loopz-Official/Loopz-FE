@@ -1,11 +1,23 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
+import { logout } from '@/services/api/auth';
+
 export default function Button({ type }: { type: '로그아웃' | '탈퇴하기' }) {
-    const handleButtonClick = () => {
+    const router = useRouter();
+
+    const handleButtonClick = async () => {
         if (type === '로그아웃') {
-            // 로그아웃
+            try {
+                await logout();
+                router.push('/main');
+            } catch (error) {
+                console.error(error);
+                alert('로그아웃 중 문제가 발생했습니다.');
+            }
         } else {
-            // 탈퇴하기기
+            alert('준비 중입니다.\n1:1 문의하기를 이용해 주세요.');
         }
     };
 

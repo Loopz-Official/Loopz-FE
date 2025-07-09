@@ -7,7 +7,7 @@ export default function Page() {
         <>
             <Header type="title" title="1:1 문의" />
 
-            <div className="mx-5 mt-8 space-y-4">
+            <div className="space-y-4 px-5 pt-8">
                 <div className="text-headline-04">1:1 문의</div>
 
                 <NotificationSection />
