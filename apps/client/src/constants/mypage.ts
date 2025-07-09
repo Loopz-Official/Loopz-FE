@@ -13,7 +13,7 @@ export const MYPAGE_LINKS = [
     },
     {
         label: '1:1 문의하기',
-        href: '',
+        href: '/mypage/contact',
     },
 ];
 
