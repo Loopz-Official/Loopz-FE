@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import ChipList from '@/components/features/filter/ChipList';
@@ -9,11 +9,13 @@ import PriceRange from '@/components/features/filter/PriceRange';
 import Header from '@/components/layouts/Header';
 import { FILTER_CONFIG, PRICE_MAX, PRICE_MIN } from '@/constants/filter';
 import { PriceFilter, SelectedChipsMap } from '@/types/filter';
+import { parseQueryParams } from '@/utils/filter/parseQueryParams';
 import { toQueryParams } from '@/utils/filter/toQueryParams';
 import { toSelectedFilterArray } from '@/utils/filter/toSelectedFilterArray';
 
 export default function ObjectFilterPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     // chips 선택 상태: { [key: string]: Set<string> }
     const [selectedChips, setSelectedChips] = useState<SelectedChipsMap>({});
@@ -23,6 +25,18 @@ export default function ObjectFilterPage() {
         min: PRICE_MIN,
         max: PRICE_MAX,
     });
+
+    // 쿼리스트링 → 상태 동기화
+    useEffect(() => {
+        const { selectedChips: parsedChips, price: parsedPrice } =
+            parseQueryParams(searchParams);
+
+        setSelectedChips(parsedChips);
+        setPrice({
+            min: parsedPrice.min || PRICE_MIN,
+            max: parsedPrice.max || PRICE_MAX,
+        });
+    }, [searchParams]);
 
     // Chip 선택/해제 핸들러
     const handleChipClick = (title: string, value: string) => {
