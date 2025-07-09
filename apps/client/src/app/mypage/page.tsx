@@ -28,6 +28,16 @@ const MYPAGE_BUTTONS = ['로그아웃', '탈퇴하기'] as const;
 export default function MyPage() {
     return (
         <div>
+            <div className="mb-4 mt-8 flex flex-col items-center gap-2.5">
+                <div className="border-gray-09 aspect-square h-auto w-20 rounded-full border-2" />
+                <div className="text-center">
+                    <div className="text-headline-04">룹스토리</div>
+                    <div className="text-gray-regular text-caption-02">
+                        카카오톡 회원
+                    </div>
+                </div>
+            </div>
+
             <Link
                 href="/like"
                 className="bg-gray-12 rounded-xs mb-5 grid grid-cols-[auto_1fr] gap-4"

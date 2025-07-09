@@ -10,7 +10,9 @@ export default function MyPageLayout({
         <>
             <Header type="main" />
             <main className="px-5">{children}</main>
-            <Footer />
+            <div className="pb-16">
+                <Footer />
+            </div>
         </>
     );
 }
