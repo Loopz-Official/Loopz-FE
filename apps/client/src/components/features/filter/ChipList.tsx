@@ -1,21 +1,19 @@
 import clsx from 'clsx';
 
-import { SelectedFilter } from '@/app/filter/page';
+import { Chip } from '@/constants/filter';
+import { SelectedFilterItem } from '@/types/filter';
 
-interface Chip {
-    label: string;
-    value: string;
-}
+type ChipListProps = {
+    chips: Chip[];
+    selectedChips: SelectedFilterItem[];
+    onClick: (chip: string) => void;
+};
 
 export default function ChipList({
     chips,
     selectedChips,
     onClick,
-}: {
-    chips: Chip[];
-    selectedChips: SelectedFilter[];
-    onClick: (chip: string) => void;
-}) {
+}: ChipListProps) {
     const isActive = (chip: Chip) => {
         return selectedChips.some((item) => item.chip === chip.value);
     };

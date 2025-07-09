@@ -2,13 +2,33 @@ export const PRICE_MIN = 0;
 export const PRICE_MAX = 700000;
 export const RANGE_STEP = 1000;
 
-export const FILTER_LIST = [
-    {
-        title: { label: '상품 정보', value: 'excludeSoldOut' },
+// 필터 타입 정의
+type FilterType = 'single' | 'multi' | 'range';
+
+export interface Chip {
+    label: string;
+    value: string;
+}
+
+interface FilterConfigItem {
+    label: string;
+    type: FilterType;
+    chips?: Chip[]; // 가격 필터는 chips 없음
+}
+
+export type FilterConfig = {
+    [key: string]: FilterConfigItem;
+};
+
+export const FILTER_CONFIG: FilterConfig = {
+    excludeSoldOut: {
+        label: '상품 정보',
+        type: 'single',
         chips: [{ label: '품절상품 제외', value: 'true' }],
     },
-    {
-        title: { label: '제품 유형', value: 'objectTypes' },
+    objectTypes: {
+        label: '제품 유형',
+        type: 'multi',
         chips: [
             { label: '가구', value: 'FURNITURE' },
             { label: '조명', value: 'LIGHT' },
@@ -18,23 +38,26 @@ export const FILTER_LIST = [
             { label: '예술 / 아트', value: 'ART' },
         ],
     },
-    {
-        title: { label: '제품 크기', value: 'objectSizes' },
+    objectSizes: {
+        label: '제품 크기',
+        type: 'multi',
         chips: [
             { label: '소형', value: 'SMALL' },
             { label: '중형', value: 'MEDIUM' },
             { label: '대형', value: 'LARGE' },
         ],
     },
-    {
-        title: { label: '가격대', value: 'price' },
+    price: {
+        label: '가격대',
+        type: 'range',
     },
-    {
-        title: { label: '키워드', value: 'keywords' },
+    keywords: {
+        label: '키워드',
+        type: 'multi',
         chips: [
             { label: '감성적인', value: 'EMOTIONAL' },
             { label: '실용적인', value: 'PRACTICAL' },
-            { label: '트렌디한', value: 'TRVALUEDY' },
+            { label: '트렌디한', value: 'TRENDY' },
             { label: '레트로한', value: 'RETRO' },
             { label: '유니크한', value: 'UNIQUE' },
             { label: '미니멀한', value: 'MINIMAL' },
@@ -44,4 +67,4 @@ export const FILTER_LIST = [
             { label: '아기자기한', value: 'CHARMING' },
         ],
     },
-];
+} as const;

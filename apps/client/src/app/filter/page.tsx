@@ -1,134 +1,86 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
 import ChipList from '@/components/features/filter/ChipList';
 import PriceRange from '@/components/features/filter/PriceRange';
 import Header from '@/components/layouts/Header';
-import { FILTER_LIST, PRICE_MAX, PRICE_MIN } from '@/constants/filter';
+import { FILTER_CONFIG, PRICE_MAX, PRICE_MIN } from '@/constants/filter';
+import { PriceFilter, SelectedChipsMap } from '@/types/filter';
+import { toQueryParams } from '@/utils/filter/toQueryParams';
+import { toSelectedFilterArray } from '@/utils/filter/toSelectedFilterArray';
 
-export interface SelectedFilter {
-    title: string;
-    chip: string;
-}
-
-export default function Page() {
-    const [selectedFilter, setSelectedFilter] = useState<SelectedFilter[]>([]);
+export default function ObjectFilterPage() {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
-    useEffect(() => {
-        const queryString = searchParams.toString();
-        if (queryString === '') return;
+    // chips 선택 상태: { [key: string]: Set<string> }
+    const [selectedChips, setSelectedChips] = useState<SelectedChipsMap>({});
 
-        const titleChipMap = queryString
-            .split('&')
-            .map((item) => item.split('='));
+    // 가격대 상태를 하나의 객체로 묶어서 관리
+    const [price, setPrice] = useState<PriceFilter>({
+        min: PRICE_MIN,
+        max: PRICE_MAX,
+    });
 
-        const initialSelectedFilter = titleChipMap.map((item) => ({
-            title: item[0] ?? '',
-            chip: item[1] ?? '',
-        }));
+    // Chip 선택/해제 핸들러
+    const handleChipClick = (title: string, value: string) => {
+        setSelectedChips((prev) => {
+            const prevSet: Set<string> = prev[title]
+                ? new Set(prev[title])
+                : new Set();
 
-        setSelectedFilter(initialSelectedFilter);
-    }, [searchParams]);
+            if (prevSet.has(value)) {
+                prevSet.delete(value);
+            } else {
+                prevSet.add(value);
+            }
 
-    const toQueryParams = (selected: SelectedFilter[]) => {
-        const params = selected
-            .map(({ title, chip }) => `${title}=${chip}`)
-            .join('&');
-        return params ? `?${params}` : '';
+            return { ...prev, [title]: prevSet };
+        });
     };
 
-    const handleChipClick = (title: string, chip: string) => {
-        const doesExist = selectedFilter.some(
-            (item) => item.title === title && item.chip === chip
-        );
-
-        if (doesExist) {
-            // 이미 있으면 제거
-            setSelectedFilter(
-                selectedFilter.filter(
-                    (item) => !(item.title === title && item.chip === chip)
-                )
-            );
-        } else {
-            // 없으면 추가
-            setSelectedFilter([...selectedFilter, { title, chip }]);
-        }
+    // 가격대 변경 핸들러
+    const handlePriceChange = (min: number, max: number) => {
+        setPrice({ min, max });
     };
 
-    const setPriceFilter = (priceMin: number, priceMax: number) => {
-        // 기존에 price 관련 필터가 있다면 제거
-        const filterWithoutPrice = selectedFilter.filter(
-            (item) => item.title !== 'priceMin' && item.title !== 'priceMax'
-        );
-
-        const price: SelectedFilter[] = [];
-
-        if (priceMin !== PRICE_MIN) {
-            // 최솟값이 아닐 때에만 추가
-            price.push({
-                title: 'priceMin',
-                chip: priceMin.toString(),
-            });
-        }
-
-        if (priceMax !== PRICE_MAX) {
-            // 최댓값이 아닐 때에만 추가
-            price.push({
-                title: 'priceMax',
-                chip: priceMax.toString(),
-            });
-        }
-
-        setSelectedFilter([...filterWithoutPrice, ...price]);
-    };
-
-    const handleConfirmButtonClick = () => {
-        const params = toQueryParams(selectedFilter);
-        router.replace(`/main${params}`);
-    };
-
+    // 초기화 버튼
     const handleClearbuttonClick = () => {
-        setSelectedFilter([]);
+        setSelectedChips({});
+        setPrice({ min: PRICE_MIN, max: PRICE_MAX });
+    };
+
+    // 결과보기 버튼
+    const handleConfirmButtonClick = () => {
+        const params = toQueryParams(selectedChips, price);
+        router.replace(`/main${params}`);
     };
 
     return (
         <div>
             <Header type="title" title="필터" />
             <div className="space-y-8 px-5 py-6 pb-24">
-                {FILTER_LIST.map(({ title, chips }) => (
-                    <div key={title.label}>
+                {Object.entries(FILTER_CONFIG).map(([key, config]) => (
+                    <div key={key}>
                         <h3 className="text-body-03 font-semibold">
-                            {title.label}
+                            {config.label}
                         </h3>
-                        {chips ? (
-                            <ChipList
-                                onClick={(chip) =>
-                                    handleChipClick(title.value, chip)
-                                }
-                                key={title.label}
-                                selectedChips={selectedFilter.filter(
-                                    (item) => item.title === title.value
-                                )}
-                                chips={chips}
+                        {config.type === 'range' ? (
+                            <PriceRange
+                                initialMin={price.min}
+                                initialMax={price.max}
+                                setPriceFilter={handlePriceChange}
                             />
                         ) : (
-                            <PriceRange
-                                initialMin={Number(
-                                    selectedFilter.find(
-                                        (item) => item.title === 'priceMin'
-                                    )?.chip
+                            <ChipList
+                                chips={config.chips || []}
+                                selectedChips={toSelectedFilterArray(
+                                    selectedChips,
+                                    key
                                 )}
-                                initialMax={Number(
-                                    selectedFilter.find(
-                                        (item) => item.title === 'priceMax'
-                                    )?.chip
-                                )}
-                                setPriceFilter={setPriceFilter}
+                                onClick={(chip) => handleChipClick(key, chip)}
                             />
                         )}
                     </div>

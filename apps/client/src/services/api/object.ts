@@ -8,9 +8,7 @@ import { apiClient } from '@/services/config/axios';
 
 export const getObjectBoardList = async (params?: ObjectBoardFilterRequest) => {
     try {
-        const response = await apiClient.get('/object/v1', {
-            params,
-        });
+        const response = await apiClient.get('/object/v1', { params });
 
         // console.log('Object Board 상품 리스트 조회', response.data.data);
 
