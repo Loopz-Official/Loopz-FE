@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { FOOTER_ITEMS, FOOTER_LINKS } from '@/constants/footer';
 
 export default function Footer() {
@@ -20,7 +18,9 @@ export default function Footer() {
             <div className="flex">
                 {FOOTER_LINKS.map(({ label, href }, i) => (
                     <div key={label} className="flex items-center">
-                        <Link href={href}>{label}</Link>
+                        <a href={href} target="_blank" rel="noreferrer">
+                            {label}
+                        </a>
                         {i !== FOOTER_LINKS.length - 1 && (
                             <div className="mx-3 h-3 w-px bg-[#e5e5ec]" />
                         )}
