@@ -11,7 +11,7 @@ type ProductListProps = {
 
 export default function ProductList({ products }: ProductListProps) {
     return products.length > 0 ? (
-        <div className="grid w-full grid-cols-2 pb-3 min-[481px]:grid-cols-3">
+        <div className="grid w-full grid-cols-2 min-[481px]:grid-cols-3">
             {products.map((product) => {
                 const isSoldOut = product.stock === 0;
 
@@ -39,6 +39,7 @@ export default function ProductList({ products }: ProductListProps) {
                                 src={product.imageUrl}
                                 alt="상품 이미지"
                                 fill
+                                sizes="(max-width: 672px) 100vw"
                                 className="h-full w-full object-cover"
                             />
                         </div>

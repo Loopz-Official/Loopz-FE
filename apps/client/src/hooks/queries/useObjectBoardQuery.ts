@@ -1,10 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { ObjectBoardFilterRequest } from '@/schemas/object/object';
+import { FilterRecord, objectBoardFilterRequest } from '@/schemas/object';
+import { validate } from '@/schemas/utils/validate';
 import { getObjectBoardList } from '@/services/api/object';
 
 // Object Board 리스트를 위한 무한 스크롤 React Query 훅
-export const useObjectBoardQuery = (filterParams: Record<string, string>) => {
+export const useObjectBoardQuery = (filterParams: Partial<FilterRecord>) => {
     return useInfiniteQuery({
         queryKey: ['object-board', filterParams],
         queryFn: async (context) => {
@@ -14,11 +15,15 @@ export const useObjectBoardQuery = (filterParams: Record<string, string>) => {
                     : 0;
 
             // API 요청 파라미터 구성
-            const params: ObjectBoardFilterRequest = {
-                page,
-                size: 10,
-                ...filterParams,
-            };
+            const params = validate(
+                objectBoardFilterRequest,
+                {
+                    page,
+                    size: 10,
+                    ...filterParams,
+                },
+                'Object Board Request'
+            );
 
             return await getObjectBoardList(params);
         },
@@ -29,5 +34,7 @@ export const useObjectBoardQuery = (filterParams: Record<string, string>) => {
             }
             return undefined;
         },
+        staleTime: 1000 * 30, // 30초
+        gcTime: 1000 * 60, // 1분
     });
 };

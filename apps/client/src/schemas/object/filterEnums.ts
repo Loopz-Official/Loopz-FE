@@ -10,13 +10,17 @@ export const filterTypeEnum = z.enum([
     'sort',
 ]);
 
+export const filterRecord = z.record(
+    filterTypeEnum,
+    z.union([z.string(), z.array(z.string()), z.boolean()])
+);
+
 export const objectTypeEnum = z.enum([
     'FURNITURE',
     'LIGHT',
-    'DISPLAY',
+    'TECH',
     'PROPS',
     'FLOWERPOT',
-    'LIFESTYLE',
     'ART',
 ]);
 
@@ -38,6 +42,7 @@ export const objectKeywordEnum = z.enum([
 export const objectSortEnum = z.enum(['latest', 'popular']);
 
 export type FilterType = z.infer<typeof filterTypeEnum>;
+export type FilterRecord = z.infer<typeof filterRecord>;
 export type ObjectType = z.infer<typeof objectTypeEnum>;
 export type ObjectSize = z.infer<typeof objectSizeEnum>;
 export type ObjectKeyword = z.infer<typeof objectKeywordEnum>;

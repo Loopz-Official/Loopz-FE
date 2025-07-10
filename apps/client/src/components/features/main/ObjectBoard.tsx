@@ -6,6 +6,9 @@ import { useInView } from 'react-intersection-observer';
 
 import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
+import { FilterRecord, filterTypeEnum } from '@/schemas/object';
+import { validate } from '@/schemas/utils/validate';
+import { accumulateParams } from '@/utils/filter/accumulateParam';
 
 import ProductList from './ProductList';
 import ProductListToolbar from './ProductListToolbar';
@@ -13,21 +16,24 @@ import ProductListToolbar from './ProductListToolbar';
 export default function ObjectBoard() {
     // 무한 스크롤을 위한 ref
     const { ref, inView } = useInView({
-        threshold: 1,
+        threshold: 0.5,
     });
     const searchParams = useSearchParams();
 
     // searchParams를 객체로 변환
     const filterParams = useMemo(() => {
-        // 1. forEach로 출력
+        const params: Partial<FilterRecord> = {};
         searchParams.forEach((value, key) => {
-            console.log(key, value);
+            const validatedKey = validate(filterTypeEnum, key, 'Filter Type');
+
+            if (validatedKey === filterTypeEnum.enum.excludeSoldOut) {
+                params[validatedKey] = value === 'true';
+            } else {
+                accumulateParams(params, validatedKey, value);
+            }
         });
 
-        const params: Record<string, string> = {};
-        searchParams.forEach((value, key) => {
-            params[key] = value;
-        });
+        console.log('Filter Params:', params);
 
         return params;
     }, [searchParams]);

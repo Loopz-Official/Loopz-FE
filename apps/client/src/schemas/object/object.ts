@@ -3,16 +3,22 @@ import * as z from 'zod/v4';
 import * as e from './filterEnums';
 
 // Filter Request DTO
+const filterOptions = z
+    .object({
+        objectTypes: z.union([e.objectTypeEnum, z.array(e.objectTypeEnum)]),
+        objectSizes: z.union([e.objectSizeEnum, z.array(e.objectSizeEnum)]),
+        priceMin: z.int32().nonnegative(),
+        priceMax: z.int32().nonnegative(),
+        keywords: z.union([e.objectKeywordEnum, z.array(e.objectKeywordEnum)]),
+        excludeSoldOut: z.boolean(),
+        sort: e.objectSortEnum,
+    })
+    .partial();
+
 export const objectBoardFilterRequest = z.object({
-    objectTypes: z.optional(e.objectTypeEnum),
-    objectSizes: z.optional(e.objectSizeEnum),
-    priceMin: z.optional(z.int32().nonnegative()),
-    priceMax: z.optional(z.int32().nonnegative()),
-    keywords: z.optional(e.objectKeywordEnum),
-    excludeSoldOut: z.optional(z.boolean()),
-    sort: z.optional(e.objectSortEnum),
-    page: z.optional(z.int32().positive()),
-    size: z.optional(z.int32().nonnegative()),
+    ...filterOptions.shape,
+    page: z.int32().positive(),
+    size: z.int32().nonnegative(),
 });
 
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;
