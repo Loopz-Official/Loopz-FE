@@ -2,7 +2,7 @@ import {
     ObjectBoardFilterRequest,
     objectBoardResponse,
     objectDetailInfo,
-} from '@/schemas/object';
+} from '@/schemas/object/object';
 import { validate } from '@/schemas/utils/validate';
 import { apiClient } from '@/services/config/axios';
 

@@ -1,39 +1,18 @@
 import * as z from 'zod/v4';
 
+import * as e from './filterEnums';
+
 // Filter Request DTO
 export const objectBoardFilterRequest = z.object({
-    objectTypes: z
-        .enum([
-            'FURNITURE',
-            'LIGHT',
-            'DISPLAY',
-            'PROPS',
-            'FLOWERPOT',
-            'LIFESTYLE',
-            'ART',
-        ])
-        .optional(),
-    objectSizes: z.enum(['SMALL', 'MEDIUM', 'LARGE']).optional(),
-    priceMin: z.int32().optional(),
-    priceMax: z.int32().optional(),
-    keywords: z
-        .enum([
-            'EMOTIONAL',
-            'TRENDY',
-            'RETRO',
-            'MINIMAL',
-            'UNIQUE',
-            'SIMPLE',
-            'LARGE',
-            'PRACTICAL',
-            'PROFOUND',
-            'CHARMING',
-        ])
-        .optional(),
-    excludeSoldOut: z.boolean().optional(),
-    sort: z.enum(['latest', 'popular']).optional(),
-    page: z.int32().nonnegative().optional(),
-    size: z.int32().positive().optional(),
+    objectTypes: z.optional(e.objectTypeEnum),
+    objectSizes: z.optional(e.objectSizeEnum),
+    priceMin: z.optional(z.int32().nonnegative()),
+    priceMax: z.optional(z.int32().nonnegative()),
+    keywords: z.optional(e.objectKeywordEnum),
+    excludeSoldOut: z.optional(z.boolean()),
+    sort: z.optional(e.objectSortEnum),
+    page: z.optional(z.int32().nonnegative()),
+    size: z.optional(z.int32().nonnegative()),
 });
 
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;

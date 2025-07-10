@@ -4,10 +4,12 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import {
-    ObjectBoardFilterRequest,
+    objectBoardFilterRequest,
     ObjectBoardResponse,
 } from '@/schemas/object';
+import { validate } from '@/schemas/utils/validate';
 import { getObjectBoardList } from '@/services/api/object';
 
 import ProductList from './ProductList';
@@ -27,11 +29,16 @@ export default function ObjectBoard() {
                 (value, key) => (filterSearchParams[key] = value)
             );
 
-            const params: ObjectBoardFilterRequest = {
-                page: pageRef.current,
-                size: 10,
-                ...filterSearchParams,
-            };
+            const params = validate(
+                objectBoardFilterRequest,
+                {
+                    page: pageRef.current,
+                    size: 10,
+                    ...filterSearchParams,
+                },
+                'Object Board Filter Request'
+            );
+
             const response = await getObjectBoardList(params);
 
             if (response) {
@@ -52,17 +59,19 @@ export default function ObjectBoard() {
     }, [inView, objectBoardData, searchParams]);
 
     return (
-        <div>
-            <div className="px-5">
-                <h2 className="text-headline-03">Object Board</h2>
-                <Suspense>
-                    <ProductListToolbar
-                        productCount={objectBoardData?.objectCount ?? 0}
-                    />
-                </Suspense>
+        <SuspenseWrapper>
+            <div>
+                <div className="px-5">
+                    <h2 className="text-headline-03">Object Board</h2>
+                    <Suspense>
+                        <ProductListToolbar
+                            productCount={objectBoardData?.objectCount ?? 0}
+                        />
+                    </Suspense>
+                </div>
+                <ProductList products={objectBoardData?.objects ?? []} />
+                <div ref={ref} />
             </div>
-            <ProductList products={objectBoardData?.objects ?? []} />
-            <div ref={ref} />
-        </div>
+        </SuspenseWrapper>
     );
 }

@@ -6,7 +6,7 @@ import BottomButton from '@/components/common/BottomButton';
 import VerticalDivider from '@/components/common/VerticalDivider';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { ObjectDetailInfo } from '@/schemas/object';
+import { ObjectDetailInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from './OrderQuantity';

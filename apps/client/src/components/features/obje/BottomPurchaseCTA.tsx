@@ -8,7 +8,7 @@ import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
-import { ObjectDetailInfo } from '@/schemas/object';
+import { ObjectDetailInfo } from '@/schemas/object/object';
 
 import BottomSheet from './BottomSheet';
 
