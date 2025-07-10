@@ -11,7 +11,7 @@ export const objectBoardFilterRequest = z.object({
     keywords: z.optional(e.objectKeywordEnum),
     excludeSoldOut: z.optional(z.boolean()),
     sort: z.optional(e.objectSortEnum),
-    page: z.optional(z.int32().nonnegative()),
+    page: z.optional(z.int32().positive()),
     size: z.optional(z.int32().nonnegative()),
 });
 

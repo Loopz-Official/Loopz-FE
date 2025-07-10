@@ -1,5 +1,15 @@
 import * as z from 'zod/v4';
 
+export const filterTypeEnum = z.enum([
+    'objectTypes',
+    'objectSizes',
+    'priceMin',
+    'priceMax',
+    'keywords',
+    'excludeSoldOut',
+    'sort',
+]);
+
 export const objectTypeEnum = z.enum([
     'FURNITURE',
     'LIGHT',
@@ -27,6 +37,7 @@ export const objectKeywordEnum = z.enum([
 
 export const objectSortEnum = z.enum(['latest', 'popular']);
 
+export type FilterType = z.infer<typeof filterTypeEnum>;
 export type ObjectType = z.infer<typeof objectTypeEnum>;
 export type ObjectSize = z.infer<typeof objectSizeEnum>;
 export type ObjectKeyword = z.infer<typeof objectKeywordEnum>;
