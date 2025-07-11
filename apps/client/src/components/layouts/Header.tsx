@@ -9,15 +9,15 @@ import CartCount from '../features/cart/CartCount';
 
 export type HeaderType = 'main' | 'sub' | 'title' | 'pop-up';
 
-export default function Header({
-    type,
-    title,
-    redirectUrl,
-}: {
+type RedirectAction = { type: 'back' } | { type: 'url'; url: string };
+
+type HeaderProps = {
     type: HeaderType;
     title?: string;
-    redirectUrl?: string;
-}) {
+    redirectAction?: RedirectAction;
+};
+
+export default function Header({ type, title, redirectAction }: HeaderProps) {
     const router = useRouter();
 
     const currentOption = LEFT_SIDE_OPTIONS[type];
@@ -27,7 +27,15 @@ export default function Header({
         if (type === 'main') {
             router.push('/main');
         } else if (type === 'pop-up') {
-            router.push(redirectUrl || '/');
+            if (redirectAction) {
+                if (redirectAction.type === 'back') {
+                    router.back();
+                } else if (redirectAction.type === 'url') {
+                    router.push(redirectAction.url);
+                }
+            } else {
+                router.push('/');
+            }
         } else {
             router.back();
         }
