@@ -1,12 +1,12 @@
 import { MYPAGE_BUTTONS } from '@/constants/mypage';
 
-import Button from './Button';
+import AccountActionButton from './AccountActionButton';
 
 export default function ButtonSection() {
     return (
         <div className="mb-8 space-x-2">
             {MYPAGE_BUTTONS.map((btn) => (
-                <Button key={btn} type={btn} />
+                <AccountActionButton key={btn} type={btn} />
             ))}
         </div>
     );

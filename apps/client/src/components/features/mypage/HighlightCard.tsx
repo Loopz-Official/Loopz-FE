@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import * as I from '@/icons/Mypage';
 
-export default function Banner() {
+export default function HighlightCard() {
     return (
         <Link
             href="/like"

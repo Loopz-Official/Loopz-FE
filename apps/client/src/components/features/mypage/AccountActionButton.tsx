@@ -3,7 +3,11 @@
 import { clearUserInfoCookie } from '@/auth/cookie/clearCookie';
 import { logout } from '@/services/api/auth';
 
-export default function Button({ type }: { type: '로그아웃' | '탈퇴하기' }) {
+export default function AccountActionButton({
+    type,
+}: {
+    type: '로그아웃' | '탈퇴하기';
+}) {
     const handleButtonClick = async () => {
         if (type === '로그아웃') {
             try {
