@@ -51,6 +51,13 @@ export default function ObjectFilterPage() {
                 prevSet.add(value);
             }
 
+            // value가 하나도 없으면 key를 아예 삭제
+            if (prevSet.size === 0) {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { [title]: _, ...rest } = prev;
+                return rest;
+            }
+
             return { ...prev, [title]: prevSet };
         });
     };
@@ -61,7 +68,7 @@ export default function ObjectFilterPage() {
     };
 
     // 초기화 버튼
-    const handleClearbuttonClick = () => {
+    const handleClearButtonClick = () => {
         setSelectedChips({});
         setPrice({ min: PRICE_MIN, max: PRICE_MAX });
     };
@@ -107,7 +114,7 @@ export default function ObjectFilterPage() {
                 onClick={handleConfirmButtonClick}
             >
                 <button
-                    onClick={handleClearbuttonClick}
+                    onClick={handleClearButtonClick}
                     className="text-body-03 border-button-gray-regular mr-2 h-full w-[6.875rem] items-center justify-center rounded-sm border"
                 >
                     초기화
