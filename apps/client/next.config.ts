@@ -29,6 +29,21 @@ const nextConfig: NextConfig = {
                 pathname: '/**',
                 search: '',
             },
+            {
+                protocol: 'https',
+                hostname: 'k.kakaocdn.net',
+                pathname: '/dn/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'ssl.pstatic.net',
+                pathname: '/**',
+            },
         ],
     },
 };
