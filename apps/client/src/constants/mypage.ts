@@ -1,3 +1,5 @@
+export const LOOPZ_EMAIL = 'loopstory08@gmail.com';
+
 export const MYPAGE_LINKS = [
     {
         label: '주문 내역',
