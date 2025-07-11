@@ -3,10 +3,10 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
+import { LIKE_TABS } from '@/constants/like';
+
 import ObjectTab from './ObjectTab';
 import SnapTab from './SnapTab';
-
-export const LIKE_TABS = ['OBJECT', 'SNAP'];
 
 export default function TabBar() {
     const [selectedTab, setSelectedTab] = useState(LIKE_TABS[0]);
