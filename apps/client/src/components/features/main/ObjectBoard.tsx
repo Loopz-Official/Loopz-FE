@@ -4,7 +4,6 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
@@ -69,16 +68,14 @@ export default function ObjectBoard() {
     }
 
     return (
-        <SuspenseWrapper fallback={<div>Loading Object Board...</div>}>
-            <div>
-                <div className="px-5">
-                    <h2 className="text-headline-03">Object Board</h2>
-                    <ProductListToolbar productCount={objectCount} />
-                </div>
-                <ProductList products={allObjects} />
-                {/* 무한 스크롤 트리거 */}
-                {hasNextPage && allObjects.length > 0 && <div ref={ref}></div>}
+        <div>
+            <div className="px-5">
+                <h2 className="text-headline-03">Object Board</h2>
+                <ProductListToolbar productCount={objectCount} />
             </div>
-        </SuspenseWrapper>
+            <ProductList products={allObjects} />
+            {/* 무한 스크롤 트리거 */}
+            {hasNextPage && allObjects.length > 0 && <div ref={ref}></div>}
+        </div>
     );
 }
