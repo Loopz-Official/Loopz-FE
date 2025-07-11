@@ -6,13 +6,13 @@ import { apiClient } from '../config/axios';
 // 닉네임 중복 검사
 export const checkNicknameRedundancy = async (nickname: string) => {
     try {
-        // // console.log('Nickname: ', nickname);
+        // console.log('Nickname: ', nickname);
 
         const response = await apiClient.get(
             `/user/v1/nickname/validate?nickname=${nickname}`
         );
 
-        // // console.log('checkNicknameRedundancy Response: ', response);
+        // console.log('checkNicknameRedundancy Response: ', response);
 
         return response.data.data;
     } catch (error) {
@@ -28,7 +28,7 @@ export const updateNickname = async (nickname: string) => {
         });
 
         if (response.status === 200) {
-            // // console.log('Nickname updated successfully: ', response);
+            // console.log('Nickname updated successfully: ', response);
 
             return { data: response.data.data, status: response.status };
         }
@@ -45,7 +45,7 @@ export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
             termsAgreement
         );
 
-        // // console.log('Agree to terms Response: ', response);
+        // console.log('Agree to terms Response: ', response);
 
         if (response.status === 200) {
             return {

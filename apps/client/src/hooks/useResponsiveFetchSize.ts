@@ -26,7 +26,7 @@ export const useResponsiveFetchSize = (rows: number = 4) => {
 
             timeout = setTimeout(() => {
                 setSize(() => getFetchSize());
-            }, 300); // 100ms debounce
+            }, 300); // 300ms debounce
         };
 
         if (typeof window !== 'undefined') {
