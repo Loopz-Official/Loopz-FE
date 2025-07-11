@@ -36,7 +36,7 @@ export default function Page() {
             <Header
                 type="pop-up"
                 title="개인정보 수집 및 이용 동의"
-                redirectUrl="back"
+                redirectAction={{ type: 'back' }}
             />
 
             <div className="pb-25 text-caption-01 flex flex-col gap-[2.125rem] px-5 pt-4">
