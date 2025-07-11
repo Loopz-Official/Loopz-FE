@@ -1,3 +1,4 @@
+import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import Banner from '@/components/features/main/Banner';
 import ObjectBoard from '@/components/features/main/ObjectBoard';
 import Footer from '@/components/layouts/Footer';
@@ -9,7 +10,9 @@ export default function Page() {
             <Header type="main" />
             <main className="flex flex-col gap-12">
                 <Banner />
-                <ObjectBoard />
+                <SuspenseWrapper fallback={<div>Loading Object Board...</div>}>
+                    <ObjectBoard />
+                </SuspenseWrapper>
             </main>
             <Footer />
         </div>
