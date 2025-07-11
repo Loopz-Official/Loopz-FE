@@ -12,11 +12,11 @@ export const ORDER_CONFIRM_ITEMS = [
         key: '입금진행',
         title: '2. 아래 계좌로 <span class="text-point">입금을 진행</span>해주세요.',
         description:
-            '결제 금액을 꼭 확인 후 진행해주세요. <br />계좌번호 : 국민은행 123456-01-234567',
+            '결제 금액을 꼭 확인 후 진행해주세요. <br />계좌번호 : 하나은행 13891074943307 권재호',
     },
     {
         key: '24시간이내',
-        title: '3. 입금 후, <span class="text-point">24시간 이내</span>로만 결제 취소 및 환불이 가능합니다.',
+        title: '3. 입금 확인 후 주문하신 물품이 <span class="text-point">[배송 준비]</span> 탭에 표시되며, 확인까지 <span class="text-point">평균 2시간</span> 정도 소요됩니다.',
         description: '',
     },
 ];

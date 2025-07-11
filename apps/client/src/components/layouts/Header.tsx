@@ -27,7 +27,11 @@ export default function Header({
         if (type === 'main') {
             router.push('/main');
         } else if (type === 'pop-up') {
-            router.push(redirectUrl || '/');
+            if (redirectUrl === 'back') {
+                router.back();
+            } else {
+                router.push(redirectUrl || '/');
+            }
         } else {
             router.back();
         }
