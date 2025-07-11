@@ -1,11 +1,11 @@
-import ProductListToolbar from '@/components/features/main/ProductListToolbar';
+import TabBar from '@/components/features/like/TabBar';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
     return (
         <div className="pb-14">
             <Header type="main" />
-            <ProductListToolbar hasFilter={false} hasOrder={false} />
+            <TabBar />
         </div>
     );
 }
