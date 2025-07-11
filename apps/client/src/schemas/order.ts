@@ -1,6 +1,6 @@
 import * as z from 'zod/v4';
 
-import { objectBasicInfo } from './object';
+import { objectBasicInfo } from './object/object';
 
 // Enum
 export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);

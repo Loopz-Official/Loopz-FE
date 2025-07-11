@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ObjectCommonInfo } from '@/schemas/object';
+import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
 
 type ProductListProps = {
@@ -11,7 +11,7 @@ type ProductListProps = {
 
 export default function ProductList({ products }: ProductListProps) {
     return products.length > 0 ? (
-        <div className="grid w-full grid-cols-2 pb-3 min-[481px]:grid-cols-3">
+        <div className="grid w-full grid-cols-2 min-[481px]:grid-cols-3">
             {products.map((product) => {
                 const isSoldOut = product.stock === 0;
 
@@ -39,14 +39,15 @@ export default function ProductList({ products }: ProductListProps) {
                                 src={product.imageUrl}
                                 alt="상품 이미지"
                                 fill
+                                sizes="(max-width: 672px) 100vw"
                                 className="h-full w-full object-cover"
                             />
                         </div>
                         <div className="px-3">
-                            <h3 className="text-caption-01 font-semibold">
+                            <h3 className="text-caption-01 truncate font-semibold">
                                 {product.objectName}
                             </h3>
-                            <p className="text-caption-01 text-gray-regular break-keep">
+                            <p className="text-caption-01 text-gray-regular line-clamp-2 h-9 whitespace-pre-line break-keep">
                                 {product.intro}
                             </p>
                             <p className="text-body-03 mt-2 font-semibold tracking-normal">
@@ -58,7 +59,7 @@ export default function ProductList({ products }: ProductListProps) {
             })}
         </div>
     ) : (
-        <div className="text-headline-04 pb-30 pt-20 text-center font-normal">
+        <div className="text-body-01 pb-30 pt-20 text-center font-normal">
             등록된 상품이 없습니다.
         </div>
     );
