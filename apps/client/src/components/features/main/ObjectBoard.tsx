@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 
 import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
+import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
 import { accumulateParams } from '@/utils/filter/accumulateParam';
@@ -16,25 +17,28 @@ import ProductListToolbar from './ProductListToolbar';
 export default function ObjectBoard() {
     // 무한 스크롤을 위한 ref
     const { ref, inView } = useInView({
-        threshold: 0.5,
+        threshold: 0.8,
     });
     const searchParams = useSearchParams();
+    const fetchSize = useResponsiveFetchSize();
 
     // searchParams를 객체로 변환
     const filterParams = useMemo(() => {
         const params: Partial<FilterRecord> = {};
-        searchParams.forEach((value, key) => {
-            const validatedKey = validate(filterTypeEnum, key, 'Filter Type');
 
-            if (validatedKey === filterTypeEnum.enum.excludeSoldOut) {
-                params[validatedKey] = value === 'true';
-            } else {
-                accumulateParams(params, validatedKey, value);
-            }
+        // excludeSoldOut을 먼저 처리해 조건문 연산 최소화
+        const excludeSoldOutValue = searchParams.get('excludeSoldOut');
+        if (excludeSoldOutValue !== null) {
+            params.excludeSoldOut = excludeSoldOutValue === 'true';
+        }
+
+        searchParams.forEach((value, key) => {
+            if (key === 'excludeSoldOut') return;
+            const validatedKey = validate(filterTypeEnum, key, 'Filter Type');
+            accumulateParams(params, validatedKey, value);
         });
 
-        console.log('Filter Params:', params);
-
+        // console.log('Filter Params:', params);
         return params;
     }, [searchParams]);
 
@@ -46,7 +50,7 @@ export default function ObjectBoard() {
         isFetchingNextPage,
         status,
         error,
-    } = useObjectBoardQuery(filterParams);
+    } = useObjectBoardQuery(filterParams, fetchSize);
 
     // 모든 페이지의 object 리스트를 하나로 합침
     const allObjects = data?.pages?.flatMap((page) => page.objects) ?? [];

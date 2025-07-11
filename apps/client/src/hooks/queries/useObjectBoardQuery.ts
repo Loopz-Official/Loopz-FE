@@ -5,9 +5,12 @@ import { validate } from '@/schemas/utils/validate';
 import { getObjectBoardList } from '@/services/api/object';
 
 // Object Board 리스트를 위한 무한 스크롤 React Query 훅
-export const useObjectBoardQuery = (filterParams: Partial<FilterRecord>) => {
+export const useObjectBoardQuery = (
+    filterParams: Partial<FilterRecord>,
+    size: number
+) => {
     return useInfiniteQuery({
-        queryKey: ['object-board', filterParams],
+        queryKey: ['object-board', filterParams, size],
         queryFn: async (context) => {
             const page =
                 typeof context.pageParam === 'number'
@@ -19,7 +22,7 @@ export const useObjectBoardQuery = (filterParams: Partial<FilterRecord>) => {
                 objectBoardFilterRequest,
                 {
                     page,
-                    size: 10,
+                    size,
                     ...filterParams,
                 },
                 'Object Board Request'
