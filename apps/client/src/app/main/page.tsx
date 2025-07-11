@@ -1,6 +1,7 @@
 import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 import Banner from '@/components/features/main/Banner';
 import ObjectBoard from '@/components/features/main/ObjectBoard';
+import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
@@ -13,6 +14,7 @@ export default function Page() {
                     <ObjectBoard />
                 </SuspenseWrapper>
             </main>
+            <Footer />
         </div>
     );
 }
