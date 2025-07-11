@@ -1,3 +1,5 @@
+import QueryString from 'qs';
+
 import {
     ObjectBoardFilterRequest,
     ObjectBoardResponse,
@@ -11,9 +13,13 @@ export const getObjectBoardList = async (
     params?: ObjectBoardFilterRequest
 ): Promise<ObjectBoardResponse> => {
     try {
-        const response = await apiClient.get('/object/v1', { params });
+        const response = await apiClient.get('/object/v1', {
+            params,
+            paramsSerializer: (params) =>
+                QueryString.stringify(params, { arrayFormat: 'brackets' }),
+        });
 
-        console.log('Object Board 상품 리스트 조회', response.data.data);
+        // console.log('Object Board 상품 리스트 조회', response.data.data);
 
         if (response.status === 200) {
             return validate(objectBoardResponse, response.data.data);

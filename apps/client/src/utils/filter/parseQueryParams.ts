@@ -13,9 +13,16 @@ export function parseQueryParams(searchParams: URLSearchParams): {
             price[key === 'priceMin' ? 'min' : 'max'] = Number(value);
         } else {
             if (!selectedChips[key]) selectedChips[key] = new Set();
-            selectedChips[key].add(value);
+
+            if (value.includes(',')) {
+                value.split(',').forEach((v) => selectedChips[key]!.add(v));
+            } else {
+                selectedChips[key]!.add(value);
+            }
         }
     });
+
+    // console.log(selectedChips);
 
     return { selectedChips, price };
 }

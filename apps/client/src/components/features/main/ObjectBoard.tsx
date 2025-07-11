@@ -9,7 +9,6 @@ import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
-import { accumulateParams } from '@/utils/filter/accumulateParam';
 
 import ProductList from './ProductList';
 import ProductListToolbar from './ProductListToolbar';
@@ -35,7 +34,10 @@ export default function ObjectBoard() {
         searchParams.forEach((value, key) => {
             if (key === 'excludeSoldOut') return;
             const validatedKey = validate(filterTypeEnum, key, 'Filter Type');
-            accumulateParams(params, validatedKey, value);
+
+            params[validatedKey] = value.includes(',')
+                ? value.split(',')
+                : value;
         });
 
         // console.log('Filter Params:', params);
