@@ -8,11 +8,15 @@ import { useSearchParams } from 'next/navigation';
 import { FilterIcon } from '@/components/icons/Filter';
 
 type ProductListToolbarProps = {
-    productCount: number;
+    productCount?: number;
+    hasOrder?: boolean;
+    hasFilter?: boolean;
 };
 
 export default function ProductListToolbar({
     productCount,
+    // hasOrder = true,
+    hasFilter = true,
 }: ProductListToolbarProps) {
     // const [isRotated, setIsRotated] = useState(false);
 
@@ -21,22 +25,39 @@ export default function ProductListToolbar({
     const filterUrl = `/filter${queryString ? `?${queryString}` : ''}`;
 
     return (
-        <div className="text-caption-01 text-gray-dark flex justify-between py-3">
-            <span>총 {productCount}개</span>
-            <div className="flex gap-4">
-                {/* <button
-                    className="flex items-center"
-                    onClick={() => setIsRotated(!isRotated)}
-                >
-                    최신순
-                    <ChevronDownIcon
-                        className={`h-4 w-4 text-black transition-transform duration-200 ${isRotated ? 'rotate-180' : ''}`}
+        <div className="text-caption-01 text-gray-dark flex justify-between px-5 py-3">
+            {hasFilter ? (
+                <span>총 {productCount}개</span>
+            ) : (
+                <label className="flex w-fit items-center gap-2">
+                    <input
+                        type="checkbox"
+                        className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
                     />
-                </button> */}
-                <Link href={filterUrl} className="flex items-center gap-0.5">
-                    필터
-                    <FilterIcon className="h-4 w-4" />
-                </Link>
+                    <span className="cursor-pointer">품절제외</span>
+                </label>
+            )}
+            <div className="flex gap-4">
+                {/* {hasOrder && (
+                    <button
+                        className="flex items-center"
+                        onClick={() => setIsRotated(!isRotated)}
+                    >
+                        최신순
+                        <ChevronDownIcon
+                            className={`h-4 w-4 text-black transition-transform duration-200 ${isRotated ? 'rotate-180' : ''}`}
+                        />
+                    </button>
+                )} */}
+                {hasFilter && (
+                    <Link
+                        href={filterUrl}
+                        className="flex items-center gap-0.5"
+                    >
+                        필터
+                        <FilterIcon className="h-4 w-4" />
+                    </Link>
+                )}
             </div>
         </div>
     );

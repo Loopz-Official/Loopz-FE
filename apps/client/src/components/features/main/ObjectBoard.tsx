@@ -73,10 +73,8 @@ export default function ObjectBoard() {
 
     return (
         <div>
-            <div className="px-5">
-                <h2 className="text-headline-03">Object Board</h2>
-                <ProductListToolbar productCount={objectCount} />
-            </div>
+            <h2 className="text-headline-03 px-5">Object Board</h2>
+            <ProductListToolbar productCount={objectCount} />
             <ProductList products={allObjects} />
             {/* 무한 스크롤 트리거 */}
             {hasNextPage && allObjects.length > 0 && <div ref={ref}></div>}
