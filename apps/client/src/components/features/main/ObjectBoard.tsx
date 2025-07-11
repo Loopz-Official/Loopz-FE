@@ -34,9 +34,13 @@ export default function ObjectBoard() {
             if (key === 'excludeSoldOut') return;
             const validatedKey = validate(filterTypeEnum, key, 'Filter Type');
 
-            params[validatedKey] = value.includes(',')
-                ? value.split(',')
-                : value;
+            if (validatedKey === 'priceMin' || validatedKey === 'priceMax') {
+                params[validatedKey] = Number(value);
+            } else if (validatedKey === 'sort') {
+                params[validatedKey] = value;
+            } else {
+                params[validatedKey] = value.split(',');
+            }
         });
 
         // console.log('Filter Params:', params);

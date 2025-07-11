@@ -12,7 +12,7 @@ export const filterTypeEnum = z.enum([
 
 export const filterRecord = z.record(
     filterTypeEnum,
-    z.union([z.string(), z.array(z.string()), z.boolean()])
+    z.union([z.string(), z.array(z.string()), z.boolean(), z.number()])
 );
 
 export const objectTypeEnum = z.enum([
