@@ -5,7 +5,7 @@ import Image from 'next/image';
 import CheckBox from '@/components/common/CheckBox';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { ObjectCommonInfo } from '@/schemas/object';
+import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
 
 import OrderQuantity from '../obje/OrderQuantity';

@@ -1,6 +1,6 @@
 import * as z from 'zod/v4';
 
-import { objectCommonInfo } from './object';
+import { objectCommonInfo } from './object/object';
 
 export const cartItemInfo = z.object({
     object: objectCommonInfo,

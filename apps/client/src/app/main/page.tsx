@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import Banner from '@/components/features/main/Banner';
 import ObjectBoard from '@/components/features/main/ObjectBoard';
 import Header from '@/components/layouts/Header';
@@ -10,9 +8,7 @@ export default function Page() {
             <Header type="main" />
             <main className="flex flex-col gap-12">
                 <Banner />
-                <Suspense>
-                    <ObjectBoard />
-                </Suspense>
+                <ObjectBoard />
             </main>
         </div>
     );

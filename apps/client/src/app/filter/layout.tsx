@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
+import SuspenseWrapper from '@/components/common/SuspenseWrapper';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <Suspense>{children}</Suspense>;
+    return <SuspenseWrapper>{children}</SuspenseWrapper>;
 }
