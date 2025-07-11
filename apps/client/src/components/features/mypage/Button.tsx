@@ -1,17 +1,20 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
+import { clearUserInfoCookie } from '@/auth/cookie/clearCookie';
 import { logout } from '@/services/api/auth';
 
 export default function Button({ type }: { type: '로그아웃' | '탈퇴하기' }) {
-    const router = useRouter();
-
     const handleButtonClick = async () => {
         if (type === '로그아웃') {
             try {
-                await logout();
-                router.push('/main');
+                const response = await logout();
+
+                if (response?.status === 200) {
+                    clearUserInfoCookie();
+                    localStorage.clear();
+                    alert(response?.data.message);
+                    window.location.href = '/';
+                }
             } catch (error) {
                 console.error(error);
                 alert('로그아웃 중 문제가 발생했습니다.');

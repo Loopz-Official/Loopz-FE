@@ -63,7 +63,7 @@ export const logout = async () => {
     try {
         const response = await apiClient.post('/auth/v1/logout');
 
-        // // console.log('Logout Response: ', response);
+        // console.log('Logout Response: ', response);
 
         if (response.status === 200) {
             return {
