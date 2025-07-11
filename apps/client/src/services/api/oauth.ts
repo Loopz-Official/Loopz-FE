@@ -25,7 +25,7 @@ export const getGoogleToken = async (code: string) => {
     try {
         const response = await apiClientGoogleAuth.post('/token', params);
 
-        // // console.log('Google Token Response: ', response.data);
+        // console.log('Google Token Response: ', response.data);
 
         return validate(googleTokenResponse, response.data);
     } catch (error) {
@@ -41,7 +41,7 @@ export const postGoogleToken = async (tokenResponse: GoogleTokenResponse) => {
             idToken: tokenResponse.id_token,
         });
 
-        // // console.log('Service Server Response: ', response);
+        // console.log('Service Server Response: ', response);
 
         if (response.status === 200) {
             const authHeader = response.headers.authorization;
@@ -65,7 +65,7 @@ export const postKakaoAuthCode = async (code: string) => {
             `/auth/v1/login/kakao?code=${code}`
         );
 
-        // // console.log('Posting Kakao Auth code response: ', response);
+        // console.log('Posting Kakao Auth code response: ', response);
 
         if (response.status === 200) {
             const authHeader = response.headers.authorization;

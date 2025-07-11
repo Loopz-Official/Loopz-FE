@@ -46,7 +46,7 @@ export default function TermsPage() {
             {} as TermsAgreement
         );
 
-        // // console.log('termsAgreement: ', termsAgreement);
+        // console.log('termsAgreement: ', termsAgreement);
 
         const termsResponse = await agreeSignupTerms(termsAgreement);
         if (!termsResponse) return;
