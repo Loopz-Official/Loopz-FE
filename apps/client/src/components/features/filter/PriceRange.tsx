@@ -7,15 +7,17 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import { PRICE_MAX, PRICE_MIN, RANGE_STEP } from '@/constants/filter';
 
+type PriceRangeProps = {
+    initialMin: number;
+    initialMax: number;
+    setPriceFilter: (priceMin: number, priceMax: number) => void;
+};
+
 export default function PriceRange({
     initialMin,
     initialMax,
     setPriceFilter,
-}: {
-    initialMin: number;
-    initialMax: number;
-    setPriceFilter: (priceMin: number, priceMax: number) => void;
-}) {
+}: PriceRangeProps) {
     const [values, setValues] = useState([PRICE_MIN, PRICE_MAX]);
     const [inputValues, setInputValues] = useState([
         PRICE_MIN.toLocaleString(),

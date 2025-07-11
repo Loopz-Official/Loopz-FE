@@ -5,7 +5,8 @@ import { gridBreakpoints } from '@/constants/grid';
 // rows: 한 번에 보여줄 row 수 (기본값 5)
 export const useResponsiveFetchSize = (rows: number = 4) => {
     const getFetchSize = useCallback(() => {
-        if (typeof window === 'undefined') return gridBreakpoints[0]!.columns;
+        if (typeof window === 'undefined')
+            return gridBreakpoints[0]!.columns * rows;
 
         const width = window.innerWidth;
         const found = gridBreakpoints.find((bp) => width <= bp.maxWidth);
