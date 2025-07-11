@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
 
@@ -10,30 +11,48 @@ type ProductListProps = {
 };
 
 export default function ProductList({ products }: ProductListProps) {
+    const handleLikeButtonClick = (e: React.MouseEvent) => {
+        e.preventDefault(); // 내비게이션 방지
+        alert('like!');
+    };
+
     return products.length > 0 ? (
         <div className="grid w-full grid-cols-2 min-[481px]:grid-cols-3">
             {products.map((product) => {
                 const isSoldOut = product.stock === 0;
+                const likeIconStyling = product.liked
+                    ? { fill: '#FFF', stroke: '#FFF' }
+                    : { fill: '#00000008', stroke: '#FFF' };
 
                 return (
                     <Link
                         href={`/obje/${product.objectId}`}
                         key={product.objectId}
-                        className="hover:bg-gray-12 active:bg-gray-12 flex w-full flex-col gap-4 pb-6 transition-colors"
+                        className="flex w-full flex-col gap-4 pb-6 transition-colors"
                     >
                         <div
                             className={clsx(
-                                'relative aspect-square h-auto w-full bg-black',
+                                'bg-gray-regular relative aspect-square h-auto w-full',
                                 {
                                     "before:absolute before:z-10 before:h-full before:w-full before:bg-black/40 before:content-['']":
                                         isSoldOut,
                                 }
                             )}
                         >
-                            {isSoldOut && (
+                            {isSoldOut ? (
                                 <div className="text-headline-04 -translate-1/2 absolute left-1/2 top-1/2 z-10 font-medium text-white">
                                     SOLD OUT
                                 </div>
+                            ) : (
+                                <button
+                                    onClick={handleLikeButtonClick}
+                                    className="absolute bottom-2 right-2 z-10"
+                                >
+                                    <LikeIconDynamic
+                                        fill={likeIconStyling.fill}
+                                        stroke={likeIconStyling.stroke}
+                                    />
+                                </button>
                             )}
                             <Image
                                 src={product.imageUrl}
