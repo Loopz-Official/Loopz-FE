@@ -15,7 +15,7 @@ export const useObjectBoardQuery = (
             const page =
                 typeof context.pageParam === 'number'
                     ? context.pageParam + 1 // DB에서 page는 1부터 시작하므로 +1
-                    : 0;
+                    : 1;
 
             // API 요청 파라미터 구성
             const params = validate(
