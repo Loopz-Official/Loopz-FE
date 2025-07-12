@@ -57,14 +57,14 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
                 )}
             >
                 {isSoldOut ? (
-                    <div className="text-headline-04 -translate-1/2 absolute left-1/2 top-1/2 z-10 font-medium text-white">
+                    <span className="text-headline-04 absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 font-medium text-white">
                         SOLD OUT
-                    </div>
+                    </span>
                 ) : (
                     <div
                         onClick={handleLikeButtonClick}
                         onKeyDown={handleLikeButtonKeyDown}
-                        className="absolute bottom-2 right-2 z-10 cursor-pointer"
+                        className="absolute bottom-2 right-2 z-20 cursor-pointer"
                         role="button"
                         tabIndex={0}
                     >
