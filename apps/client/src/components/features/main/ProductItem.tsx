@@ -17,10 +17,30 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
         ? { fill: '#FFF', stroke: '#FFF' }
         : { fill: '#00000008', stroke: '#FFF' };
 
-    const handleLikeButtonClick = useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
+    const handleLike = () => {
+        // TODO: 실제 좋아요 API 호출 로직을 여기에 작성
+        // 예: likeProduct(product.objectId)
         alert('like!');
-    }, []);
+    };
+
+    const handleLikeButtonClick = useCallback(
+        (e: React.MouseEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            handleLike();
+        },
+        []
+    );
+
+    const handleLikeButtonKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLDivElement>) => {
+            // For button tag default action
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleLike();
+            }
+        },
+        []
+    );
 
     return (
         <Link
@@ -41,15 +61,18 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
                         SOLD OUT
                     </div>
                 ) : (
-                    <button
+                    <div
                         onClick={handleLikeButtonClick}
-                        className="absolute bottom-2 right-2 z-10"
+                        onKeyDown={handleLikeButtonKeyDown}
+                        className="absolute bottom-2 right-2 z-10 cursor-pointer"
+                        role="button"
+                        tabIndex={0}
                     >
                         <LikeIconDynamic
                             fill={likeIconStyling.fill}
                             stroke={likeIconStyling.stroke}
                         />
-                    </button>
+                    </div>
                 )}
                 <Image
                     src={product.imageUrl}
