@@ -5,6 +5,7 @@
             "feature/*": false,
             "fix/*": false,
             "refactor/*": false,
+            "chore/*": false,
             "integration/*": false,
             "develop": false
         }
