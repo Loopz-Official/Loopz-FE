@@ -3,16 +3,16 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import { LIKE_TABS } from '@/constants/like';
+import { LIKE_TABS, LikeTab } from '@/constants/like';
 
 import ObjectTab from './ObjectTab';
 import SnapTab from './SnapTab';
 
-export default function TabBar() {
-    const [selectedTab, setSelectedTab] = useState(LIKE_TABS[0]);
+export default function LikeTabBar() {
+    const [selectedTab, setSelectedTab] = useState<LikeTab>(LIKE_TABS[0]);
 
     return (
-        <div>
+        <div className="fixed top-14 z-20 w-full max-w-2xl">
             <div className="grid grid-cols-2">
                 {LIKE_TABS.map((tab) => (
                     <button
@@ -30,7 +30,7 @@ export default function TabBar() {
                 ))}
             </div>
 
-            {selectedTab === 'OBJECT' ? <ObjectTab /> : <SnapTab />}
+            {selectedTab === LIKE_TABS[0] ? <ObjectTab /> : <SnapTab />}
         </div>
     );
 }
