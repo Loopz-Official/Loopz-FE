@@ -14,6 +14,8 @@ export const apiClient = axios.create({
 // Request Interceptor
 apiClient.interceptors.request.use(
     (config) => {
+        if (typeof window === 'undefined') return config;
+
         const accessToken = getCookie('access-token');
 
         if (accessToken) {
@@ -38,6 +40,8 @@ apiClient.interceptors.response.use(
         // Do something with response error
 
         // // console.log('Request Error: ', error);
+
+        if (typeof window === 'undefined') return Promise.reject(error);
 
         if (error?.response.status === 401 || error?.response.status === 403) {
             clearUserInfoCookie(); // 🍪 임시 쿠키 설정 (추후 refactor 필요)
