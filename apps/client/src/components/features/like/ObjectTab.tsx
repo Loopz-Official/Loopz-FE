@@ -1,9 +1,5 @@
-import ProductListToolbar from '../main/ProductListToolbar';
+import FilterBar from '@/components/common/filter/FilterBar';
 
 export default function ObjectTab() {
-    return (
-        <div className="py-1">
-            <ProductListToolbar hasFilter={false} hasOrder={false} />
-        </div>
-    );
+    return <FilterBar />;
 }
