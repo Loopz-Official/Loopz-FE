@@ -9,7 +9,7 @@ import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
 
-import ProductList from './ProductList';
+import ProductList from './ProductList/index';
 import ProductListToolbar from './ProductListToolbar';
 
 export default function ObjectBoard() {
