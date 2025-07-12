@@ -108,7 +108,7 @@ export default function OrderConfirmPageContent() {
                 type="checkbox"
                 checked={isChecked(itemKey)}
                 onChange={() => toggle(itemKey)}
-                className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-5 w-5 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                className="border-gray-09 rounded-xs not-checked:bg-[url('/checkbox/unchecked.svg')] relative h-5 w-5 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checkbox/checked.svg')]"
             />
             <span className="text-body-03 text-gray-dark font-normal">
                 네! 확인했습니다.

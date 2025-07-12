@@ -149,7 +149,7 @@ export default function AddressCUPage() {
                         }
                         checked={newAddress.defaultAddress}
                         type="checkbox"
-                        className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                        className="border-gray-09 rounded-xs not-checked:bg-[url('/checkbox/unchecked.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checkbox/checked.svg')]"
                     />
                     <span className="text-body-03">기본 배송지로 설정</span>
                 </label>
