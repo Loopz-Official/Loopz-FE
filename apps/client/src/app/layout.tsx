@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 
 import Frame from '@/components/layouts/Frame';
+import { META } from '@/constants/meta';
 import ReactQueryProviderWrapper from '@/providers/QueryProviderWrapper';
 
 import type { Metadata } from 'next';
@@ -15,8 +16,33 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-    title: 'Loopz',
-    description: 'Loopz web application',
+    metadataBase: new URL(META.URL),
+
+    title: META.TITLE,
+    description: META.DESCRIPTION,
+    keywords: META.KEYWORDS,
+
+    openGraph: {
+        title: META.TITLE,
+        description: META.DESCRIPTION,
+        images: [
+            {
+                url: META.IMAGE_URL,
+                width: 800,
+                height: 600,
+                alt: META.TITLE,
+            },
+        ],
+        locale: META.LOCALE,
+        type: META.TYPE,
+    },
+    twitter: {
+        title: META.TITLE,
+        description: META.DESCRIPTION,
+        images: {
+            url: META.IMAGE_URL,
+        },
+    },
 };
 
 export default function RootLayout({
