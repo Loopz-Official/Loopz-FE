@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { DeliveryRequest } from '@/app/order/form/OrderFormPageContent';
-import { ChevronDownIcon } from '@/components/icons/ChevronDown';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
 import { OrderFrom } from '@/constants/order';
+import { ChevronDownIcon } from '@/icons/Chevron';
 import { PlusIcon } from '@/icons/Plus';
 import { AddressInfo } from '@/schemas/address';
 import { getOrderFromQueryString } from '@/utils/route';

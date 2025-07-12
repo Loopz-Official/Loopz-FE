@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import 'swiper/css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Link from 'next/link';
 
-import { calculatePeekWidth } from '@/utils/calculatePeekWidth';
 import { MOCK_BANNER } from '@/constants/mockBanner';
+import { calculatePeekWidth } from '@/utils/calculatePeekWidth';
 
 const swiperBreakpoints = {
     0: {

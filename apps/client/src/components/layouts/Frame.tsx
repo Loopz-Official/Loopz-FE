@@ -7,7 +7,7 @@ import NavigationBar from './NavigationBar';
 
 export default function Frame({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const isNavbarVisiblePaths = ['/main', '/mypage'];
+    const isNavbarVisiblePaths = ['/main', '/mypage', '/like'];
     const isNavbarVisible = isNavbarVisiblePaths.includes(pathname);
 
     return (

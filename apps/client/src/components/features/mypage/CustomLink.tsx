@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ChevronDownIcon } from '@/components/icons/ChevronDown';
+import { ChevronDownIcon } from '@/icons/Chevron';
 
 export default function CustomLink({
     href,
