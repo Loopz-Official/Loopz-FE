@@ -32,7 +32,7 @@ const BottomPurchaseCTA = ({
     const isLiked = objectDetail.liked;
 
     const handleLike = () => {
-        likeToggleMutation.mutate({ objectId, currentLiked: !isLiked });
+        likeToggleMutation.mutate({ objectId, currentLiked: isLiked });
     };
 
     const handleCart = () => {
