@@ -18,7 +18,7 @@ export const toQueryParams = (
     if (price.max !== PRICE_MAX) params.append('priceMax', String(price.max));
 
     const queryString = params.toString();
-    console.log(queryString);
+    // console.log(queryString);
 
     return queryString ? `?${queryString}` : '';
 };

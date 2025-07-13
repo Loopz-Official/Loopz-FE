@@ -1,4 +1,4 @@
-import QueryString from 'qs';
+import Qs from 'qs';
 
 import {
     ObjectBoardFilterRequest,
@@ -17,7 +17,7 @@ export const getObjectBoardList = async (
         const response = await apiClient.get('/object/v1', {
             params,
             paramsSerializer: (params) =>
-                QueryString.stringify(params, { arrayFormat: 'brackets' }),
+                Qs.stringify(params, { arrayFormat: 'repeat' }),
         });
 
         // console.log('Object Board 상품 리스트 조회', response.data.data);
