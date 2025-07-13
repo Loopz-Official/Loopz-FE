@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 import BottomButton from '@/components/common/BottomButton';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
+import { useLikeToggleMutation } from '@/hooks/mutations/useObjectMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
 import { ObjectDetailInfo } from '@/schemas/object/object';
@@ -21,23 +21,25 @@ const BottomPurchaseCTA = ({
     objectId,
     objectDetail,
 }: BottomPurchaseCTAProps) => {
-    const [isLiked, setIsLiked] = useState(false);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
-    // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
 
     const addCartMutation = useUpdateCartItem();
+    const likeToggleMutation = useLikeToggleMutation();
 
     if (!objectDetail) return <div>오브제 상세 정보가 존재하지 않습니다.</div>;
 
     const isSoldOut = objectDetail.stock === 0;
+    const isLiked = objectDetail.liked;
 
-    const handleLike = () => setIsLiked((prev) => !prev);
-    const handleCart = async () => {
-        await addCartMutation.mutateAsync({
+    const handleLike = () => {
+        likeToggleMutation.mutate({ objectId, currentLiked: !isLiked });
+    };
+
+    const handleCart = () => {
+        addCartMutation.mutate({
             objectId: useToAddObjectStore.getState().objectId,
             quantity: 1,
         });
-        toast.success('장바구니에 상품을 담았어요!');
     };
 
     const likeIconStyling = isLiked
