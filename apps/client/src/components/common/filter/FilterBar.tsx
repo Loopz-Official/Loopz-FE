@@ -18,7 +18,7 @@ const FilterBar = ({
     onChangeFilter,
 }: FilterBarProps) => {
     return (
-        <div className="my-1 flex w-full items-center justify-between px-5 py-3">
+        <div className="my-1 flex w-full items-center justify-between bg-white px-5 py-3">
             <SoldoutFilter
                 value={excludeSoldOut}
                 onChange={(v) => onChangeFilter('excludeSoldOut', v)}
