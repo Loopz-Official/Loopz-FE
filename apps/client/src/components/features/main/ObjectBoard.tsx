@@ -4,12 +4,12 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
+import ProductList from '@/components/common/ProductList';
+import { useObjectBoardQuery } from '@/hooks/queries/useObjectQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
 
-import ProductList from './ProductList/index';
 import ProductListToolbar from './ProductListToolbar';
 
 export default function ObjectBoard() {
@@ -75,7 +75,7 @@ export default function ObjectBoard() {
         <div>
             <h2 className="text-headline-03 px-5">Object Board</h2>
             <ProductListToolbar productCount={objectCount} />
-            <ProductList products={allObjects} />
+            <ProductList products={allObjects} fetchSize={fetchSize} />
             {/* 무한 스크롤 트리거 */}
             {hasNextPage && allObjects.length > 0 && <div ref={ref}></div>}
         </div>

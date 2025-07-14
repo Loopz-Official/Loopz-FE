@@ -1,4 +1,3 @@
-import LikeTabBar from '@/components/features/like/TabBar';
 import Header from '@/components/layouts/Header';
 
 export default function LikePageLayout({
@@ -8,11 +7,8 @@ export default function LikePageLayout({
 }) {
     return (
         <>
-            <div className="relative">
-                <Header type="main" />
-                <LikeTabBar />
-                <main>{children}</main>
-            </div>
+            <Header type="main" />
+            <main className="pb-14">{children}</main>
         </>
     );
 }

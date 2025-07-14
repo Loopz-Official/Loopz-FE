@@ -17,6 +17,7 @@ export default function Frame({ children }: { children: React.ReactNode }) {
             <Toaster
                 toastOptions={{
                     style: {
+                        border: 'none',
                         background: '#505050',
                         borderRadius: '4px',
                         padding: '16px 20px',
@@ -28,7 +29,7 @@ export default function Frame({ children }: { children: React.ReactNode }) {
                 position="bottom-center"
                 offset={{ bottom: '84px' }}
                 mobileOffset={{ bottom: '84px' }}
-                expand={false}
+                visibleToasts={1}
             />
         </div>
     );

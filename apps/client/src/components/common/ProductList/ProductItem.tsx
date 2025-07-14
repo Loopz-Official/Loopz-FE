@@ -6,29 +6,28 @@ import { memo, useCallback } from 'react';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
+import { getLikeIconStyling } from '@/utils/likeIconStyling';
 
 type ProductItemProps = {
     product: ObjectCommonInfo;
+    priority: boolean;
+    onLike: () => void;
 };
 
-const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
+const ProductItem = memo(function ProductItem({
+    product,
+    priority,
+    onLike,
+}: ProductItemProps) {
     const isSoldOut = product.stock === 0;
-    const likeIconStyling = product.liked
-        ? { fill: '#FFF', stroke: '#FFF' }
-        : { fill: '#00000008', stroke: '#FFF' };
-
-    const handleLike = () => {
-        // TODO: 실제 좋아요 API 호출 로직을 여기에 작성
-        // 예: likeProduct(product.objectId)
-        alert('like!');
-    };
+    const likeIconStyling = getLikeIconStyling(product.liked);
 
     const handleLikeButtonClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             e.preventDefault();
-            handleLike();
+            onLike();
         },
-        []
+        [onLike]
     );
 
     const handleLikeButtonKeyDown = useCallback(
@@ -36,10 +35,10 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
             // For button tag default action
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                handleLike();
+                onLike();
             }
         },
-        []
+        [onLike]
     );
 
     return (
@@ -64,7 +63,7 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
                     <div
                         onClick={handleLikeButtonClick}
                         onKeyDown={handleLikeButtonKeyDown}
-                        className="absolute bottom-2 right-2 z-20 cursor-pointer"
+                        className="drop-shadow-black/25 absolute bottom-4 right-4 z-10 cursor-pointer drop-shadow-md"
                         role="button"
                         tabIndex={0}
                     >
@@ -78,6 +77,7 @@ const ProductItem = memo(function ProductItem({ product }: ProductItemProps) {
                     src={product.imageUrl}
                     alt="상품 이미지"
                     fill
+                    priority={priority}
                     sizes="(max-width: 672px) 100vw"
                     className="h-full w-full object-cover"
                 />

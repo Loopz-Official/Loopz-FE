@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import {
     CartItemUpdateResponse,
@@ -24,6 +25,7 @@ export const useUpdateCartItem = () => {
             updateCartItem(objectId, quantity),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
+            toast.success('장바구니에 상품을 담았어요!');
         },
         onError: handleMutationError,
     });
