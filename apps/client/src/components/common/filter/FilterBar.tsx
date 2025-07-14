@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { ObjectSort, SortAndSoldOutOptions } from '@/schemas/object';
 
 import SoldoutFilter from './unit/SoldoutFilter';
@@ -33,4 +35,4 @@ const FilterBar = ({
     );
 };
 
-export default FilterBar;
+export default memo(FilterBar);
