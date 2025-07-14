@@ -9,6 +9,7 @@ import { useLikeToggleMutation } from '@/hooks/mutations/useObjectMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { CartIcon } from '@/icons/Header';
 import { ObjectDetailInfo } from '@/schemas/object/object';
+import { getLikeIconStyling } from '@/utils/likeIconStyling';
 
 import BottomSheet from './BottomSheet';
 
@@ -42,9 +43,7 @@ const BottomPurchaseCTA = ({
         });
     };
 
-    const likeIconStyling = isLiked
-        ? { fill: '#FF5A2D', stroke: 'none' }
-        : { fill: 'none', stroke: '#151515' };
+    const likeIconStyling = getLikeIconStyling(isLiked);
 
     const CTA_ICONS = [
         {

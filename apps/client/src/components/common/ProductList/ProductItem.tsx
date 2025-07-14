@@ -6,6 +6,7 @@ import { memo, useCallback } from 'react';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
+import { getLikeIconStyling } from '@/utils/likeIconStyling';
 
 type ProductItemProps = {
     product: ObjectCommonInfo;
@@ -19,9 +20,7 @@ const ProductItem = memo(function ProductItem({
     onLike,
 }: ProductItemProps) {
     const isSoldOut = product.stock === 0;
-    const likeIconStyling = product.liked
-        ? { fill: '#FF5A2D', stroke: '#FF5A2D' }
-        : { fill: '#00000008', stroke: '#FFFFFF' };
+    const likeIconStyling = getLikeIconStyling(product.liked);
 
     const handleLikeButtonClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
