@@ -1,6 +1,9 @@
 import * as z from 'zod/v4';
 
 import * as e from './filterEnums';
+// ObjectSort 타입과 enum import
+export { objectSortEnum } from './filterEnums';
+export type { ObjectSort } from './filterEnums';
 
 // Filter Request DTO
 const filterOptions = z
@@ -11,13 +14,13 @@ const filterOptions = z
         priceMax: z.int32().nonnegative(),
         keywords: z.union([e.objectKeywordEnum, z.array(e.objectKeywordEnum)]),
         excludeSoldOut: z.boolean(),
-        sort: e.objectSortEnum,
+        sort: e.objectSortEnum, // 최신순/인기순 등 정렬 옵션
     })
     .partial();
 
 export const paginationOptions = z.object({
     page: z.int32().positive(),
-    size: z.int32().nonnegative(),
+    size: z.int32().positive(),
 });
 
 export const objectBoardFilterRequest = z.object({
@@ -68,3 +71,16 @@ export const objectDetailInfo = z.object({
     descriptionUrl: z.nullable(z.url()),
 });
 export type ObjectDetailInfo = z.infer<typeof objectDetailInfo>;
+
+// Object Liked
+const sortAndSoldOutOptions = filterOptions.pick({
+    sort: true,
+    excludeSoldOut: true,
+});
+export type SortAndSoldOutOptions = z.infer<typeof sortAndSoldOutOptions>;
+
+export const filteredObjectRequest = z.object({
+    ...paginationOptions.shape,
+    ...sortAndSoldOutOptions.shape,
+});
+export type FilteredObjectRequest = z.infer<typeof filteredObjectRequest>;

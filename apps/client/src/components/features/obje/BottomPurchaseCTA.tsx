@@ -76,7 +76,10 @@ const BottomPurchaseCTA = ({
                 <ul className="flex items-center gap-4">
                     {CTA_ICONS.map((item) => (
                         <li key={item.name}>
-                            <button onClick={item.onClick} disabled={isSoldOut}>
+                            <button
+                                onClick={item.onClick}
+                                disabled={isSoldOut && item.name === 'cart'}
+                            >
                                 {item.icon()}
                             </button>
                         </li>

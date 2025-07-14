@@ -1,9 +1,10 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import {
+    filteredObjectRequest,
     FilterRecord,
     objectBoardFilterRequest,
-    paginationOptions,
+    SortAndSoldOutOptions,
 } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
 import {
@@ -62,9 +63,12 @@ export const useObjectDetailQuery = (objectId: string) => {
 };
 
 // 오브제 좋아요 조회
-export const useLikedObjectListQuery = (size: number) => {
+export const useLikedObjectListQuery = (
+    size: number,
+    filters: Partial<SortAndSoldOutOptions>
+) => {
     return useInfiniteQuery({
-        queryKey: ['object-liked', size],
+        queryKey: ['object-liked', size, filters],
         queryFn: async (context) => {
             const page =
                 typeof context.pageParam === 'number'
@@ -73,12 +77,13 @@ export const useLikedObjectListQuery = (size: number) => {
 
             // API 요청 파라미터 구성
             const params = validate(
-                paginationOptions,
+                filteredObjectRequest,
                 {
                     page,
                     size,
+                    ...filters,
                 },
-                'Object Board Request'
+                'Liked Object Request'
             );
 
             return await getLikedObjectList(params);

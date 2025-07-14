@@ -1,6 +1,7 @@
 import Qs from 'qs';
 
 import {
+    FilteredObjectRequest,
     ObjectBoardFilterRequest,
     ObjectBoardResponse,
     objectBoardResponse,
@@ -63,12 +64,11 @@ export const toggleObjectLike = async (objectId: string) => {
 };
 
 // 오브제 좋아요 조회
-export const getLikedObjectList = async (params: {
-    page: number;
-    size: number;
-}) => {
+export const getLikedObjectList = async (params: FilteredObjectRequest) => {
     try {
-        const response = await apiClient.get('/object/v1/likes', { params });
+        const response = await apiClient.get('/object/v1/likes', {
+            params,
+        });
 
         // console.log('Liked Object List', response);
 
