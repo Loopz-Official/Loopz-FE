@@ -76,6 +76,7 @@ const ProductItem = memo(function ProductItem({
                     src={product.imageUrl}
                     alt="상품 이미지"
                     fill
+                    priority
                     sizes="(max-width: 672px) 100vw"
                     className="h-full w-full object-cover"
                 />

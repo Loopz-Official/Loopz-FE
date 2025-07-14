@@ -7,7 +7,7 @@ export const getMyAccountInfo = async () => {
     try {
         const response = await apiClient.get('/user/v1/me');
 
-        console.log('My Account Info Response:', response);
+        // console.log('My Account Info Response:', response);
 
         if (response.status === 200) {
             return validate(
