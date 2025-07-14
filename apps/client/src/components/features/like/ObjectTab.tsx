@@ -54,7 +54,7 @@ export default function ObjectTab() {
     return (
         <>
             <FilterBar
-                excludeSoldOut={filters.excludeSoldOut ?? false}
+                excludeSoldOut={filters.excludeSoldOut}
                 onChangeFilter={handleChangeFilter}
             />
             <ProductList

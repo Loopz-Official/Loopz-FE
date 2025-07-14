@@ -73,9 +73,9 @@ export const objectDetailInfo = z.object({
 export type ObjectDetailInfo = z.infer<typeof objectDetailInfo>;
 
 // Object Liked
-const sortAndSoldOutOptions = filterOptions.pick({
-    sort: true,
-    excludeSoldOut: true,
+const sortAndSoldOutOptions = z.object({
+    excludeSoldOut: z.boolean(),
+    sort: z.optional(e.objectSortEnum),
 });
 export type SortAndSoldOutOptions = z.infer<typeof sortAndSoldOutOptions>;
 
