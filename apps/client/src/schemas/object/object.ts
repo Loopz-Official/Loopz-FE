@@ -15,10 +15,14 @@ const filterOptions = z
     })
     .partial();
 
-export const objectBoardFilterRequest = z.object({
-    ...filterOptions.shape,
+export const paginationOptions = z.object({
     page: z.int32().positive(),
     size: z.int32().nonnegative(),
+});
+
+export const objectBoardFilterRequest = z.object({
+    ...filterOptions.shape,
+    ...paginationOptions.shape,
 });
 
 export type ObjectBoardFilterRequest = z.infer<typeof objectBoardFilterRequest>;

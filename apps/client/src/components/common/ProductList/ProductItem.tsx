@@ -19,7 +19,7 @@ const ProductItem = memo(function ProductItem({
     const isSoldOut = product.stock === 0;
     const likeIconStyling = product.liked
         ? { fill: '#FF5A2D', stroke: '#FF5A2D' }
-        : { fill: '#00000008', stroke: '#FFF' };
+        : { fill: '#00000008', stroke: '#FFFFFF' };
 
     const handleLikeButtonClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -62,7 +62,7 @@ const ProductItem = memo(function ProductItem({
                     <div
                         onClick={handleLikeButtonClick}
                         onKeyDown={handleLikeButtonKeyDown}
-                        className="absolute bottom-2 right-2 z-20 cursor-pointer"
+                        className="drop-shadow-black/25 absolute bottom-4 right-4 z-10 cursor-pointer drop-shadow-md"
                         role="button"
                         tabIndex={0}
                     >

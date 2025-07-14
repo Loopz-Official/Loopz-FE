@@ -5,9 +5,13 @@ import ProductItem from './ProductItem';
 
 type ProductListProps = {
     products: ObjectCommonInfo[];
+    isLikePage?: boolean;
 };
 
-export default function ProductList({ products }: ProductListProps) {
+export default function ProductList({
+    products,
+    isLikePage = false,
+}: ProductListProps) {
     const { mutate } = useLikeToggleMutation();
 
     return products.length > 0 ? (
@@ -27,7 +31,7 @@ export default function ProductList({ products }: ProductListProps) {
         </div>
     ) : (
         <div className="text-body-01 pb-30 pt-20 text-center font-normal">
-            등록된 상품이 없습니다.
+            {isLikePage ? '좋아요한' : '등록된'} 상품이 없습니다.
         </div>
     );
 }

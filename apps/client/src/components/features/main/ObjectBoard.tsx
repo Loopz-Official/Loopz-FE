@@ -4,12 +4,12 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useObjectBoardQuery } from '@/hooks/queries/useObjectBoardQuery';
+import ProductList from '@/components/common/ProductList';
+import { useObjectBoardQuery } from '@/hooks/queries/useObjectQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
 
-import ProductList from './ProductList/index';
 import ProductListToolbar from './ProductListToolbar';
 
 export default function ObjectBoard() {

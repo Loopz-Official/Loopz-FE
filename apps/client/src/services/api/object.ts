@@ -61,3 +61,23 @@ export const toggleObjectLike = async (objectId: string) => {
         throw error;
     }
 };
+
+// 오브제 좋아요 조회
+export const getLikedObjectList = async (params: {
+    page: number;
+    size: number;
+}) => {
+    try {
+        const response = await apiClient.get('/object/v1/likes', { params });
+
+        // console.log('Liked Object List', response);
+
+        if (response.status === 200) {
+            return validate(objectBoardResponse, response.data.data);
+        }
+        throw new Error('Invalid response status');
+    } catch (error) {
+        console.error('좋아요 조회 실패', error);
+        throw error;
+    }
+};

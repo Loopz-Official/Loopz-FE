@@ -25,6 +25,9 @@ export const useLikeToggleMutation = () => {
                 queryKey: ['object', variables.objectId],
             });
 
+            // object-liked 쿼리 무효화 (좋아요 리스트 페이지)
+            queryClient.invalidateQueries({ queryKey: ['object-liked'] });
+
             if (data.liked) {
                 toast.success('좋아요한 상품에 추가되었습니다');
             } else {

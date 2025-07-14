@@ -5,7 +5,7 @@ type FilterBarProps = {
     hasSort?: boolean;
 };
 
-const FilterBar = ({ hasSort = true }: FilterBarProps) => {
+const FilterBar = ({ hasSort = false }: FilterBarProps) => {
     return (
         <div className="my-1 flex w-full items-center justify-between px-5 py-3">
             <SoldoutFilter />
