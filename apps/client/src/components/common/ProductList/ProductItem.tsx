@@ -9,11 +9,13 @@ import { formatPrice } from '@/utils/formatPrice';
 
 type ProductItemProps = {
     product: ObjectCommonInfo;
+    priority: boolean;
     onLike: () => void;
 };
 
 const ProductItem = memo(function ProductItem({
     product,
+    priority,
     onLike,
 }: ProductItemProps) {
     const isSoldOut = product.stock === 0;
@@ -76,7 +78,7 @@ const ProductItem = memo(function ProductItem({
                     src={product.imageUrl}
                     alt="상품 이미지"
                     fill
-                    priority
+                    priority={priority}
                     sizes="(max-width: 672px) 100vw"
                     className="h-full w-full object-cover"
                 />

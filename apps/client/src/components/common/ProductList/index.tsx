@@ -5,18 +5,20 @@ import ProductItem from './ProductItem';
 
 type ProductListProps = {
     products: ObjectCommonInfo[];
+    fetchSize: number;
     isLikePage?: boolean;
 };
 
 export default function ProductList({
     products,
+    fetchSize,
     isLikePage = false,
 }: ProductListProps) {
     const { mutate } = useLikeToggleMutation();
 
     return products.length > 0 ? (
         <div className="grid w-full grid-cols-2 min-[481px]:grid-cols-3">
-            {products.map((product) => (
+            {products.map((product, idx) => (
                 <ProductItem
                     key={product.objectId}
                     product={product}
@@ -26,6 +28,7 @@ export default function ProductList({
                             currentLiked: product.liked,
                         })
                     }
+                    priority={idx < fetchSize}
                 />
             ))}
         </div>

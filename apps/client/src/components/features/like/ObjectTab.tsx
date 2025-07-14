@@ -57,7 +57,11 @@ export default function ObjectTab() {
                 excludeSoldOut={filters.excludeSoldOut ?? false}
                 onChangeFilter={handleChangeFilter}
             />
-            <ProductList products={allObjects} isLikePage />
+            <ProductList
+                products={allObjects}
+                fetchSize={fetchSize}
+                isLikePage
+            />
             {hasNextPage && allObjects.length > 0 && <div ref={ref}></div>}
         </>
     );
