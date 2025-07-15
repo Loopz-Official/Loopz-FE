@@ -20,7 +20,7 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
     const router = useRouter();
 
     const { count } = usePurchaseCountStore();
-    const { setProducts } = useSelectedProductsStore();
+    const { setSelectedProducts } = useSelectedProductsStore();
 
     if (!objectId) return <div>오브제가 존재하지 않습니다.</div>;
     if (!objectDetail)
@@ -31,12 +31,9 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
     const handleBottomButtonClick = () => {
         const product = {
             objectId,
-            objectName: objectDetail.objectName,
-            objectPrice: objectDetail.objectPrice,
-            imageUrl: objectDetail.imageUrl,
             quantity: count,
         };
-        setProducts([product]);
+        setSelectedProducts([product]);
 
         router.push('/order/form/?orderFrom=detail');
     };

@@ -13,6 +13,7 @@ import Header from '@/components/layouts/Header';
 import { ORDER_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
+import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
@@ -29,7 +30,9 @@ export type DeliveryRequest = {
 
 export default function OrderFormPageContent() {
     const router = useRouter();
+
     const { orderFrom, isValid } = useValidOrderFrom();
+
     // 모든 훅은 여기서 호출
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
     const { selectedAddressId, setSelectedAddressId } =
@@ -38,12 +41,20 @@ export default function OrderFormPageContent() {
         option: null,
         customText: '',
     });
-    const termsCheck = useTermsCheck(ORDER_TERMS);
-    const isAllTermsChecked = termsCheck.isAllMandatoryChecked;
-    const { products } = useSelectedProductsStore();
-    const { productPrice, totalPrice } = getPriceSummary(products);
+
+    const { selectedProducts } = useSelectedProductsStore();
+    const { data: selectedObjectInfos } =
+        useSelectedObjectInfosQuery(selectedProducts);
+
+    const { productPrice, totalPrice } = getPriceSummary(
+        selectedObjectInfos ?? []
+    );
+
     const { setBaseOrderRequest } = useBaseOrderRequestStore();
     const { data: addressList, isLoading, error } = useAddressListQuery();
+
+    const termsCheck = useTermsCheck(ORDER_TERMS);
+    const isAllTermsChecked = termsCheck.isAllMandatoryChecked;
 
     const isDisabled = !(activeAddressInfo && isAllTermsChecked);
 
@@ -112,7 +123,10 @@ export default function OrderFormPageContent() {
                 </section>
                 {/* 주문 상품 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
-                    <OrderItemsSection variant="form" />
+                    <OrderItemsSection
+                        variant="form"
+                        productInfos={selectedObjectInfos}
+                    />
                 </section>
                 {/* 결제 금액 */}
                 <section className="flex flex-col border-t border-black pb-5 pt-5">

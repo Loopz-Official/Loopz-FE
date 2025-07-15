@@ -12,6 +12,7 @@ import {
 } from '@/constants/orderConfirm';
 import { useCheckGroup } from '@/hooks/check/useCheckGroup';
 import { usePlaceOrderMutation } from '@/hooks/mutations/useOrderMutation';
+import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
@@ -25,6 +26,12 @@ import { validate } from '@/schemas/utils/validate';
 
 export default function OrderConfirmPageContent() {
     const router = useRouter();
+
+    const { selectedProducts, clearSelectedProducts } =
+        useSelectedProductsStore();
+    const { data: selectedObjectInfos } =
+        useSelectedObjectInfosQuery(selectedProducts);
+
     const { orderFrom, isValid } = useValidOrderFrom();
 
     const checkKeys = useMemo(
@@ -32,7 +39,6 @@ export default function OrderConfirmPageContent() {
         []
     );
     const { isChecked, isAllChecked, toggle } = useCheckGroup(checkKeys, false);
-    const { products, clearProducts } = useSelectedProductsStore();
     const { clearSelectedAddressId } = useSelectedAddressIdStore();
     const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
         useBaseOrderRequestStore();
@@ -47,7 +53,9 @@ export default function OrderConfirmPageContent() {
                 agreedToTerms,
             };
 
-            const productIds = products.map((product) => product.objectId);
+            const productIds = selectedObjectInfos?.map(
+                (product) => product.objectId
+            );
 
             if (orderFrom === 'cart') {
                 const cartRequestData = {
@@ -64,7 +72,7 @@ export default function OrderConfirmPageContent() {
                     data: validatedCartRequest,
                 });
             } else {
-                const [singleProduct] = products;
+                const [singleProduct] = selectedObjectInfos ?? [];
                 if (!singleProduct) {
                     toast.error('주문할 상품이 없습니다');
                     return;
@@ -90,7 +98,7 @@ export default function OrderConfirmPageContent() {
 
             // 주문 완료 후 관련 모든 전역 상태 스토리지 내 제거
             clearBaseOrderRequest();
-            clearProducts();
+            clearSelectedProducts();
             clearSelectedAddressId();
 
             router.replace('/order/complete');

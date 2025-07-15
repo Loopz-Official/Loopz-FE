@@ -21,7 +21,7 @@ import * as U from '@/utils/cart/getCart';
 export default function CartPage() {
     const router = useRouter();
 
-    const { setProducts } = useSelectedProductsStore();
+    const { setSelectedProducts } = useSelectedProductsStore();
     const updateCartItemMutation = M.useUpdateCartItem({
         showToast: false,
     });
@@ -73,17 +73,13 @@ export default function CartPage() {
             toast('구매할 상품을 선택해주세요!');
             return;
         }
-
-        const selected = selectedItems.map(({ object, quantity }) => ({
+        const products = selectedItems.map(({ object, quantity }) => ({
             objectId: object.objectId,
-            objectName: object.objectName,
-            objectPrice: object.objectPrice,
-            imageUrl: object.imageUrl,
             quantity,
         }));
-        setProducts(selected);
+        setSelectedProducts(products);
 
-        router.push('/order/form?orderFrom=cart');
+        router.push('/order/form?orderFrom=cart'); // 추후 Query string 삭제 필요!!
     };
 
     return (
