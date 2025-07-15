@@ -22,7 +22,9 @@ export default function CartPage() {
     const router = useRouter();
 
     const { setProducts } = useSelectedProductsStore();
-    const updateCartItemMutation = M.useUpdateCartItem();
+    const updateCartItemMutation = M.useUpdateCartItem({
+        showToast: false,
+    });
     const deleteSingleItemMutation = M.useCartItemDelete();
     const deleteSelectedItemsMutation = M.useSelectedCartItemsDelete();
 
@@ -51,8 +53,7 @@ export default function CartPage() {
     const finalPrice = U.getCartFinalPrice(totalPrice, DELIVERY_FEE);
 
     const handleDeleteItem = (objectId: ObjectId) => {
-        deleteSingleItemMutation.mutateAsync({ objectId });
-        toast.success('상품을 삭제했어요!');
+        deleteSingleItemMutation.mutate({ objectId });
     };
 
     const handleDeleteSelectedItems = () => {
@@ -60,12 +61,11 @@ export default function CartPage() {
             toast('삭제할 상품을 선택해주세요');
             return;
         }
-        deleteSelectedItemsMutation.mutateAsync(checked);
-        toast.success(`${checked.length}개의 상품을 삭제했어요!`);
+        deleteSelectedItemsMutation.mutate(checked);
     };
 
     const handleEditQuantity = (objectId: ObjectId, quantity: number) => {
-        updateCartItemMutation.mutateAsync({ objectId, quantity });
+        updateCartItemMutation.mutate({ objectId, quantity });
     };
 
     const handleBottomButtonClick = () => {

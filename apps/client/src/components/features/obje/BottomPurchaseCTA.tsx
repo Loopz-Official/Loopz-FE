@@ -43,7 +43,7 @@ const BottomPurchaseCTA = ({
         });
     };
 
-    const likeIconStyling = getLikeIconStyling(isLiked);
+    const likeIconStyling = getLikeIconStyling('detail', isLiked);
 
     const CTA_ICONS = [
         {

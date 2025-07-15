@@ -20,7 +20,7 @@ const ProductItem = memo(function ProductItem({
     onLike,
 }: ProductItemProps) {
     const isSoldOut = product.stock === 0;
-    const likeIconStyling = getLikeIconStyling(product.liked);
+    const likeIconStyling = getLikeIconStyling('board', product.liked);
 
     const handleLikeButtonClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
