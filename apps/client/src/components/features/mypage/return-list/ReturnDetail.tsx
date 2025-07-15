@@ -8,7 +8,7 @@ export default function ReturnDetail() {
     ];
 
     return (
-        <div className="px-5">
+        <div>
             <DetailTitle>취소 상세</DetailTitle>
 
             <div className="flex flex-col gap-2">

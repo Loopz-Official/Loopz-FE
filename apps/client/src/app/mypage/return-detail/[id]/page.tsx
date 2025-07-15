@@ -1,29 +1,28 @@
 import Divider from '@/components/features/mypage/Divider';
 import PaymentSummary from '@/components/features/mypage/order-list/PaymentSummary';
-import ReceiptInformation from '@/components/features/mypage/order-list/ReceiptInformation';
 import ProductItemByDeliveryState from '@/components/features/mypage/order-return-list/ProductItemByDeliveryState';
+import ReturnDetail from '@/components/features/mypage/return-list/ReturnDetail';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
     return (
         <div>
-            <Header type="title" title="주문 상세" />
+            <Header type="title" title="취소/반품 상세" />
 
-            {/* TODO: 주문 번호 섹션 필요 */}
+            {/* TODO: '접수하신 제품의 반품/환불이 완료되었어요. 문구 필요 */}
 
             <Divider />
 
-            {/* 주문 상품 */}
+            {/* 취소 상품 */}
             <div className="space-y-5 px-5 py-6">
-                <ProductItemByDeliveryState isDetailPage type="order" />
-                <ProductItemByDeliveryState isDetailPage type="order" />
+                <ProductItemByDeliveryState isDetailPage type="return" />
             </div>
 
             <Divider />
 
             {/* 수령 정보 */}
             <div className="px-5 py-6">
-                <ReceiptInformation />
+                <ReturnDetail />
             </div>
 
             <Divider />

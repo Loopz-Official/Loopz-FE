@@ -9,8 +9,10 @@ import { formatPrice } from '@/utils/formatPrice';
 
 export default function ProductItemByDeliveryState({
     type,
+    isDetailPage = false,
 }: {
     type: 'order' | 'return';
+    isDetailPage?: boolean;
 }) {
     const isOrderList = type === 'order';
 
@@ -44,9 +46,11 @@ export default function ProductItemByDeliveryState({
                 >
                     {currentDeliveryState.value}
                 </div>
-                <button className="text-caption-02 text-gray-regular underline underline-offset-4">
-                    {isOrderList ? '주문 상세' : '취소 상세'}
-                </button>
+                {!isDetailPage && (
+                    <button className="text-caption-02 text-gray-regular underline underline-offset-4">
+                        {isOrderList ? '주문 상세' : '취소 상세'}
+                    </button>
+                )}
             </div>
 
             {/* 상품 정보 */}
