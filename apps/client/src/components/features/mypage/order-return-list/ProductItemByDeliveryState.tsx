@@ -34,7 +34,7 @@ export default function ProductItemByDeliveryState({
         'grow h-10 flex justify-center items-center rounded-md border border-button-gray-regular text-body-03';
 
     return (
-        <div className="px-5">
+        <div>
             <div className="mb-2 flex items-center justify-between">
                 <div
                     className={clsx(
