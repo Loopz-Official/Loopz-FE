@@ -88,9 +88,9 @@ export const getSelectedObjectInfos = async (
     objectInfos: ObjectSelectionRequest[]
 ) => {
     try {
-        const response = await apiClient.post('/object/v1/infos', objectInfos);
+        const response = await apiClient.post('/object/v1/info', objectInfos);
 
-        console.log('선택한 오브제 정보 조회', response);
+        // console.log('선택한 오브제 정보 조회', response);
 
         if (response.status === 200) {
             return validate(selectedObjectInfos, response.data.data);
