@@ -4,6 +4,7 @@ import {
     filteredObjectRequest,
     FilterRecord,
     objectBoardFilterRequest,
+    ObjectSelectionRequest,
     SortAndSoldOutOptions,
 } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
@@ -11,6 +12,7 @@ import {
     getLikedObjectList,
     getObjectBoardList,
     getObjectDetail,
+    getSelectedObjectInfos,
 } from '@/services/api/object';
 
 // Object Board 리스트를 위한 무한 스크롤 React Query 훅
@@ -95,6 +97,19 @@ export const useLikedObjectListQuery = (
             }
             return undefined;
         },
+        staleTime: 1000 * 10, // 10초 (For testing)
+        gcTime: 1000 * 30, // 30초 (For testing)
+    });
+};
+
+// 선택한 오브제 정보 조회
+export const useSelectedObjectInfosQuery = (
+    objectInfos: ObjectSelectionRequest[]
+) => {
+    return useQuery({
+        queryKey: ['selected-object', objectInfos],
+        queryFn: () => getSelectedObjectInfos(objectInfos),
+        enabled: !!objectInfos && objectInfos.length > 0,
         staleTime: 1000 * 10, // 10초 (For testing)
         gcTime: 1000 * 30, // 30초 (For testing)
     });

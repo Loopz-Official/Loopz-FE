@@ -84,3 +84,20 @@ export const filteredObjectRequest = z.object({
     ...sortAndSoldOutOptions.shape,
 });
 export type FilteredObjectRequest = z.infer<typeof filteredObjectRequest>;
+
+// Selected Object Info Request
+export const objectSelectionRequest = z.object({
+    objectId: z.uuid(),
+    quantity: z.int32().positive(), // 1개부터 주문 가능 (request)
+});
+export type ObjectSelectionRequest = z.infer<typeof objectSelectionRequest>;
+
+const objectInfo = z.object({
+    ...objectBasicInfo.shape,
+    quantity: z.int32().positive(),
+    stock: z.int32().positive(),
+});
+export type ObjectInfo = z.infer<typeof objectInfo>;
+
+export const selectedObjectInfos = z.array(objectInfo);
+export type SelectedObjectInfos = z.infer<typeof selectedObjectInfos>;
