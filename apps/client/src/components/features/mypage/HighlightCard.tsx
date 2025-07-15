@@ -5,13 +5,14 @@ export default function HighlightCard() {
     return (
         <Link
             href="/like"
-            className="bg-gray-12 rounded-xs mb-5 grid grid-cols-[auto_1fr]"
+            className="bg-gray-12 rounded-xs mb-5 grid grid-cols-[auto_1fr] overflow-hidden"
         >
             <Image
                 src={'/profile/like-banner-img.png'}
                 alt="Like Banner"
                 width={80}
                 height={80}
+                priority
             />
             <div className="px-4 py-5">
                 <div className="text-body-03 font-semibold">
