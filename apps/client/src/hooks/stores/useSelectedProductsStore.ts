@@ -1,30 +1,50 @@
 import { create } from 'zustand';
-import { combine, persist } from 'zustand/middleware';
+import { combine, createJSONStorage, persist } from 'zustand/middleware';
 
-import { SelectedProduct } from '@/schemas/order';
-
+import { SelectedProductInfo } from '@/schemas/order';
 interface SelectedProducts {
-    products: SelectedProduct[];
-    setProducts: (products: SelectedProduct[]) => void;
-    clearProducts: () => void;
+    selectedProducts: SelectedProductInfo[];
+    setSelectedProducts: (productInfos: SelectedProductInfo[]) => void;
+    clearSelectedProducts: () => void;
 }
 
-const initialState = {
-    products: [] as SelectedProduct[],
+const initialState: Pick<SelectedProducts, 'selectedProducts'> = {
+    selectedProducts: [],
 };
 
 // 주문 완료 시 자동으로 clearProducts 호출
 export const useSelectedProductsStore = create<SelectedProducts>()(
     persist(
         combine(initialState, (set) => ({
-            setProducts: (products) => set({ products }),
-            clearProducts: () => {
+            setSelectedProducts: (products) =>
+                set({ selectedProducts: products }),
+            clearSelectedProducts: () => {
                 localStorage.removeItem('SELECTED_PRODUCTS');
             },
         })),
 
         {
             name: 'SELECTED_PRODUCTS',
+            storage: createJSONStorage(() => localStorage, {
+                replacer: (key, value) => {
+                    if (key === 'selectedProducts') {
+                        return btoa(JSON.stringify(value));
+                    }
+                    return value;
+                },
+                reviver: (key, value) => {
+                    if (
+                        key === 'selectedProducts' &&
+                        typeof value === 'string'
+                    ) {
+                        return JSON.parse(atob(value));
+                    }
+                    return value;
+                },
+            }),
+            partialize: (state) => ({
+                selectedProducts: state.selectedProducts,
+            }),
         }
     )
 );

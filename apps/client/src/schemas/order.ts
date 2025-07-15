@@ -1,7 +1,5 @@
 import * as z from 'zod/v4';
 
-import { objectBasicInfo } from './object/object';
-
 // Enum
 export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
 export type PaymentMethodEnum = z.infer<typeof paymentMethodEnum>;
@@ -19,14 +17,15 @@ export type OrderStatusEnum = z.infer<typeof orderStatusEnum>;
 export const orderStatus = z.optional(orderStatusEnum);
 export type OrderStatus = z.infer<typeof orderStatus>;
 
-// Request Schema
-
-export const selectedProduct = z.object({
-    ...objectBasicInfo.shape,
-    quantity: z.int32().nonnegative(),
+/*
+ * Request Schema
+ */
+// 선택한 상품 정보 (POST 요청을 위한 key 값)
+export const selectedProductInfo = z.object({
+    objectId: z.uuid(),
+    quantity: z.int32().positive(),
 });
-
-export type SelectedProduct = z.infer<typeof selectedProduct>;
+export type SelectedProductInfo = z.infer<typeof selectedProductInfo>;
 
 export const baseOrderRequest = z.object({
     addressId: z.optional(z.uuid()),
@@ -53,7 +52,7 @@ export const cartOrderRequest = z.object({
 export type CartOrderRequest = z.infer<typeof cartOrderRequest>;
 
 const orderedObjectInfo = z.object({
-    ...selectedProduct.shape,
+    ...selectedProductInfo.shape,
     totalPrice: z.int32().nonnegative(),
 });
 export type OrderedObjectInfo = z.infer<typeof orderedObjectInfo>;
