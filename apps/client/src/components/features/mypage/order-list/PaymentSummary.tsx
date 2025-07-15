@@ -9,7 +9,7 @@ export default function PaymentSummary() {
     ];
 
     return (
-        <div className="mx-5">
+        <div>
             <DetailTitle>결제 내역</DetailTitle>
 
             <div className="flex flex-col gap-2">

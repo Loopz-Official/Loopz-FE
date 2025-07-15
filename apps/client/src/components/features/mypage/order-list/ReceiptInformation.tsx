@@ -2,7 +2,7 @@ import DetailTitle from '../order-return-list/DetailTitle';
 
 export default function ReceiptInformation() {
     return (
-        <div className="px-5">
+        <div>
             <DetailTitle>수령 정보</DetailTitle>
             <div className="text-body-03 grid grid-cols-[auto_1fr] grid-rows-[auto_auto_auto] gap-x-4 gap-y-3 font-normal">
                 <div className="text-gray-dark">수령인</div>

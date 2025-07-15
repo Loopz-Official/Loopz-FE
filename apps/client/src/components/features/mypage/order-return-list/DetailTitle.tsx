@@ -4,7 +4,7 @@ export default function DetailTitle({
     children: React.ReactNode;
 }) {
     return (
-        <h3 className="text-body-01 mb-5 border-b py-2 font-semibold">
+        <h3 className="text-body-01 mb-5 border-b pb-2 font-semibold">
             {children}
         </h3>
     );
