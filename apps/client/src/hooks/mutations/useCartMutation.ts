@@ -44,6 +44,7 @@ export const useCartItemDelete = () => {
             deleteSingleCartItem(objectId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
+            toast.success('상품을 삭제했어요!');
         },
         onError: handleMutationError,
     });
@@ -55,8 +56,9 @@ export const useSelectedCartItemsDelete = () => {
     return useMutation({
         mutationFn: (objectIdList: ObjectIdArray) =>
             deleteSelectedCartItems(objectIdList),
-        onSuccess: () => {
+        onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
+            toast.success(`${variables.length}개의 상품을 삭제했어요!`);
         },
         onError: handleMutationError,
     });
