@@ -22,7 +22,9 @@ export default function CartPage() {
     const router = useRouter();
 
     const { setProducts } = useSelectedProductsStore();
-    const updateCartItemMutation = M.useUpdateCartItem();
+    const updateCartItemMutation = M.useUpdateCartItem({
+        showToast: false,
+    });
     const deleteSingleItemMutation = M.useCartItemDelete();
     const deleteSelectedItemsMutation = M.useSelectedCartItemsDelete();
 
@@ -65,7 +67,7 @@ export default function CartPage() {
     };
 
     const handleEditQuantity = (objectId: ObjectId, quantity: number) => {
-        updateCartItemMutation.mutateAsync({ objectId, quantity });
+        updateCartItemMutation.mutate({ objectId, quantity });
     };
 
     const handleBottomButtonClick = () => {

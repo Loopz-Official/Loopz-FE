@@ -13,19 +13,24 @@ import {
 } from '@/services/api/cart';
 import { handleMutationError } from '@/utils/error/handleMutationError';
 
+import type { UseUpdateCartItemOptions } from './types';
+
 type AddCartMutationProps = CartItemUpdateResponse & {
     objectId: ObjectId;
 };
 
-export const useUpdateCartItem = () => {
+export const useUpdateCartItem = (options?: UseUpdateCartItemOptions) => {
     const queryClient = useQueryClient();
+    const showToast = options?.showToast ?? true;
 
     return useMutation({
         mutationFn: ({ objectId, quantity }: AddCartMutationProps) =>
             updateCartItem(objectId, quantity),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
-            toast.success('장바구니에 상품을 담았어요!');
+            if (showToast) {
+                toast.success('장바구니에 상품을 담았어요!');
+            }
         },
         onError: handleMutationError,
     });
