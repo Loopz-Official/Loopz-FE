@@ -1,4 +1,4 @@
-import ProductItemByDeliveryState from '@/components/features/mypage/order-list/ProductItemByDeliveryState';
+import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 
 export default function Page() {
     return (
