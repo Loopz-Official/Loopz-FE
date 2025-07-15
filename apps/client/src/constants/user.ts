@@ -1,10 +1,11 @@
+import { GoogleBadge, KakaoBadge, NaverBadge } from '@/icons/OAuthBadge';
 import { MyAccountInfo } from '@/schemas/user';
 
-export const SOCIAL_LOGIN_TYPE_LABEL: Record<
+export const OAUTH_BADGE: Record<
     MyAccountInfo['socialLoginType'],
-    string
+    React.ComponentType<React.SVGProps<SVGSVGElement>> | undefined
 > = {
-    GOOGLE: '구글',
-    KAKAO: '카카오',
-    NAVER: '네이버',
+    GOOGLE: GoogleBadge,
+    KAKAO: KakaoBadge,
+    NAVER: NaverBadge,
 };
