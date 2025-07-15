@@ -5,6 +5,7 @@ import {
     OrderListDeliveryStates,
     ReturnListDeliveryStates,
 } from '@/constants/deliveryState';
+import { formatPrice } from '@/utils/formatPrice';
 
 export default function ProductItemByDeliveryState({
     type,
@@ -67,7 +68,7 @@ export default function ProductItemByDeliveryState({
                         {product.intro}
                     </div>
                     <div className="text-body-03 font-semibold">
-                        {product.objectPrice.toLocaleString()}원
+                        {formatPrice(product.objectPrice)}원
                     </div>
                 </div>
             </div>
