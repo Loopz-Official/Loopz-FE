@@ -1,12 +1,10 @@
 import clsx from 'clsx';
+import Image from 'next/image';
 
 import {
     OrderListDeliveryStates,
     ReturnListDeliveryStates,
 } from '@/constants/deliveryState';
-
-// 이 아이템의 state, 추후 api 응답을 props로 전달받음
-const currentState = 'DELIVERED';
 
 export default function ProductItemByDeliveryState({
     type,
@@ -15,11 +13,20 @@ export default function ProductItemByDeliveryState({
 }) {
     const isOrderList = type === 'order';
 
+    // 추후 props로 전달
+    const product = {
+        objectName: '이름이름이름',
+        intro: '설명설명설명설명설명설명',
+        objectPrice: 10000,
+        imageUrl: '/banner/01.png',
+        status: isOrderList ? 'PURCHASE_CONFIRMED' : 'CANCELED_REQUESTED',
+    };
+
     const deliveryStates = isOrderList
         ? OrderListDeliveryStates
         : ReturnListDeliveryStates;
     const currentDeliveryState = deliveryStates.find(
-        (state) => state.label === currentState
+        (state) => state.label === product.status
     )!;
 
     const buttonClass =
@@ -41,8 +48,31 @@ export default function ProductItemByDeliveryState({
                 </button>
             </div>
 
-            <div></div>
+            {/* 상품 정보 */}
+            <div className="mb-1.5 grid grid-cols-[auto_1fr] gap-3">
+                <div className="bg-gray-regular relative aspect-square h-auto w-[clamp(70px,20vw,100px)]">
+                    <Image
+                        src={product.imageUrl}
+                        alt={product.objectName}
+                        fill
+                        className="h-auto w-auto object-cover"
+                    />
+                </div>
 
+                <div className="flex flex-col">
+                    <div className="text-caption-01 mb-0.5 font-semibold">
+                        {product.objectName}
+                    </div>
+                    <div className="text-caption-01 text-gray-regular mb-2 line-clamp-2">
+                        {product.intro}
+                    </div>
+                    <div className="text-body-03 font-semibold">
+                        {product.objectPrice.toLocaleString()}원
+                    </div>
+                </div>
+            </div>
+
+            {/* 하단 버튼 */}
             {'button' in currentDeliveryState && (
                 <div className="space-y-1.5">
                     {(currentDeliveryState.button as string) && (
@@ -51,19 +81,16 @@ export default function ProductItemByDeliveryState({
                         </button>
                     )}
 
-                    <div className="flex gap-1.5">
-                        {(currentDeliveryState.label === 'DELIVERED' ||
-                            currentDeliveryState.label ===
-                                'PURCHASE_CONFIRMED') && (
+                    {(currentDeliveryState.label === 'DELIVERED' ||
+                        currentDeliveryState.label ===
+                            'PURCHASE_CONFIRMED') && (
+                        <div className="flex gap-1.5">
                             <button className={buttonClass}>배송 조회</button>
-                        )}
-
-                        {currentDeliveryState.label === 'DELIVERED' && (
                             <button className={buttonClass}>
                                 반품/환불 요청
                             </button>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
