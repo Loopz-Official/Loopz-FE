@@ -8,8 +8,9 @@ export default function Page() {
     return (
         <div>
             <Header type="title" title="취소/반품 상세" />
-
-            {/* TODO: '접수하신 제품의 반품/환불이 완료되었어요. 문구 필요 */}
+            <div className="text-body-03 text-gray-dark px-5 py-2.5 font-normal">
+                접수하신 제품의 반품/환불이 완료되었어요.
+            </div>
 
             <Divider />
 
