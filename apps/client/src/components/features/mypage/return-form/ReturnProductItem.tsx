@@ -2,7 +2,13 @@ import Image from 'next/image';
 
 import { formatPrice } from '@/utils/formatPrice';
 
-export default function ReturnProductItem() {
+export default function ReturnProductItem({
+    type,
+}: {
+    type: 'cancel' | 'return';
+}) {
+    const isCancel = type === 'cancel';
+
     // 추후 props로 전달
     const product = {
         objectName: '이름이름이름',
@@ -12,9 +18,9 @@ export default function ReturnProductItem() {
     };
 
     return (
-        <div className="px-5">
+        <div>
             <div className="text-body-03 mb-2 flex items-center justify-between font-semibold">
-                반품 상품
+                {isCancel ? '취소 상품' : '반품 상품'}
             </div>
 
             {/* 상품 정보 */}
