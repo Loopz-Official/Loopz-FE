@@ -15,14 +15,13 @@ import { orderStatusEnum, paymentMethodEnum } from '@/schemas/order';
 export default function OrderCompletePage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-
     const orderId = searchParams.get('orderId') ?? '';
 
     const { data: orderInfos, isLoading, error } = useOrderDetailQuery(orderId);
 
     useEffect(() => {
         if (error) {
-            router.push('/main'); // 추후에는 push로 history 남길 것
+            router.push('/main');
         }
     }, [error, router]);
 

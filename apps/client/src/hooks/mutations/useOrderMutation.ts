@@ -10,7 +10,7 @@ export const usePlaceOrderMutation = () => {
     return useMutation({
         mutationFn: (orderRequest: OrderRequest) => placeOrder(orderRequest),
         onSuccess: (data) => {
-            queryClient.setQueryData(['order-detail'], data.orderId);
+            queryClient.setQueryData(['order-detail', data.orderId], data);
         },
         onError: handleMutationError,
     });
