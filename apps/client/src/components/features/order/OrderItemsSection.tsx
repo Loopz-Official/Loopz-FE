@@ -4,20 +4,18 @@ import { OrderedObjectInfo } from '@/schemas/order';
 
 import OrderItem from './OrderItem';
 
+// Discriminated Union 타입 정의
+// variant에 따라 올바른 prop만 받도록 강제
+
 type OrderItemsSectionProps = {
-    productInfos?: ObjectInfo[];
-    orderItems?: OrderedObjectInfo[];
     variant: OrderItemVariant;
+    items: ObjectInfo[] | OrderedObjectInfo[];
 };
 
 export default function OrderItemsSection({
-    productInfos,
-    orderItems,
     variant,
+    items,
 }: OrderItemsSectionProps) {
-    const items: ObjectInfo[] | OrderedObjectInfo[] =
-        variant === 'form' ? (productInfos ?? []) : (orderItems ?? []);
-
     return (
         <>
             <header>

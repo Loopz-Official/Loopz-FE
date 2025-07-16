@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
@@ -9,16 +9,20 @@ import PaymentMethodSection from '@/components/features/order/complete/PaymentMe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { ORDER_NOTIFICATIONS } from '@/constants/order';
-import { useOrderCompleteQuery } from '@/hooks/queries/useOrderQuery';
+import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
+import { orderStatusEnum, paymentMethodEnum } from '@/schemas/order';
 
 export default function OrderCompletePage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
 
-    const { data: orderData, isLoading, error } = useOrderCompleteQuery();
+    const orderId = searchParams.get('orderId') ?? '';
+
+    const { data: orderInfos, isLoading, error } = useOrderDetailQuery(orderId);
 
     useEffect(() => {
         if (error) {
-            router.replace('/main'); // 추후에는 push로 history 남길 것
+            router.push('/main'); // 추후에는 push로 history 남길 것
         }
     }, [error, router]);
 
@@ -61,15 +65,19 @@ export default function OrderCompletePage() {
                         <div className="flex flex-col gap-3 border-t border-black pb-6 pt-3">
                             <OrderItemsSection
                                 variant="complete"
-                                orderItems={orderData?.objects ?? []}
+                                items={orderInfos?.objects ?? []}
                             />
                         </div>
 
                         {/* 결제 수단 */}
                         <div className="pb-13 flex flex-col border-t border-black pt-3">
                             <PaymentMethodSection
-                                paymentMethod={orderData?.paymentMethod}
-                                status={orderData?.status}
+                                paymentMethod={
+                                    orderInfos?.paymentMethod ??
+                                    paymentMethodEnum.enum.BANK_TRANSFER
+                                }
+                                status={orderStatusEnum.enum.PENDING}
+                                // 상품 단위로 status가 존재하므로 PENDING(아직 결제 시스템 도입 전이므로) 처리
                             />
                         </div>
                     </div>
