@@ -11,7 +11,7 @@ type Actions = {
 const intitalState: BaseOrderRequest = {
     addressId: undefined,
     paymentMethod: undefined,
-    deliveryRequest: undefined,
+    deliveryRequest: '',
     agreedToTerms: false,
 };
 

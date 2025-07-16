@@ -29,15 +29,18 @@ export type DeliveryRequest = {
 export default function OrderFormPage() {
     const router = useRouter();
 
-    // Address 관련 상태 관리
+    // 배송지 선택
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
     const { selectedAddressId, setSelectedAddressId } =
         useSelectedAddressIdStore();
+
+    // 배송 요청사항
     const [deliveryRequest, setDeliveryRequest] = useState<DeliveryRequest>({
         option: null,
         customText: '',
     });
 
+    // 주문 예정 상품
     const { selectedProducts } = useSelectedProductsStore();
     const { data: selectedObjectInfos } =
         useSelectedObjectInfosQuery(selectedProducts);
@@ -46,6 +49,7 @@ export default function OrderFormPage() {
         selectedObjectInfos ?? []
     );
 
+    // 주문 생성을 위한 전역 상태 (결제 시스템 도입 시 삭제 예정)
     const { setBaseOrderRequest } = useBaseOrderRequestStore();
     const { data: addressList, isLoading, error } = useAddressListQuery();
 

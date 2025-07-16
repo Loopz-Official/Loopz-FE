@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { DeliveryRequest } from '@/app/order/form/OrderFormPageContent';
+import { DeliveryRequest } from '@/app/order/form/page';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
 import { ChevronDownIcon } from '@/icons/Chevron';
 import { PlusIcon } from '@/icons/Plus';
@@ -31,7 +31,7 @@ export default function AddressSection({
 }: AddressSectionProps) {
     const router = useRouter();
 
-    const [isOptionOpen, setIsOptionOpen] = useState(false);
+    const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
     const isTextareaOpen =
         deliveryRequest.option === DELIVERY_REQUESTS.at(-1) && !isOptionOpen;
 

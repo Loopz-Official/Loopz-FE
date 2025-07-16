@@ -18,6 +18,23 @@ export const getAddressList = async () => {
     }
 };
 
+// 특정 배송지 조회 (find 메소드 사용으로 인해 필요 없어질 수도 있음)
+export const getAddressInfo = async (addressId: string) => {
+    try {
+        const response = await apiClient.get(`/user/v1/address/${addressId}`);
+
+        // console.log('Address Info Response: ', response);
+
+        if (response.status === 200) {
+            return validate(addressInfo, response.data.data, 'Address Info');
+        }
+        throw new Error('Failed to fetch address info');
+    } catch (error) {
+        console.error('Error fetching address info:', error);
+        throw error;
+    }
+};
+
 // 배송지 추가
 export const createAddress = async (address: AddressCURequest) => {
     try {
