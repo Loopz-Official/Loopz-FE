@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import Modal from '@/components/common/Modal';
 import Divider from '@/components/features/mypage/Divider';
 import TabBar from '@/components/features/mypage/list/TabBar';
 import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
@@ -39,14 +38,6 @@ export default function Page() {
                     </div>
                 ))}
             </div>
-
-            <Modal
-                text="정말 주문을 취소하시겠습니까?"
-                buttons={[
-                    { text: '예', onClick: () => {} },
-                    { text: '아니오', onClick: () => {} },
-                ]}
-            />
         </>
     );
 }

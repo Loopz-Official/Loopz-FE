@@ -4,11 +4,15 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 
 export default function Modal({
+    isOpen,
     text,
     buttons,
+    onClose,
 }: {
+    isOpen: boolean;
     text: string;
     buttons: { text: string; onClick: () => void }[];
+    onClose: () => void;
 }) {
     useEffect(() => {
         const defaultOverflow = document.body.style.overflow;
@@ -19,15 +23,15 @@ export default function Modal({
         };
     }, []);
 
-    // const handleBackgroundClick = (e: React.MouseEvent) => {
-    //     if (e.target === e.currentTarget) {
-    //         onClose();
-    //     }
-    // };
+    const handleBackgroundClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
 
-    return (
+    return isOpen ? (
         <div
-            // onClick={handleBackgroundClick}
+            onClick={handleBackgroundClick}
             className="z-100 fixed left-0 top-0 flex h-dvh w-dvw items-center justify-center bg-black/60"
         >
             <div className="w-78 h-41 text-body-03 grid grid-rows-[1fr_auto] rounded-sm bg-white">
@@ -57,5 +61,5 @@ export default function Modal({
                 </div>
             </div>
         </div>
-    );
+    ) : null;
 }

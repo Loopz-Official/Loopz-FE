@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 
 import Frame from '@/components/layouts/Frame';
+import OverlayProviderWrapper from '@/providers/OverlayProviderWrapper';
 import ReactQueryProviderWrapper from '@/providers/QueryProviderWrapper';
 
 import type { Metadata } from 'next';
@@ -30,7 +31,9 @@ export default function RootLayout({
                 className={`${pretendard.className} tracking-tight text-black`}
             >
                 <ReactQueryProviderWrapper>
-                    <Frame>{children}</Frame>
+                    <OverlayProviderWrapper>
+                        <Frame>{children}</Frame>
+                    </OverlayProviderWrapper>
                 </ReactQueryProviderWrapper>
             </body>
         </html>

@@ -1,6 +1,10 @@
+'use client';
+
 import clsx from 'clsx';
 import Image from 'next/image';
+import { overlay } from 'overlay-kit';
 
+import Modal from '@/components/common/Modal';
 import {
     OrderListDeliveryStates,
     ReturnListDeliveryStates,
@@ -40,7 +44,27 @@ export default function ProductItemByDeliveryState({
 
         switch (state) {
             case 'ORDERED':
-                console.log('ordered');
+                overlay.open(({ isOpen, close }) => (
+                    <Modal
+                        isOpen={isOpen}
+                        onClose={close}
+                        text="정말 주문을 취소하시겠습니까?"
+                        buttons={[
+                            {
+                                text: '예',
+                                onClick: () => {
+                                    close();
+                                },
+                            },
+                            {
+                                text: '아니오',
+                                onClick: () => {
+                                    close();
+                                },
+                            },
+                        ]}
+                    />
+                ));
                 break;
             case 'SHIPPING':
                 console.log('shipping');
