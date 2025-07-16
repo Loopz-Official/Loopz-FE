@@ -23,14 +23,14 @@ export type OrderStatus = z.infer<typeof orderStatus>;
  * Request Schema
  */
 // 선택한 상품 정보 (POST 요청을 위한 key 값)
-export const selectedProductInfo = z.object({
+export const selectedProductInfo = z.strictObject({
     objectId: z.uuid(),
     quantity: z.int32().positive(),
 });
 export type SelectedProductInfo = z.infer<typeof selectedProductInfo>;
 
 // 주문 요청 schema
-export const orderRequest = z.object({
+export const orderRequest = z.strictObject({
     objects: z.array(selectedProductInfo),
     addressId: z.uuid(),
     paymentMethod,

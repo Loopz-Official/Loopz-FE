@@ -11,7 +11,6 @@ import {
 } from '@/constants/orderConfirm';
 import { useCheckGroup } from '@/hooks/check/useCheckGroup';
 import { usePlaceOrderMutation } from '@/hooks/mutations/useOrderMutation';
-import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
@@ -23,8 +22,6 @@ export default function OrderConfirmPage() {
 
     const { selectedProducts, clearSelectedProducts } =
         useSelectedProductsStore();
-    const { data: selectedObjectInfos } =
-        useSelectedObjectInfosQuery(selectedProducts);
 
     const checkKeys = useMemo(
         () => ORDER_CONFIRM_ITEMS.map((item) => item.key),
@@ -39,7 +36,7 @@ export default function OrderConfirmPage() {
     const handleBottomButtonClick = async () => {
         try {
             const orderInfos = {
-                objects: selectedObjectInfos,
+                objects: selectedProducts,
                 paymentMethod: paymentMethodEnum.enum.BANK_TRANSFER,
                 addressId,
                 deliveryRequest,
