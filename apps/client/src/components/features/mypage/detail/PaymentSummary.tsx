@@ -1,6 +1,6 @@
 import { formatPrice } from '@/utils/formatPrice';
 
-import DetailTitle from '../order-return-list/DetailTitle';
+import DetailTitle from './DetailTitle';
 
 export default function PaymentSummary() {
     const summaries = [

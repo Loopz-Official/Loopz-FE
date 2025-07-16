@@ -1,7 +1,7 @@
+import PaymentSummary from '@/components/features/mypage/detail/PaymentSummary';
 import Divider from '@/components/features/mypage/Divider';
-import PaymentSummary from '@/components/features/mypage/order-list/PaymentSummary';
-import ReceiptInformation from '@/components/features/mypage/order-list/ReceiptInformation';
-import ProductItemByDeliveryState from '@/components/features/mypage/order-return-list/ProductItemByDeliveryState';
+import ReceiptInformation from '@/components/features/mypage/order-detail/ReceiptInformation';
+import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {

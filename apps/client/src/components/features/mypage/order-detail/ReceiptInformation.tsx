@@ -1,4 +1,4 @@
-import DetailTitle from '../order-return-list/DetailTitle';
+import DetailTitle from '../detail/DetailTitle';
 
 export default function ReceiptInformation() {
     return (

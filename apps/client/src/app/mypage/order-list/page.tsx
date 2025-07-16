@@ -1,5 +1,5 @@
 import Divider from '@/components/features/mypage/Divider';
-import ProductItemByDeliveryState from '@/components/features/mypage/order-return-list/ProductItemByDeliveryState';
+import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
