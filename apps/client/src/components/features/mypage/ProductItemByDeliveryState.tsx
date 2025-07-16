@@ -22,7 +22,7 @@ export default function ProductItemByDeliveryState({
         intro: '설명설명설명설명설명설명',
         objectPrice: 10000,
         imageUrl: '/banner/01.png',
-        status: isOrderList ? 'PURCHASE_CONFIRMED' : 'CANCELED_REQUESTED',
+        status: isOrderList ? 'ORDERED' : 'CANCELED_REQUESTED',
     };
 
     const deliveryStates = isOrderList
@@ -34,6 +34,37 @@ export default function ProductItemByDeliveryState({
 
     const buttonClass =
         'grow h-10 flex justify-center items-center rounded-md border border-button-gray-regular text-body-03';
+
+    const handleCustomButtonClick = () => {
+        const state = currentDeliveryState.label;
+
+        switch (state) {
+            case 'ORDERED':
+                console.log('ordered');
+                break;
+            case 'SHIPPING':
+                console.log('shipping');
+                break;
+            case 'DELIVERED':
+                console.log('delivered');
+                break;
+            case 'PURCHASE_CONFIRMED':
+                console.log('purchase confirmed');
+                break;
+            case 'CANCELED_REQUESTED':
+                console.log('canceled requested');
+                break;
+            case 'CANCELED_COMPLETE':
+                console.log('canceled complete');
+                break;
+            case 'REFUND_REQUESTED':
+                console.log('refund requested');
+                break;
+            case 'REFUND_COMPLETE':
+                console.log('refund complete');
+                break;
+        }
+    };
 
     return (
         <div>
@@ -81,7 +112,10 @@ export default function ProductItemByDeliveryState({
             {'button' in currentDeliveryState && (
                 <div className="space-y-1.5">
                     {(currentDeliveryState.button as string) && (
-                        <button className={clsx('w-full', buttonClass)}>
+                        <button
+                            onClick={handleCustomButtonClick}
+                            className={clsx('w-full', buttonClass)}
+                        >
                             {currentDeliveryState.button as string}
                         </button>
                     )}
