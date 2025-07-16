@@ -1,5 +1,5 @@
-import PaymentSummary from '@/components/features/mypage/detail/PaymentSummary';
 import Divider from '@/components/features/mypage/Divider';
+import OrderPaymentSummary from '@/components/features/mypage/order-detail/OrderPaymentSummary';
 import ReceiptInformation from '@/components/features/mypage/order-detail/ReceiptInformation';
 import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
@@ -37,7 +37,12 @@ export default async function Page({
 
             {/* 결제 내역 */}
             <div className="px-5 py-6">
-                <PaymentSummary />
+                <OrderPaymentSummary
+                    totalProductPrice={21000}
+                    shippingFee={3000}
+                    totalPayment={24000}
+                    paymentMethod="BANK_TRANSFER"
+                />
             </div>
 
             {/* TODO: 하단 버튼 추가 필요 */}
