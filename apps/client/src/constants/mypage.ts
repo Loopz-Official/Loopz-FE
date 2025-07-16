@@ -32,3 +32,15 @@ export const CONTACT_CHANNELS = [
     { label: 'DM 문의하기', href: 'https://www.instagram.com/loop_z.official' },
     { label: '이메일 문의하기', href: '' },
 ];
+
+export const ORDER_LIST_TABS = [
+    { label: 'ALL', value: '전체' },
+    { label: 'ORDERED', value: '배송준비' },
+    { label: 'SHIPPING', value: '배송중' },
+    { label: 'DELIVERED', value: '배송완료' },
+];
+
+export const RETURN_LIST_TABS = [
+    { label: 'CANCELED', value: '주문 취소' },
+    { label: 'REFUND', value: '반품/환불' },
+];
