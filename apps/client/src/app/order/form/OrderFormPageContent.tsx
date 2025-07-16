@@ -17,11 +17,9 @@ import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { useValidOrderFrom } from '@/hooks/useValidOrderFrom';
 import { AddressInfo } from '@/schemas/address';
 import { formatPrice } from '@/utils/formatPrice';
 import { getPriceSummary } from '@/utils/order/getPrice';
-import { getOrderFromQueryString } from '@/utils/route';
 
 export type DeliveryRequest = {
     option: string | null;
@@ -31,9 +29,7 @@ export type DeliveryRequest = {
 export default function OrderFormPageContent() {
     const router = useRouter();
 
-    const { orderFrom, isValid } = useValidOrderFrom();
-
-    // 모든 훅은 여기서 호출
+    // Address 관련 상태 관리
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
     const { selectedAddressId, setSelectedAddressId } =
         useSelectedAddressIdStore();
@@ -86,10 +82,6 @@ export default function OrderFormPageContent() {
         setDeliveryRequest((prev) => ({ ...prev, [key]: value }));
     };
 
-    if (!isValid) {
-        return <div>잘못된 접근입니다. 홈으로 이동합니다...</div>;
-    }
-
     const handleOrderButtonClick = () => {
         if (!activeAddressInfo) return;
         const request =
@@ -101,8 +93,8 @@ export default function OrderFormPageContent() {
             deliveryRequest: request ?? '',
             agreedToTerms: isAllTermsChecked,
         });
-        // isValid가 true → orderFrom은 OrderFrom 타입임이 보장됨
-        router.push(`/order/confirm?${getOrderFromQueryString(orderFrom)}`);
+
+        router.push(`/order/confirm`);
     };
 
     return (
@@ -112,7 +104,6 @@ export default function OrderFormPageContent() {
                 {/* 배송지 정보 */}
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <AddressSection
-                        orderFrom={orderFrom}
                         activeAddressInfo={activeAddressInfo}
                         addressList={addressList ?? []}
                         deliveryRequest={deliveryRequest}
@@ -125,7 +116,7 @@ export default function OrderFormPageContent() {
                 <section className="flex flex-col gap-3 border-t border-black pb-8 pt-4">
                     <OrderItemsSection
                         variant="form"
-                        productInfos={selectedObjectInfos}
+                        items={selectedObjectInfos ?? []}
                     />
                 </section>
                 {/* 결제 금액 */}

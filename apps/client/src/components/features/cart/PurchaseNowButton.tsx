@@ -7,7 +7,7 @@ const PurchaseNowButton = ({ onClick }: { onClick: () => void }) => {
 
     const handleClick = () => {
         onClick();
-        router.push('/order/form?orderFrom=detail'); // 이 부분도 semantic이 detail로 분류되어야 한다는게 어색함
+        router.push('/order/form'); // 이 부분도 semantic이 detail로 분류되어야 한다는게 어색함
     };
 
     return (

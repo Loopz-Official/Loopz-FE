@@ -3,7 +3,6 @@
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
-import { toast } from 'sonner';
 
 import Header from '@/components/layouts/Header';
 import {
@@ -16,12 +15,7 @@ import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStore';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { useValidOrderFrom } from '@/hooks/useValidOrderFrom';
-import {
-    cartOrderRequest,
-    detailOrderRequest,
-    paymentMethodEnum,
-} from '@/schemas/order';
+import { orderRequest, paymentMethodEnum } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
 
 export default function OrderConfirmPageContent() {
@@ -31,8 +25,6 @@ export default function OrderConfirmPageContent() {
         useSelectedProductsStore();
     const { data: selectedObjectInfos } =
         useSelectedObjectInfosQuery(selectedProducts);
-
-    const { orderFrom, isValid } = useValidOrderFrom();
 
     const checkKeys = useMemo(
         () => ORDER_CONFIRM_ITEMS.map((item) => item.key),
@@ -46,67 +38,34 @@ export default function OrderConfirmPageContent() {
 
     const handleBottomButtonClick = async () => {
         try {
-            const baseRequest = {
-                addressId,
+            const orderInfos = {
+                objects: selectedObjectInfos,
                 paymentMethod: paymentMethodEnum.enum.BANK_TRANSFER,
+                addressId,
                 deliveryRequest,
                 agreedToTerms,
             };
 
-            const productIds = selectedObjectInfos?.map(
-                (product) => product.objectId
+            const validatedOrderRequest = validate(
+                orderRequest,
+                orderInfos,
+                'Order Request'
             );
 
-            if (orderFrom === 'cart') {
-                const cartRequestData = {
-                    ...baseRequest,
-                    objectIds: productIds,
-                };
-                const validatedCartRequest = validate(
-                    cartOrderRequest,
-                    cartRequestData,
-                    'Cart Order Request'
-                );
-                await placeOrderMutation.mutateAsync({
-                    orderFrom: 'cart',
-                    data: validatedCartRequest,
-                });
-            } else {
-                const [singleProduct] = selectedObjectInfos ?? [];
-                if (!singleProduct) {
-                    toast.error('주문할 상품이 없습니다');
-                    return;
-                }
-
-                const detailRequestData = {
-                    ...baseRequest,
-                    quantity: singleProduct.quantity,
-                };
-                const validatedDetailRequest = validate(
-                    detailOrderRequest,
-                    detailRequestData,
-                    'Detail Order Request'
-                );
-                await placeOrderMutation.mutateAsync({
-                    orderFrom: 'detail',
-                    data: {
-                        ...validatedDetailRequest,
-                        objectId: singleProduct.objectId,
-                    },
-                });
-            }
+            const responseData = await placeOrderMutation.mutateAsync(
+                validatedOrderRequest
+            );
+            const { orderId } = responseData;
 
             // 주문 완료 후 관련 모든 전역 상태 스토리지 내 제거
             clearBaseOrderRequest();
             clearSelectedProducts();
             clearSelectedAddressId();
 
-            router.replace('/order/complete');
+            router.replace(`/order/complete?orderId=${orderId}`);
         } catch (error) {
             console.error(error);
-            alert(
-                '주문 확인 중 문제가 발생했습니다.\n잠시 후 다시 시도해 주세요.'
-            );
+            throw error;
         }
     };
 
@@ -123,10 +82,6 @@ export default function OrderConfirmPageContent() {
             </span>
         </label>
     );
-
-    if (!isValid) {
-        return <div>잘못된 접근입니다. 홈으로 이동합니다...</div>;
-    }
 
     return (
         <div className="pb-27">

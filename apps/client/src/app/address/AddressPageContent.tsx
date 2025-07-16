@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -8,18 +8,13 @@ import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
-import { OrderFrom } from '@/constants/order';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { PlusIcon } from '@/icons/Plus';
-import { getOrderFromQueryString } from '@/utils/route';
 
 export default function AddressPageContent() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
-    const orderFromQueryString = getOrderFromQueryString(orderFrom);
 
     const [activeId, setActiveId] = useState<string | undefined>(undefined);
     const { selectedAddressId, setSelectedAddressId } =
@@ -50,7 +45,7 @@ export default function AddressPageContent() {
             toast('배송지는 최대 10개까지 등록할 수 있습니다');
             return;
         } else {
-            router.push(`/address/add?${orderFromQueryString}`);
+            router.push(`/address/add`);
         }
     };
 
@@ -58,7 +53,7 @@ export default function AddressPageContent() {
         if (activeId) {
             try {
                 setSelectedAddressId(activeId);
-                router.push(`/order/form?${orderFromQueryString}`);
+                router.push(`/order/form`);
             } catch {
                 toast.error('배송지 업데이트 중 에러가 발생했습니다.');
             }
@@ -136,7 +131,7 @@ export default function AddressPageContent() {
                                         type="edit"
                                         onClick={() => {
                                             router.push(
-                                                `/address/edit?addressId=${address.addressId}&${orderFromQueryString}`
+                                                `/address/edit?addressId=${address.addressId}`
                                             );
                                         }}
                                     />

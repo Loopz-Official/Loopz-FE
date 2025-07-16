@@ -79,7 +79,7 @@ export default function CartPage() {
         }));
         setSelectedProducts(products);
 
-        router.push('/order/form?orderFrom=cart'); // 추후 Query string 삭제 필요!!
+        router.push('/order/form');
     };
 
     return (

@@ -35,7 +35,7 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
         };
         setSelectedProducts([product]);
 
-        router.push('/order/form/?orderFrom=detail');
+        router.push('/order/form');
     };
 
     return (
