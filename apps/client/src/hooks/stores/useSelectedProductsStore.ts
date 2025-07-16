@@ -24,7 +24,7 @@ export const useSelectedProductsStore = create<SelectedProducts>()(
         })),
 
         {
-            name: 'SELECTED_PRODUCTS',
+            name: 'LOOPZ_SELECTED_PRODUCTS',
             storage: createJSONStorage(() => localStorage, {
                 replacer: (key, value) => {
                     if (key === 'selectedProducts') {

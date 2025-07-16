@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface SelectedAddressIdStore {
     selectedAddressId: string | null;
@@ -19,7 +19,27 @@ export const useSelectedAddressIdStore = create<SelectedAddressIdStore>()(
             },
         }),
         {
-            name: 'LOOPZ_USER_SELECTED_ADDRESS_ID',
+            name: 'LOOPZ_SELECTED_ADDRESS',
+            storage: createJSONStorage(() => localStorage, {
+                replacer: (key, value) => {
+                    if (key === 'selectedAddressId') {
+                        return btoa(JSON.stringify(value));
+                    }
+                    return value;
+                },
+                reviver: (key, value) => {
+                    if (
+                        key === 'selectedAddressId' &&
+                        typeof value === 'string'
+                    ) {
+                        return JSON.parse(atob(value));
+                    }
+                    return value;
+                },
+            }),
+            partialize: (state) => ({
+                selectedAddressId: state.selectedAddressId,
+            }),
         }
     )
 );
