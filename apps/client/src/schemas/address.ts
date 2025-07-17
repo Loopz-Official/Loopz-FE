@@ -3,7 +3,7 @@ import * as z from 'zod/v4';
 // 배송지 목록
 export const addressInfo = z.object({
     addressId: z.uuid(),
-    userId: z.string(),
+    userId: z.uuid(),
     recipientName: z.string(),
     phoneNumber: z.string(),
     zoneCode: z.string(),

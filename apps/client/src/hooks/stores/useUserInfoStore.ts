@@ -5,6 +5,7 @@ import { UserInfo } from '@/schemas/auth';
 
 type UserInfoStore = UserInfo & {
     setUserInfo: (info: Partial<UserInfo>) => void;
+    clearUserInfo: () => void;
 };
 
 const initialState: UserInfo = {
@@ -20,14 +21,17 @@ const initialState: UserInfo = {
     agreedEventSMS: null,
 };
 
-export const useUserInfo = create<UserInfoStore>()(
+export const useUserInfoStore = create<UserInfoStore>()(
     persist(
         combine(initialState, (set) => ({
             setUserInfo: (info: Partial<UserInfo>) => set(info),
+            clearUserInfo: () => {
+                localStorage.removeItem('LOOPZ_USER_INFO');
+            },
         })),
         {
-            name: 'user-info',
-            storage: createJSONStorage(() => localStorage), // Local Storage 연동
+            name: 'LOOPZ_USER_INFO',
+            storage: createJSONStorage(() => localStorage),
         }
     )
 );

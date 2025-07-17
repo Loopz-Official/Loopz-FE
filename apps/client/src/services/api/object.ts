@@ -6,6 +6,8 @@ import {
     ObjectBoardResponse,
     objectBoardResponse,
     objectDetailInfo,
+    ObjectSelectionRequest,
+    selectedObjectInfos,
 } from '@/schemas/object/object';
 import { validate } from '@/schemas/utils/validate';
 import { apiClient } from '@/services/config/axios';
@@ -78,6 +80,24 @@ export const getLikedObjectList = async (params: FilteredObjectRequest) => {
         throw new Error('Invalid response status');
     } catch (error) {
         console.error('좋아요 조회 실패', error);
+        throw error;
+    }
+};
+
+export const getSelectedObjectInfos = async (
+    objectInfos: ObjectSelectionRequest[]
+) => {
+    try {
+        const response = await apiClient.post('/object/v1/info', objectInfos);
+
+        // console.log('선택한 오브제 정보 조회', response);
+
+        if (response.status === 200) {
+            return validate(selectedObjectInfos, response.data.data);
+        }
+        throw new Error('Invalid response status');
+    } catch (error) {
+        console.error('선택한 오브제 정보 조회 실패', error);
         throw error;
     }
 };

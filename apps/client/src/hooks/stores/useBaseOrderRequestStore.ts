@@ -11,11 +11,11 @@ type Actions = {
 const intitalState: BaseOrderRequest = {
     addressId: undefined,
     paymentMethod: undefined,
-    deliveryRequest: undefined,
+    deliveryRequest: '',
     agreedToTerms: false,
 };
 
-// 주문 완료 시 자동으로 clearBaseOrderRequest 호출
+// 결제 시스템 도입 시 삭제 필요
 export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
     persist(
         combine(intitalState, (set) => ({
@@ -25,7 +25,7 @@ export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
             },
         })),
         {
-            name: 'LOOPZ-ORDER-REQUEST',
+            name: 'LOOPZ_ORDER_REQUEST',
             storage: createJSONStorage(() => sessionStorage),
         }
     )

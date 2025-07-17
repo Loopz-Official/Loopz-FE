@@ -5,12 +5,14 @@ import { useEffect } from 'react';
 
 import { setTokenCookie, setUserInfoCookie } from '@/auth/cookie/setCookie';
 import OAuthRedirect from '@/components/features/oauth/OAuthRedirect';
-import { useUserInfo } from '@/hooks/stores/userInfo';
+import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
 import { postKakaoAuthCode } from '@/services/api/oauth';
 
 export default function KakaoRedirectClient() {
     const searchParams = useSearchParams();
     const router = useRouter();
+
+    const { setUserInfo, clearUserInfo } = useUserInfoStore();
 
     useEffect(() => {
         const handleKakaoLogin = async () => {
@@ -22,11 +24,12 @@ export default function KakaoRedirectClient() {
 
                 const { data: loginUserInfo, accessToken } = serverResponse;
 
-                useUserInfo.getState().setUserInfo(loginUserInfo);
+                setUserInfo(loginUserInfo);
 
                 // 🍪 쿠키 관련 임시 설정 (추후 refactor 필요)
                 setTokenCookie(accessToken);
                 setUserInfoCookie();
+                clearUserInfo();
 
                 router.push(
                     loginUserInfo.enabled
@@ -39,7 +42,7 @@ export default function KakaoRedirectClient() {
         };
 
         handleKakaoLogin();
-    }, [searchParams, router]);
+    }, [searchParams, router, setUserInfo, clearUserInfo]);
 
     return <OAuthRedirect />;
 }

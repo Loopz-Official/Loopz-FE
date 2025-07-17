@@ -1,8 +1,8 @@
-import { useUserInfo } from '@/hooks/stores/userInfo';
+import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
 
 export const setUserInfoCookie = () => {
-    document.cookie = `enabled=${useUserInfo.getState().enabled}; path=/;`;
-    document.cookie = `nickname=${useUserInfo.getState().nickName}; path=/;`;
+    document.cookie = `enabled=${useUserInfoStore.getState().enabled}; path=/;`;
+    document.cookie = `nickname=${useUserInfoStore.getState().nickName}; path=/;`;
 };
 
 export const setTokenCookie = (token: string) => {

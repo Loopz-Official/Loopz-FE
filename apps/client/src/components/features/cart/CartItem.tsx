@@ -47,13 +47,12 @@ const CartItem = ({
         const selectedProduct = [
             {
                 objectId: itemInfo.objectId,
-                objectName: itemInfo.objectName,
-                objectPrice: itemInfo.objectPrice,
-                imageUrl: itemInfo.imageUrl,
                 quantity,
             },
         ];
-        useSelectedProductsStore.getState().setProducts(selectedProduct);
+        useSelectedProductsStore
+            .getState()
+            .setSelectedProducts(selectedProduct);
     };
 
     return (

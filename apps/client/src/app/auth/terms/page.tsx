@@ -7,7 +7,7 @@ import { setUserInfoCookie } from '@/auth/cookie/setCookie';
 import BottomButton from '@/components/common/BottomButton';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
-import { useUserInfo } from '@/hooks/stores/userInfo';
+import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
 
@@ -54,7 +54,7 @@ export default function TermsPage() {
         const { data: termsUserInfo, status } = termsResponse;
 
         if (status === 200) {
-            useUserInfo.getState().setUserInfo(termsUserInfo);
+            useUserInfoStore.getState().setUserInfo(termsUserInfo);
             setUserInfoCookie();
             router.push('/auth/complete');
         }
