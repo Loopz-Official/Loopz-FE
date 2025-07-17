@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { overlay } from 'overlay-kit';
+import { toast } from 'sonner';
 
 import Modal from '@/components/common/Modal';
 import {
@@ -26,7 +27,7 @@ export default function ProductItemByDeliveryState({
         intro: '설명설명설명설명설명설명',
         objectPrice: 10000,
         imageUrl: '/banner/01.png',
-        status: isOrderList ? 'ORDERED' : 'CANCELED_REQUESTED',
+        status: isOrderList ? 'DELIVERED' : 'CANCELED_REQUESTED',
     };
 
     const deliveryStates = isOrderList
@@ -70,7 +71,7 @@ export default function ProductItemByDeliveryState({
                 console.log('shipping');
                 break;
             case 'DELIVERED':
-                console.log('delivered');
+                toast.success('구매가 확정되었어요!');
                 break;
             case 'PURCHASE_CONFIRMED':
                 console.log('purchase confirmed');

@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 
-import NoItem from '@/components/features/mypage/list/NoItem';
+import Divider from '@/components/features/mypage/Divider';
 import TabBar from '@/components/features/mypage/list/TabBar';
+import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
 import { ORDER_LIST_TABS } from '@/constants/mypage';
 
@@ -19,23 +20,23 @@ export default function Page() {
                 onClick={(tab) => setSelectedTab(tab)}
             />
 
-            <NoItem />
-            {/* {[[0, 1], [2], [3]].map((arr) => (
-                    <div key={arr[0]}>
-                        <div className="space-y-4 px-5 py-6">
-                            <div className="text-headline-04">2025.04.25</div>
-                            <div className="space-y-5">
-                                {arr.map((item) => (
-                                    <ProductItemByDeliveryState
-                                        key={item}
-                                        type="order"
-                                    />
-                                ))}
-                            </div>
+            {/* <NoItem /> */}
+            {[[0, 1], [2], [3]].map((arr) => (
+                <div key={arr[0]}>
+                    <div className="space-y-4 px-5 py-6">
+                        <div className="text-headline-04">2025.04.25</div>
+                        <div className="space-y-5">
+                            {arr.map((item) => (
+                                <ProductItemByDeliveryState
+                                    key={item}
+                                    type="order"
+                                />
+                            ))}
                         </div>
-                        <Divider />
                     </div>
-                ))} */}
+                    <Divider />
+                </div>
+            ))}
         </div>
     );
 }
