@@ -5,10 +5,10 @@ export const MYPAGE_LINKS = [
         label: '주문 내역',
         href: '/mypage/order-list',
     },
-    {
-        label: '취소/반품 내역',
-        href: '/mypage/return-list',
-    },
+    // {
+    //     label: '취소/반품 내역',
+    //     href: '/mypage/return-list',
+    // },
     {
         label: '회원 정보 수정',
         href: '/mypage/edit',

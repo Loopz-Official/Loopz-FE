@@ -1,5 +1,10 @@
 export const ORDER_LIST_STATUS = [
     {
+        label: 'PENDING',
+        value: '주문 대기',
+        button: '',
+    },
+    {
         label: 'ORDERED',
         value: '배송 준비',
         button: '주문 취소',

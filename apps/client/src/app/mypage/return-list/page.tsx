@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import Divider from '@/components/features/mypage/Divider';
 import TabBar from '@/components/features/mypage/list/TabBar';
-import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
 import { RETURN_LIST_TABS } from '@/constants/mypage';
 
@@ -25,12 +24,12 @@ export default function Page() {
                     <div className="space-y-4 px-5 py-6">
                         <div className="text-headline-04">2025.04.25</div>
                         <div className="space-y-5">
-                            {arr.map((item) => (
+                            {/* {arr.map((item) => (
                                 <ProductItemByDeliveryState
                                     key={item}
                                     type="return"
                                 />
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                     <Divider />
