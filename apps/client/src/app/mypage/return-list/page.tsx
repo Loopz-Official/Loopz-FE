@@ -19,7 +19,7 @@ export default function Page() {
             />
 
             <div className="text-body-03 fixed left-0 top-0 flex h-dvh w-dvw items-center justify-center font-normal">
-                아직 준비 준비 중인 서비스입니다.
+                아직 준비 중인 서비스입니다.
             </div>
             {/* {[[0, 1], [2], [3]].map((arr) => (
                 <div key={arr[0]}>
