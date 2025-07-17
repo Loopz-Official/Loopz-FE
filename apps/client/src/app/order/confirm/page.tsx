@@ -22,15 +22,16 @@ export default function OrderConfirmPage() {
 
     const { selectedProducts, clearSelectedProducts } =
         useSelectedProductsStore();
+    const { clearSelectedAddressId } = useSelectedAddressIdStore();
+    const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
+        useBaseOrderRequestStore();
 
     const checkKeys = useMemo(
         () => ORDER_CONFIRM_ITEMS.map((item) => item.key),
         []
     );
     const { isChecked, isAllChecked, toggle } = useCheckGroup(checkKeys, false);
-    const { clearSelectedAddressId } = useSelectedAddressIdStore();
-    const { addressId, deliveryRequest, agreedToTerms, clearBaseOrderRequest } =
-        useBaseOrderRequestStore();
+
     const placeOrderMutation = usePlaceOrderMutation();
 
     const handleBottomButtonClick = async () => {

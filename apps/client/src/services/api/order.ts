@@ -1,4 +1,11 @@
-import { orderHistory, OrderRequest, orderResponse } from '@/schemas/order';
+import {
+    OrderDetailResponse,
+    orderDetailResponse,
+    OrderHistoryResponse,
+    orderHistoryResponse,
+    OrderRequest,
+    placedOrderResponse,
+} from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -12,9 +19,9 @@ export const placeOrder = async (orderRequest: OrderRequest) => {
 
         if (response.status === 200) {
             return validate(
-                orderResponse,
+                placedOrderResponse,
                 response.data.data,
-                'Order Response'
+                'Place Order Response'
             );
         }
         throw new Error('Failed to place order');
@@ -25,7 +32,7 @@ export const placeOrder = async (orderRequest: OrderRequest) => {
 };
 
 // 주문 내역 조회 API
-export const getOrderHistory = async () => {
+export const getOrderHistory = async (): Promise<OrderHistoryResponse> => {
     try {
         const response = await apiClient.get('/order/v1');
 
@@ -33,7 +40,7 @@ export const getOrderHistory = async () => {
 
         if (response.status === 200) {
             return validate(
-                orderHistory,
+                orderHistoryResponse,
                 response.data.data,
                 'Order History Response'
             );
@@ -46,20 +53,20 @@ export const getOrderHistory = async () => {
 };
 
 // 특정 주문 조회 API
-export const getOrderDetail = async (orderId: string) => {
+export const getOrderDetail = async (
+    orderId: string
+): Promise<OrderDetailResponse> => {
     try {
         const response = await apiClient.get(`/order/v1/${orderId}`);
 
         console.log('Order Detail Response: ', response);
 
         if (response.status === 200) {
-            // // 추후 DTO 확정 시 반영
-            // return validate(
-            //     orderResponse,
-            //     response.data.data,
-            //     'Order Detail Response'
-            // );
-            return response.data.data;
+            return validate(
+                orderDetailResponse,
+                response.data.data,
+                'Order Detail Response'
+            );
         }
         throw new Error('Failed to fetch order detail');
     } catch (error) {

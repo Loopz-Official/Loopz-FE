@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 import { OrderItemVariant } from '@/constants/order';
 import { ObjectInfo } from '@/schemas/object';
-import { OrderedObjectInfo } from '@/schemas/order';
+import { OrderedObjectDetailInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 
 type OrderItemProps = {
     variant: OrderItemVariant;
-    item: ObjectInfo | OrderedObjectInfo;
+    item: ObjectInfo | OrderedObjectDetailInfo;
 };
 
 export default function OrderItem({ variant, item }: OrderItemProps) {

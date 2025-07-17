@@ -1,6 +1,7 @@
 import * as z from 'zod/v4';
 
-import { cartObjectInfo, objectInfo } from './object';
+import { addressInfo } from './address';
+import { objectInfo } from './object';
 
 // Enum
 export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
@@ -19,7 +20,7 @@ export type OrderStatusEnum = z.infer<typeof orderStatusEnum>;
 export const orderStatus = z.optional(orderStatusEnum);
 export type OrderStatus = z.infer<typeof orderStatus>;
 
-/*
+/**
  * Request Schema
  */
 // 선택한 상품 정보 (POST 요청을 위한 key 값)
@@ -61,37 +62,64 @@ export const cartOrderRequest = z.object({
 });
 export type CartOrderRequest = z.infer<typeof cartOrderRequest>;
 
-// Response Schema
-export const orderedObjectInfo = z.object({
+/**
+ * Response Schema
+ */
+
+// 주문 관련 API Base Response
+const orderBaseResponse = z.object({
+    orderId: z.uuid(),
+    paymentMethod: paymentMethodEnum,
+    totalProductPrice: z.int32().nonnegative(), // 전체 상품 가격
+    shippingFee: z.int32().nonnegative(), // 배송비
+    totalPayment: z.int32().nonnegative(), // 총 결제 금액
+});
+
+/**
+ * POST /order/v1
+ */
+// 주문 생성 API response의 Object schema
+const placedOrderObjectInfo = z.object({
     ...objectInfo.omit({ objectPrice: true }).shape,
     purchasePrice: z.int32().nonnegative(),
 });
-export type OrderedObjectInfo = z.infer<typeof orderedObjectInfo>;
 
-export const orderResponse = z.object({
-    orderId: z.uuid(),
-    paymentMethod: paymentMethodEnum,
-    objects: z.array(orderedObjectInfo),
-    shippingFee: z.int32().nonnegative(),
-    totalProductPrice: z.int32().nonnegative(),
-    totalPayment: z.int32().nonnegative(),
+// 주문 생성 API response schema
+export const placedOrderResponse = z.object({
+    ...orderBaseResponse.shape,
+    objects: z.array(placedOrderObjectInfo),
 });
+export type PlacedOrderResponse = z.infer<typeof placedOrderResponse>;
 
-export type OrderResponse = z.infer<typeof orderResponse>;
+/**
+ * 주문 내역 (전체 및 상세) 조회 API Response Schema
+ * (GET /order/v1)
+ */
 
-// 주문 내역 조회 schema
-export const orderInfos = z.object({
-    orderId: z.uuid(),
-    objects: z.array(
-        z.object({
-            ...cartObjectInfo.omit({ objectPrice: true }).shape,
-            intro: z.string(),
-            status: orderStatusEnum,
-            orderDate: z.date(),
-        })
-    ),
+// 주문 전체 및 상세 내역 조회 시 Object schema
+const orderedObjectDetailInfo = z.object({
+    ...placedOrderObjectInfo.omit({ stock: true }).shape,
+    intro: z.string(),
+    status: orderStatusEnum,
+    orderDate: z.iso.datetime(),
 });
-export type OrderInfos = z.infer<typeof orderInfos>;
+export type OrderedObjectDetailInfo = z.infer<typeof orderedObjectDetailInfo>;
 
-export const orderHistory = z.array(orderInfos);
-export type OrderHistory = z.infer<typeof orderHistory>;
+// 전체 주문 내역 조회 (/order/v1)
+export const orderHistoryUnit = z.object({
+    orderId: z.uuid(),
+    objects: z.array(orderedObjectDetailInfo),
+});
+export type OrderHistoryUnit = z.infer<typeof orderHistoryUnit>;
+
+export const orderHistoryResponse = z.array(orderHistoryUnit);
+export type OrderHistoryResponse = z.infer<typeof orderHistoryResponse>;
+
+// 주문 상세 내역 조회 Schema
+export const orderDetailResponse = z.object({
+    ...orderBaseResponse.shape,
+    orderNumber: z.string(), // 주문 번호 (주문 내역  조회 시 사용)
+    objects: z.array(orderedObjectDetailInfo),
+    address: addressInfo,
+});
+export type OrderDetailResponse = z.infer<typeof orderDetailResponse>;

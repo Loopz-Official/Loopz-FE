@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { OrderHistory, OrderResponse } from '@/schemas/order';
 import { getOrderDetail, getOrderHistory } from '@/services/api/order';
 
 export const useOrderHistoryQuery = (orderId?: string) => {
-    return useQuery<OrderHistory>({
+    return useQuery({
         queryKey: ['order-history', orderId],
         queryFn: getOrderHistory,
         staleTime: 1000 * 10,
@@ -13,7 +12,7 @@ export const useOrderHistoryQuery = (orderId?: string) => {
 };
 
 export const useOrderDetailQuery = (orderId: string) => {
-    return useQuery<OrderResponse>({
+    return useQuery({
         queryKey: ['order-detail', orderId],
         queryFn: () => getOrderDetail(orderId), // 주문 ID로 fetch
         enabled: !!orderId,

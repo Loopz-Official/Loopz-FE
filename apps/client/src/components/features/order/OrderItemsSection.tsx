@@ -1,6 +1,6 @@
 import { OrderItemVariant } from '@/constants/order';
 import { ObjectInfo } from '@/schemas/object';
-import { OrderedObjectInfo } from '@/schemas/order';
+import { OrderedObjectDetailInfo } from '@/schemas/order';
 
 import OrderItem from './OrderItem';
 
@@ -9,7 +9,7 @@ import OrderItem from './OrderItem';
 
 type OrderItemsSectionProps = {
     variant: OrderItemVariant;
-    items: ObjectInfo[] | OrderedObjectInfo[];
+    items: ObjectInfo[] | OrderedObjectDetailInfo[];
 };
 
 export default function OrderItemsSection({
