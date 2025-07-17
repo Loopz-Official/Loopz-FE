@@ -6,7 +6,6 @@ import Divider from '@/components/features/mypage/Divider';
 import NoItem from '@/components/features/mypage/list/NoItem';
 // import TabBar from '@/components/features/mypage/list/TabBar';
 import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
-import RefundPolicy from '@/components/features/mypage/return-form/RefundPolicy';
 import Header from '@/components/layouts/Header';
 // import { ORDER_LIST_TABS } from '@/constants/mypage';
 import { useOrderHistoryQuery } from '@/hooks/queries/useOrderQuery';
@@ -48,10 +47,6 @@ export default function Page() {
                     </div>
                 ))
             )}
-
-            <div className="px-5 py-6">
-                <RefundPolicy />
-            </div>
         </div>
     );
 }
