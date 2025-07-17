@@ -46,7 +46,7 @@ export default function Modal({
             className="z-100 fixed left-0 top-0 flex h-dvh w-dvw items-center justify-center bg-black/60"
         >
             <div className="w-78 h-41 text-body-03 grid grid-rows-[1fr_auto] rounded-sm bg-white">
-                <div className="flex items-center justify-center font-normal">
+                <div className="flex items-center justify-center whitespace-pre-line px-5 text-center font-normal">
                     {text}
                 </div>
                 <div className="flex">

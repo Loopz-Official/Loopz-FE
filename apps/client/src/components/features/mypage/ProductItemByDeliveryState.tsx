@@ -7,8 +7,8 @@ import { toast } from 'sonner';
 
 import Modal from '@/components/common/Modal';
 import {
-    OrderListDeliveryStates,
-    ReturnListDeliveryStates,
+    ORDER_LIST_STATUS,
+    RETURN_LIST_STATUS,
 } from '@/constants/deliveryState';
 import { formatPrice } from '@/utils/formatPrice';
 
@@ -27,23 +27,21 @@ export default function ProductItemByDeliveryState({
         intro: '설명설명설명설명설명설명',
         objectPrice: 10000,
         imageUrl: '/banner/01.png',
-        status: isOrderList ? 'DELIVERED' : 'CANCELED_REQUESTED',
+        status: isOrderList ? 'PURCHASE_CONFIRMED' : 'CANCELED_REQUESTED',
     };
 
-    const deliveryStates = isOrderList
-        ? OrderListDeliveryStates
-        : ReturnListDeliveryStates;
-    const currentDeliveryState = deliveryStates.find(
-        (state) => state.label === product.status
+    const deliveryStatus = isOrderList ? ORDER_LIST_STATUS : RETURN_LIST_STATUS;
+    const currentDeliveryStatus = deliveryStatus.find(
+        (status) => status.label === product.status
     )!;
 
     const buttonClass =
         'grow h-10 flex justify-center items-center rounded-md border border-button-gray-regular text-body-03';
 
     const handleCustomButtonClick = () => {
-        const state = currentDeliveryState.label;
+        const status = currentDeliveryStatus.label;
 
-        switch (state) {
+        switch (status) {
             case 'ORDERED':
                 overlay.open(({ isOpen, close }) => (
                     <Modal
@@ -91,6 +89,20 @@ export default function ProductItemByDeliveryState({
         }
     };
 
+    const handleReturnButtonClick = () => {
+        const status = currentDeliveryStatus.label;
+        if (status === 'PURCHASE_CONFIRMED') {
+            overlay.open(({ isOpen, close }) => (
+                <Modal
+                    isOpen={isOpen}
+                    onClose={close}
+                    text={`교환, 환불 가능한 기간이 지났습니다.\n교환,환불은 배송 완료 후 7일 이내에 가능합니다.`}
+                    buttons={[{ text: '확인', onClick: close }]}
+                />
+            ));
+        }
+    };
+
     return (
         <div>
             <div className="mb-2 flex items-center justify-between">
@@ -100,7 +112,7 @@ export default function ProductItemByDeliveryState({
                         isOrderList ? 'text-status-blue' : 'text-gray-regular'
                     )}
                 >
-                    {currentDeliveryState.value}
+                    {currentDeliveryStatus.value}
                 </div>
                 {!isDetailPage && (
                     <button className="text-caption-02 text-gray-regular underline underline-offset-4">
@@ -134,23 +146,26 @@ export default function ProductItemByDeliveryState({
             </div>
 
             {/* 하단 버튼 */}
-            {'button' in currentDeliveryState && (
+            {'button' in currentDeliveryStatus && (
                 <div className="space-y-1.5">
-                    {(currentDeliveryState.button as string) && (
+                    {(currentDeliveryStatus.button as string) && (
                         <button
                             onClick={handleCustomButtonClick}
                             className={clsx('w-full', buttonClass)}
                         >
-                            {currentDeliveryState.button as string}
+                            {currentDeliveryStatus.button as string}
                         </button>
                     )}
 
-                    {(currentDeliveryState.label === 'DELIVERED' ||
-                        currentDeliveryState.label ===
+                    {(currentDeliveryStatus.label === 'DELIVERED' ||
+                        currentDeliveryStatus.label ===
                             'PURCHASE_CONFIRMED') && (
                         <div className="flex gap-1.5">
                             <button className={buttonClass}>배송 조회</button>
-                            <button className={buttonClass}>
+                            <button
+                                onClick={handleReturnButtonClick}
+                                className={buttonClass}
+                            >
                                 반품/환불 요청
                             </button>
                         </div>
