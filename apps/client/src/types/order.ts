@@ -1,6 +1,6 @@
 import { PortOneOrderStatus } from '@/schemas/payment/enum';
 
-export interface PaymentStatus {
+export type PaymentStatus = {
     status: PortOneOrderStatus;
     message: string;
-}
+};

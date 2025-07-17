@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AddressSection from '@/components/features/order/form/AddressSection';
@@ -18,8 +18,15 @@ import { useBaseOrderRequestStore } from '@/hooks/stores/useBaseOrderRequestStor
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
+import { currencyEnum, portOnePaymentMethod } from '@/schemas/payment/enum';
+import { paymentRequest } from '@/schemas/payment/orderRequest';
+import { validate } from '@/schemas/utils/validate';
+import { portOneRequestPayment } from '@/services/api/payment';
+import { PaymentStatus } from '@/types/order';
 import { formatPrice } from '@/utils/formatPrice';
+import { getOrderName } from '@/utils/order/getOrderName';
 import { getPriceSummary } from '@/utils/order/getPrice';
+import { getRandomId } from '@/utils/order/getRandomId';
 
 export type DeliveryRequest = {
     option: string | null;
@@ -27,7 +34,11 @@ export type DeliveryRequest = {
 };
 
 export default function OrderFormPage() {
-    const router = useRouter();
+    // const router = useRouter();
+
+    const [paymentStatus, setPaymentStatus] = useState<Partial<PaymentStatus>>({
+        status: 'IDLE',
+    });
 
     // 배송지 선택
     const [activeAddressInfo, setActiveAddressInfo] = useState<AddressInfo>();
@@ -55,8 +66,6 @@ export default function OrderFormPage() {
 
     const termsCheck = useTermsCheck(ORDER_TERMS);
     const isAllTermsChecked = termsCheck.isAllMandatoryChecked;
-
-    const isDisabled = !(activeAddressInfo && isAllTermsChecked);
 
     useEffect(() => {
         const info =
@@ -86,20 +95,65 @@ export default function OrderFormPage() {
         setDeliveryRequest((prev) => ({ ...prev, [key]: value }));
     };
 
-    const handleOrderButtonClick = () => {
-        if (!activeAddressInfo) return;
-        const request =
-            deliveryRequest.option === '직접 입력'
-                ? deliveryRequest.customText
-                : deliveryRequest.option;
-        setBaseOrderRequest({
-            addressId: activeAddressInfo.addressId,
-            deliveryRequest: request ?? '',
-            agreedToTerms: isAllTermsChecked,
-        });
+    const handleOrderButtonClick = async () => {
+        try {
+            if (!activeAddressInfo) return;
+            const request =
+                deliveryRequest.option === '직접 입력'
+                    ? deliveryRequest.customText
+                    : deliveryRequest.option;
+            setBaseOrderRequest({
+                addressId: activeAddressInfo.addressId,
+                deliveryRequest: request ?? '',
+                agreedToTerms: isAllTermsChecked,
+            });
 
-        router.push(`/order/confirm`);
+            setPaymentStatus({
+                status: 'PENDING',
+            });
+
+            const paymentId = getRandomId();
+            const payment = {
+                storeId: process.env.NEXT_PUBLIC_PORTONE_STORE_ID ?? '', // 추후에는 보안을 위해 서버에서 API 콜하도록 수정
+                channelKey:
+                    process.env.NEXT_PUBLIC_NICE_PAYMENTS_CHANNEL_ID ?? '', // 추후에는 보안을 위해 서버에서 API 콜하도록 수정
+                paymentId,
+                orderName: getOrderName(selectedObjectInfos ?? []),
+                totalAmount: totalPrice,
+                currency: currencyEnum.enum.CURRENCY_KRW,
+                payMethod: portOnePaymentMethod.enum.CARD,
+            };
+
+            const validatedPaymentRequest = validate(
+                paymentRequest,
+                payment,
+                'Port One Payment Request'
+            );
+
+            const paymentResponse = await portOneRequestPayment(
+                validatedPaymentRequest
+            );
+
+            if (paymentResponse.code !== undefined) {
+                setPaymentStatus({
+                    status: 'FAILED',
+                    message: paymentResponse.message,
+                });
+                return;
+            }
+            // const completeResponse = await placeOrder({
+            //     paymentId: payment.paymentId,
+            // });
+
+            // router.push(`/order/confirm`);
+        } catch {
+            toast.error('주문에 실패했습니다. 다시 시도해주세요.');
+        }
     };
+
+    const isWaitingPayment = paymentStatus.status !== 'IDLE';
+    const isDisabled =
+        !(activeAddressInfo && isAllTermsChecked) && isWaitingPayment;
 
     return (
         <div className="pb-17">
