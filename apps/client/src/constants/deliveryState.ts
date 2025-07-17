@@ -1,4 +1,4 @@
-export const OrderListDeliveryStates = [
+export const ORDER_LIST_STATUS = [
     {
         label: 'ORDERED',
         value: '배송 준비',
@@ -21,7 +21,7 @@ export const OrderListDeliveryStates = [
     },
 ];
 
-export const ReturnListDeliveryStates = [
+export const RETURN_LIST_STATUS = [
     {
         label: 'CANCELED_REQUESTED',
         value: '주문 취소 요청',
