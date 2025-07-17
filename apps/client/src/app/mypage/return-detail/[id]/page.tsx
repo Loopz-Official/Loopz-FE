@@ -5,13 +5,20 @@ import ReturnPaymentSummary from '@/components/features/mypage/return-detail/Ret
 import Header from '@/components/layouts/Header';
 
 export default function Page() {
+    // product status에 따라 취소 요청 또는 취소 완료 상태이면 true
+    const isCancel = false;
+
+    // product status에 따라 취소 완료 또는 반품 완료 상태이면 true
     const isCompleted = false;
 
     return (
         <div>
-            <Header type="title" title="취소/반품 상세" />
+            <Header
+                type="title"
+                title={isCancel ? '취소 상세' : '반품/환불 상세'}
+            />
             <div className="text-body-03 text-gray-dark px-5 py-2.5 font-normal">
-                {`접수하신 제품의 반품/환불이 ${isCompleted ? '완료' : '요청'}되었어요.`}
+                {`접수하신 제품의 ${isCancel ? '취소가' : '반품/환불이'} ${isCompleted ? '완료' : '요청'}되었어요.`}
             </div>
 
             <Divider />
