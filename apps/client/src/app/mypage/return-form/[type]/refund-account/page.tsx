@@ -2,6 +2,7 @@ import CheckBox from '@/components/common/CheckBox';
 import Divider from '@/components/features/mypage/Divider';
 import AccountInformation from '@/components/features/mypage/return-form/AccountInformation';
 import PhoneNumberInformation from '@/components/features/mypage/return-form/PhoneNumberInformation';
+import RefundPolicy from '@/components/features/mypage/return-form/RefundPolicy';
 import ReturnProductItem from '@/components/features/mypage/return-form/ReturnProductItem';
 import Header from '@/components/layouts/Header';
 
@@ -38,13 +39,15 @@ export default async function Page({
 
             <Divider />
 
-            <div className="px-5 py-6">
+            <div className="space-y-3 px-5 py-6">
+                <RefundPolicy />
+
                 {!isCancel && (
                     <>
                         <div className="text-body-03 mb-1 font-semibold">
                             반품 시 배송비는 고객 부담으로 처리됩니다.
                         </div>
-                        <div className="text-caption-01 text-gray-dark mb-3">
+                        <div className="text-caption-01 text-gray-dark">
                             * 착불로 반송하실 경우에는 해당 배송비를 제외한
                             금액으로 환불 처리됩니다.
                         </div>
