@@ -15,13 +15,24 @@ export default function Modal({
     onClose: () => void;
 }) {
     useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
         const defaultOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
 
         return () => {
+            document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = defaultOverflow;
         };
-    }, []);
+    }, [isOpen, onClose]);
 
     const handleBackgroundClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
