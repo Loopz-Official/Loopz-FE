@@ -1,5 +1,4 @@
 import Divider from '@/components/features/mypage/Divider';
-import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import ReturnDetail from '@/components/features/mypage/return-detail/ReturnDetail';
 import ReturnPaymentSummary from '@/components/features/mypage/return-detail/ReturnPaymentSummary';
 import Header from '@/components/layouts/Header';
@@ -22,7 +21,7 @@ export default function Page() {
 
             {/* 취소 상품 */}
             <div className="space-y-5 px-5 py-6">
-                <ProductItemByDeliveryState isDetailPage type="return" />
+                {/* <ProductItemByDeliveryState isDetailPage type="return" /> */}
             </div>
 
             <Divider />

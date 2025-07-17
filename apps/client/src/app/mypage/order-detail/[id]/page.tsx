@@ -1,7 +1,6 @@
 import Divider from '@/components/features/mypage/Divider';
 import OrderPaymentSummary from '@/components/features/mypage/order-detail/OrderPaymentSummary';
 import ReceiptInformation from '@/components/features/mypage/order-detail/ReceiptInformation';
-import ProductItemByDeliveryState from '@/components/features/mypage/ProductItemByDeliveryState';
 import Header from '@/components/layouts/Header';
 
 export default async function Page({
@@ -22,8 +21,8 @@ export default async function Page({
 
             {/* 주문 상품 */}
             <div className="space-y-5 px-5 py-6">
-                <ProductItemByDeliveryState isDetailPage type="order" />
-                <ProductItemByDeliveryState isDetailPage type="order" />
+                {/* <ProductItemByDeliveryState isDetailPage type="order" />
+                <ProductItemByDeliveryState isDetailPage type="order" /> */}
             </div>
 
             <Divider />

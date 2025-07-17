@@ -5,7 +5,7 @@ export default function NoItem() {
                 <div className="flex flex-col items-center gap-5">
                     <div className="opacity-33 h-[3.375rem] w-[3.375rem] bg-[url('/alert.svg')] bg-center bg-no-repeat" />
                     <div className="text-headline-04 font-normal">
-                        해당 상품 내역이 없습니다.
+                        상품 내역이 없습니다.
                     </div>
                 </div>
             </div>

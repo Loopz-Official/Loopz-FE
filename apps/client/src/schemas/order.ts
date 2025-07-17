@@ -101,13 +101,13 @@ const orderedObjectDetailInfo = z.object({
     ...placedOrderObjectInfo.omit({ stock: true }).shape,
     intro: z.string(),
     status: orderStatusEnum,
-    orderDate: z.iso.datetime(),
 });
 export type OrderedObjectDetailInfo = z.infer<typeof orderedObjectDetailInfo>;
 
 // 전체 주문 내역 조회 (/order/v1)
 export const orderHistoryUnit = z.object({
     orderId: z.uuid(),
+    orderDate: z.iso.datetime(),
     objects: z.array(orderedObjectDetailInfo),
 });
 export type OrderHistoryUnit = z.infer<typeof orderHistoryUnit>;

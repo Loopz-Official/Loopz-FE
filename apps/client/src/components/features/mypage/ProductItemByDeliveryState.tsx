@@ -10,25 +10,19 @@ import {
     ORDER_LIST_STATUS,
     RETURN_LIST_STATUS,
 } from '@/constants/deliveryState';
+import { OrderedObjectDetailInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 
 export default function ProductItemByDeliveryState({
     type,
+    object: product,
     isDetailPage = false,
 }: {
     type: 'order' | 'return';
+    object: OrderedObjectDetailInfo;
     isDetailPage?: boolean;
 }) {
     const isOrderList = type === 'order';
-
-    // 추후 props로 전달
-    const product = {
-        objectName: '이름이름이름',
-        intro: '설명설명설명설명설명설명',
-        objectPrice: 10000,
-        imageUrl: '/banner/01.png',
-        status: isOrderList ? 'PURCHASE_CONFIRMED' : 'CANCELED_REQUESTED',
-    };
 
     const deliveryStatus = isOrderList ? ORDER_LIST_STATUS : RETURN_LIST_STATUS;
     const currentDeliveryStatus = deliveryStatus.find(
@@ -103,6 +97,8 @@ export default function ProductItemByDeliveryState({
         }
     };
 
+    if (!currentDeliveryStatus) return null;
+
     return (
         <div>
             <div className="mb-2 flex items-center justify-between">
@@ -140,7 +136,7 @@ export default function ProductItemByDeliveryState({
                         {product.intro}
                     </div>
                     <div className="text-body-03 font-semibold">
-                        {formatPrice(product.objectPrice)}원
+                        {formatPrice(product.purchasePrice)}원
                     </div>
                 </div>
             </div>

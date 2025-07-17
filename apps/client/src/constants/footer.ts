@@ -15,4 +15,8 @@ export const FOOTER_LINKS = [
         label: '개인정보처리방침',
         href: 'https://clean-archduke-51e.notion.site/22b9575b8447803095a1f9df09300e27?source=copy_link',
     },
+    {
+        label: '환불규정',
+        href: '/agreement/refund',
+    },
 ];
