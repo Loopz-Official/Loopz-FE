@@ -22,7 +22,7 @@ export default async function Page({
             />
 
             <div className="px-5 py-6">
-                <ReturnProductItem type={isCancel ? 'cancel' : 'return'} />
+                <ReturnProductItem type={type} />
             </div>
 
             <Divider />
@@ -39,7 +39,7 @@ export default async function Page({
 
             <Divider />
 
-            <div className="space-y-3 px-5 py-6">
+            <div className="space-y-6 px-5 pt-6">
                 <RefundPolicy />
 
                 {!isCancel && (
@@ -62,7 +62,11 @@ export default async function Page({
                 </div>
             </div>
 
-            {/* TODO: 버튼 추가 */}
+            <div className="w-full px-5 py-8">
+                <button className="disabled:bg-button-disabled text-body-02 w-full rounded-sm bg-black py-4 text-white">
+                    계속하기
+                </button>
+            </div>
         </div>
     );
 }
