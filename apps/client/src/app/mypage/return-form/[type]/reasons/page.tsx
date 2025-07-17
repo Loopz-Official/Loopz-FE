@@ -35,7 +35,7 @@ export default async function Page({
                 <RadioSection options={reasons} />
             </div>
 
-            <div className="fixed bottom-0 w-full px-5 py-8">
+            <div className="fixed bottom-0 w-full max-w-2xl px-5 py-8">
                 <button className="disabled:bg-button-disabled text-body-02 w-full rounded-sm bg-black py-4 text-white">
                     계속하기
                 </button>
