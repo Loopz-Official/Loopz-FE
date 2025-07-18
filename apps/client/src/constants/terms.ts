@@ -33,7 +33,7 @@ export const SIGN_UP_TERMS: SignupTerm[] = [
         id: 'agreedServiceTerms',
         title: 'Loopz 이용약관 동의',
         mandatory: true,
-        href: '',
+        href: 'https://clean-archduke-51e.notion.site/22b9575b844780b491b0f1ba31af053e?source=copy_link',
         checked: false,
     },
     {
