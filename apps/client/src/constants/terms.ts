@@ -40,7 +40,7 @@ export const SIGN_UP_TERMS: SignupTerm[] = [
         id: 'agreedMarketing',
         title: '개인정보 마케팅 활용 동의',
         mandatory: false,
-        href: '',
+        href: 'https://clean-archduke-51e.notion.site/1e99575b8447801b8fbacddc0132d74f',
         checked: false,
     },
     {
