@@ -3,7 +3,7 @@ export const LOOPZ_EMAIL = 'loopstory08@gmail.com';
 export const MYPAGE_LINKS = [
     {
         label: '주문 내역',
-        href: '/mypage/order-list',
+        href: '/my-order/list',
     },
     {
         label: '취소/반품 내역',
@@ -31,13 +31,6 @@ export const CONTACT_CHANNELS = [
     { label: '카카오톡 문의하기', href: 'https://open.kakao.com/o/sfx6Rvyh' },
     { label: 'DM 문의하기', href: 'https://www.instagram.com/loop_z.official' },
     { label: '이메일 문의하기', href: '' },
-];
-
-export const ORDER_LIST_TABS = [
-    { label: 'ALL', value: '전체' },
-    { label: 'ORDERED', value: '배송준비' },
-    { label: 'SHIPPING', value: '배송중' },
-    { label: 'DELIVERED', value: '배송완료' },
 ];
 
 export const RETURN_LIST_TABS = [

@@ -1,22 +1,14 @@
 import * as z from 'zod/v4';
 
-import { addressInfo } from './address';
-import { objectInfo } from './object';
+import { addressInfo } from '../address';
+import { objectInfo } from '../object';
 
-// Enum
-export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
-export type PaymentMethodEnum = z.infer<typeof paymentMethodEnum>;
+import { orderStatusEnum, paymentMethodEnum } from './enum';
+
+// Optional Enum Schema
 export const paymentMethod = z.optional(paymentMethodEnum);
 export type PaymentMethod = z.infer<typeof paymentMethod>;
 
-export const orderStatusEnum = z.enum([
-    'PENDING',
-    'ORDERED',
-    'SHIPPING',
-    'DELIVERED',
-    'CANCELED',
-]);
-export type OrderStatusEnum = z.infer<typeof orderStatusEnum>;
 export const orderStatus = z.optional(orderStatusEnum);
 export type OrderStatus = z.infer<typeof orderStatus>;
 
