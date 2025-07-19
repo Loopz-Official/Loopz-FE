@@ -22,16 +22,40 @@ export const ORDER_STATUS_META_MAP: Record<
     OrderStatusEnum,
     OrderStatusMetadata
 > = {
-    PENDING: { label: '주문 대기', textColor: 'text-status-blue' },
+    PENDING: {
+        label: '주문 대기',
+        textColor: 'text-status-blue',
+    },
     ORDERED: {
         label: "주문 완료 ( 24시간 이내의 입금 확인이 정상적으로 처리되면, 주문 상태가 '배송중'으로 변경됩니다. )",
         textColor: 'text-status-blue',
     },
-    SHIPPING: { label: '배송중', textColor: 'text-status-blue' },
-    DELIVERED: { label: '배송 완료', textColor: 'text-status-blue' },
-    CANCELED: { label: '주문취소', textColor: 'text-gray-04' },
-    CANCEL_REQUESTED: { label: '취소 요청', textColor: 'text-gray-04' },
-    CANCEL_COMPLETE: { label: '취소 완료', textColor: 'text-gray-04' },
-    REFUND_REQUESTED: { label: '반품 요청', textColor: 'text-gray-04' },
-    REFUND_COMPLETE: { label: '반품 완료', textColor: 'text-gray-04' },
+    SHIPPING: {
+        label: '배송중',
+        textColor: 'text-status-blue',
+    },
+    DELIVERED: {
+        label: '배송 완료',
+        textColor: 'text-status-blue',
+    },
+    CANCELED: {
+        label: '주문취소',
+        textColor: 'text-gray-04',
+    },
+    CANCEL_REQUESTED: {
+        label: '취소 요청',
+        textColor: 'text-gray-04',
+    },
+    CANCEL_COMPLETE: {
+        label: '취소 완료',
+        textColor: 'text-gray-04',
+    },
+    REFUND_REQUESTED: {
+        label: '반품 요청',
+        textColor: 'text-gray-04',
+    },
+    REFUND_COMPLETE: {
+        label: '반품 완료',
+        textColor: 'text-gray-04',
+    },
 };

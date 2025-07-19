@@ -11,7 +11,7 @@ const MyOrderItem = ({
     orderedObjects: OrderedObjectDetailInfo[];
 }) => {
     return (
-        <>
+        <section className="flex flex-col gap-5">
             {orderedObjects.map((object) => (
                 <div key={object.objectId}>
                     <OrderStatusText status={object.status} />
@@ -39,7 +39,7 @@ const MyOrderItem = ({
                     </div>
                 </div>
             ))}
-        </>
+        </section>
     );
 };
 

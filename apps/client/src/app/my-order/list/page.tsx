@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { TopTabBar } from '@/components/common/TabBar/TopTabBar';
 import MyOrderItem from '@/components/features/my-order/MyOrderItem';
+import OrderHeader from '@/components/features/my-order/OrderHeader';
 import { ORDER_LIST_TABS } from '@/constants/order/myOrder';
 import { useOrderHistoryQuery } from '@/hooks/queries/useOrderQuery';
 
@@ -26,12 +27,26 @@ export default function MyOrderListPage() {
                 setSelectedTab={setSelectedTab}
             />
             <div className="px-5 py-6">
-                {orderHistory.map((order) => (
-                    <MyOrderItem
-                        key={order.orderId}
-                        orderedObjects={order.objects}
-                    />
-                ))}
+                <div className="flex flex-col gap-5">
+                    {orderHistory.map((order) => (
+                        <div
+                            key={order.orderId}
+                            className="flex flex-col gap-8"
+                        >
+                            <section className="flex flex-col gap-2.5">
+                                <OrderHeader
+                                    orderId={order.orderId}
+                                    orderDate={order.orderDate}
+                                />
+                                <MyOrderItem
+                                    key={order.orderId}
+                                    orderedObjects={order.objects}
+                                />
+                            </section>
+                            <hr className="bg-gray-regular h-0.5 w-full border-none" />
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );
