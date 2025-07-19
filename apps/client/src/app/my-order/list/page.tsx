@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import EmptyState from '@/components/common/Feedback/EmptyState';
 import { TopTabBar } from '@/components/common/TabBar/TopTabBar';
 import MyOrderItem from '@/components/features/my-order/MyOrderItem';
 import OrderHeader from '@/components/features/my-order/OrderHeader';
@@ -18,6 +19,8 @@ export default function MyOrderListPage() {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
     if (!orderHistory) return <div>No data</div>;
+    if (orderHistory.length === 0)
+        return <EmptyState message="주문 내역이 없습니다." headerHeight={56} />;
 
     return (
         <>
