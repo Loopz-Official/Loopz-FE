@@ -23,11 +23,19 @@ export const ORDER_STATUS_META_MAP: Record<
     OrderStatusMetadata
 > = {
     PENDING: {
-        label: '주문 대기',
-        textColor: 'text-status-blue',
+        label: '결제 대기',
+        textColor: 'text-gray-05',
+    },
+    FAILED: {
+        label: '결제 실패',
+        textColor: 'text-status-red',
     },
     ORDERED: {
-        label: "주문 완료 ( 24시간 이내의 입금 확인이 정상적으로 처리되면, 주문 상태가 '배송중'으로 변경됩니다. )",
+        label: '결제 완료',
+        textColor: 'text-status-blue',
+    },
+    DELIVERY_READY: {
+        label: '배송 준비',
         textColor: 'text-status-blue',
     },
     SHIPPING: {
@@ -38,9 +46,9 @@ export const ORDER_STATUS_META_MAP: Record<
         label: '배송 완료',
         textColor: 'text-status-blue',
     },
-    CANCELED: {
-        label: '주문취소',
-        textColor: 'text-gray-04',
+    PURCHASE_CONFIRMED: {
+        label: '구매 확정',
+        textColor: 'text-status-blue',
     },
     CANCEL_REQUESTED: {
         label: '취소 요청',
