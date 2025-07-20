@@ -5,8 +5,8 @@ import { useState } from 'react';
 import HorizontalDivider from '@/components/common/Divider/Horizontal';
 import EmptyState from '@/components/common/Feedback/EmptyState';
 import { TopTabBar } from '@/components/common/TabBar/TopTabBar';
+import OrderHeader from '@/components/features/my-order/Header/Order';
 import MyOrderItem from '@/components/features/my-order/MyOrderItem';
-import OrderHeader from '@/components/features/my-order/OrderHeader';
 import { ORDER_LIST_TABS } from '@/constants/order/myOrder';
 import { useOrderHistoryQuery } from '@/hooks/queries/useOrderQuery';
 
@@ -39,7 +39,7 @@ export default function MyOrderListPage() {
                         >
                             <section className="flex flex-col gap-2.5">
                                 <OrderHeader
-                                    orderId={order.orderId}
+                                    orderNumber={order.orderId} // 추후 orderNumber response DTO 추가 시 수정
                                     orderDate={order.orderDate}
                                 />
                                 <MyOrderItem
@@ -47,7 +47,7 @@ export default function MyOrderListPage() {
                                     orderedObjects={order.objects}
                                 />
                             </section>
-                            <HorizontalDivider isViewportWidth />
+                            <HorizontalDivider lightColor />
                         </div>
                     ))}
                 </div>
