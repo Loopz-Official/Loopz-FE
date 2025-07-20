@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import HorizontalDivider from '@/components/common/Divider/Horizontal';
 import EmptyState from '@/components/common/Feedback/EmptyState';
 import { TopTabBar } from '@/components/common/TabBar/TopTabBar';
 import MyOrderItem from '@/components/features/my-order/MyOrderItem';
@@ -46,7 +47,7 @@ export default function MyOrderListPage() {
                                     orderedObjects={order.objects}
                                 />
                             </section>
-                            <hr className="bg-gray-regular h-0.5 w-full border-none" />
+                            <HorizontalDivider isViewportWidth />
                         </div>
                     ))}
                 </div>

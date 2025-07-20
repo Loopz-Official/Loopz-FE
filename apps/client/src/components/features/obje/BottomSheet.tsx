@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import BottomButton from '@/components/common/BottomButton';
-import VerticalDivider from '@/components/common/VerticalDivider';
+import VerticalDivider from '@/components/common/Divider/Vertical';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { ObjectDetailInfo } from '@/schemas/object/object';
