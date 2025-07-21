@@ -1,6 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import Radio from '@/components/common/Radio';
 import CustomInput from '@/components/features/mypage/edit/CustomInput';
@@ -9,6 +11,7 @@ import { GENDERS } from '@/constants/user';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { GenderType } from '@/schemas/user';
+import { checkNicknameRedundancy } from '@/services/api/auth';
 import { validateBirthDate } from '@/utils/mypage/validateBirthDate';
 
 export default function Page() {
@@ -20,6 +23,9 @@ export default function Page() {
         birthDate: string;
         gender: GenderType;
     }>({ nickName: '', birthDate: '', gender: 'UNKNOWN' });
+    const [isNicknameValid, setIsNicknameValid] = useState<boolean | null>(
+        null
+    );
     const [birthDateError, setBirthDateError] = useState('');
 
     useEffect(() => {
@@ -30,6 +36,26 @@ export default function Page() {
             }));
         }
     }, [userInfo]);
+
+    useEffect(() => {
+        if (
+            !newUserInfo.nickName ||
+            newUserInfo.nickName === userInfo?.nickName
+        )
+            return;
+
+        const timer = setTimeout(() => {
+            handleNicknameValidation(newUserInfo.nickName);
+        }, 2000);
+
+        // 닉네임이 바뀌면 타이머 초기화
+        return () => clearTimeout(timer);
+    }, [newUserInfo.nickName, userInfo]);
+
+    const handleNicknameValidation = async (nickname: string) => {
+        const response = await checkNicknameRedundancy(nickname);
+        setIsNicknameValid(!!response.usable);
+    };
 
     if (isLoading) return <div>Loading...</div>;
     else if (!userInfo) return <div>회원 정보를 불러오는 데 실패했습니다.</div>;
@@ -65,16 +91,15 @@ export default function Page() {
     };
 
     const handleEditButtonClick = async () => {
-        if (birthDateError) {
-            alert('생년월일 형식이 올바르지 않습니다.');
-            return;
-        }
         try {
             await updateUserInfoMutation.mutateAsync({
-                nickName: newUserInfo.nickName,
+                ...(newUserInfo.nickName === userInfo.nickName
+                    ? {}
+                    : { nickName: newUserInfo.nickName }),
                 birthDate: newUserInfo.birthDate,
                 gender: newUserInfo.gender,
             });
+            toast('회원 정보가 수정되었습니다.');
         } catch {
             alert('회원 정보를 수정하는 중 에러가 발생했습니다.');
         }
@@ -97,6 +122,24 @@ export default function Page() {
                         }
                         placeholder="닉네임을 입력해 주세요."
                     />
+                    {(newUserInfo.nickName.length === 0 ||
+                        isNicknameValid != null) && (
+                        <p
+                            className={clsx(
+                                'text-body-03',
+                                isNicknameValid &&
+                                    newUserInfo.nickName.length > 0
+                                    ? 'text-status-blue'
+                                    : 'text-status-red'
+                            )}
+                        >
+                            {newUserInfo.nickName.length === 0
+                                ? '닉네임은 필수 입력 사항입니다.'
+                                : isNicknameValid
+                                  ? '사용 가능한 닉네임입니다.'
+                                  : '이미 사용 중인 닉네임입니다.'}
+                        </p>
+                    )}
                 </div>
 
                 <div className="space-y-2">
@@ -153,6 +196,11 @@ export default function Page() {
 
             <div className="fixed bottom-0 w-full max-w-2xl px-5 py-8">
                 <button
+                    disabled={
+                        !isNicknameValid ||
+                        newUserInfo.nickName.length === 0 ||
+                        !!birthDateError
+                    }
                     onClick={handleEditButtonClick}
                     className="disabled:bg-button-disabled text-body-02 w-full rounded-sm bg-black py-4 text-white"
                 >

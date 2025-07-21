@@ -13,7 +13,7 @@ export const useUpdateUserInfoMutation = () => {
             birthDate,
             gender,
         }: {
-            nickName: string;
+            nickName?: string;
             birthDate?: string;
             gender?: GenderType;
         }) => updateMyAccoundInfo(nickName, birthDate, gender),

@@ -24,7 +24,7 @@ export const getMyAccountInfo = async () => {
 };
 
 export const updateMyAccoundInfo = async (
-    nickName: string,
+    nickName?: string,
     birthDate?: string,
     gender?: GenderType
 ) => {
