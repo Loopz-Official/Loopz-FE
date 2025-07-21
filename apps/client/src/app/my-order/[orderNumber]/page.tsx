@@ -1,18 +1,14 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useMemo } from 'react';
 
 import HorizontalDivider from '@/components/common/Divider/Horizontal';
 import OrderDetailPageHeader from '@/components/features/my-order/Header/OrderDetailPage';
 import MyOrderItem from '@/components/features/my-order/MyOrderItem';
 import OrderSummaryGroup from '@/components/features/my-order/OrderSummary/Group';
+import { ORDER_PAGE_SUMMARY_CONFIGS } from '@/constants/order';
 import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
-import { OrderSummaryItem } from '@/types/myOrder';
-import {
-    getBuyerInfoItems,
-    getPaymentInfoItems,
-} from '@/utils/my-order/summaryItems';
+import { useSummaryGroups } from '@/hooks/useSummaryGroups';
 
 export default function MyOrderDetailPage() {
     const params = useParams<{ orderNumber: string }>();
@@ -24,15 +20,10 @@ export default function MyOrderDetailPage() {
         error,
     } = useOrderDetailQuery(orderNumber);
 
-    const buyerInfoItems: OrderSummaryItem[] = useMemo(() => {
-        if (!orderedObjects) return [];
-        return getBuyerInfoItems(orderedObjects);
-    }, [orderedObjects]);
-
-    const paymentInfoItems: OrderSummaryItem[] = useMemo(() => {
-        if (!orderedObjects) return [];
-        return getPaymentInfoItems(orderedObjects);
-    }, [orderedObjects]);
+    const summarySections = useSummaryGroups(
+        orderedObjects,
+        ORDER_PAGE_SUMMARY_CONFIGS
+    );
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
@@ -40,7 +31,7 @@ export default function MyOrderDetailPage() {
 
     return (
         <>
-            <OrderDetailPageHeader orderNumber={orderedObjects.orderNumber} />
+            <OrderDetailPageHeader serialNumber={orderedObjects.orderNumber} />
             <HorizontalDivider isViewportWidth height="3" />
             <div className="w-full px-5 py-6">
                 {/* 주문 상품 Section */}
@@ -51,18 +42,16 @@ export default function MyOrderDetailPage() {
 
                 {/* 주문 Summary Section */}
                 <section>
-                    {buyerInfoItems.length > 0 && (
-                        <OrderSummaryGroup
-                            title="구매자 정보"
-                            items={buyerInfoItems}
-                            gap={12}
-                        />
-                    )}
-                    {paymentInfoItems.length > 0 && (
-                        <OrderSummaryGroup
-                            title="결제 내역"
-                            items={paymentInfoItems}
-                        />
+                    {summarySections.map(
+                        ({ title, items, gap }) =>
+                            items.length > 0 && (
+                                <OrderSummaryGroup
+                                    key={title}
+                                    title={title}
+                                    items={items}
+                                    gap={gap}
+                                />
+                            )
                     )}
                 </section>
             </div>
