@@ -9,7 +9,7 @@ export default function RadioSection({ options }: { options: string[] }) {
                         key={reason}
                         className="text-body-02 text-gray-dark flex items-center gap-2 font-normal"
                     >
-                        <Radio name="return" />
+                        <Radio name="return" checked={false} />
                         {reason}
                     </label>
                 ))}

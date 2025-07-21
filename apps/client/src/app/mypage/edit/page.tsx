@@ -139,7 +139,12 @@ export default function Page() {
                                     })
                                 }
                             >
-                                <Radio name="gander" />
+                                <Radio
+                                    name="gander"
+                                    checked={
+                                        newUserInfo.gender === gender.label
+                                    }
+                                />
                                 <span className="text-body-03 font-normal">
                                     {gender.value}
                                 </span>
