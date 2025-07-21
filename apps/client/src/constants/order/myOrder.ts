@@ -13,25 +13,6 @@ export const CS_HISTORY_TABS = [
     { key: 'RETURN', label: '반품 접수' },
 ];
 
-export const ORDER_CTA_HANDLERS = {
-    cancel: () => {
-        // 결제 취소
-        /* ... */
-    },
-    track: () => {
-        // 배송 조회
-        /* ... */
-    },
-    confirm: () => {
-        // 구매 확정
-        /* ... */
-    },
-    return: () => {
-        // 반품 신청
-        /* ... */
-    },
-};
-
 // 주문 상세 페이지 Summary Config
 export const ORDER_PAGE_SUMMARY_CONFIGS: SummaryGroupConfig[] = [
     {

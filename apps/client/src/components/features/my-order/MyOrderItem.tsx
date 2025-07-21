@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { ORDER_CTA_HANDLERS } from '@/constants/order';
+import { MY_PAGE_ORDER_CTA_HANDLERS } from '@/constants/order/ctaHandlers';
 import { OrderedObjectDetailInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 import { getButtonsByStatus } from '@/utils/my-order/getButtonsByStatus';
@@ -43,7 +43,7 @@ const MyOrderItem = ({
                     <ActionButtonList
                         buttons={getButtonsByStatus(
                             object.status,
-                            ORDER_CTA_HANDLERS
+                            MY_PAGE_ORDER_CTA_HANDLERS
                         )}
                     />
                 </div>
