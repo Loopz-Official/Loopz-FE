@@ -3,13 +3,13 @@ import { OrderSummaryItem } from '@/types/myOrder';
 
 import OrderSummaryRow from './Row';
 
-interface OrderSummaryGroupProps {
+export interface OrderSummaryGroup {
     title: string;
     items: OrderSummaryItem[];
     gap?: number;
 }
 
-const OrderSummaryGroup = ({ title, items, gap }: OrderSummaryGroupProps) => (
+const OrderSummaryGroup = ({ title, items, gap }: OrderSummaryGroup) => (
     <section className="mb-10 flex w-full flex-col gap-5">
         <h3 className="text-body-01 border-b-[1.5px] border-black py-3 font-semibold">
             {title}

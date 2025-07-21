@@ -1,3 +1,5 @@
+import { OrderDetailResponse } from '@/schemas/order';
+
 // 주문 내역 내 TabBar 타입
 export interface OrderTab {
     key: string;
@@ -29,3 +31,10 @@ export type OrderSummaryItem =
     | {
           type: OrderSummaryItemType.DIVIDER;
       };
+
+// 상세 페이지 Summary Group 타입 정의
+export interface SummaryGroupConfig {
+    title: string;
+    getItems: (data: OrderDetailResponse) => OrderSummaryItem[];
+    gap?: number;
+}

@@ -48,13 +48,60 @@ export function getPaymentInfoItems(
             },
             value: {
                 text: `${formatPrice(orderedObjects.totalPayment)}원`,
-                className: 'text-body-01 text-point',
+                className: 'text-body-01 text-point font-semibold',
             },
         },
         {
             type: OrderSummaryItemType.ROW,
             label: '결제 수단',
             value: PAYMENT_METHOD_LABEL_MAP[orderedObjects.paymentMethod],
+        },
+    ];
+}
+
+// 취소/반품 상세 정보
+export const getCancelOrReturnDetailItems =
+    () // orderedObjects: OrderDetailResponse
+    : OrderSummaryItem[] => {
+        return [
+            {
+                type: OrderSummaryItemType.ROW,
+                label: '신청 일시',
+                value: '2025-07-09 17:15:15',
+            },
+            {
+                type: OrderSummaryItemType.ROW,
+                label: '사유',
+                value: '상품이 설명과 다름',
+            },
+        ];
+    };
+
+// 환불 정보
+export function getRefundInfoItems(
+    orderedObjects: OrderDetailResponse
+): OrderSummaryItem[] {
+    return [
+        {
+            type: OrderSummaryItemType.ROW,
+            label: {
+                text: '총 환불 금액',
+                className: 'text-body-01 text-black',
+            },
+            value: {
+                text: `${formatPrice(orderedObjects.totalPayment)}원`,
+                className: 'text-body-01 text-point font-semibold',
+            },
+        },
+        {
+            type: OrderSummaryItemType.ROW,
+            label: '환불 수단',
+            value: '계좌이체',
+        },
+        {
+            type: OrderSummaryItemType.ROW,
+            label: '환불 예정일',
+            value: '영업일 기준 3~5일 이내',
         },
     ];
 }
