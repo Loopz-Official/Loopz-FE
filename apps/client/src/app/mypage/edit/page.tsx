@@ -81,7 +81,7 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <div className="pb-30">
             <Header type="title" title="확인/수정하기" />
 
             <div className="space-y-9 px-5 py-6">
