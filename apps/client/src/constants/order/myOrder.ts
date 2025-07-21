@@ -5,6 +5,11 @@ export const ORDER_LIST_TABS = [
     { key: 'DELIVERED', label: '배송완료' },
 ];
 
+export const CS_HISTORY_TABS = [
+    { key: 'CANCEL', label: '결제 취소' },
+    { key: 'RETURN', label: '반품 접수' },
+];
+
 export const ORDER_CTA_HANDLERS = {
     cancel: () => {
         // 주문 취소

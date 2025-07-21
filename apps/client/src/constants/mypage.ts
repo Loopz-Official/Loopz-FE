@@ -7,7 +7,7 @@ export const MYPAGE_LINKS = [
     },
     {
         label: '취소/반품 내역',
-        href: '/mypage/return-list',
+        href: '/my-order/cs-history ',
     },
     {
         label: '회원 정보 수정',

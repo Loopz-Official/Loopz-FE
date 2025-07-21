@@ -4,16 +4,16 @@ import { OrderTab } from '@/types/myOrder';
 
 interface TopTabBarProps {
     tabs: OrderTab[];
-    selectedTab: string;
-    setSelectedTab: (tab: string) => void;
+    activeTab: string;
+    setActiveTab: (tab: string) => void;
     renderLabel?: (label: string) => React.ReactNode;
     className?: string;
 }
 
 export function TopTabBar({
     tabs,
-    selectedTab,
-    setSelectedTab,
+    activeTab,
+    setActiveTab,
     renderLabel = (label) => label,
     className,
 }: TopTabBarProps) {
@@ -27,10 +27,10 @@ export function TopTabBar({
             {tabs.map((tab) => (
                 <button
                     key={tab.key}
-                    onClick={() => setSelectedTab(tab.key)}
+                    onClick={() => setActiveTab(tab.key)}
                     className={clsx(
                         'text-body-03 flex-1 justify-center border-b py-4 tracking-normal',
-                        selectedTab === tab.key
+                        activeTab === tab.key
                             ? 'border-black font-semibold'
                             : 'text-disabled border-disabled font-normal'
                     )}
