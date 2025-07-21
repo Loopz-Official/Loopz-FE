@@ -1,4 +1,7 @@
-export const CANCEL_REASONS = [
+// CS 관련 Claim 타입 정의
+export type ClaimType = 'cancel' | 'return';
+
+const CANCEL_REASONS = [
     '배송이 지연되어 더 이상 필요하지 않음',
     '가격이 비싸다고 느껴짐',
     '옵션(수량 등)을 잘못 선택함',
@@ -6,13 +9,18 @@ export const CANCEL_REASONS = [
     '기타',
 ];
 
-export const RETURN_REASONS = [
+const RETURN_REASONS = [
     '상품이 설명과 다름',
     '배송 지연 또는 미도착',
     '주문 실수 또는 중복 결제',
     '상품 불량 또는 파손',
     '기타',
 ];
+
+export const CLAIM_REASONS: Record<ClaimType, string[]> = {
+    cancel: CANCEL_REASONS,
+    return: RETURN_REASONS,
+};
 
 export const REFUND_POLICY = [
     {

@@ -1,4 +1,4 @@
-import { REFUND_POLICY } from '@/constants/return';
+import { REFUND_POLICY } from '@/constants/order/claim';
 
 export default function RefundPolicy() {
     return (
