@@ -28,7 +28,7 @@ export const useOrderStatusCTAHandlers = () => {
                             text: '확인',
                             onClick: () => {
                                 router.push(
-                                    `/my-order/cs-request/form?orderNumber=${orderNumber}`
+                                    `/my-order/cs-request/form/${orderNumber}`
                                 );
                                 // TODO: 주문 취소 API 연동
                                 console.log('주문 취소');
@@ -56,7 +56,7 @@ export const useOrderStatusCTAHandlers = () => {
         },
         return: ({ orderNumber }: HandlerOptions = {}) => {
             // 반품 접수
-            router.push(`/my-order/cs-request/form?orderNumber=${orderNumber}`);
+            router.push(`/my-order/cs-request/form/${orderNumber}`);
         },
     };
 

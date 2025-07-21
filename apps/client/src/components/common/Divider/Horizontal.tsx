@@ -4,17 +4,19 @@ interface HorizontalDividerProps {
     color?: string;
     isViewportWidth?: boolean;
     height?: string;
+    marginTop?: string;
 }
 
 const HorizontalDivider = ({
     color = 'gray-regular',
     isViewportWidth = false,
     height = '2',
+    marginTop = '0',
 }: HorizontalDividerProps) => {
     return (
         <hr
             className={clsx(
-                `border-none bg-${color}`,
+                `border-none bg-${color} mt-${marginTop}`,
                 isViewportWidth ? 'w-screen max-w-2xl' : 'w-full'
             )}
             style={{
