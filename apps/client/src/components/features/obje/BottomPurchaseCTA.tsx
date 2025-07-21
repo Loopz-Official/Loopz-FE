@@ -7,6 +7,7 @@ import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
 import { useLikeToggleMutation } from '@/hooks/mutations/useObjectMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
+import usePreventBodyScroll from '@/hooks/usePreventBodyScroll';
 import { CartIcon } from '@/icons/Header';
 import { ObjectDetailInfo } from '@/schemas/object/object';
 import { getLikeIconStyling } from '@/utils/likeIconStyling';
@@ -23,6 +24,7 @@ const BottomPurchaseCTA = ({
     objectDetail,
 }: BottomPurchaseCTAProps) => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+    usePreventBodyScroll(isBottomSheetOpen);
 
     const addCartMutation = useUpdateCartItem();
     const likeToggleMutation = useLikeToggleMutation();

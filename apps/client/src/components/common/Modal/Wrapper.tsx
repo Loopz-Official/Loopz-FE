@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 
+import usePreventBodyScroll from '@/hooks/usePreventBodyScroll';
+
 import ModalButton, { ButtonConfig } from './Button';
 
 interface ModalProps {
@@ -17,6 +19,8 @@ export default function ModalWrapper({
     buttons,
     onClose,
 }: ModalProps) {
+    usePreventBodyScroll(isOpen);
+
     useEffect(() => {
         if (!isOpen) return;
 
@@ -28,12 +32,8 @@ export default function ModalWrapper({
 
         document.addEventListener('keydown', handleKeyDown);
 
-        const defaultOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = defaultOverflow;
         };
     }, [isOpen, onClose]);
 
