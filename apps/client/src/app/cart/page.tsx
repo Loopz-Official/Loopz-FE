@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
 
-import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import CartItem from '@/components/features/cart/CartItem';
 import CartSummary from '@/components/features/cart/CartSummary';
 import EmptyCart from '@/components/features/cart/EmptyCart';
@@ -133,7 +133,7 @@ export default function CartPage() {
                         </>
                     )}
                     <BottomNotice type="cart" />
-                    <BottomButton
+                    <BottomFixedButton
                         text="구매하기"
                         isDisabled={false}
                         onClick={handleBottomButtonClick}

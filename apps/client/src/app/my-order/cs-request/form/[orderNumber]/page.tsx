@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import HorizontalDivider from '@/components/common/Divider/Horizontal';
 import ClaimReasonSelector from '@/components/features/my-order/Claim/ReasonSelector';
 import SelectableProductList from '@/components/features/my-order/SelectableProductList';
@@ -69,7 +69,7 @@ export default function CsRequestFormPage() {
                 onChange={onChange}
             />
 
-            <BottomButton
+            <BottomFixedButton
                 text="취소/반품 신청"
                 isDisabled={selectedIds.length === 0 || !selectedValue}
                 onClick={handleSumbit}

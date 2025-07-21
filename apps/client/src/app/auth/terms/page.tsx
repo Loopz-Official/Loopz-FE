@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { setUserInfoCookie } from '@/auth/cookie/setCookie';
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
 import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
@@ -81,7 +81,7 @@ export default function TermsPage() {
                     />
                 ))}
             </section>
-            <BottomButton
+            <BottomFixedButton
                 position="static"
                 text="다음"
                 isDisabled={!isMandatoryAllChecked}

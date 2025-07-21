@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { setUserInfoCookie } from '@/auth/cookie/setCookie';
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
 import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
 import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
@@ -68,7 +68,7 @@ export default function NicknamePage() {
                     isNicknameValid={isNicknameValid}
                 />
             </section>
-            <BottomButton
+            <BottomFixedButton
                 text="다음"
                 isDisabled={
                     nickname.length === 0 || (isChecking && !isNicknameValid)

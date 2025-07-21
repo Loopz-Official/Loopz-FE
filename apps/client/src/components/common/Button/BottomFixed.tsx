@@ -3,7 +3,7 @@
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
 
-export default function BottomButton({
+export default function BottomFixedButton({
     text,
     isDisabled,
     onClick,
