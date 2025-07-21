@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 import BottomButton from '@/components/common/BottomButton';
@@ -12,6 +12,7 @@ import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
 import { useSingleSelect } from '@/hooks/select/useSingleSelect';
 
 export default function CsRequestFormPage() {
+    const router = useRouter();
     const { orderNumber } = useParams<{ orderNumber: string }>();
 
     const {
@@ -39,15 +40,15 @@ export default function CsRequestFormPage() {
 
     const { objects: orderedObjects } = orderDetail;
 
-    // const handleSumbit = () => {
-    //     // TODO: API 연동
-    //     console.log({
-    //         orderNumber,
-    //         reason: selectedValue,
-    //         productIds: selectedIds,
-    //     });
-    //     router.push('/my-order/cs-request/complete');
-    // };
+    const handleSumbit = () => {
+        // TODO: API 연동
+        console.log({
+            orderNumber,
+            reason: selectedValue,
+            productIds: selectedIds,
+        });
+        router.push(`/my-order/cs-request/complete/${orderNumber}`); // 임시로 orderNumber로 대체 (추후 claimNumber로 변경)
+    };
 
     return (
         <>
@@ -61,18 +62,17 @@ export default function CsRequestFormPage() {
                 />
                 <HorizontalDivider margin="mt-2" />
             </section>
-            <section className="flex flex-col gap-8">
-                <ClaimReasonSelector
-                    claimType="cancel"
-                    selectedValue={selectedValue}
-                    onChange={onChange}
-                />
-                <HorizontalDivider />
-            </section>
+
+            <ClaimReasonSelector
+                claimType="cancel"
+                selectedValue={selectedValue}
+                onChange={onChange}
+            />
+
             <BottomButton
                 text="취소/반품 신청"
                 isDisabled={selectedIds.length === 0 || !selectedValue}
-                onClick={() => {}}
+                onClick={handleSumbit}
             />
         </>
     );
