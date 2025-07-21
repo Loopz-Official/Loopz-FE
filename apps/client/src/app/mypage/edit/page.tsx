@@ -9,6 +9,7 @@ import { GENDERS } from '@/constants/user';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { GenderType } from '@/schemas/user';
+import { validateBirthDate } from '@/utils/mypage/validateBirthDate';
 
 export default function Page() {
     const { data: userInfo, isLoading } = useUserInfoQuery();
@@ -58,16 +59,8 @@ export default function Page() {
         });
 
         if (value.length >= 10) {
-            const [year, month, day] = value.split('-').map(Number);
-            if (year == null || month == null || day == null) return;
-
-            if (year < 1900 || year > 2100) {
-                setBirthDateError('연도는 1900년에서 2100년 사이여야 합니다.');
-            } else if (month < 1 || month > 12) {
-                setBirthDateError('월은 1월에서 12월 사이여야 합니다.');
-            } else if (day < 1 || day > 31) {
-                setBirthDateError('일은 1일에서 31일 사이여야 합니다.');
-            }
+            const errorMessage = validateBirthDate(value);
+            setBirthDateError(errorMessage);
         }
     };
 
