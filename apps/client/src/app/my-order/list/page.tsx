@@ -45,6 +45,7 @@ export default function MyOrderListPage() {
                                 <MyOrderItem
                                     key={order.orderId}
                                     orderedObjects={order.objects}
+                                    orderNumber={order.orderId} // 추후 orderNumber response DTO 추가 시 수정
                                 />
                             </section>
                             <HorizontalDivider color="gray-light" />

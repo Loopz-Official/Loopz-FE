@@ -36,7 +36,10 @@ export default function MyOrderDetailPage() {
             <div className="w-full px-5 py-6">
                 {/* 주문 상품 Section */}
                 <section className="mb-3 flex w-full flex-col gap-6">
-                    <MyOrderItem orderedObjects={orderedObjects.objects} />
+                    <MyOrderItem
+                        orderedObjects={orderedObjects.objects}
+                        orderNumber={orderNumber} // 추후 orderedObjects.orderNumber로 수정
+                    />
                     <HorizontalDivider color="gray-light" />
                 </section>
 

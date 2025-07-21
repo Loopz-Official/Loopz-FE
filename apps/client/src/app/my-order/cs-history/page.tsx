@@ -43,6 +43,7 @@ export default function MyCSHistoryPage() {
                                     orderDate={order.orderDate}
                                     isCSRequested
                                 />
+                                {/* 취소/반품은 CTA 필요 x */}
                                 <MyOrderItem
                                     key={order.orderId}
                                     orderedObjects={order.objects}

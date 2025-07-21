@@ -39,6 +39,7 @@ export default function MyOrderDetailPage() {
             <div className="w-full px-5 py-6">
                 {/* 취소/반품 상품 Section */}
                 <section className="mb-3 flex w-full flex-col gap-6">
+                    {/* 반품이므로 CTA 필요 x */}
                     <MyOrderItem orderedObjects={orderedObjects.objects} />
                     <HorizontalDivider color="gray-light" />
                 </section>

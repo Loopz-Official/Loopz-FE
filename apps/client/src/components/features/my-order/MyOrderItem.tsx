@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { MY_PAGE_ORDER_CTA_HANDLERS } from '@/constants/order/ctaHandlers';
+import { useOrderStatusCTAHandlers } from '@/hooks/actions/useOrderStatusCTAHandlers';
 import { OrderedObjectDetailInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 import { getButtonsByStatus } from '@/utils/my-order/getButtonsByStatus';
@@ -9,10 +9,14 @@ import ActionButtonList from './ActionButtonList';
 import OrderStatusText from './OrderStatusText';
 
 const MyOrderItem = ({
+    orderNumber,
     orderedObjects,
 }: {
+    orderNumber?: string;
     orderedObjects: OrderedObjectDetailInfo[];
 }) => {
+    const ctaHandlers = useOrderStatusCTAHandlers();
+
     return (
         <section className="flex flex-col gap-5">
             {orderedObjects.map((object) => (
@@ -40,12 +44,15 @@ const MyOrderItem = ({
                             </span>
                         </section>
                     </div>
-                    <ActionButtonList
-                        buttons={getButtonsByStatus(
-                            object.status,
-                            MY_PAGE_ORDER_CTA_HANDLERS
-                        )}
-                    />
+                    {orderNumber && (
+                        <ActionButtonList
+                            buttons={getButtonsByStatus(
+                                object.status,
+                                orderNumber,
+                                ctaHandlers
+                            )}
+                        />
+                    )}
                 </div>
             ))}
         </section>
