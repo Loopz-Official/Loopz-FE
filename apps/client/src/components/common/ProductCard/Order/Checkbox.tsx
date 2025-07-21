@@ -11,7 +11,7 @@ const ProductCardCheckbox = ({
 }: ProductCardCheckboxProps) => (
     <button
         type="button"
-        className={`flex h-5 w-5 items-center justify-center ${className}`}
+        className={`h-4.5 w-4.5 flex items-center justify-center ${className}`}
         onClick={onChange}
         aria-checked={checked}
         aria-label={checked ? 'checked' : 'unchecked'}
