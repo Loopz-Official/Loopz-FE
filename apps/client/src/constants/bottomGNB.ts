@@ -1,6 +1,6 @@
-import * as I from '@/icons/NavigationBar';
+import * as I from '@/icons/BottomGNB';
 
-export const NAVIGATION_BAR_OPTIONS = [
+export const BOTTOM_GNB_OPTIONS = [
     {
         label: 'MAIN',
         icon: I.MainIcon,
@@ -10,11 +10,6 @@ export const NAVIGATION_BAR_OPTIONS = [
         label: 'LOOPZ',
         icon: I.LoopzBookIcon,
         href: '/about',
-    },
-    {
-        label: 'SHOT',
-        icon: I.ShotIcon,
-        href: '/shot',
     },
     {
         label: 'LIKE',

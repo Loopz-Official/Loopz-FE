@@ -4,19 +4,19 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { NAVIGATION_BAR_OPTIONS } from '@/constants/navigationBar';
+import { BOTTOM_GNB_OPTIONS } from '@/constants/bottomGNB';
 
-export default function NavigationBar() {
+export default function BottomGNB() {
     const pathname = usePathname();
 
     return (
-        <div className="bg-gray-12 z-100 fixed bottom-0 grid h-14 w-full max-w-2xl grid-cols-5">
-            {NAVIGATION_BAR_OPTIONS.map(({ label, icon: Icon, href }) => (
+        <div className="bg-gray-12 z-100 fixed bottom-0 flex h-14 w-full max-w-2xl">
+            {BOTTOM_GNB_OPTIONS.map(({ label, icon: Icon, href }) => (
                 <Link
                     href={href}
                     key={label}
                     className={clsx(
-                        'max-w-22 m-auto flex h-full w-full flex-col items-center justify-center text-[10px] leading-[1.4]',
+                        'max-w-22 m-auto flex h-full w-full flex-col items-center justify-center text-[10px] leading-[1.4] tracking-normal',
                         pathname === href ? 'text-black' : 'text-disabled'
                     )}
                 >
