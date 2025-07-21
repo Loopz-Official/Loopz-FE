@@ -47,7 +47,7 @@ export default function MyOrderListPage() {
                                     orderedObjects={order.objects}
                                 />
                             </section>
-                            <HorizontalDivider lightColor />
+                            <HorizontalDivider color="gray-light" />
                         </div>
                     ))}
                 </div>

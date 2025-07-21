@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 
-import { Tab } from '@/constants/order/myOrder';
+import { OrderTab } from '@/types/myOrder';
 
-type TopTabBarProps = {
-    tabs: Tab[];
+interface TopTabBarProps {
+    tabs: OrderTab[];
     selectedTab: string;
     setSelectedTab: (tab: string) => void;
     renderLabel?: (label: string) => React.ReactNode;
     className?: string;
-};
+}
 
 export function TopTabBar({
     tabs,

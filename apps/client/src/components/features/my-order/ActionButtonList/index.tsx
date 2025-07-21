@@ -1,13 +1,13 @@
-import { ActionButtonInfo } from '@/types/myOrder';
+import { OrderActionButton } from '@/types/myOrder';
 
 import ActionButtonItem from './ActionButtonItem';
 
 interface ActionButtonList {
-    buttons: ActionButtonInfo[];
+    buttons: OrderActionButton[];
     maxPerRow?: number; // 한 줄에 최대 버튼 수 (기본값 2)
 }
 
-const ActionButtonList = ({ buttons, maxPerRow = 4 }: ActionButtonList) => {
+const ActionButtonList = ({ buttons, maxPerRow = 2 }: ActionButtonList) => {
     if (!buttons.length) return null;
 
     // 버튼을 행 단위로 나누기

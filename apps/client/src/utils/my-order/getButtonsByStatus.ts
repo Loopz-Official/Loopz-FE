@@ -1,12 +1,12 @@
 import { OrderStatusEnum } from '@/schemas/order';
-import { ActionButtonInfo } from '@/types/myOrder';
+import { OrderActionButton } from '@/types/myOrder';
 
 import noop from '../noop';
 
 export function getButtonsByStatus(
     status: OrderStatusEnum,
     handlers: { [key: string]: () => void }
-): ActionButtonInfo[] {
+): OrderActionButton[] {
     switch (status) {
         case 'PENDING':
             return [{ label: '결제 취소', onClick: handlers.cancel ?? noop }];
