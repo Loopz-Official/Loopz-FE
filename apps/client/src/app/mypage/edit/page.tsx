@@ -3,51 +3,12 @@
 import { useEffect, useState } from 'react';
 
 import Radio from '@/components/common/Radio';
+import CustomInput from '@/components/features/mypage/edit/CustomInput';
 import Header from '@/components/layouts/Header';
+import { GENDERS } from '@/constants/user';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { GenderType } from '@/schemas/user';
-
-export const GENDERS = [
-    {
-        label: 'MALE',
-        value: '남성',
-        checked: false,
-    },
-    {
-        label: 'FEMAIL',
-        value: '여성',
-        checked: false,
-    },
-    {
-        label: 'UNKNOWN',
-        value: '선택하지 않음',
-        checked: false,
-    },
-] as const;
-
-export function CustomInput({
-    readOnly = false,
-    placeholder,
-    value,
-    onChange,
-}: {
-    readOnly?: boolean;
-    placeholder: string;
-    value: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
-    return (
-        <input
-            onChange={onChange}
-            type="text"
-            readOnly={readOnly}
-            value={value}
-            placeholder={placeholder}
-            className="text-body-01 placeholder:text-disabled read-only:text-disabled border-gray-regular w-full rounded-sm border px-3 py-4 font-normal read-only:border-[#f7f7f7] read-only:bg-[#f7f7f7]"
-        />
-    );
-}
 
 export default function Page() {
     const { data: userInfo, isLoading } = useUserInfoQuery();
