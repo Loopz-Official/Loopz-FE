@@ -22,7 +22,7 @@ export type MyAccountInfo = z.infer<typeof myAccountInfo>;
 
 export const deatilAccountInfo = z.object({
     ...baseAccountInfo.shape,
-    birthDate: z.string().optional(),
-    gender: genderEnum.optional(),
+    birthDate: z.nullable(z.string()),
+    gender: z.nullable(genderEnum),
 });
 export type DetailAccountInfo = z.infer<typeof deatilAccountInfo>;

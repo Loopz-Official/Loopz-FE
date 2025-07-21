@@ -6,7 +6,7 @@ import Radio from '@/components/common/Radio';
 import Header from '@/components/layouts/Header';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
-import { DetailAccountInfo } from '@/schemas/user';
+import { GenderType } from '@/schemas/user';
 
 export const GENDERS = [
     {
@@ -53,13 +53,18 @@ export default function Page() {
     const { data: userInfo, isLoading } = useUserInfoQuery();
     const updateUserInfoMutation = useUpdateUserInfoMutation();
 
-    const [newUserInfo, setNewUserInfo] = useState<
-        Pick<DetailAccountInfo, 'nickName' | 'birthDate' | 'gender'>
-    >({ nickName: '', birthDate: '', gender: 'UNKNOWN' });
+    const [newUserInfo, setNewUserInfo] = useState<{
+        nickName: string;
+        birthDate: string;
+        gender: GenderType;
+    }>({ nickName: '', birthDate: '', gender: 'UNKNOWN' });
 
     useEffect(() => {
         if (userInfo) {
-            setNewUserInfo({ ...userInfo, nickName: userInfo.nickName });
+            setNewUserInfo((prev) => ({
+                ...prev,
+                nickName: userInfo.nickName,
+            }));
         }
     }, [userInfo]);
 
