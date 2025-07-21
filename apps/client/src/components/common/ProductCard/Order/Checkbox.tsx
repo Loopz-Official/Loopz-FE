@@ -18,38 +18,43 @@ const ProductCardCheckbox = ({
     >
         {checked ? (
             <svg
+                xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-                viewBox="0 0 24 24"
+                viewBox="0 0 20 20"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
             >
-                <rect width="24" height="24" rx="4" fill="#151515" />
+                <rect width="20" height="20" rx="4" fill="#151515" />
                 <path
-                    d="M7 12.5L10.5 16L17 9.5"
-                    stroke="#fff"
-                    strokeWidth="2"
+                    d="M5 10.1111L8.57143 14L15 7"
+                    stroke="white"
+                    strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                 />
             </svg>
         ) : (
             <svg
+                xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-                viewBox="0 0 24 24"
+                viewBox="0 0 20 20"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
             >
                 <rect
-                    x="1"
-                    y="1"
-                    width="22"
-                    height="22"
+                    x="0.5"
+                    y="0.5"
+                    width="19"
+                    height="19"
                     rx="4"
                     stroke="#CCCCCC"
-                    strokeWidth="1"
-                    fill="#fff"
+                />
+                <path
+                    d="M5 10.1111L8.57143 14L15 7"
+                    stroke="#CCCCCC"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 />
             </svg>
         )}
