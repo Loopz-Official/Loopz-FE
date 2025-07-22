@@ -14,16 +14,13 @@ export const GENDERS = [
     {
         label: 'MALE',
         value: '남성',
-        checked: false,
     },
     {
         label: 'FEMALE',
         value: '여성',
-        checked: false,
     },
     {
         label: 'UNKNOWN',
         value: '선택하지 않음',
-        checked: false,
     },
 ] as const;
