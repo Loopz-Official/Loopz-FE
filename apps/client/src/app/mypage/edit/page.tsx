@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import Radio from '@/components/common/Radio';
+import Radio from '@/components/common/Button/Radio';
 import CustomInput from '@/components/features/mypage/edit/CustomInput';
 import Header from '@/components/layouts/Header';
 import { GENDERS } from '@/constants/user';
@@ -165,26 +165,19 @@ export default function Page() {
                     <div className="text-body-02">성별</div>
                     <div className="flex gap-6">
                         {GENDERS.map((gender) => (
-                            <label
+                            <Radio
                                 key={gender.label}
-                                className="flex items-center gap-2"
-                            >
-                                <Radio
-                                    name="gander"
-                                    checked={
-                                        newUserInfo.gender === gender.label
-                                    }
-                                    onChange={() =>
-                                        setNewUserInfo({
-                                            ...newUserInfo,
-                                            gender: gender.label,
-                                        })
-                                    }
-                                />
-                                <span className="text-body-03 cursor-pointer font-normal">
-                                    {gender.value}
-                                </span>
-                            </label>
+                                className="text-body-03 flex cursor-pointer items-center gap-2 font-normal"
+                                label={gender.value}
+                                name="gander"
+                                checked={newUserInfo.gender === gender.label}
+                                onChange={() =>
+                                    setNewUserInfo({
+                                        ...newUserInfo,
+                                        gender: gender.label,
+                                    })
+                                }
+                            />
                         ))}
                     </div>
                 </div>
