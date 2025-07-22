@@ -8,6 +8,7 @@ import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check/useTermsCheck';
 import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
+import { ChevronRightIcon } from '@/icons/Chevron';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
 
@@ -56,16 +57,34 @@ export default function TermsPage() {
                     checked={isAllChecked}
                     onChange={toggleAll}
                 />
-                {terms.map((term, i) => (
-                    <AgreementUnit
-                        type="single"
-                        key={term.id}
-                        index={i}
-                        {...term}
-                        checked={isChecked(term.id)}
-                        onChange={() => toggle(term.id)}
-                    />
-                ))}
+                {terms.map((term, i) => {
+                    const isFirstOrLast = i === 0 || i === terms.length - 1;
+
+                    return (
+                        <div
+                            key={term.id}
+                            className="flex items-center justify-between pr-3"
+                        >
+                            <AgreementUnit
+                                type="single"
+                                index={i}
+                                {...term}
+                                checked={isChecked(term.id)}
+                                onChange={() => toggle(term.id)}
+                            />
+                            {!isFirstOrLast && (
+                                <a
+                                    href={term.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex h-6 w-6 items-center justify-between"
+                                >
+                                    <ChevronRightIcon />
+                                </a>
+                            )}
+                        </div>
+                    );
+                })}
             </section>
             <BottomFixedButton
                 position="static"
