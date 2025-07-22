@@ -22,7 +22,7 @@ export const myAccountInfo = z.object({
 });
 export type MyAccountInfo = z.infer<typeof myAccountInfo>;
 
-export const deatilAccountInfo = z.object({
+export const detailAccountInfo = z.object({
     ...baseAccountInfo.shape,
 });
-export type DetailAccountInfo = z.infer<typeof deatilAccountInfo>;
+export type DetailAccountInfo = z.infer<typeof detailAccountInfo>;

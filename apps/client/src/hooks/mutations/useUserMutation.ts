@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { GenderType, MyAccountInfo } from '@/schemas/user';
-import { updateMyAccoundInfo } from '@/services/api/user';
+import { updateMyAccountInfo } from '@/services/api/user';
 import { handleMutationError } from '@/utils/error/handleMutationError';
 
 export const useUpdateUserInfoMutation = () => {
@@ -16,7 +16,7 @@ export const useUpdateUserInfoMutation = () => {
             nickName?: string;
             birthDate?: string;
             gender?: GenderType;
-        }) => updateMyAccoundInfo(nickName, birthDate, gender),
+        }) => updateMyAccountInfo(nickName, birthDate, gender),
         onSuccess: (data) => {
             queryClient.setQueryData(['user'], (prevData: MyAccountInfo) => {
                 return { ...prevData, ...data };

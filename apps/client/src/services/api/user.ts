@@ -1,4 +1,4 @@
-import { deatilAccountInfo, GenderType, myAccountInfo } from '@/schemas/user';
+import { detailAccountInfo, GenderType, myAccountInfo } from '@/schemas/user';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -23,7 +23,7 @@ export const getMyAccountInfo = async () => {
     }
 };
 
-export const updateMyAccoundInfo = async (
+export const updateMyAccountInfo = async (
     nickName?: string,
     birthDate?: string,
     gender?: GenderType
@@ -37,12 +37,12 @@ export const updateMyAccoundInfo = async (
 
         if (response.status === 200) {
             return validate(
-                deatilAccountInfo,
+                detailAccountInfo,
                 response.data.data,
                 'Detail Account Info'
             );
         }
-        throw new Error('Failed to fetch detail account info');
+        throw new Error('Failed to update detail account info');
     } catch (error) {
         console.error('Error fetching detail account info:', error);
         throw error;
