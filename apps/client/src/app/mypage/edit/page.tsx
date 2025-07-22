@@ -112,7 +112,7 @@ export default function Page() {
                         })
                     }
                 />
-                <EmailSection email={userInfo.email ?? ''} />
+                <EmailSection email={userInfo.email} />
                 <BirthDateSection
                     birthDate={newUserInfo.birthDate}
                     birthDateError={birthDateError}

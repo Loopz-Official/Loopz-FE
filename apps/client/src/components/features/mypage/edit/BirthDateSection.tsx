@@ -15,7 +15,7 @@ export default function BirthDateSection({
         <div className="space-y-2">
             <div className="text-body-02">생년월일</div>
             <CustomInput
-                value={birthDate ?? ''}
+                value={birthDate}
                 onChange={onBirthDateChange}
                 placeholder="YYYY-MM-DD"
             />
