@@ -11,6 +11,8 @@ export const baseAccountInfo = z.object({
     realName: z.nullable(z.string()),
     nickName: z.string(),
     enabled: z.boolean(),
+    birthDate: z.nullable(z.string()),
+    gender: z.nullable(genderEnum),
 });
 
 export const myAccountInfo = z.object({
@@ -22,7 +24,5 @@ export type MyAccountInfo = z.infer<typeof myAccountInfo>;
 
 export const deatilAccountInfo = z.object({
     ...baseAccountInfo.shape,
-    birthDate: z.nullable(z.string()),
-    gender: z.nullable(genderEnum),
 });
 export type DetailAccountInfo = z.infer<typeof deatilAccountInfo>;

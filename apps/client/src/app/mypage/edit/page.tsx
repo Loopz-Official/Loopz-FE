@@ -30,10 +30,11 @@ export default function Page() {
 
     useEffect(() => {
         if (userInfo) {
-            setNewUserInfo((prev) => ({
-                ...prev,
+            setNewUserInfo({
                 nickName: userInfo.nickName,
-            }));
+                birthDate: userInfo.birthDate ?? '',
+                gender: userInfo.gender ?? 'UNKNOWN',
+            });
         }
     }, [userInfo]);
 
@@ -71,11 +72,7 @@ export default function Page() {
             value = value.slice(0, 7) + '-' + value.slice(7, 9);
         }
 
-        if (
-            value.length > 10 &&
-            value.length > newUserInfo.birthDate.length &&
-            !birthDateError
-        ) {
+        if (value.length > 10 && value.length > newUserInfo.birthDate.length) {
             return;
         }
 
@@ -91,13 +88,12 @@ export default function Page() {
     };
 
     const handleEditButtonClick = async () => {
+        const { nickName, birthDate, gender } = newUserInfo;
         try {
             await updateUserInfoMutation.mutateAsync({
-                ...(newUserInfo.nickName === userInfo.nickName
-                    ? {}
-                    : { nickName: newUserInfo.nickName }),
-                birthDate: newUserInfo.birthDate,
-                gender: newUserInfo.gender,
+                ...(nickName === userInfo.nickName ? {} : { nickName }),
+                ...(birthDate ? { birthDate } : {}),
+                ...(gender ? { gender } : {}),
             });
             toast('회원 정보가 수정되었습니다.');
         } catch {
@@ -197,7 +193,7 @@ export default function Page() {
             <div className="fixed bottom-0 w-full max-w-2xl px-5 py-8">
                 <button
                     disabled={
-                        !isNicknameValid ||
+                        isNicknameValid === false ||
                         newUserInfo.nickName.length === 0 ||
                         !!birthDateError
                     }
