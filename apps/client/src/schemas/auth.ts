@@ -1,5 +1,7 @@
 import * as z from 'zod/v4';
 
+import { serverAuthResponse } from './oauth';
+
 export const nicknameRedundancyResponse = z.object({
     usable: z.boolean(),
 });
@@ -30,7 +32,7 @@ export const termsAgreement = z.object({
 export type TermsAgreement = z.infer<typeof termsAgreement>;
 
 export const userInfo = z.object({
-    ...nicknameUpdateResponse.shape,
+    ...serverAuthResponse.shape,
     ...termsAgreement.shape,
 });
 export type UserInfo = z.infer<typeof userInfo>;
