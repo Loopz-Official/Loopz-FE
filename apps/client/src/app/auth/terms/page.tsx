@@ -38,11 +38,11 @@ export default function TermsPage() {
         const { data: termsUserInfo, status } = termsResponse;
 
         if (status === 200) {
-            useUserEmailStore.getState().setUserEmail(termsUserInfo.email);
             setAuthCookies({
                 enabled: termsUserInfo.enabled,
             });
-
+            // 로그인 성공 시 불필요한 이메일 정보 스토리지 내 제거
+            useUserEmailStore.getState().clearUserEmail();
             router.push('/auth/complete');
         }
     };

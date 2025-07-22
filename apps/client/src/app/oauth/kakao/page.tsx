@@ -38,8 +38,10 @@ export default function KakaoRedirectPage() {
                         nickName: loginUserInfo.nickName,
                     });
 
-                    // 2. 그 다음 전역 상태 업데이트
-                    setUserEmail(loginUserInfo.email);
+                    // 2. nickname이 없는 경우에만 전역 상태 업데이트
+                    if (!loginUserInfo.nickName) {
+                        setUserEmail(loginUserInfo.email);
+                    }
 
                     // 3. 약간의 지연 후 리다이렉트 (쿠키 설정 안정화)
                     setTimeout(() => {
