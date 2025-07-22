@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
 import { useLikeToggleMutation } from '@/hooks/mutations/useObjectMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
+import usePreventBodyScroll from '@/hooks/usePreventBodyScroll';
 import { CartIcon } from '@/icons/Header';
 import { ObjectDetailInfo } from '@/schemas/object/object';
 import { getLikeIconStyling } from '@/utils/likeIconStyling';
@@ -23,6 +24,7 @@ const BottomPurchaseCTA = ({
     objectDetail,
 }: BottomPurchaseCTAProps) => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+    usePreventBodyScroll(isBottomSheetOpen);
 
     const addCartMutation = useUpdateCartItem();
     const likeToggleMutation = useLikeToggleMutation();
@@ -66,7 +68,7 @@ const BottomPurchaseCTA = ({
 
     return (
         <div className="fixed bottom-0 z-50 w-full max-w-2xl bg-white">
-            <BottomButton
+            <BottomFixedButton
                 text={isSoldOut ? '판매 완료' : '구매하기'}
                 isDisabled={isSoldOut}
                 onClick={() => setIsBottomSheetOpen(true)}
@@ -84,7 +86,7 @@ const BottomPurchaseCTA = ({
                         </li>
                     ))}
                 </ul>
-            </BottomButton>
+            </BottomFixedButton>
             {isBottomSheetOpen && (
                 <>
                     <BottomSheet

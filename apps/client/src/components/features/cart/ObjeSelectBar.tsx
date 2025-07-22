@@ -1,5 +1,5 @@
 import CheckBox from '@/components/common/CheckBox';
-import VerticalDivider from '@/components/common/VerticalDivider';
+import VerticalDivider from '@/components/common/Divider/Vertical';
 
 type ObjectSelectBarProps = {
     objectCount: number;

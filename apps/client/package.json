@@ -39,7 +39,7 @@
         "@types/react": "^19.1.0",
         "@types/react-dom": "^19.1.1",
         "autoprefixer": "^10.4.20",
-        "eslint": "^9.28.0",
+        "eslint": "^9.31.0",
         "openapi-typescript": "^7.8.0",
         "postcss": "^8.5.3",
         "react-intersection-observer": "^9.16.0",

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
@@ -95,7 +95,7 @@ export default function OrderCompletePage() {
                         </ul>
                     </footer>
 
-                    <BottomButton
+                    <BottomFixedButton
                         text="다른 상품 둘러보러 가기"
                         isDisabled={false}
                         onClick={() => router.replace('/main')}

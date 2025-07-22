@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import BottomButton from '@/components/common/BottomButton';
 import BottomNotice from '@/components/common/BottomNotice';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import EditDeleteButton from '@/components/common/EditDeleteButton';
 import Header from '@/components/layouts/Header';
 import { useDeleteAddressMutation } from '@/hooks/mutations/useAddressMutation';
@@ -152,7 +152,7 @@ export default function AddressPage() {
 
             <BottomNotice type="address" />
 
-            <BottomButton
+            <BottomFixedButton
                 text="선택하기"
                 isDisabled={false}
                 onClick={handleSaveButtonClick}
