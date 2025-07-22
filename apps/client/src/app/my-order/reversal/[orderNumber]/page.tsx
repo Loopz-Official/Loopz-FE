@@ -47,13 +47,13 @@ export default function MyOrderDetailPage() {
                 {/* 취소/반품 Summary Section */}
                 <section>
                     {summarySections.map(
-                        ({ title, items, gap }) =>
+                        ({ title, items, gapClass }) =>
                             items.length > 0 && (
                                 <OrderSummaryGroup
                                     key={title}
                                     title={title}
                                     items={items}
-                                    gap={gap}
+                                    gapClass={gapClass}
                                 />
                             )
                     )}

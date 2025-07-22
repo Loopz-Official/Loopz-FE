@@ -1,7 +1,14 @@
 import clsx from 'clsx';
 
+const colorClasses = {
+    'gray-regular': 'bg-gray-regular',
+    'gray-light': 'bg-gray-light',
+} as const;
+
+type ColorKey = keyof typeof colorClasses;
+
 interface HorizontalDividerProps {
-    color?: string;
+    color?: ColorKey;
     isViewportWidth?: boolean;
     height?: string;
     margin?: string;
@@ -16,7 +23,9 @@ const HorizontalDivider = ({
     return (
         <hr
             className={clsx(
-                `border-none bg-${color} ${margin}`,
+                'border-none',
+                colorClasses[color],
+                margin,
                 isViewportWidth ? 'w-screen max-w-2xl' : 'w-full'
             )}
             style={{

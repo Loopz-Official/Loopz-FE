@@ -6,10 +6,10 @@ import OrderSummaryRow from './Row';
 export interface OrderSummaryGroup {
     title: string;
     items: OrderSummaryItem[];
-    gap?: number;
+    gapClass?: string;
 }
 
-const OrderSummaryGroup = ({ title, items, gap }: OrderSummaryGroup) => (
+const OrderSummaryGroup = ({ title, items, gapClass }: OrderSummaryGroup) => (
     <section className="mb-10 flex w-full flex-col gap-5">
         <h3 className="text-body-01 border-b-[1.5px] border-black py-3 font-semibold">
             {title}
@@ -21,7 +21,7 @@ const OrderSummaryGroup = ({ title, items, gap }: OrderSummaryGroup) => (
                         key={idx}
                         label={item.label}
                         value={item.value}
-                        gap={gap}
+                        gapClass={gapClass}
                     />
                 ) : (
                     <HorizontalDivider key={idx} />

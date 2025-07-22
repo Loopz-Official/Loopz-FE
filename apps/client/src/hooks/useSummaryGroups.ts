@@ -11,10 +11,10 @@ export const useSummaryGroups = (
     return useMemo(() => {
         if (!data) return [];
 
-        return configs.map(({ title, getItems, gap }) => ({
+        return configs.map(({ title, getItems, gapClass }) => ({
             title,
             items: getItems(data),
-            gap,
+            gapClass,
         }));
     }, [data, configs]);
 };

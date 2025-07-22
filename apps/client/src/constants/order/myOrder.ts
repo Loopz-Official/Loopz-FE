@@ -18,6 +18,7 @@ export const ORDER_PAGE_SUMMARY_CONFIGS: SummaryGroupConfig[] = [
     {
         title: '구매자 정보',
         getItems: U.getBuyerInfoItems,
+        gapClass: 'gap-12',
     },
     {
         title: '결제 내역',
@@ -34,7 +35,6 @@ export const REVERSAL_PAGE_SUMMARY_CONFIGS: SummaryGroupConfig[] = [
     {
         title: '취소/반품 정보',
         getItems: U.getCancelOrReturnDetailItems,
-        gap: 12,
     },
     {
         title: '환불 정보',

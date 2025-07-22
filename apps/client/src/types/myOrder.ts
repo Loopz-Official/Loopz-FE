@@ -36,5 +36,5 @@ export type OrderSummaryItem =
 export interface SummaryGroupConfig {
     title: string;
     getItems: (data: OrderDetailResponse) => OrderSummaryItem[];
-    gap?: number;
+    gapClass?: string;
 }

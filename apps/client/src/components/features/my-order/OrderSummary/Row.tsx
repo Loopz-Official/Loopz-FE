@@ -5,7 +5,7 @@ import { OrderSummaryContent } from '@/types/myOrder';
 interface OrderSummaryRowProps {
     label: OrderSummaryContent;
     value: OrderSummaryContent;
-    gap?: number;
+    gapClass?: string;
 }
 
 const renderContent = (content: OrderSummaryContent) =>
@@ -15,11 +15,11 @@ const renderContent = (content: OrderSummaryContent) =>
         <span className={content.className}>{content.text}</span>
     );
 
-const OrderSummaryRow = ({ label, value, gap }: OrderSummaryRowProps) => (
+const OrderSummaryRow = ({ label, value, gapClass }: OrderSummaryRowProps) => (
     <div
         className={clsx(
             'text-body-03 flex font-normal',
-            gap ? `gap-${gap}` : 'justify-between'
+            gapClass ? gapClass : 'justify-between'
         )}
     >
         <div className="text-gray-03 min-w-16">{renderContent(label)}</div>
