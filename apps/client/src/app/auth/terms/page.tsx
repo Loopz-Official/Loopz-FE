@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { setUserInfoCookie } from '@/auth/cookie/setCookie';
+import { setAuthCookies } from '@/auth/cookie/setCookie';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
@@ -55,7 +55,10 @@ export default function TermsPage() {
 
         if (status === 200) {
             useUserInfoStore.getState().setUserInfo(termsUserInfo);
-            setUserInfoCookie();
+            setAuthCookies({
+                enabled: termsUserInfo.enabled,
+            });
+
             router.push('/auth/complete');
         }
     };
