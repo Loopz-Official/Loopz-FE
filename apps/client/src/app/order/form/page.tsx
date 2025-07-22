@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AddressSection from '@/components/features/order/form/AddressSection';
 import PriceSummarySection from '@/components/features/order/form/PriceSummarySection';
 import AgreementSection from '@/components/features/order/form/TermsSection';
@@ -141,7 +141,7 @@ export default function OrderFormPage() {
             </div>
 
             {/* 버튼 */}
-            <BottomButton
+            <BottomFixedButton
                 text={`${formatPrice(totalPrice)} 원 결제하기`}
                 isDisabled={isDisabled}
                 onClick={handleOrderButtonClick}

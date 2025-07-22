@@ -1,4 +1,7 @@
-import { PAYMENT_METHOD_LABEL_MAP, STATUS_LABEL_MAP } from '@/constants/order';
+import {
+    ORDER_STATUS_META_MAP,
+    PAYMENT_METHOD_LABEL_MAP,
+} from '@/constants/order';
 import { OrderStatus, PaymentMethod } from '@/schemas/order';
 
 interface PaymentMethodSectionProps {
@@ -31,7 +34,9 @@ export default function PaymentMethodSection({
                 <hr className="border-gray-regular my-3" />
                 <div className="gap-15 text-body-03 grid grid-cols-[auto_1fr] font-normal">
                     <div className="text-gray-dark">주문상태</div>
-                    <div>{status ? STATUS_LABEL_MAP[status] : '-'}</div>
+                    <div>
+                        {status ? ORDER_STATUS_META_MAP[status].label : '-'}
+                    </div>
                 </div>
             </div>
         </>

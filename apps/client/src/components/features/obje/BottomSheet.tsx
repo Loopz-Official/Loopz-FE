@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
-import BottomButton from '@/components/common/BottomButton';
-import VerticalDivider from '@/components/common/VerticalDivider';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import VerticalDivider from '@/components/common/Divider/Vertical';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { ObjectDetailInfo } from '@/schemas/object/object';
@@ -80,7 +80,7 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
                 </section>
             </section>
 
-            <BottomButton
+            <BottomFixedButton
                 text="구매하기"
                 isDisabled={stock === 0}
                 onClick={handleBottomButtonClick}

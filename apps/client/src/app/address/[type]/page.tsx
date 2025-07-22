@@ -8,7 +8,7 @@ import {
 } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AddressSearchSection from '@/components/features/address/AddressSearchSection';
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
@@ -152,7 +152,7 @@ export default function AddressCUPage() {
                 </label>
             </div>
 
-            <BottomButton
+            <BottomFixedButton
                 text={type === 'add' ? '저장하기' : '수정하기'}
                 isDisabled={isDisabled}
                 onClick={handleSubmitButtonClick}
