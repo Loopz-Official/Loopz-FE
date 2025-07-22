@@ -1,13 +1,13 @@
 'use client';
 
-import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import Radio from '@/components/common/Button/Radio';
-import CustomInput from '@/components/features/mypage/edit/CustomInput';
+import BirthDateSection from '@/components/features/mypage/edit/BirthDateSection';
+import EmailSection from '@/components/features/mypage/edit/EmailSection';
+import GenderSection from '@/components/features/mypage/edit/GenderSection';
+import NicknameSection from '@/components/features/mypage/edit/NicknameSection';
 import Header from '@/components/layouts/Header';
-import { GENDERS } from '@/constants/user';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { GenderType } from '@/schemas/user';
@@ -49,7 +49,6 @@ export default function Page() {
             handleNicknameValidation(newUserInfo.nickName);
         }, 2000);
 
-        // 닉네임이 바뀌면 타이머 초기화
         return () => clearTimeout(timer);
     }, [newUserInfo.nickName, userInfo]);
 
@@ -76,10 +75,7 @@ export default function Page() {
             return;
         }
 
-        setNewUserInfo({
-            ...newUserInfo,
-            birthDate: value,
-        });
+        setNewUserInfo({ ...newUserInfo, birthDate: value });
 
         if (value.length >= 10) {
             const errorMessage = validateBirthDate(value);
@@ -106,81 +102,28 @@ export default function Page() {
             <Header type="title" title="확인/수정하기" />
 
             <div className="space-y-9 px-5 py-6">
-                <div className="space-y-2">
-                    <div className="text-body-02">닉네임 *</div>
-                    <CustomInput
-                        value={newUserInfo.nickName}
-                        onChange={(e) =>
-                            setNewUserInfo({
-                                ...newUserInfo,
-                                nickName: e.target.value,
-                            })
-                        }
-                        placeholder="닉네임을 입력해 주세요."
-                    />
-                    {(newUserInfo.nickName.length === 0 ||
-                        isNicknameValid != null) && (
-                        <p
-                            className={clsx(
-                                'text-body-03',
-                                isNicknameValid &&
-                                    newUserInfo.nickName.length > 0
-                                    ? 'text-status-blue'
-                                    : 'text-status-red'
-                            )}
-                        >
-                            {newUserInfo.nickName.length === 0
-                                ? '닉네임은 필수 입력 사항입니다.'
-                                : isNicknameValid
-                                  ? '사용 가능한 닉네임입니다.'
-                                  : '이미 사용 중인 닉네임입니다.'}
-                        </p>
-                    )}
-                </div>
-
-                <div className="space-y-2">
-                    <div className="text-body-02">이메일 (변경 불가)</div>
-                    <CustomInput
-                        readOnly
-                        value={userInfo.email ?? ''}
-                        placeholder="이메일을 입력해 주세요."
-                    />
-                </div>
-
-                <div className="space-y-2">
-                    <div className="text-body-02">생년월일</div>
-                    <CustomInput
-                        value={newUserInfo.birthDate ?? ''}
-                        onChange={handleBirthDateChange}
-                        placeholder="YYYY-MM-DD"
-                    />
-                    {birthDateError && (
-                        <p className="text-status-red text-body-03">
-                            {birthDateError}
-                        </p>
-                    )}
-                </div>
-
-                <div className="space-y-2">
-                    <div className="text-body-02">성별</div>
-                    <div className="flex gap-6">
-                        {GENDERS.map((gender) => (
-                            <Radio
-                                key={gender.label}
-                                className="text-body-03 flex cursor-pointer items-center gap-2 font-normal"
-                                label={gender.value}
-                                name="gander"
-                                checked={newUserInfo.gender === gender.label}
-                                onChange={() =>
-                                    setNewUserInfo({
-                                        ...newUserInfo,
-                                        gender: gender.label,
-                                    })
-                                }
-                            />
-                        ))}
-                    </div>
-                </div>
+                <NicknameSection
+                    nickName={newUserInfo.nickName}
+                    isNicknameValid={isNicknameValid}
+                    onNicknameChange={(e) =>
+                        setNewUserInfo({
+                            ...newUserInfo,
+                            nickName: e.target.value,
+                        })
+                    }
+                />
+                <EmailSection email={userInfo.email ?? ''} />
+                <BirthDateSection
+                    birthDate={newUserInfo.birthDate}
+                    birthDateError={birthDateError}
+                    onBirthDateChange={handleBirthDateChange}
+                />
+                <GenderSection
+                    gender={newUserInfo.gender}
+                    onGenderChange={(gender) =>
+                        setNewUserInfo({ ...newUserInfo, gender })
+                    }
+                />
             </div>
 
             <div className="fixed bottom-0 w-full max-w-2xl px-5 py-8">
