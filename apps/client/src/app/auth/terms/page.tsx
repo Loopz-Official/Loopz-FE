@@ -1,52 +1,35 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 import { setAuthCookies } from '@/auth/cookie/setCookie';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
+import { useTermsCheck } from '@/hooks/check/useTermsCheck';
 import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
 
 export default function TermsPage() {
     const router = useRouter();
-
-    const [agreements, setAgreements] = useState(
-        SIGN_UP_TERMS.map((a) => ({ ...a }))
-    );
-
-    const isCheckedAll = agreements.every((agreement) => agreement.checked);
-    const isMandatoryAllChecked = agreements
-        .filter((agreement) => agreement.mandatory)
-        .every((agreement) => agreement.checked);
-
-    const handleAllChange = (checked: boolean) => {
-        setAgreements(
-            agreements.map((agreement) => ({ ...agreement, checked }))
-        );
-    };
-
-    const handleSingleChange = (index: number, checked: boolean) => {
-        setAgreements((agreements) =>
-            agreements.map((agreement, i) =>
-                i === index ? { ...agreement, checked } : agreement
-            )
-        );
-    };
+    const terms = SIGN_UP_TERMS;
+    const {
+        isChecked,
+        isAllChecked,
+        isAllMandatoryChecked,
+        toggle,
+        toggleAll,
+    } = useTermsCheck(terms);
 
     const handleTermsAgreementSubmit = async () => {
-        const termsAgreement = agreements.reduce(
+        const termsAgreement = terms.reduce(
             (acc, cur) => ({
                 ...acc,
-                [cur.id]: cur.checked,
+                [cur.id]: isChecked(cur.id),
             }),
             {} as TermsAgreement
         );
-
-        // // console.log('termsAgreement: ', termsAgreement);
 
         const termsResponse = await agreeSignupTerms(termsAgreement);
         if (!termsResponse) return;
@@ -70,24 +53,24 @@ export default function TermsPage() {
                 <AgreementUnit
                     type="all"
                     title="전체 동의하기 (선택 동의 포함)"
-                    checked={isCheckedAll}
-                    onChange={handleAllChange}
+                    checked={isAllChecked}
+                    onChange={toggleAll}
                 />
-                {agreements.map((agreement, i) => (
+                {terms.map((term, i) => (
                     <AgreementUnit
                         type="single"
-                        key={agreement.id}
+                        key={term.id}
                         index={i}
-                        {...agreement}
-                        checked={agreement.checked}
-                        onChange={(checked) => handleSingleChange(i, checked)}
+                        {...term}
+                        checked={isChecked(term.id)}
+                        onChange={() => toggle(term.id)}
                     />
                 ))}
             </section>
             <BottomFixedButton
                 position="static"
                 text="다음"
-                isDisabled={!isMandatoryAllChecked}
+                isDisabled={!isAllMandatoryChecked}
                 onClick={handleTermsAgreementSubmit}
             />
         </>
