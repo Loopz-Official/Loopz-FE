@@ -15,14 +15,14 @@ export default function AuthLayout({
     const isCompletePage = pathname === '/auth/complete';
 
     return (
-        <div className="flex h-dvh w-full flex-col px-5 pb-12">
+        <div className="flex h-dvh w-full flex-col">
             {!isCompletePage ? (
                 <>
                     {!isLoginPage && <Header type="title" title="회원가입" />}
                     <main
                         className={clsx(
-                            'flex h-full flex-col justify-between',
-                            isLoginPage ? '' : 'pt-8'
+                            'flex h-full flex-col justify-between px-5',
+                            isLoginPage ? 'pb-12' : 'py-8'
                         )}
                     >
                         {children}

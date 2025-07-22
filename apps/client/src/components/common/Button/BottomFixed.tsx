@@ -24,13 +24,11 @@ export default function BottomFixedButton({
     return (
         <div
             className={clsx(
-                `${position} h-18 bottom-0 z-50 grid w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
+                `${position} bottom-0 z-50 grid h-14 w-full max-w-2xl grid-cols-[auto_1fr] items-center bg-white shadow-[0px_-6px_20px_0px_rgba(0,0,0,0.04)]`,
                 position === 'fixed' && 'left-1/2 -translate-x-1/2 px-5 py-3',
                 isBottomSheetOpen
                     ? 'border-gray-regular border-t border-solid'
-                    : isObjeDetailPage
-                      ? 'gap-x-6'
-                      : ''
+                    : isObjeDetailPage && 'gap-x-6'
             )}
         >
             <div className="flex h-full items-center gap-4">{children}</div>
@@ -39,9 +37,7 @@ export default function BottomFixedButton({
                 onClick={onClick}
                 className={clsx(
                     'disabled:bg-button-disabled h-full w-full rounded-[0.25rem] bg-black font-semibold text-white',
-                    position === 'fixed'
-                        ? 'text-body-03 py-3'
-                        : 'text-headline-04'
+                    position === 'fixed' ? 'text-body-03 py-3' : 'text-body-01'
                 )}
             >
                 {text}
