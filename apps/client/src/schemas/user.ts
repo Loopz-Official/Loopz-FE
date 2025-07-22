@@ -1,7 +1,7 @@
 import * as z from 'zod/v4';
 
 // Enum
-export const genderEnum = z.enum(['MALE', 'FEMAIL', 'UNKNOWN']);
+export const genderEnum = z.enum(['MALE', 'FEMALE', 'UNKNOWN']);
 export type GenderType = z.infer<typeof genderEnum>;
 
 export const baseAccountInfo = z.object({

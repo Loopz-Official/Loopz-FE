@@ -17,7 +17,7 @@ export const GENDERS = [
         checked: false,
     },
     {
-        label: 'FEMAIL',
+        label: 'FEMALE',
         value: '여성',
         checked: false,
     },
