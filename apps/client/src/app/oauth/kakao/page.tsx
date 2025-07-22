@@ -5,14 +5,14 @@ import { useEffect } from 'react';
 
 import { setAuthCookies } from '@/auth/cookie/setCookie';
 import OAuthRedirect from '@/components/features/oauth/OAuthRedirect';
-import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
+import { useUserEmailStore } from '@/hooks/stores/useUserEmailStore';
 import { postKakaoAuthCode } from '@/services/api/oauth';
 
 export default function KakaoRedirectPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const { setUserInfo } = useUserInfoStore();
+    const { setUserEmail } = useUserEmailStore();
 
     useEffect(() => {
         const handleKakaoLogin = async () => {
@@ -39,7 +39,7 @@ export default function KakaoRedirectPage() {
                     });
 
                     // 2. 그 다음 전역 상태 업데이트
-                    setUserInfo(loginUserInfo);
+                    setUserEmail(loginUserInfo.email);
 
                     // 3. 약간의 지연 후 리다이렉트 (쿠키 설정 안정화)
                     setTimeout(() => {
@@ -59,7 +59,7 @@ export default function KakaoRedirectPage() {
         };
 
         handleKakaoLogin();
-    }, [searchParams, router, setUserInfo]);
+    }, [searchParams, router, setUserEmail]);
 
     return <OAuthRedirect />;
 }

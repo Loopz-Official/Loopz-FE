@@ -7,7 +7,7 @@ import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check/useTermsCheck';
-import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
+import { useUserEmailStore } from '@/hooks/stores/useUserEmailStore';
 import { ChevronRightIcon } from '@/icons/Chevron';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
@@ -38,7 +38,7 @@ export default function TermsPage() {
         const { data: termsUserInfo, status } = termsResponse;
 
         if (status === 200) {
-            useUserInfoStore.getState().setUserInfo(termsUserInfo);
+            useUserEmailStore.getState().setUserEmail(termsUserInfo.email);
             setAuthCookies({
                 enabled: termsUserInfo.enabled,
             });

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { setAuthCookies } from '@/auth/cookie/setCookie';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
-import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
+import { useUserEmailStore } from '@/hooks/stores/useUserEmailStore';
 import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
 
 export default function NicknamePage() {
@@ -46,7 +46,7 @@ export default function NicknamePage() {
         const { data: nicknameUserInfo, status } = nicknameResponse;
 
         if (status === 200) {
-            useUserInfoStore.getState().setUserInfo(nicknameUserInfo);
+            useUserEmailStore.getState().setUserEmail(nicknameUserInfo.email);
             setAuthCookies({
                 nickName: nicknameUserInfo.nickName,
             });
@@ -61,7 +61,7 @@ export default function NicknamePage() {
             <section className="flex h-fit w-full flex-col gap-8">
                 <UserInfoInput
                     label="email"
-                    userInfo={useUserInfoStore.getState().email}
+                    userInfo={useUserEmailStore.getState().email}
                 />
                 <UserInfoInput
                     label="nickname"
