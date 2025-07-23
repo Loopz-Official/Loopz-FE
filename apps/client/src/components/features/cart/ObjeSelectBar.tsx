@@ -19,7 +19,12 @@ const ObjectSelectBar = ({
     return (
         <div className="text-caption-01 text-gray-dark border-gray-regular flex items-center gap-2 border-b border-solid px-5 py-4">
             <label className="flex cursor-pointer select-none items-center gap-2">
-                <CheckBox isChecked={isAllChecked} onChange={toggleAll} />
+                <CheckBox
+                    checked={isAllChecked}
+                    onChange={toggleAll}
+                    variant="product-card"
+                    size="md"
+                />
                 전체 선택 ({selectedCount}/{objectCount})
             </label>
 

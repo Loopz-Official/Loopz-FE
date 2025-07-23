@@ -1,5 +1,6 @@
 'use client';
 
+import CheckBox from '@/components/common/CheckBox';
 import ProductCard from '@/components/common/ProductCard/Order';
 import { OrderedObjectDetailInfo } from '@/schemas/order';
 
@@ -21,9 +22,11 @@ const SelectableProductList = ({
             {products.map((product) => (
                 <ProductCard.Root key={product.objectId}>
                     {isMultipleItems && (
-                        <ProductCard.Checkbox
+                        <CheckBox
                             checked={isChecked(product.objectId)}
                             onChange={() => onToggle(product.objectId)}
+                            variant="product-card"
+                            size="md"
                         />
                     )}
                     <ProductCard.Image
