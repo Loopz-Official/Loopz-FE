@@ -1,4 +1,4 @@
-import ExternalLink from '@/components/common/ExternalLink';
+import ExternalLink from '@/components/common/Links/ExternalLink';
 
 const CHANNEL_BUTTON_CLASS =
     'bg-button-gray-light border-gray-regular flex h-[3.125rem] w-full items-center justify-center rounded-sm border';

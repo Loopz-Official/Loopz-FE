@@ -1,4 +1,4 @@
-import ExternalLink from '@/components/common/ExternalLink';
+import ExternalLink from '@/components/common/Links/ExternalLink';
 
 export default function ContactSection() {
     return (

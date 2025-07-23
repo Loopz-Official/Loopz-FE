@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { setAuthCookies } from '@/auth/cookie/setCookie';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
-import ExternalLink from '@/components/common/ExternalLink';
+import ExternalLink from '@/components/common/Links/ExternalLink';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check/useTermsCheck';
