@@ -48,16 +48,14 @@ export default function GoogleRedirectPage() {
                         setUserEmail(loginUserInfo.email);
                     }
 
-                    // 3. 약간의 지연 후 리다이렉트 (쿠키 설정 안정화)
-                    setTimeout(() => {
-                        router.push(
-                            loginUserInfo.enabled
-                                ? '/main'
-                                : loginUserInfo.nickName
-                                  ? '/auth/terms'
-                                  : '/auth/nickname'
-                        );
-                    }, 100);
+                    // 3. 리다이렉트 (쿠키 설정 후 즉시 실행)
+                    router.push(
+                        loginUserInfo.enabled
+                            ? '/main'
+                            : loginUserInfo.nickName
+                              ? '/auth/terms'
+                              : '/auth/nickname'
+                    );
                 } catch (error) {
                     console.error('Google login error:', error);
                     router.push('/auth/login');

@@ -16,11 +16,8 @@ export const mergeCookieValues = (
 
     // 병합
     return {
-        accessToken:
-            partial.accessToken !== undefined
-                ? partial.accessToken
-                : accessToken,
-        enabled: partial.enabled !== undefined ? partial.enabled : enabled,
-        nickName: partial.nickName !== undefined ? partial.nickName : nickName,
+        accessToken: partial.accessToken ?? accessToken,
+        enabled: partial.enabled ?? enabled,
+        nickName: partial.nickName ?? nickName,
     };
 };
