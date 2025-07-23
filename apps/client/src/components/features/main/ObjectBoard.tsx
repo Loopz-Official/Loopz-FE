@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import ProductList from '@/components/common/ProductList';
+import ProductList from '@/components/common/ProductCard/Main';
 import { useObjectBoardQuery } from '@/hooks/queries/useObjectQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';
 import { FilterRecord, filterTypeEnum } from '@/schemas/object';

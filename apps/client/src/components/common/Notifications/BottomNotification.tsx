@@ -2,11 +2,7 @@ import { HELPER_TEXT } from '@/constants/helperText';
 
 type BottomNoticeType = 'cart' | 'address';
 
-type BottomNoticeProps = {
-    type: BottomNoticeType;
-};
-
-const BottomNotice = ({ type }: BottomNoticeProps) => {
+const BottomNotification = ({ type }: { type: BottomNoticeType }) => {
     const helperText = HELPER_TEXT[type];
 
     return (
@@ -21,4 +17,4 @@ const BottomNotice = ({ type }: BottomNoticeProps) => {
     );
 };
 
-export default BottomNotice;
+export default BottomNotification;

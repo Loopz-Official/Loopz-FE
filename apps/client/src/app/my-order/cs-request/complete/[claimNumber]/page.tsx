@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 
-import ProductCard from '@/components/common/ProductCard/Order';
+import ProductCard from '@/components/common/ProductCard';
 import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
 import { CheckCircleComplete } from '@/icons/Common';
 import { formatPrice } from '@/utils/formatPrice';
@@ -42,7 +42,7 @@ export default function CSRequestCompletePage() {
                 </h3>
                 <div className="flex flex-col gap-4">
                     {orderedObjects.map((object) => (
-                        <ProductCard.Root
+                        <ProductCard.Order.Root
                             key={object.objectId}
                             className="justify-between"
                         >
@@ -55,11 +55,11 @@ export default function CSRequestCompletePage() {
                                     {object.quantity}개
                                 </span>
                             </div>
-                            <ProductCard.Image
+                            <ProductCard.Order.Image
                                 imageUrl={object.imageUrl}
                                 alt={object.objectName}
                             />
-                        </ProductCard.Root>
+                        </ProductCard.Order.Root>
                     ))}
                 </div>
             </section>

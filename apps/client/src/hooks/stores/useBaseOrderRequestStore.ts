@@ -21,7 +21,7 @@ export const useBaseOrderRequestStore = create<BaseOrderRequest & Actions>()(
         combine(intitalState, (set) => ({
             setBaseOrderRequest: (req) => set((prev) => ({ ...prev, ...req })),
             clearBaseOrderRequest: () => {
-                sessionStorage.removeItem('LOOPZ-ORDER-REQUEST');
+                set(intitalState);
             },
         })),
         {

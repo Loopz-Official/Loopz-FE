@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import FilterBar from '@/components/common/filter/FilterBar';
-import ProductList from '@/components/common/ProductList';
+import ProductList from '@/components/common/ProductCard/Main';
 import { useFilterState } from '@/hooks/check/useFilterState';
 import { useLikedObjectListQuery } from '@/hooks/queries/useObjectQuery';
 import { useResponsiveFetchSize } from '@/hooks/useResponsiveFetchSize';

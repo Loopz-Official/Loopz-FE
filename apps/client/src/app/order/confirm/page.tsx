@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
+import CheckBox from '@/components/common/CheckBox';
 import Header from '@/components/layouts/Header';
 import {
     ORDER_CONFIRM_ITEMS,
@@ -69,11 +70,10 @@ export default function OrderConfirmPage() {
 
     const renderCheckbox = (itemKey: string) => (
         <label className="mt-5 flex w-fit cursor-pointer items-center gap-2">
-            <input
-                type="checkbox"
+            <CheckBox
                 checked={isChecked(itemKey)}
                 onChange={() => toggle(itemKey)}
-                className="border-gray-09 rounded-xs not-checked:bg-[url('/checkbox/unchecked.svg')] relative h-5 w-5 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checkbox/checked.svg')]"
+                size="md"
             />
             <span className="text-body-03 text-gray-dark font-normal">
                 네! 확인했습니다.

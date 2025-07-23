@@ -28,7 +28,7 @@ const AgreementUnit = ({
         <label
             htmlFor={checkBoxInputId}
             className={clsx(
-                'flex w-full cursor-pointer items-center gap-2 px-3',
+                'flex w-full cursor-pointer items-center gap-4 px-3',
                 type === 'all' ? 'bg-gray-12 py-4.5 mb-3' : 'h-11'
             )}
         >
@@ -47,11 +47,13 @@ const AgreementUnit = ({
                 }
             />
 
-            <div className="text-body-03 flex items-center gap-1 text-black">
+            <div className="text-body-03 flex items-center gap-1.5 text-black">
                 {type === 'single' && (
-                    <span>[{mandatory ? '필수' : '선택'}]</span>
+                    <span className="select-none">
+                        [{mandatory ? '필수' : '선택'}]
+                    </span>
                 )}
-                <span>{title}</span>
+                <span className="select-none">{title}</span>
             </div>
         </label>
     );

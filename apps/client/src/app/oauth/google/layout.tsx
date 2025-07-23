@@ -1,6 +1,6 @@
 import SuspenseWrapper from '@/components/common/Wrappers/SuspenseWrapper';
 
-export default function OrderCompleteLayout({
+export default function GoogleRediretLayout({
     children,
 }: {
     children: React.ReactNode;
