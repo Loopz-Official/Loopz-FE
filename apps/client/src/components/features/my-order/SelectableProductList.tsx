@@ -1,7 +1,7 @@
 'use client';
 
 import CheckBox from '@/components/common/CheckBox';
-import ProductCard from '@/components/common/ProductCard/Order';
+import ProductCard from '@/components/common/ProductCard';
 import { OrderedObjectDetailInfo } from '@/schemas/order';
 
 interface SelectableProductListProps {
@@ -20,7 +20,7 @@ const SelectableProductList = ({
     return (
         <div className="flex w-fit flex-col gap-4">
             {products.map((product) => (
-                <ProductCard.Root key={product.objectId}>
+                <ProductCard.Order.Root key={product.objectId}>
                     {isMultipleItems && (
                         <CheckBox
                             checked={isChecked(product.objectId)}
@@ -29,16 +29,16 @@ const SelectableProductList = ({
                             size="md"
                         />
                     )}
-                    <ProductCard.Image
+                    <ProductCard.Order.Image
                         imageUrl={product.imageUrl}
                         alt={product.objectName}
                     />
-                    <ProductCard.Info
+                    <ProductCard.Order.Info
                         name={product.objectName}
                         intro={product.intro}
                         price={product.purchasePrice}
                     />
-                </ProductCard.Root>
+                </ProductCard.Order.Root>
             ))}
         </div>
     );
