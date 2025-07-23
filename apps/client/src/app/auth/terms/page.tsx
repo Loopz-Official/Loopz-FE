@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { setAuthCookies } from '@/auth/cookie/setCookie';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import ExternalLink from '@/components/common/ExternalLink';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check/useTermsCheck';
@@ -73,14 +74,12 @@ export default function TermsPage() {
                                 onChange={() => toggle(term.id)}
                             />
                             {!isFirstOrLast && (
-                                <a
+                                <ExternalLink
                                     href={term.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="flex h-6 w-6 items-center justify-between"
-                                >
-                                    <ChevronRightIcon />
-                                </a>
+                                    className="flex h-6 w-6 items-center justify-center"
+                                    icon={<ChevronRightIcon />}
+                                    showIcon
+                                />
                             )}
                         </div>
                     );

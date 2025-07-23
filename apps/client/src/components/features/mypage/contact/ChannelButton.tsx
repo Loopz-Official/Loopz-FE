@@ -1,3 +1,5 @@
+import ExternalLink from '@/components/common/ExternalLink';
+
 const CHANNEL_BUTTON_CLASS =
     'bg-button-gray-light border-gray-regular flex h-[3.125rem] w-full items-center justify-center rounded-sm border';
 
@@ -14,14 +16,9 @@ export default function ChannelButton({
 }: ChannelButtonProps) {
     if (href) {
         return (
-            <a
-                className={CHANNEL_BUTTON_CLASS}
-                href={href}
-                target="_blank"
-                rel="noreferrer noopener"
-            >
+            <ExternalLink className={CHANNEL_BUTTON_CLASS} href={href}>
                 {label}
-            </a>
+            </ExternalLink>
         );
     }
 

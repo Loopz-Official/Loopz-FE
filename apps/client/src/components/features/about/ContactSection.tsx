@@ -1,3 +1,5 @@
+import ExternalLink from '@/components/common/ExternalLink';
+
 export default function ContactSection() {
     return (
         <div className="mt-25 w-full bg-black bg-[url('/about/contact.png')] bg-cover bg-no-repeat px-8 pb-11 pt-10 text-white">
@@ -11,14 +13,12 @@ export default function ContactSection() {
             </div>
 
             <div className="text-gray-dark text-caption-01 w-fit rounded-full bg-white px-3 py-2 font-medium tracking-normal">
-                <a
+                <ExternalLink
                     href="https://open.kakao.com/o/sfx6Rvyh"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="w-fit"
                 >
                     Contact us
-                </a>
+                </ExternalLink>
             </div>
         </div>
     );
