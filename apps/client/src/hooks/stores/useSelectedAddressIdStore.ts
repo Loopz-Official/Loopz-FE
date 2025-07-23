@@ -15,7 +15,7 @@ export const useSelectedAddressIdStore = create<SelectedAddressIdStore>()(
             setSelectedAddressId: (addressId) =>
                 set({ selectedAddressId: addressId }),
             clearSelectedAddressId: () => {
-                localStorage.removeItem('LOOPZ_USER_SELECTED_ADDRESS_ID');
+                set({ selectedAddressId: null });
             },
         }),
         {

@@ -19,7 +19,7 @@ export const useSelectedProductsStore = create<SelectedProducts>()(
             setSelectedProducts: (products) =>
                 set({ selectedProducts: products }),
             clearSelectedProducts: () => {
-                localStorage.removeItem('SELECTED_PRODUCTS');
+                set({ selectedProducts: [] });
             },
         })),
 

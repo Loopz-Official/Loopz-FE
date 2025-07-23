@@ -13,7 +13,9 @@ export const useUserEmailStore = create<UserEmailStore>()(
         (set) => ({
             email: '',
             setUserEmail: (email) => set({ email }),
-            clearUserEmail: () => localStorage.removeItem('LOOPZ_USER_EMAIL'),
+            clearUserEmail: () => {
+                set({ email: '' });
+            },
         }),
         {
             name: 'LOOPZ_USER_EMAIL',
