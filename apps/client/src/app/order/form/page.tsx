@@ -83,22 +83,28 @@ export default function OrderFormPage() {
     const queryClient = useQueryClient();
     const router = useRouter();
 
+    /**
+     * redirection(쿼리스트링) 방식 (모바일 환경 대응)
+     * 결제 요청 후 쿼리스트링에 paymentId, code가 있으면 후처리
+     */
     useEffect(() => {
-        // redirection(쿼리스트링) 방식: 결제 완료 후 쿼리스트링에 paymentId, code가 있으면 후처리
         const paymentId = searchParams.get('paymentId');
         const code = searchParams.get('code');
         const message = searchParams.get('message');
-
-        // 타입 안전성 보장: message는 string만 허용
+        const orderId = searchParams.get('orderId');
         const safeMessage = typeof message === 'string' ? message : undefined;
 
-        if (code !== null || paymentId === null) {
-            // 결제 실패/취소 등 에러 상황
+        // 쿼리스트링에 paymentId, code 둘 다 없으면 아무 동작도 하지 않음 (일반 진입)
+        if (!paymentId && !code) return;
+
+        // 결제 실패/취소 등 에러 상황
+        if (code !== null || !paymentId) {
             toast.error(safeMessage || '결제가 취소되었거나 실패했습니다.');
             return;
         }
 
-        if (paymentId) {
+        // orderId가 있으면 바로 라우팅
+        if (paymentId && orderId) {
             completePayment(paymentId).then((orderData) => {
                 // 주문 상세 캐싱
                 queryClient.setQueryData(

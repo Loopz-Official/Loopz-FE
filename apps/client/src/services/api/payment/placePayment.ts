@@ -44,8 +44,8 @@ export async function placePayment({
             pc: 'POPUP',
             mobile: 'REDIRECTION',
         },
-        redirectUrl: `${window.location.origin}/order/form`,
-        appScheme: `${window.location.origin}/order/form`,
+        redirectUrl: `${window.location.origin}/order/form?orderId=${customData.orderId}`,
+        appScheme: `${window.location.origin}/payment/notification`,
     };
 
     const validatedPaymentRequest = validate(
