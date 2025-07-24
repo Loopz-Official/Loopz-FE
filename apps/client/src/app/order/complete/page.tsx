@@ -75,8 +75,7 @@ export default function OrderCompletePage() {
                                     orderInfos?.paymentMethod ??
                                     paymentMethodEnum.enum.BANK_TRANSFER
                                 }
-                                status={orderStatusEnum.enum.PENDING}
-                                // 상품 단위로 status가 존재하므로 PENDING(아직 결제 시스템 도입 전이므로) 처리
+                                status={orderStatusEnum.enum.ORDERED} // orderStatus Response DTO에 추가 요청 후 수정
                             />
                         </div>
                     </div>
