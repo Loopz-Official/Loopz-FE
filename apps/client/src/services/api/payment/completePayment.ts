@@ -6,7 +6,7 @@ export const completePayment = async (paymentId: string) => {
             paymentId,
         });
 
-        console.log('Complete Payment Response:', response);
+        // console.log('Complete Payment Response:', response);
 
         if (response.status === 200) {
             return response.data;

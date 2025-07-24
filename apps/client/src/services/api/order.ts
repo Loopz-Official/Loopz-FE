@@ -13,7 +13,7 @@ import { apiClient } from '../config/axios';
 
 // 주문 생성 API
 export const placeOrder = async (orderRequest: OrderRequest) => {
-    console.log('Place Order Request: ', orderRequest);
+    // console.log('Place Order Request: ', orderRequest);
 
     const validatedOrderRequest = validate(
         orderRequestSchema,
@@ -27,7 +27,7 @@ export const placeOrder = async (orderRequest: OrderRequest) => {
             validatedOrderRequest
         );
 
-        console.log('Place Order Response: ', response);
+        // console.log('Place Order Response: ', response);
 
         if (response.status === 200) {
             return validate(
