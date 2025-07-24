@@ -3,6 +3,7 @@ import PortOne, { PaymentRequest } from '@portone/browser-sdk/v2';
 import { currencyEnum, nicePaymentsPayMethod } from '@/schemas/payment/enum';
 import { paymentRequest } from '@/schemas/payment/request';
 import { validate } from '@/schemas/utils/validate';
+import { getRequiredEnv } from '@/utils/getRequiredEnv';
 import { getRandomId } from '@/utils/order/getRandomId';
 
 import { PlacePaymentParams } from './types';
@@ -16,11 +17,14 @@ export async function placePayment({
     totalPrice,
     customData,
 }: PlacePaymentParams) {
+    const storeId = getRequiredEnv('NEXT_PUBLIC_PORTONE_STORE_ID');
+    const channelKey = getRequiredEnv('NEXT_PUBLIC_NICE_PAYMENTS_CHANNEL_ID');
+
     const paymentId = getRandomId();
 
     const payment: PaymentRequest = {
-        storeId: process.env.NEXT_PUBLIC_PORTONE_STORE_ID ?? '',
-        channelKey: process.env.NEXT_PUBLIC_NICE_PAYMENTS_CHANNEL_ID ?? '',
+        storeId,
+        channelKey,
         paymentId,
         orderName,
         totalAmount: totalPrice,
