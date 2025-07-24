@@ -69,17 +69,19 @@ export const usePlaceOrderAndPaymentMutation = () => {
                     customData,
                 });
 
-                // Step 4. 결제 응답 검증
-                if (paymentResponse?.code !== undefined) {
+                // Step 4. 결제 응답 검증 및 취소/실패 방어
+                if (
+                    paymentResponse?.code !== undefined ||
+                    !paymentResponse?.paymentId
+                ) {
                     throw new Error(
-                        paymentResponse?.message || '결제 요청에 실패했습니다.'
+                        paymentResponse?.message ||
+                            '결제가 취소되었거나 실패했습니다.'
                     );
                 }
 
                 // Step 5. 결제 완료 처리
-                if (paymentResponse?.paymentId) {
-                    await completePayment(paymentResponse.paymentId);
-                }
+                await completePayment(paymentResponse.paymentId);
 
                 // Step 6. 주문 상세 캐싱
                 queryClient.setQueryData(
