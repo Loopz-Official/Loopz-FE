@@ -30,7 +30,15 @@ const nextConfig: NextConfig = {
                 search: '',
             },
             {
+                // For test server object detail image (추후 삭제 필요)
                 protocol: 'https',
+                hostname: 'loopz.co.kr',
+                port: '',
+                pathname: '/**',
+                search: '',
+            },
+            {
+                protocol: 'http',
                 hostname: 'k.kakaocdn.net',
                 pathname: '/dn/**',
             },
