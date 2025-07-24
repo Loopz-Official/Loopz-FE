@@ -5,10 +5,6 @@ import { objectInfo } from '../object';
 
 import { orderStatusEnum, paymentMethodEnum } from './enum';
 
-// Optional Enum Schema
-export const paymentMethod = z.optional(paymentMethodEnum);
-export type PaymentMethod = z.infer<typeof paymentMethod>;
-
 export const orderStatus = z.optional(orderStatusEnum);
 export type OrderStatus = z.infer<typeof orderStatus>;
 
@@ -22,23 +18,21 @@ export const selectedProductInfo = z.strictObject({
 });
 export type SelectedProductInfo = z.infer<typeof selectedProductInfo>;
 
-// 주문 요청 schema
-export const orderRequest = z.strictObject({
-    objects: z.array(selectedProductInfo),
-    addressId: z.uuid(),
-    paymentMethod,
-    deliveryRequest: z.optional(z.string()),
-    agreedToTerms: z.boolean(),
-});
-export type OrderRequest = z.infer<typeof orderRequest>;
-
+// 주문 Base request schema (주문 생성 시 공통 요청 사항)
 export const baseOrderRequest = z.object({
     addressId: z.optional(z.uuid()),
-    paymentMethod,
+    paymentMethod: paymentMethodEnum,
     deliveryRequest: z.string(),
     agreedToTerms: z.boolean(),
 });
 export type BaseOrderRequest = z.infer<typeof baseOrderRequest>;
+
+// 주문 생성 request schema
+export const orderRequestSchema = z.strictObject({
+    objects: z.array(selectedProductInfo),
+    ...baseOrderRequest.shape,
+});
+export type OrderRequest = z.infer<typeof orderRequestSchema>;
 
 // 상세보기에서 주문
 export const detailOrderRequest = z.object({
@@ -71,10 +65,11 @@ const orderBaseResponse = z.object({
  * POST /order/v1
  */
 // 주문 생성 API response의 Object schema
-const placedOrderObjectInfo = z.object({
+export const placedOrderObjectInfo = z.object({
     ...objectInfo.omit({ objectPrice: true }).shape,
     purchasePrice: z.int32().nonnegative(),
 });
+export type PlacedOrderObjectInfo = z.infer<typeof placedOrderObjectInfo>;
 
 // 주문 생성 API response schema
 export const placedOrderResponse = z.object({
