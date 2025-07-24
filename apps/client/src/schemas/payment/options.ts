@@ -47,26 +47,24 @@ export const paymentOptions = z
         birthYear: BirthYear,
         birthMonth: BirthMonth,
         birthDay: BirthDay,
-        customData: z.object({
-            item: z.uuid(),
-        }),
         redirectUrl: z.url(), // 결제 완료 후 리다이렉트 될 URL
         noticeUrls: z.array(z.url()),
         appScheme: z.url(),
         productType: z.enum(['PRODUCT_TYPE_REAL', 'PRODUCT_TYPE_DIGITAL']), // 결제 상품 유형
-        offerPeriod: z.union([
-            z.object({
-                range: z.object({
-                    from: z.string(),
-                    to: z.string(),
-                }),
-            }),
-            z.object({
+        offerPeriod: z
+            .object({
+                range: z
+                    .object({
+                        from: z.string(),
+                        to: z.string(),
+                    })
+                    .optional(),
                 interval: z
                     .string()
-                    .regex(/^\d+[dmy]$/, '형식: 숫자+d/m/y (예: 3d, 2m, 1y)'),
-            }),
-        ]),
+                    .regex(/^\d+[dmy]$/) // 3d, 6m, 1y 등만 허용
+                    .optional(),
+            })
+            .partial(),
         products: z.array(
             z.object({
                 id: z.uuid(), // 상품 아이디
