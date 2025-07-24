@@ -1,5 +1,7 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -18,6 +20,7 @@ import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { AddressInfo } from '@/schemas/address';
+import { completePayment } from '@/services/api/payment/completePayment';
 import { formatPrice } from '@/utils/formatPrice';
 import { getOrderName } from '@/utils/order/getOrderName';
 import { getPriceSummary } from '@/utils/order/getPrice';
@@ -75,6 +78,38 @@ export default function OrderFormPage() {
 
     const termsCheck = useTermsCheck(ORDER_TERMS);
     const { isAllMandatoryChecked } = termsCheck;
+
+    const searchParams = useSearchParams();
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
+    useEffect(() => {
+        // redirection(쿼리스트링) 방식: 결제 완료 후 쿼리스트링에 paymentId, code가 있으면 후처리
+        const paymentId = searchParams.get('paymentId');
+        const code = searchParams.get('code');
+        const message = searchParams.get('message');
+
+        // 타입 안전성 보장: message는 string만 허용
+        const safeMessage = typeof message === 'string' ? message : undefined;
+
+        if (code !== null || paymentId === null) {
+            // 결제 실패/취소 등 에러 상황
+            toast.error(safeMessage || '결제가 취소되었거나 실패했습니다.');
+            return;
+        }
+
+        if (paymentId) {
+            completePayment(paymentId).then((orderData) => {
+                // 주문 상세 캐싱
+                queryClient.setQueryData(
+                    ['order-detail', orderData.orderId],
+                    orderData
+                );
+                // 결제 완료 페이지로 라우팅
+                router.push(`/order/complete?orderId=${orderData.orderId}`);
+            });
+        }
+    }, [searchParams, queryClient, router]);
 
     // 선택된 배송지 정보 설정
     useEffect(() => {

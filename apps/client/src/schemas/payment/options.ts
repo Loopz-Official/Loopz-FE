@@ -20,6 +20,20 @@ export const BirthDay = z
     .string()
     .regex(BirthDayRegex, '올바른 일을 입력해주세요.');
 
+// USED OPTION 1. 디바이스 환경에 따른 결제창 유형 설정
+export const windowType = z
+    .object({
+        pc: z.enum(['IFRAME', 'POPUP', 'REDIRECTION', 'UI']).optional(),
+        mobile: z.enum(['IFRAME', 'POPUP', 'REDIRECTION', 'UI']).optional(),
+    })
+    .partial();
+
+export const callbackUrls = z.object({
+    redirectUrl: z.url(), // 결제 완료 후 리다이렉트 될 URL
+    appScheme: z.url(), // 앱 스킴 URL
+    // noticeUrls: z.array(z.url()), // 결제 완료 후 알림 받을 URL
+});
+
 // bypass에 현재는 나이스 페이먼츠만 존재
 export const paymentOptions = z
     .object({

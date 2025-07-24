@@ -3,6 +3,7 @@ import { z } from 'zod/v4';
 import { prefixedUuidSchema } from '../utils/prefixedUuidSchema';
 
 import { currencyEnum, nicePaymentsPayMethod } from './enum';
+import { callbackUrls, windowType } from './options';
 
 // 결제 요청 시 고객사 및 PG사 ID 검증 schema
 const storeIdSchema = prefixedUuidSchema('storeId', 'store-');
@@ -36,6 +37,8 @@ export const paymentRequest = z.object({
     currency: currencyEnum,
     payMethod: nicePaymentsPayMethod,
     customData: customDataSchema,
+    windowType,
+    ...callbackUrls.shape,
     // ...paymentOptions.shape, // Option 필드는 필요할 때 추가 (사용하는 키 값들만 runtime validation 처리)
 });
 export type PaymentRequest = z.infer<typeof paymentRequest>;

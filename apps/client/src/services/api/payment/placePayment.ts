@@ -41,8 +41,11 @@ export async function placePayment({
         payMethod: nicePaymentsPayMethod.enum.CARD, // 추후 결제수단 선택 옵션 추가 가능 (현재는 신용카드 결제만 지원)
         customData,
         windowType: {
-            pc: 'REDIRECTION',
+            pc: 'POPUP',
+            mobile: 'REDIRECTION',
         },
+        redirectUrl: `${window.location.origin}/order/form`,
+        appScheme: `${window.location.origin}/order/form`,
     };
 
     const validatedPaymentRequest = validate(
