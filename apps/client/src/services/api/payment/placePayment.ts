@@ -44,7 +44,7 @@ export async function placePayment({
             pc: 'POPUP',
             mobile: 'REDIRECTION',
         },
-        redirectUrl: `${window.location.origin}/order/complete?orderId=${customData.orderId}`,
+        redirectUrl: `${window.location.origin}/payment/redirect?orderId=${customData.orderId}`,
         appScheme: `${window.location.origin}/payment/notification`,
     };
 

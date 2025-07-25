@@ -9,7 +9,6 @@ import PaymentMethodSection from '@/components/features/order/complete/PaymentMe
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { ORDER_NOTIFICATIONS } from '@/constants/order';
-import { useCompletePaymentMutation } from '@/hooks/mutations/useCompletePaymentMutation';
 import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
 import { orderStatusEnum, paymentMethodEnum } from '@/schemas/order';
 
@@ -17,64 +16,14 @@ export default function OrderCompletePage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const orderId = searchParams.get('orderId') ?? '';
-    const paymentId = searchParams.get('paymentId') ?? '';
-    const code = searchParams.get('code') ?? '';
-    const message = searchParams.get('message') ?? '';
 
-    // 모든 훅은 최상단에서 호출
     const { data: orderInfos, isLoading, error } = useOrderDetailQuery(orderId);
-    const {
-        mutate: completePaymentMutate,
-        isPending: isProcessing,
-        isError: isProcessError,
-        error: processError,
-    } = useCompletePaymentMutation();
-
-    useEffect(() => {
-        // 결제 실패/취소 등 에러 상황에서는 mutation 실행하지 않음
-        if (code || !paymentId) return;
-        if (paymentId && orderId) {
-            completePaymentMutate({ paymentId, orderId });
-        }
-    }, [code, paymentId, orderId, completePaymentMutate]);
 
     useEffect(() => {
         if (error) {
             router.push('/main');
         }
     }, [error, router]);
-
-    // 렌더링 분기(에러 UI)
-    if (code || !paymentId) {
-        return (
-            <div className="flex min-h-screen flex-col items-center justify-center">
-                <div className="mb-4 text-lg font-semibold text-red-600">
-                    {message || '결제가 취소되었거나 실패했습니다.'}
-                </div>
-            </div>
-        );
-    }
-
-    if (isProcessError) {
-        return (
-            <div>
-                {processError instanceof Error
-                    ? processError.message
-                    : '결제 후처리에 실패했습니다.'}
-            </div>
-        );
-    }
-
-    if (isProcessing) {
-        return (
-            <div className="flex min-h-screen flex-col items-center justify-center">
-                <div className="mb-4 text-lg font-semibold">
-                    결제 처리 중입니다...
-                </div>
-                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-gray-900" />
-            </div>
-        );
-    }
 
     return (
         <div className="pb-17">
