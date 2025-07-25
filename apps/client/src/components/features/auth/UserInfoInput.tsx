@@ -6,7 +6,9 @@ type UserInfoInputProps = {
     nickname?: string;
     setNickname?: (nickname: string) => void;
     isChecking?: boolean;
-    isNicknameValid?: boolean;
+    isNicknameValid?: boolean | null;
+    labelClassName?: string;
+    inputClassName?: string;
 };
 
 const UserInfoInput = ({
@@ -15,7 +17,9 @@ const UserInfoInput = ({
     nickname,
     setNickname,
     isChecking,
-    isNicknameValid,
+    isNicknameValid = null,
+    labelClassName,
+    inputClassName,
 }: UserInfoInputProps) => {
     const nicknameValidationText = (): {
         text: string;
@@ -26,7 +30,9 @@ const UserInfoInput = ({
                 return {
                     text: '중복 검사 중...',
                 };
-
+            if (isNicknameValid === null) {
+                return { text: '' };
+            }
             return isNicknameValid
                 ? {
                       text: '사용 가능한 닉네임입니다.',
@@ -45,16 +51,23 @@ const UserInfoInput = ({
 
     return (
         <div className="h-fit w-full">
-            <label htmlFor={label} className="mb-2 flex">
+            <label
+                htmlFor={label}
+                className={clsx('mb-2 flex', labelClassName)}
+            >
                 {label === 'email' ? '이메일' : '닉네임'}
             </label>
             <input
                 type="text"
                 className={clsx(
-                    'text-body-02 w-full rounded-sm px-3 py-4 font-normal',
-                    label === 'email'
-                        ? 'bg-gray-12 rounder-sm text-disabled'
-                        : 'border-gray-regular border border-solid text-black'
+                    'w-full rounded-sm px-3 py-4 font-normal',
+                    {
+                        'bg-gray-12 rounder-sm text-disabled':
+                            label === 'email',
+                        'border-gray-regular text-body-02 border border-solid':
+                            label === 'nickname',
+                    },
+                    inputClassName
                 )}
                 value={userInfo}
                 onChange={(e) => setNickname && setNickname(e.target.value)}
@@ -67,7 +80,7 @@ const UserInfoInput = ({
                     placeholder: '닉네임을 입력해주세요.',
                 })}
             />
-            {label === 'nickname' && (
+            {label === 'nickname' && nicknameValidationText().text && (
                 <span
                     className={clsx(
                         'text-caption-01 text-gray-regular mt-2 block px-1',

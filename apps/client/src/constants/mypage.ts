@@ -10,8 +10,8 @@ export const MYPAGE_LINKS = [
         href: '/my-order/cs-history ',
     },
     {
-        label: '회원 정보 수정',
-        href: '/mypage/edit',
+        label: '회원정보 수정',
+        href: '/mypage/profile/edit',
     },
     {
         label: '1:1 문의하기',
