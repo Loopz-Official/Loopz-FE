@@ -31,7 +31,7 @@ export const useOrderStatusCTAHandlers = () => {
                                     `/my-order/cs-request/form/${orderNumber}`
                                 );
                                 // TODO: 주문 취소 API 연동
-                                console.log('주문 취소');
+                                // console.log('주문 취소');
                                 onSuccess?.();
                                 close();
                             },

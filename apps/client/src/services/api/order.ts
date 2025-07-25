@@ -4,6 +4,7 @@ import {
     OrderHistoryResponse,
     orderHistoryResponse,
     OrderRequest,
+    orderRequestSchema,
     placedOrderResponse,
 } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
@@ -12,8 +13,19 @@ import { apiClient } from '../config/axios';
 
 // 주문 생성 API
 export const placeOrder = async (orderRequest: OrderRequest) => {
+    // console.log('Place Order Request: ', orderRequest);
+
+    const validatedOrderRequest = validate(
+        orderRequestSchema,
+        orderRequest,
+        'Place Order Request'
+    );
+
     try {
-        const response = await apiClient.post('/order/v1', orderRequest);
+        const response = await apiClient.post(
+            '/order/v1',
+            validatedOrderRequest
+        );
 
         // console.log('Place Order Response: ', response);
 

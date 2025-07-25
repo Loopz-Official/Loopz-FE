@@ -12,9 +12,16 @@ export default function middleware(request: NextRequest) {
     const isCompletePage = requestUrl.pathname === '/auth/complete';
     const isNicknamePage = requestUrl.pathname === '/auth/nickname';
     const isTermsPage = requestUrl.pathname === '/auth/terms';
+    const isPaymentNotification =
+        requestUrl.pathname === '/payment/notification';
 
-    // 1. 토큰이 없고, 소셜 로그인 라우트를 제외한 라우트 접근 시 로그인 페이지로 리다이렉트
-    if (!accessToken && !isOAuthRoute && !isLoginPage) {
+    // 1. 토큰이 없고, 소셜 로그인 라우트와 결제 알림 라우트를 제외한 라우트 접근 시 로그인 페이지로 리다이렉트
+    if (
+        !accessToken &&
+        !isOAuthRoute &&
+        !isLoginPage &&
+        !isPaymentNotification
+    ) {
         return NextResponse.redirect(new URL('/auth/login', request.url));
     }
 

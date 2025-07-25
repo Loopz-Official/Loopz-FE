@@ -2,10 +2,10 @@ import {
     ORDER_STATUS_META_MAP,
     PAYMENT_METHOD_LABEL_MAP,
 } from '@/constants/order';
-import { OrderStatus, PaymentMethod } from '@/schemas/order';
+import { OrderStatus, PaymentMethodEnum } from '@/schemas/order';
 
 interface PaymentMethodSectionProps {
-    paymentMethod: PaymentMethod;
+    paymentMethod: PaymentMethodEnum;
     status: OrderStatus;
 }
 

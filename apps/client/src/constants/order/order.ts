@@ -15,7 +15,7 @@ export const ORDER_NOTIFICATIONS = [
 
 export const PAYMENT_METHOD_LABEL_MAP: Record<PaymentMethodEnum, string> = {
     BANK_TRANSFER: '계좌이체',
-    CREDIT_CARD: '신용카드',
+    NICE_PAY: '나이스 페이먼츠',
 };
 
 export const ORDER_STATUS_META_MAP: Record<

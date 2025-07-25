@@ -16,6 +16,10 @@ export const orderStatusEnum = z.enum([
 ]);
 export type OrderStatusEnum = z.infer<typeof orderStatusEnum>;
 
-// 결제 방식
-export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'CREDIT_CARD']);
+/**
+ * 결제 방식
+ * - 추후 나이스페이먼츠 결제 수단에 따라서 정의 필요
+ * - 현재는 신용카드 결제만 지원
+ */
+export const paymentMethodEnum = z.enum(['BANK_TRANSFER', 'NICE_PAY']);
 export type PaymentMethodEnum = z.infer<typeof paymentMethodEnum>;

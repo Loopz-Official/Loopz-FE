@@ -42,11 +42,11 @@ export default function CsRequestFormPage() {
 
     const handleSumbit = () => {
         // TODO: API 연동
-        console.log({
-            orderNumber,
-            reason: selectedValue,
-            productIds: selectedIds,
-        });
+        // console.log({
+        //     orderNumber,
+        //     reason: selectedValue,
+        //     productIds: selectedIds,
+        // });
         router.push(`/my-order/cs-request/complete/${orderNumber}`); // 임시로 orderNumber로 대체 (추후 claimNumber로 변경)
     };
 
