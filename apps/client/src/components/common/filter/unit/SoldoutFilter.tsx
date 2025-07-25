@@ -15,6 +15,7 @@ const SoldoutFilter = ({ value, onChange }: SoldoutFilterProps) => {
             <CheckBox
                 checked={value}
                 onChange={() => onChange(!value)}
+                variant="product-card"
                 size="sm"
             />
             <span className="text-caption-01 text-gray-dark select-none">
