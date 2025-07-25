@@ -11,7 +11,7 @@ export const MYPAGE_LINKS = [
     },
     {
         label: '회원정보 수정',
-        href: '/mypage/edit',
+        href: '/mypage/profile/edit',
     },
     {
         label: '1:1 문의하기',
