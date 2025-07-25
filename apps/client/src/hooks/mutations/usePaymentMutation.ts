@@ -6,22 +6,10 @@ import { useRouter } from 'next/navigation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { OrderRequest, PlacedOrderObjectInfo } from '@/schemas/order';
 import { currencyEnum } from '@/schemas/payment/enum';
-import { placeOrder } from '@/services/api/order';
+import { getOrderDetail, placeOrder } from '@/services/api/order';
 import { completePayment } from '@/services/api/payment/completePayment';
 import { placePayment } from '@/services/api/payment/placePayment';
 import { handleMutationError } from '@/utils/error/handleMutationError';
-
-export const usePlaceOrderMutation = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: (orderRequest: OrderRequest) => placeOrder(orderRequest),
-        onSuccess: (data) => {
-            queryClient.setQueryData(['order-detail', data.orderId], data);
-        },
-        onError: handleMutationError,
-    });
-};
 
 /**
  * - 결제는 주문 생성 및 결제 요청과 함께 atomic transaction으로 처리
@@ -83,12 +71,6 @@ export const usePlaceOrderAndPaymentMutation = () => {
                 // Step 5. 결제 완료 처리
                 await completePayment(paymentResponse.paymentId);
 
-                // Step 6. 주문 상세 캐싱
-                queryClient.setQueryData(
-                    ['order-detail', orderData.orderId],
-                    orderData
-                );
-
                 return orderData;
             } catch (error) {
                 // 에러 발생 시 상세 로깅
@@ -97,8 +79,53 @@ export const usePlaceOrderAndPaymentMutation = () => {
             }
         },
         onSuccess: (orderData) => {
+            // 주문 상세 캐싱
+            queryClient.setQueryData(
+                ['order-detail', orderData.orderId],
+                orderData
+            );
+
             router.push(`/order/complete?orderId=${orderData.orderId}`);
         },
         onError: handleMutationError,
+    });
+};
+
+/**
+ * 결제 완료 처리를 위한 mutation
+ */
+export const useCompletePaymentMutation = (orderId?: string) => {
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
+    return useMutation({
+        mutationFn: async (paymentId: string) => {
+            // Step 1. 결제 완료 처리
+            const paymentResult = await completePayment(paymentId);
+
+            // Step 2. 주문 상세 데이터 조회 및 캐싱
+            if (orderId) {
+                try {
+                    const orderDetail = await getOrderDetail(orderId);
+                    queryClient.setQueryData(
+                        ['order-detail', orderId],
+                        orderDetail
+                    );
+                } catch (error) {
+                    console.error(
+                        'Failed to fetch order detail for caching:',
+                        error
+                    );
+                    // 주문 상세 조회 실패해도 결제 완료는 성공으로 처리 (No error handling)
+                }
+            }
+
+            return paymentResult;
+        },
+        onSuccess: () => {
+            if (orderId) {
+                router.replace(`/order/complete?orderId=${orderId}`);
+            }
+        },
     });
 };
