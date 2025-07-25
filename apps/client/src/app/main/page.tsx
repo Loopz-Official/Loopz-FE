@@ -1,4 +1,4 @@
-import SuspenseWrapper from '@/components/common/SuspenseWrapper';
+import SuspenseWrapper from '@/components/common/Wrappers/SuspenseWrapper';
 import Banner from '@/components/features/main/Banner';
 import ObjectBoard from '@/components/features/main/ObjectBoard';
 import Footer from '@/components/layouts/Footer';

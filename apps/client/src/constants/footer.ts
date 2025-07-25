@@ -8,11 +8,15 @@ export const FOOTER_ITEMS = [
 
 export const FOOTER_LINKS = [
     {
-        label: '이용약관',
+        label: '이용 약관',
         href: 'https://clean-archduke-51e.notion.site/22b9575b844780b491b0f1ba31af053e?source=copy_link',
     },
     {
-        label: '개인정보처리방침',
+        label: '개인정보 처리방침',
         href: 'https://clean-archduke-51e.notion.site/22b9575b8447803095a1f9df09300e27?source=copy_link',
+    },
+    {
+        label: '환불 규정',
+        href: '/agreement/refund',
     },
 ];

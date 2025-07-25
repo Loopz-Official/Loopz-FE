@@ -4,29 +4,25 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { DeliveryRequest } from '@/app/order/form/OrderFormPageContent';
-import { ChevronDownIcon } from '@/components/icons/ChevronDown';
+import { DeliveryRequest } from '@/app/order/form/page';
 import { DELIVERY_REQUESTS } from '@/constants/delivery';
-import { OrderFrom } from '@/constants/order';
+import { ChevronDownIcon } from '@/icons/Chevron';
 import { PlusIcon } from '@/icons/Plus';
 import { AddressInfo } from '@/schemas/address';
-import { getOrderFromQueryString } from '@/utils/route';
 
 type AddressSectionProps = {
     activeAddressInfo: AddressInfo | undefined;
-    addressList: AddressInfo[];
     deliveryRequest: DeliveryRequest;
+    addressList: AddressInfo[];
     onDeliveryRequestChange: <K extends keyof DeliveryRequest>(
         key: K,
         value: DeliveryRequest[K]
     ) => void;
-    orderFrom: OrderFrom;
     isLoading: boolean;
     error: unknown;
 };
 
 export default function AddressSection({
-    orderFrom,
     activeAddressInfo,
     deliveryRequest,
     onDeliveryRequestChange,
@@ -35,7 +31,7 @@ export default function AddressSection({
 }: AddressSectionProps) {
     const router = useRouter();
 
-    const [isOptionOpen, setIsOptionOpen] = useState(false);
+    const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
     const isTextareaOpen =
         deliveryRequest.option === DELIVERY_REQUESTS.at(-1) && !isOptionOpen;
 
@@ -45,11 +41,7 @@ export default function AddressSection({
                 <h2 className="text-body-01 font-semibold">배송지 정보</h2>
                 {activeAddressInfo && (
                     <button
-                        onClick={() =>
-                            router.push(
-                                `/address?${getOrderFromQueryString(orderFrom)}`
-                            )
-                        }
+                        onClick={() => router.push(`/address`)}
                         className="text-caption-01 rounded-xs border-gray-regular flex w-[3.375rem] items-center justify-center border py-1"
                     >
                         변경
@@ -155,11 +147,7 @@ export default function AddressSection({
                         배송지를 신규입력 해주세요.
                     </div>
                     <button
-                        onClick={() =>
-                            router.push(
-                                `/address/add?${getOrderFromQueryString(orderFrom)}`
-                            )
-                        }
+                        onClick={() => router.push(`/address/add`)}
                         className="border-gray-regular flex w-full items-center justify-center gap-1 rounded-sm border py-3"
                     >
                         <PlusIcon className="h-4 w-4" />

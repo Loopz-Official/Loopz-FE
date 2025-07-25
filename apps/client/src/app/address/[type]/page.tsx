@@ -8,16 +8,15 @@ import {
 } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import CheckBox from '@/components/common/CheckBox';
 import AddressSearchSection from '@/components/features/address/AddressSearchSection';
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
 import Header from '@/components/layouts/Header';
-import { OrderFrom } from '@/constants/order';
 import * as M from '@/hooks/mutations/useAddressMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { AddressCURequest } from '@/schemas/address';
-import { getOrderFromQueryString } from '@/utils/route';
 
 export default function AddressCUPage() {
     const router = useRouter();
@@ -25,7 +24,6 @@ export default function AddressCUPage() {
     if (type !== 'add' && type !== 'edit') notFound();
 
     const searchParams = useSearchParams();
-    const orderFrom = searchParams.get('orderFrom') as OrderFrom;
     const addressId = type === 'edit' ? searchParams.get('addressId') : null;
 
     const { data: addressList } = useAddressListQuery();
@@ -81,7 +79,7 @@ export default function AddressCUPage() {
             } else {
                 await createAddressMutation(newAddress);
             }
-            router.replace(`/address?${getOrderFromQueryString(orderFrom)}`);
+            router.replace(`/address`);
         } catch {
             alert(
                 type === 'edit'
@@ -140,22 +138,21 @@ export default function AddressCUPage() {
                 </div>
 
                 <label className="flex w-fit cursor-pointer items-center gap-2">
-                    <input
-                        onChange={(e) =>
+                    <CheckBox
+                        checked={newAddress.defaultAddress}
+                        onChange={() =>
                             handleFieldChange(
                                 'defaultAddress',
-                                e.target.checked
+                                !newAddress.defaultAddress
                             )
                         }
-                        checked={newAddress.defaultAddress}
-                        type="checkbox"
-                        className="border-gray-09 rounded-xs not-checked:bg-[url('/unchecked-check.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checked-check.svg')]"
+                        size="sm"
                     />
                     <span className="text-body-03">기본 배송지로 설정</span>
                 </label>
             </div>
 
-            <BottomButton
+            <BottomFixedButton
                 text={type === 'add' ? '저장하기' : '수정하기'}
                 isDisabled={isDisabled}
                 onClick={handleSubmitButtonClick}

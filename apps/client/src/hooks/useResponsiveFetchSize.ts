@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { gridBreakpoints } from '@/constants/grid';
+import { GRID_BREAKPOINTS } from '@/constants/grid';
 
 // rows: 한 번에 보여줄 row 수 (기본값 5)
 export const useResponsiveFetchSize = (rows: number = 4) => {
     const getFetchSize = useCallback(() => {
         if (typeof window === 'undefined')
-            return gridBreakpoints[0]!.columns * rows;
+            return GRID_BREAKPOINTS[0]!.columns * rows;
 
         const width = window.innerWidth;
-        const found = gridBreakpoints.find((bp) => width <= bp.maxWidth);
+        const found = GRID_BREAKPOINTS.find((bp) => width <= bp.maxWidth);
 
         return found
             ? found.columns * found.rows
-            : gridBreakpoints[gridBreakpoints.length - 1]!.columns * rows;
+            : GRID_BREAKPOINTS[GRID_BREAKPOINTS.length - 1]!.columns * rows;
     }, [rows]);
 
     const [size, setSize] = useState(() => getFetchSize());

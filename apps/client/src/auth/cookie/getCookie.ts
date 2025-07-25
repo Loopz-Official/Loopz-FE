@@ -1,6 +1,10 @@
-export const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
+export const getCookie = (name: string): string | undefined => {
+    const match = document.cookie.match(
+        new RegExp('(^| )' + name + '=([^;]+)')
+    );
 
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    if (match && match[2] !== undefined) {
+        return decodeURIComponent(match[2]);
+    }
+    return undefined;
 };

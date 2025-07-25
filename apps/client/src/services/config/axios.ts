@@ -5,7 +5,7 @@ import { getCookie } from '@/auth/cookie/getCookie';
 import { OAUTH_GOOGLE_API } from '@/constants/oauth';
 
 export const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_LOOPZ_PROD_SERVER,
+    baseURL: process.env.NEXT_PUBLIC_LOOPZ_SERVER,
     headers: {
         'Content-type': 'application/json',
     },

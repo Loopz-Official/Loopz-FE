@@ -2,15 +2,16 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { OrderItemVariant } from '@/constants/order';
-import { OrderedObjectInfo } from '@/schemas/order';
+import { ObjectInfo } from '@/schemas/object';
+import { OrderedObjectDetailInfo } from '@/schemas/order';
 import { formatPrice } from '@/utils/formatPrice';
 
 type OrderItemProps = {
-    item: OrderedObjectInfo;
     variant: OrderItemVariant;
+    item: ObjectInfo | OrderedObjectDetailInfo;
 };
 
-export default function OrderItem({ item, variant }: OrderItemProps) {
+export default function OrderItem({ variant, item }: OrderItemProps) {
     const titleClassName =
         variant === 'complete' ? 'text-body-03' : 'text-body-01 font-semibold';
 
@@ -21,7 +22,10 @@ export default function OrderItem({ item, variant }: OrderItemProps) {
                     {item.objectName}
                 </h3>
                 <span className="text-caption-01 text-gray-dark tracking-normal">
-                    {formatPrice(item.objectPrice)}원 / 수량 {item.quantity}개
+                    {'objectPrice' in item
+                        ? formatPrice(item.objectPrice)
+                        : formatPrice(item.purchasePrice)}
+                    원 / 수량 {item.quantity}개
                 </span>
             </div>
             <div className="bg-gray-regular relative aspect-square h-auto w-[clamp(70px,20vw,100px)]">
@@ -29,7 +33,9 @@ export default function OrderItem({ item, variant }: OrderItemProps) {
                     src={item.imageUrl}
                     alt={item.objectName}
                     fill
+                    sizes="(max-width: 672px) 100vw"
                     className="h-auto w-auto object-cover"
+                    priority
                 />
             </div>
         </div>

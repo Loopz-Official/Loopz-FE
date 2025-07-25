@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
-import BottomButton from '@/components/common/BottomButton';
-import VerticalDivider from '@/components/common/VerticalDivider';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import VerticalDivider from '@/components/common/Divider/Vertical';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { ObjectDetailInfo } from '@/schemas/object/object';
@@ -20,7 +20,7 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
     const router = useRouter();
 
     const { count } = usePurchaseCountStore();
-    const { setProducts } = useSelectedProductsStore();
+    const { setSelectedProducts } = useSelectedProductsStore();
 
     if (!objectId) return <div>오브제가 존재하지 않습니다.</div>;
     if (!objectDetail)
@@ -31,14 +31,11 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
     const handleBottomButtonClick = () => {
         const product = {
             objectId,
-            objectName: objectDetail.objectName,
-            objectPrice: objectDetail.objectPrice,
-            imageUrl: objectDetail.imageUrl,
             quantity: count,
         };
-        setProducts([product]);
+        setSelectedProducts([product]);
 
-        router.push('/order/form/?orderFrom=detail');
+        router.push('/order/form');
     };
 
     return (
@@ -83,7 +80,7 @@ const BottomSheet = ({ objectId, objectDetail }: BottomSheetProps) => {
                 </section>
             </section>
 
-            <BottomButton
+            <BottomFixedButton
                 text="구매하기"
                 isDisabled={stock === 0}
                 onClick={handleBottomButtonClick}

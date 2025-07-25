@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import { SOCIAL_LOGIN_TYPE_LABEL } from '@/constants/user';
+import { OAUTH_BADGE } from '@/constants/user';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 
 export default function Profile() {
@@ -19,12 +19,14 @@ export default function Profile() {
         return <div>유저 정보를 불러올 수 없습니다.</div>;
     }
 
-    const { nickName, imageUrl, socialLoginType } = userInfo;
+    const { nickName, imageUrl, socialLoginType, email } = userInfo;
 
     const hasImage = Boolean(imageUrl);
     const profileSrc = imageUrl ?? '/profile/default.svg';
     const profileSize = hasImage ? 80 : 56;
     const borderClass = hasImage ? 'border' : 'border-2';
+
+    const BadgeIcon = OAUTH_BADGE[socialLoginType];
 
     return (
         <div className="mb-5 mt-8 flex flex-col items-center gap-2.5">
@@ -45,10 +47,11 @@ export default function Profile() {
                 />
             </div>
             <div className="text-center">
-                <div className="text-headline-04">{nickName}</div>
-                <div className="text-gray-regular text-caption-02">
-                    {SOCIAL_LOGIN_TYPE_LABEL[socialLoginType]} 회원
-                </div>
+                <span className="text-headline-04">{nickName}</span>
+                <span className="text-gray-regular text-caption-02 flex items-center gap-1.5">
+                    {BadgeIcon && <BadgeIcon />}
+                    {email}
+                </span>
             </div>
         </div>
     );

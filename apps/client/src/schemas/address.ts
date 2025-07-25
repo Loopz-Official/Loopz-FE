@@ -1,9 +1,19 @@
 import * as z from 'zod/v4';
 
+const KORPhoneNumberRegex = /^010-\d{4}-\d{4}$/;
+export const KORPhoneNumber = z
+    .string()
+    .regex(KORPhoneNumberRegex, '전화번호는 010-xxxx-xxxx 형식이어야 합니다.');
+
+const KORZipCodeRegex = /^[0-9]{5}$/;
+export const KORZipCode = z
+    .string()
+    .regex(KORZipCodeRegex, '우편번호는 5자리 숫자여야 합니다.');
+
 // 배송지 목록
 export const addressInfo = z.object({
     addressId: z.uuid(),
-    userId: z.string(),
+    userId: z.uuid(),
     recipientName: z.string(),
     phoneNumber: z.string(),
     zoneCode: z.string(),

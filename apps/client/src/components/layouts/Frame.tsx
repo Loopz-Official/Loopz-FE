@@ -3,20 +3,21 @@
 import { usePathname } from 'next/navigation';
 import { Toaster } from 'sonner';
 
-import NavigationBar from './NavigationBar';
+import BottomGNB from './BottomGNB';
 
 export default function Frame({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const isNavbarVisiblePaths = ['/main', '/mypage'];
+    const isNavbarVisiblePaths = ['/main', '/mypage', '/like', '/about'];
     const isNavbarVisible = isNavbarVisiblePaths.includes(pathname);
 
     return (
         <div className="mx-auto w-full max-w-2xl">
             {children}
-            {isNavbarVisible && <NavigationBar />}
+            {isNavbarVisible && <BottomGNB />}
             <Toaster
                 toastOptions={{
                     style: {
+                        border: 'none',
                         background: '#505050',
                         borderRadius: '4px',
                         padding: '16px 20px',
@@ -28,7 +29,7 @@ export default function Frame({ children }: { children: React.ReactNode }) {
                 position="bottom-center"
                 offset={{ bottom: '84px' }}
                 mobileOffset={{ bottom: '84px' }}
-                expand={false}
+                visibleToasts={1}
             />
         </div>
     );

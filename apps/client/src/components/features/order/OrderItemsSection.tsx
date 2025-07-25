@@ -1,27 +1,21 @@
 import { OrderItemVariant } from '@/constants/order';
-import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
-import { OrderedObjectInfo } from '@/schemas/order';
+import { ObjectInfo } from '@/schemas/object';
+import { OrderedObjectDetailInfo } from '@/schemas/order';
 
 import OrderItem from './OrderItem';
 
+// Discriminated Union 타입 정의
+// variant에 따라 올바른 prop만 받도록 강제
+
 type OrderItemsSectionProps = {
-    orderItems?: OrderedObjectInfo[];
     variant: OrderItemVariant;
+    items: ObjectInfo[] | OrderedObjectDetailInfo[];
 };
 
 export default function OrderItemsSection({
-    orderItems,
     variant,
+    items,
 }: OrderItemsSectionProps) {
-    const { products } = useSelectedProductsStore();
-    const items: OrderedObjectInfo[] =
-        variant === 'form'
-            ? products.map((product) => ({
-                  ...product,
-                  totalPrice: product.objectPrice * product.quantity,
-              }))
-            : (orderItems ?? []);
-
     return (
         <>
             <header>

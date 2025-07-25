@@ -1,5 +1,7 @@
 import { FOOTER_ITEMS, FOOTER_LINKS } from '@/constants/footer';
 
+import VerticalDivider from '../common/Divider/Vertical';
+
 export default function Footer() {
     return (
         <div className="border-gray-light border-t-4 px-5 pb-9 pt-6">
@@ -15,17 +17,25 @@ export default function Footer() {
                 ))}
             </div>
 
-            <div className="flex">
-                {FOOTER_LINKS.map(({ label, href }, i) => (
-                    <div key={label} className="flex items-center">
-                        <a href={href} target="_blank" rel="noreferrer">
-                            {label}
-                        </a>
-                        {i !== FOOTER_LINKS.length - 1 && (
-                            <div className="mx-3 h-3 w-px bg-[#e5e5ec]" />
-                        )}
-                    </div>
-                ))}
+            <div className="flex gap-3">
+                {FOOTER_LINKS.map(({ label, href }, i) => {
+                    const refund = label === '환불 규정';
+                    const isLast = i === FOOTER_LINKS.length - 1;
+
+                    return (
+                        <div key={label} className="flex items-center gap-3">
+                            <a
+                                href={href}
+                                target={refund ? '_self' : '_blank'}
+                                rel="noreferrer"
+                                className="text-body-03 text-gray-03 font-normal"
+                            >
+                                {label}
+                            </a>
+                            {!isLast && <VerticalDivider />}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

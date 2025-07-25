@@ -1,17 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { OrderResponse } from '@/schemas/order';
+import { getOrderDetail, getOrderHistory } from '@/services/api/order';
 
-export const useOrderCompleteQuery = () => {
-    return useQuery<OrderResponse>({
-        queryKey: ['orderComplete'],
+export const useOrderHistoryQuery = (orderId?: string) => {
+    return useQuery({
+        queryKey: ['order-history', orderId],
+        queryFn: getOrderHistory,
+        staleTime: 1000 * 10,
+        gcTime: 1000 * 30,
     });
 };
 
-// // 주문 생성 API 만들어지면 적용
-// export const useOrderCompleteQuery = (orderId: string) => {
-//     return useQuery<OrderResponse>({
-//         queryKey: ['orderComplete', orderId],
-//         queryFn: () => fetchOrderComplete(orderId), // 주문 ID로 fetch
-//     });
-// };
+export const useOrderDetailQuery = (orderId: string) => {
+    return useQuery({
+        queryKey: ['order-detail', orderId],
+        queryFn: () => getOrderDetail(orderId), // 주문 ID로 fetch
+        enabled: !!orderId,
+        staleTime: 1000 * 10,
+        gcTime: 1000 * 30,
+    });
+};

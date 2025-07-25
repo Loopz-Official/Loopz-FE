@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import BottomPurchaseCTA from '@/components/features/obje/BottomPurchaseCTA';
 import ObjectMetadataUnit from '@/components/features/obje/ObjectMetadataUnit';
 import PurchaseNotice from '@/components/features/obje/PurchaseNotice';
-import { useObjectDetailQuery } from '@/hooks/queries/useObjectDetailQuery';
+import { useObjectDetailQuery } from '@/hooks/queries/useObjectQuery';
 import { usePurchaseCountStore } from '@/hooks/stores/usePurchaseCount';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
 import { formatPrice } from '@/utils/formatPrice';

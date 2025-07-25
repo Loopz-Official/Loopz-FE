@@ -3,8 +3,10 @@
     "git": {
         "deploymentEnabled": {
             "feature/*": false,
+            "feature/42-payment": true,
             "fix/*": false,
             "refactor/*": false,
+            "chore/*": false,
             "integration/*": false,
             "develop": false
         }

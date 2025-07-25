@@ -1,4 +1,10 @@
-import { logoutResponse, TermsAgreement, userInfo } from '@/schemas/auth';
+import {
+    logoutResponse,
+    nicknameRedundancyResponse,
+    nicknameUpdateResponse,
+    TermsAgreement,
+    userInfo,
+} from '@/schemas/auth';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -6,17 +12,23 @@ import { apiClient } from '../config/axios';
 // 닉네임 중복 검사
 export const checkNicknameRedundancy = async (nickname: string) => {
     try {
-        // console.log('Nickname: ', nickname);
-
         const response = await apiClient.get(
             `/user/v1/nickname/validate?nickname=${nickname}`
         );
 
         // console.log('checkNicknameRedundancy Response: ', response);
 
-        return response.data.data;
+        if (response.status === 200) {
+            return validate(
+                nicknameRedundancyResponse,
+                response.data.data,
+                'Nickname Redundancy'
+            );
+        }
+        throw new Error('Nickname Redundancy API Error');
     } catch (error) {
         console.error('Error checking nickname redundancy:', error);
+        throw error;
     }
 };
 
@@ -27,13 +39,22 @@ export const updateNickname = async (nickname: string) => {
             nickname,
         });
 
-        if (response.status === 200) {
-            // console.log('Nickname updated successfully: ', response);
+        // console.log('Nickname update: ', response);
 
-            return { data: response.data.data, status: response.status };
+        if (response.status === 200) {
+            return {
+                data: validate(
+                    nicknameUpdateResponse,
+                    response.data.data,
+                    'Nickname Update'
+                ),
+                status: response.status,
+            };
         }
+        throw new Error('Nickname Update API Error');
     } catch (error) {
         console.error('Error updating nickname:', error);
+        throw error;
     }
 };
 

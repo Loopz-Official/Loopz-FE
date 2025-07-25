@@ -1,14 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { toast } from 'sonner';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import LikeIconDynamic from '@/components/icons/LikeIcon';
 import { useUpdateCartItem } from '@/hooks/mutations/useCartMutation';
+import { useLikeToggleMutation } from '@/hooks/mutations/useObjectMutation';
 import { useToAddObjectStore } from '@/hooks/stores/useToAddObject';
+import usePreventBodyScroll from '@/hooks/usePreventBodyScroll';
 import { CartIcon } from '@/icons/Header';
 import { ObjectDetailInfo } from '@/schemas/object/object';
+import { getLikeIconStyling } from '@/utils/likeIconStyling';
 
 import BottomSheet from './BottomSheet';
 
@@ -21,28 +23,29 @@ const BottomPurchaseCTA = ({
     objectId,
     objectDetail,
 }: BottomPurchaseCTAProps) => {
-    const [isLiked, setIsLiked] = useState(false);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
-    // const [isCartToastRender, setIsCartToastRender] = useState<boolean>(false);
+    usePreventBodyScroll(isBottomSheetOpen);
 
     const addCartMutation = useUpdateCartItem();
+    const likeToggleMutation = useLikeToggleMutation();
 
     if (!objectDetail) return <div>오브제 상세 정보가 존재하지 않습니다.</div>;
 
     const isSoldOut = objectDetail.stock === 0;
+    const isLiked = objectDetail.liked;
 
-    const handleLike = () => setIsLiked((prev) => !prev);
-    const handleCart = async () => {
-        await addCartMutation.mutateAsync({
+    const handleLike = () => {
+        likeToggleMutation.mutate({ objectId, currentLiked: isLiked });
+    };
+
+    const handleCart = () => {
+        addCartMutation.mutate({
             objectId: useToAddObjectStore.getState().objectId,
             quantity: 1,
         });
-        toast.success('장바구니에 상품을 담았어요!');
     };
 
-    const likeIconStyling = isLiked
-        ? { fill: '#FF5A2D', stroke: 'none' }
-        : { fill: 'none', stroke: '#151515' };
+    const likeIconStyling = getLikeIconStyling('detail', isLiked);
 
     const CTA_ICONS = [
         {
@@ -65,7 +68,7 @@ const BottomPurchaseCTA = ({
 
     return (
         <div className="fixed bottom-0 z-50 w-full max-w-2xl bg-white">
-            <BottomButton
+            <BottomFixedButton
                 text={isSoldOut ? '판매 완료' : '구매하기'}
                 isDisabled={isSoldOut}
                 onClick={() => setIsBottomSheetOpen(true)}
@@ -74,13 +77,16 @@ const BottomPurchaseCTA = ({
                 <ul className="flex items-center gap-4">
                     {CTA_ICONS.map((item) => (
                         <li key={item.name}>
-                            <button onClick={item.onClick} disabled={isSoldOut}>
+                            <button
+                                onClick={item.onClick}
+                                disabled={isSoldOut && item.name === 'cart'}
+                            >
                                 {item.icon()}
                             </button>
                         </li>
                     ))}
                 </ul>
-            </BottomButton>
+            </BottomFixedButton>
             {isBottomSheetOpen && (
                 <>
                     <BottomSheet

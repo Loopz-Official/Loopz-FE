@@ -1,52 +1,37 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
-import { setUserInfoCookie } from '@/auth/cookie/setCookie';
-import BottomButton from '@/components/common/BottomButton';
+import { setAuthCookies } from '@/auth/cookie/setCookie';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import ExternalLink from '@/components/common/Links/ExternalLink';
 import AgreementUnit from '@/components/features/auth/AgreementUnit';
 import { SIGN_UP_TERMS } from '@/constants/terms';
-import { useUserInfo } from '@/hooks/stores/userInfo';
+import { useTermsCheck } from '@/hooks/check/useTermsCheck';
+import { useUserEmailStore } from '@/hooks/stores/useUserEmailStore';
+import { ChevronRightIcon } from '@/icons/Chevron';
 import { TermsAgreement } from '@/schemas/auth';
 import { agreeSignupTerms } from '@/services/api/auth';
 
 export default function TermsPage() {
     const router = useRouter();
-
-    const [agreements, setAgreements] = useState(
-        SIGN_UP_TERMS.map((a) => ({ ...a }))
-    );
-
-    const isCheckedAll = agreements.every((agreement) => agreement.checked);
-    const isMandatoryAllChecked = agreements
-        .filter((agreement) => agreement.mandatory)
-        .every((agreement) => agreement.checked);
-
-    const handleAllChange = (checked: boolean) => {
-        setAgreements(
-            agreements.map((agreement) => ({ ...agreement, checked }))
-        );
-    };
-
-    const handleSingleChange = (index: number, checked: boolean) => {
-        setAgreements((agreements) =>
-            agreements.map((agreement, i) =>
-                i === index ? { ...agreement, checked } : agreement
-            )
-        );
-    };
+    const terms = SIGN_UP_TERMS;
+    const {
+        isChecked,
+        isAllChecked,
+        isAllMandatoryChecked,
+        toggle,
+        toggleAll,
+    } = useTermsCheck(terms);
 
     const handleTermsAgreementSubmit = async () => {
-        const termsAgreement = agreements.reduce(
+        const termsAgreement = terms.reduce(
             (acc, cur) => ({
                 ...acc,
-                [cur.id]: cur.checked,
+                [cur.id]: isChecked(cur.id),
             }),
             {} as TermsAgreement
         );
-
-        // console.log('termsAgreement: ', termsAgreement);
 
         const termsResponse = await agreeSignupTerms(termsAgreement);
         if (!termsResponse) return;
@@ -54,8 +39,11 @@ export default function TermsPage() {
         const { data: termsUserInfo, status } = termsResponse;
 
         if (status === 200) {
-            useUserInfo.getState().setUserInfo(termsUserInfo);
-            setUserInfoCookie();
+            setAuthCookies({
+                enabled: termsUserInfo.enabled,
+            });
+            // 로그인 성공 시 불필요한 이메일 정보 스토리지 내 제거
+            useUserEmailStore.getState().clearUserEmail();
             router.push('/auth/complete');
         }
     };
@@ -67,24 +55,40 @@ export default function TermsPage() {
                 <AgreementUnit
                     type="all"
                     title="전체 동의하기 (선택 동의 포함)"
-                    checked={isCheckedAll}
-                    onChange={handleAllChange}
+                    checked={isAllChecked}
+                    onChange={toggleAll}
                 />
-                {agreements.map((agreement, i) => (
-                    <AgreementUnit
-                        type="single"
-                        key={agreement.id}
-                        index={i}
-                        {...agreement}
-                        checked={agreement.checked}
-                        onChange={(checked) => handleSingleChange(i, checked)}
-                    />
-                ))}
+                {terms.map((term, i) => {
+                    const isFirstOrLast = i === 0 || i === terms.length - 1;
+
+                    return (
+                        <div
+                            key={term.id}
+                            className="flex items-center justify-between pr-3"
+                        >
+                            <AgreementUnit
+                                type="single"
+                                index={i}
+                                {...term}
+                                checked={isChecked(term.id)}
+                                onChange={() => toggle(term.id)}
+                            />
+                            {!isFirstOrLast && (
+                                <ExternalLink
+                                    href={term.href}
+                                    className="flex h-6 w-6 items-center justify-center"
+                                    icon={<ChevronRightIcon />}
+                                    showIcon
+                                />
+                            )}
+                        </div>
+                    );
+                })}
             </section>
-            <BottomButton
+            <BottomFixedButton
                 position="static"
                 text="다음"
-                isDisabled={!isMandatoryAllChecked}
+                isDisabled={!isAllMandatoryChecked}
                 onClick={handleTermsAgreementSubmit}
             />
         </>

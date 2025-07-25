@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import { ChevronDownIcon } from '@/components/icons/ChevronDown';
+import { ChevronDownIcon } from '@/icons/Chevron';
 import { formatPrice } from '@/utils/formatPrice';
 
 interface PriceSummarySectionProps {

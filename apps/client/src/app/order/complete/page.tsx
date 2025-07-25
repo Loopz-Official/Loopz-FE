@@ -1,24 +1,27 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
 import { ORDER_NOTIFICATIONS } from '@/constants/order';
-import { useOrderCompleteQuery } from '@/hooks/queries/useOrderQuery';
+import { useOrderDetailQuery } from '@/hooks/queries/useOrderQuery';
+import { orderStatusEnum, paymentMethodEnum } from '@/schemas/order';
 
 export default function OrderCompletePage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const orderId = searchParams.get('orderId') ?? '';
 
-    const { data: orderData, isLoading, error } = useOrderCompleteQuery();
+    const { data: orderInfos, isLoading, error } = useOrderDetailQuery(orderId);
 
     useEffect(() => {
         if (error) {
-            router.replace('/main'); // 추후에는 push로 history 남길 것
+            router.push('/main');
         }
     }, [error, router]);
 
@@ -61,15 +64,18 @@ export default function OrderCompletePage() {
                         <div className="flex flex-col gap-3 border-t border-black pb-6 pt-3">
                             <OrderItemsSection
                                 variant="complete"
-                                orderItems={orderData?.objects ?? []}
+                                items={orderInfos?.objects ?? []}
                             />
                         </div>
 
                         {/* 결제 수단 */}
                         <div className="pb-13 flex flex-col border-t border-black pt-3">
                             <PaymentMethodSection
-                                paymentMethod={orderData?.paymentMethod}
-                                status={orderData?.status}
+                                paymentMethod={
+                                    orderInfos?.paymentMethod ??
+                                    paymentMethodEnum.enum.BANK_TRANSFER
+                                }
+                                status={orderStatusEnum.enum.ORDERED} // orderStatus Response DTO에 추가 요청 후 수정
                             />
                         </div>
                     </div>
@@ -88,7 +94,7 @@ export default function OrderCompletePage() {
                         </ul>
                     </footer>
 
-                    <BottomButton
+                    <BottomFixedButton
                         text="다른 상품 둘러보러 가기"
                         isDisabled={false}
                         onClick={() => router.replace('/main')}

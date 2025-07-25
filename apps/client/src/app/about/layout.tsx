@@ -1,7 +1,6 @@
 import Header from '@/components/layouts/Header';
-import NavigationBar from '@/components/layouts/NavigationBar';
 
-export default function ObjectDetailLayout({
+export default function AboutLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -10,7 +9,6 @@ export default function ObjectDetailLayout({
         <>
             <Header type="main" />
             <main className="pb-14">{children}</main>
-            <NavigationBar />
         </>
     );
 }

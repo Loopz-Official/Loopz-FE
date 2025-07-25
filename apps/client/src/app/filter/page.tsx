@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import ChipList from '@/components/features/filter/ChipList';
 import PriceRange from '@/components/features/filter/PriceRange';
 import Header from '@/components/layouts/Header';
@@ -108,7 +108,7 @@ export default function ObjectFilterPage() {
                 ))}
             </div>
 
-            <BottomButton
+            <BottomFixedButton
                 text="결과보기"
                 isDisabled={false}
                 onClick={handleConfirmButtonClick}
@@ -119,7 +119,7 @@ export default function ObjectFilterPage() {
                 >
                     초기화
                 </button>
-            </BottomButton>
+            </BottomFixedButton>
         </div>
     );
 }
