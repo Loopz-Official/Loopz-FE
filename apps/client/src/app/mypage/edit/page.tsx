@@ -1,40 +1,81 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import UserInfoInput from '@/components/features/auth/UserInfoInput';
 import BirthDateSection from '@/components/features/mypage/edit/BirthDateSection';
-import EmailSection from '@/components/features/mypage/edit/EmailSection';
 import GenderSection from '@/components/features/mypage/edit/GenderSection';
-import NicknameSection from '@/components/features/mypage/edit/NicknameSection';
-import Header from '@/components/layouts/Header';
 import { useUpdateUserInfoMutation } from '@/hooks/mutations/useUserMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserQuery';
 import { GenderType } from '@/schemas/user';
 import { checkNicknameRedundancy } from '@/services/api/auth';
 import { validateBirthDate } from '@/utils/mypage/validateBirthDate';
 
+// 사용자 정보 폼 타입 분리
+type UserInfoForm = {
+    nickName: string;
+    birthDate: string;
+    gender: GenderType;
+};
+
 export default function Page() {
-    const { data: userInfo, isLoading } = useUserInfoQuery();
+    const { data: userInfoRaw, isLoading } = useUserInfoQuery();
     const updateUserInfoMutation = useUpdateUserInfoMutation();
 
-    const [newUserInfo, setNewUserInfo] = useState<{
-        nickName: string;
-        birthDate: string;
-        gender: GenderType;
-    }>({ nickName: '', birthDate: '', gender: 'UNKNOWN' });
+    // userInfo를 UserInfoForm 타입으로 변환 (null/undefined 방지)
+    const userInfo: UserInfoForm | undefined = useMemo(
+        () =>
+            userInfoRaw
+                ? {
+                      nickName: userInfoRaw.nickName,
+                      birthDate: userInfoRaw.birthDate ?? '',
+                      gender: userInfoRaw.gender ?? 'UNKNOWN',
+                  }
+                : undefined,
+        [userInfoRaw]
+    );
+
+    const [newUserInfo, setNewUserInfo] = useState<UserInfoForm>({
+        nickName: '',
+        birthDate: '',
+        gender: 'UNKNOWN',
+    });
     const [isNicknameValid, setIsNicknameValid] = useState<boolean | null>(
         null
     );
-    const [birthDateError, setBirthDateError] = useState('');
+    const [isCheckingNickname, setIsCheckingNickname] =
+        useState<boolean>(false);
+    const [birthDateError, setBirthDateError] = useState<string>('');
+
+    // 변경 감지 함수 분리
+    const isUserInfoUnchanged = (a: UserInfoForm, b: UserInfoForm) =>
+        a.nickName === b.nickName &&
+        a.birthDate === b.birthDate &&
+        a.gender === b.gender;
+
+    // 변경된 값만 추려내는 함수 분리
+    const getChangedUserInfo = (
+        newUserInfo: UserInfoForm,
+        userInfo: UserInfoForm
+    ): Partial<UserInfoForm> => {
+        const params: Partial<UserInfoForm> = {};
+        if (newUserInfo.nickName !== userInfo.nickName) {
+            params.nickName = newUserInfo.nickName;
+        }
+        if (newUserInfo.birthDate !== userInfo.birthDate) {
+            params.birthDate = newUserInfo.birthDate;
+        }
+        if (newUserInfo.gender !== userInfo.gender) {
+            params.gender = newUserInfo.gender;
+        }
+        return params;
+    };
 
     useEffect(() => {
         if (userInfo) {
-            setNewUserInfo({
-                nickName: userInfo.nickName,
-                birthDate: userInfo.birthDate ?? '',
-                gender: userInfo.gender ?? 'UNKNOWN',
-            });
+            setNewUserInfo(userInfo);
         }
     }, [userInfo]);
 
@@ -42,23 +83,29 @@ export default function Page() {
         if (
             !newUserInfo.nickName ||
             newUserInfo.nickName === userInfo?.nickName
-        )
+        ) {
+            setIsNicknameValid(null); // 기존 닉네임이면 중복 검사 결과를 초기화
             return;
+        }
 
+        setIsCheckingNickname(true);
         const timer = setTimeout(() => {
             handleNicknameValidation(newUserInfo.nickName);
         }, 2000);
 
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+        };
     }, [newUserInfo.nickName, userInfo]);
 
-    const handleNicknameValidation = async (nickname: string) => {
-        const response = await checkNicknameRedundancy(nickname);
-        setIsNicknameValid(!!response.usable);
-    };
-
     if (isLoading) return <div>Loading...</div>;
-    else if (!userInfo) return <div>회원 정보를 불러오는 데 실패했습니다.</div>;
+    if (!userInfo) return <div>회원 정보를 불러오는 데 실패했습니다.</div>;
+
+    const handleNicknameValidation = async (nickname: string) => {
+        const { usable } = await checkNicknameRedundancy(nickname);
+        setIsNicknameValid(usable);
+        setIsCheckingNickname(false);
+    };
 
     const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBirthDateError('');
@@ -83,36 +130,47 @@ export default function Page() {
         }
     };
 
-    const handleEditButtonClick = async () => {
-        const { nickName, birthDate, gender } = newUserInfo;
-        try {
-            await updateUserInfoMutation.mutateAsync({
-                ...(nickName === userInfo.nickName ? {} : { nickName }),
-                ...(birthDate ? { birthDate } : {}),
-                ...(gender ? { gender } : {}),
-            });
-            toast('회원 정보가 수정되었습니다.');
-        } catch {
-            alert('회원 정보를 수정하는 중 에러가 발생했습니다.');
+    const handleEditButtonClick = () => {
+        if (isUserInfoUnchanged(newUserInfo, userInfo)) {
+            toast.info('변경된 내용이 없습니다');
+            return;
         }
+
+        // 변경된 값만 추려서 전달
+        const params = getChangedUserInfo(newUserInfo, userInfo);
+        updateUserInfoMutation.mutate(params);
     };
 
-    return (
-        <div className="pb-30">
-            <Header type="title" title="확인/수정하기" />
+    const isEditButtonDisabled =
+        isNicknameValid === false ||
+        isCheckingNickname ||
+        newUserInfo.nickName.length === 0 ||
+        !!birthDateError;
 
-            <div className="space-y-9 px-5 py-6">
-                <NicknameSection
-                    nickName={newUserInfo.nickName}
-                    isNicknameValid={isNicknameValid}
-                    onNicknameChange={(e) =>
+    return (
+        <>
+            <div className="space-y-9">
+                <UserInfoInput
+                    label="nickname"
+                    userInfo={newUserInfo.nickName}
+                    nickname={newUserInfo.nickName}
+                    setNickname={(value) =>
                         setNewUserInfo({
                             ...newUserInfo,
-                            nickName: e.target.value,
+                            nickName: value,
                         })
                     }
+                    isChecking={isCheckingNickname}
+                    isNicknameValid={isNicknameValid}
+                    labelClassName="text-body-02"
+                    inputClassName="text-body-01"
                 />
-                <EmailSection email={userInfo.email} />
+                <UserInfoInput
+                    label="email"
+                    userInfo={userInfoRaw?.email ?? ''}
+                    labelClassName="text-body-02"
+                    inputClassName="text-body-01"
+                />
                 <BirthDateSection
                     birthDate={newUserInfo.birthDate}
                     birthDateError={birthDateError}
@@ -126,19 +184,11 @@ export default function Page() {
                 />
             </div>
 
-            <div className="fixed bottom-0 w-full max-w-2xl px-5 py-8">
-                <button
-                    disabled={
-                        isNicknameValid === false ||
-                        newUserInfo.nickName.length === 0 ||
-                        !!birthDateError
-                    }
-                    onClick={handleEditButtonClick}
-                    className="disabled:bg-button-disabled text-body-02 w-full rounded-sm bg-black py-4 text-white"
-                >
-                    수정하기
-                </button>
-            </div>
-        </div>
+            <BottomFixedButton
+                text="수정하기"
+                isDisabled={isEditButtonDisabled}
+                onClick={handleEditButtonClick}
+            />
+        </>
     );
 }

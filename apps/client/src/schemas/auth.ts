@@ -2,6 +2,11 @@ import * as z from 'zod/v4';
 
 import { serverAuthResponse } from './oauth';
 
+export const nicknameRedundancy = z.object({
+    usable: z.boolean(),
+});
+export type NicknameRedundancy = z.infer<typeof nicknameRedundancy>;
+
 export const termsAgreement = z.object({
     over14: z.nullable(z.boolean()),
     agreedServiceTerms: z.nullable(z.boolean()),

@@ -1,4 +1,9 @@
-import { logoutResponse, TermsAgreement, userInfo } from '@/schemas/auth';
+import {
+    logoutResponse,
+    nicknameRedundancy,
+    TermsAgreement,
+    userInfo,
+} from '@/schemas/auth';
 import { validate } from '@/schemas/utils/validate';
 
 import { apiClient } from '../config/axios';
@@ -12,11 +17,19 @@ export const checkNicknameRedundancy = async (nickname: string) => {
             `/user/v1/nickname/validate?nickname=${nickname}`
         );
 
-        // // console.log('checkNicknameRedundancy Response: ', response);
+        console.log('checkNicknameRedundancy Response: ', response);
 
-        return response.data.data;
+        if (response.status === 200) {
+            return validate(
+                nicknameRedundancy,
+                response.data.data,
+                'Nickname Redundancy'
+            );
+        }
+        throw new Error('Failed to check nickname redundancy');
     } catch (error) {
         console.error('Error checking nickname redundancy:', error);
+        throw error;
     }
 };
 

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
-import { GenderType, MyAccountInfo } from '@/schemas/user';
+import { GenderType } from '@/schemas/user';
 import { updateMyAccountInfo } from '@/services/api/user';
 import { handleMutationError } from '@/utils/error/handleMutationError';
 
@@ -17,10 +18,9 @@ export const useUpdateUserInfoMutation = () => {
             birthDate?: string;
             gender?: GenderType;
         }) => updateMyAccountInfo(nickName, birthDate, gender),
-        onSuccess: (data) => {
-            queryClient.setQueryData(['user'], (prevData: MyAccountInfo) => {
-                return { ...prevData, ...data };
-            });
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+            toast.success('회원 정보가 수정되었습니다.');
         },
         onError: handleMutationError,
     });

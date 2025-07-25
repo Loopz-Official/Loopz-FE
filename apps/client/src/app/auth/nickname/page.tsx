@@ -29,13 +29,8 @@ export default function NicknamePage() {
     }, [nickname]);
 
     const handleNicknameValidation = async (nickname: string) => {
-        setIsNicknameValid(false);
-
-        const response = await checkNicknameRedundancy(nickname);
-
-        // // console.log('checkNicknameRedundancy Response: ', response);
-
-        setIsNicknameValid(!!response.usable);
+        const { usable } = await checkNicknameRedundancy(nickname);
+        setIsNicknameValid(usable);
         setIsChecking(false);
     };
 
