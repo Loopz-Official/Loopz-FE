@@ -12,7 +12,7 @@ import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
 import { ORDER_TERMS } from '@/constants/terms';
 import { useTermsCheck } from '@/hooks/check';
-import { usePlaceOrderAndPaymentMutation } from '@/hooks/mutations/useOrderMutation';
+import { usePlaceOrderAndPaymentMutation } from '@/hooks/mutations/usePaymentMutation';
 import { useAddressListQuery } from '@/hooks/queries/useAddressQuery';
 import { useSelectedObjectInfosQuery } from '@/hooks/queries/useObjectQuery';
 import { useSelectedAddressIdStore } from '@/hooks/stores/useSelectedAddressIdStore';
