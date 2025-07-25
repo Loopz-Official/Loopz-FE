@@ -29,7 +29,6 @@ export const checkNicknameRedundancy = async (nickname: string) => {
     } catch (error) {
         console.error('Error checking nickname redundancy:', error);
         throw error;
-        throw error;
     }
 };
 
