@@ -22,11 +22,11 @@ export const LEFT_SIDE_OPTIONS = {
 };
 
 export const RIGHT_SIDE_OPTIONS = [
-    // {
-    //     label: '검색',
-    //     icon: I.SearchIcon,
-    //     route: '/search',
-    // },
+    {
+        label: '검색',
+        icon: I.SearchIcon,
+        route: '/search',
+    },
     {
         label: '장바구니',
         icon: I.CartIcon,
