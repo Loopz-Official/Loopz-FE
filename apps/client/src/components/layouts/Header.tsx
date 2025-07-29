@@ -42,7 +42,7 @@ export default function Header({ type, title, redirectAction }: HeaderProps) {
     };
 
     return (
-        <div className="z-100 sticky top-0 grid h-14 w-full grid-cols-[1fr_auto_1fr] bg-white px-5 py-[0.875rem]">
+        <div className="sticky top-0 z-50 grid h-14 w-full grid-cols-[1fr_auto_1fr] bg-white px-5 py-[0.875rem]">
             <div>
                 <button
                     onClick={handleLeftOptionClick}
