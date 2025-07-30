@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import * as I from '@/icons/Header';
@@ -9,13 +9,16 @@ import { RelativeObjectResponse } from '@/schemas/search';
 import { getRelativeObject } from '@/services/api/search';
 import { splitTextByKeyword } from '@/utils/splitTextByKeyword';
 
-export default function SearchBar() {
+export default function SearchBar({
+    keyword: paramsKeyword,
+}: {
+    keyword: string;
+}) {
     const [isSearching, setIsSearching] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [relativeObjects, setRelativeObjects] =
         useState<RelativeObjectResponse>([]);
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     useEffect(() => {
         if (!keyword) {
@@ -23,7 +26,7 @@ export default function SearchBar() {
             return;
         }
 
-        if (keyword === searchParams.get('keyword')) {
+        if (keyword === paramsKeyword) {
             return;
         }
 
@@ -32,7 +35,7 @@ export default function SearchBar() {
         }, 1000);
 
         return () => clearTimeout(timer);
-    }, [keyword, searchParams]);
+    }, [keyword, paramsKeyword]);
 
     const autocomplete = async (keyword: string) => {
         const response = await getRelativeObject(keyword);
@@ -50,8 +53,10 @@ export default function SearchBar() {
     };
 
     useEffect(() => {
-        setKeyword(searchParams.get('keyword') ?? '');
-    }, [searchParams]);
+        if (paramsKeyword) {
+            setKeyword(paramsKeyword);
+        }
+    }, [paramsKeyword]);
 
     return (
         <>

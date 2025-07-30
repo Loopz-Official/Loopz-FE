@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import RecentSearch from '@/components/features/search/RecentSearch';
 import SearchBar from '@/components/features/search/SearchBar';
 import SearchBoard from '@/components/features/search/SearchBoard';
@@ -13,9 +11,7 @@ export default async function Page({
 
     return (
         <div>
-            <Suspense>
-                <SearchBar />
-            </Suspense>
+            <SearchBar keyword={keyword} />
 
             {keyword ? (
                 <SearchBoard keyword={keyword} />
