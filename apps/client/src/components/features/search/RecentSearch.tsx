@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { SearchHistoryResponse } from '@/schemas/search';
@@ -11,7 +10,6 @@ import KeywordList from './KeywordList';
 export default function RecentSearch() {
     const [histories, setHistories] = useState<SearchHistoryResponse>([]);
     const [error, setError] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
         const getHistories = async () => {
@@ -38,13 +36,7 @@ export default function RecentSearch() {
             </div>
 
             <div>
-                <KeywordList
-                    variant="recent"
-                    keywords={histories}
-                    onClick={(keyword: string) =>
-                        router.push(`/search?keyword=${keyword}`)
-                    }
-                />
+                <KeywordList variant="recent" keywords={histories} />
             </div>
         </div>
     );

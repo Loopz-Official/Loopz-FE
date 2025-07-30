@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 import * as I from '@/icons/Search';
 
@@ -12,15 +13,11 @@ export interface Keyword {
 type keywordListProps = {
     variant: 'recent' | 'recommanded';
     keywords: Keyword[];
-    onClick: (keyword: string) => void;
 };
 
-export default function KeywordList({
-    variant,
-    keywords,
-    onClick,
-}: keywordListProps) {
+export default function KeywordList({ variant, keywords }: keywordListProps) {
     const isRecentKeyword = variant === 'recent';
+    const router = useRouter();
 
     return (
         <div
@@ -30,9 +27,7 @@ export default function KeywordList({
             {keywords.map(({ keyword }) => (
                 <button
                     key={keyword}
-                    onClick={() => {
-                        onClick(keyword);
-                    }}
+                    onClick={() => router.push(`/search?keyword=${keyword}`)}
                     className={clsx(
                         'text-body-03 text-gray-dark flex w-max items-center gap-1.5 whitespace-nowrap rounded-full border py-1 tracking-normal',
                         isRecentKeyword
@@ -43,7 +38,11 @@ export default function KeywordList({
                     {keyword}
 
                     {isRecentKeyword && (
-                        <div role="button" tabIndex={0}>
+                        <div
+                            role="button"
+                            tabIndex={0}
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <I.CloseIcon />
                         </div>
                     )}
