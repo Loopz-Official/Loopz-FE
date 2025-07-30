@@ -1,23 +1,32 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import { SearchHistoryResponse } from '@/schemas/search';
+import { getSearchHistory } from '@/services/api/search';
 
 import KeywordList from './KeywordList';
 
-const keywords = [
-    { searchId: '', keyword: '매거진' },
-    { searchId: '', keyword: '의자' },
-    { searchId: '', keyword: '전신 거울' },
-    { searchId: '', keyword: '러그' },
-    { searchId: '', keyword: '이것 저것' },
-    { searchId: '', keyword: '이 것 저 것' },
-    { searchId: '', keyword: '이것' },
-    { searchId: '', keyword: '저것' },
-    { searchId: '', keyword: 'dlrjtwjrjt' },
-];
-
 export default function RecentSearch() {
+    const [histories, setHistories] = useState<SearchHistoryResponse>([]);
+    const [error, setError] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const getHistories = async () => {
+            try {
+                const response = await getSearchHistory();
+                setHistories(response);
+            } catch {
+                setError(true);
+            }
+        };
+
+        getHistories();
+    }, []);
+
+    if (error) return null;
 
     return (
         <div className="space-y-2.5">
@@ -31,7 +40,7 @@ export default function RecentSearch() {
             <div>
                 <KeywordList
                     variant="recent"
-                    keywords={keywords}
+                    keywords={histories}
                     onClick={(keyword: string) =>
                         router.push(`/search?keyword=${keyword}`)
                     }
