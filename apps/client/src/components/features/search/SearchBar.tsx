@@ -53,9 +53,7 @@ export default function SearchBar({
     };
 
     useEffect(() => {
-        if (paramsKeyword) {
-            setKeyword(paramsKeyword);
-        }
+        setKeyword(paramsKeyword ?? '');
     }, [paramsKeyword]);
 
     return (
@@ -80,7 +78,7 @@ export default function SearchBar({
             </form>
 
             {isSearching && relativeObjects.length > 0 && (
-                <div className="fixed top-14 h-full w-full bg-white pt-4">
+                <div className="fixed top-14 z-20 h-full w-full bg-white pt-4">
                     {relativeObjects.map(({ objectName }) => (
                         <Link
                             key={objectName}
