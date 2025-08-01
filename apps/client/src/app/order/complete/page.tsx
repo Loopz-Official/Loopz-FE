@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import PaymentMethodSection from '@/components/features/order/complete/PaymentMethod';
 import OrderItemsSection from '@/components/features/order/OrderItemsSection';
 import Header from '@/components/layouts/Header';
@@ -75,8 +75,7 @@ export default function OrderCompletePage() {
                                     orderInfos?.paymentMethod ??
                                     paymentMethodEnum.enum.BANK_TRANSFER
                                 }
-                                status={orderStatusEnum.enum.PENDING}
-                                // 상품 단위로 status가 존재하므로 PENDING(아직 결제 시스템 도입 전이므로) 처리
+                                status={orderStatusEnum.enum.ORDERED} // orderStatus Response DTO에 추가 요청 후 수정
                             />
                         </div>
                     </div>
@@ -95,7 +94,7 @@ export default function OrderCompletePage() {
                         </ul>
                     </footer>
 
-                    <BottomButton
+                    <BottomFixedButton
                         text="다른 상품 둘러보러 가기"
                         isDisabled={false}
                         onClick={() => router.replace('/main')}

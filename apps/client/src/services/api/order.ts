@@ -4,6 +4,7 @@ import {
     OrderHistoryResponse,
     orderHistoryResponse,
     OrderRequest,
+    orderRequestSchema,
     placedOrderResponse,
 } from '@/schemas/order';
 import { validate } from '@/schemas/utils/validate';
@@ -12,10 +13,21 @@ import { apiClient } from '../config/axios';
 
 // 주문 생성 API
 export const placeOrder = async (orderRequest: OrderRequest) => {
-    try {
-        const response = await apiClient.post('/order/v1', orderRequest);
+    // console.log('Place Order Request: ', orderRequest);
 
-        console.log('Place Order Response: ', response);
+    const validatedOrderRequest = validate(
+        orderRequestSchema,
+        orderRequest,
+        'Place Order Request'
+    );
+
+    try {
+        const response = await apiClient.post(
+            '/order/v1',
+            validatedOrderRequest
+        );
+
+        // console.log('Place Order Response: ', response);
 
         if (response.status === 200) {
             return validate(
@@ -36,7 +48,7 @@ export const getOrderHistory = async (): Promise<OrderHistoryResponse> => {
     try {
         const response = await apiClient.get('/order/v1');
 
-        console.log('Order History Response: ', response);
+        // console.log('Order History Response: ', response);
 
         if (response.status === 200) {
             return validate(
@@ -59,7 +71,7 @@ export const getOrderDetail = async (
     try {
         const response = await apiClient.get(`/order/v1/${orderId}`);
 
-        console.log('Order Detail Response: ', response);
+        // console.log('Order Detail Response: ', response);
 
         if (response.status === 200) {
             return validate(

@@ -9,3 +9,18 @@ export const OAUTH_BADGE: Record<
     KAKAO: KakaoBadge,
     NAVER: NaverBadge,
 };
+
+export const GENDERS = [
+    {
+        label: 'MALE',
+        value: '남성',
+    },
+    {
+        label: 'FEMALE',
+        value: '여성',
+    },
+    {
+        label: 'UNKNOWN',
+        value: '선택하지 않음',
+    },
+] as const;

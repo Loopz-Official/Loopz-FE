@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { setUserInfoCookie } from '@/auth/cookie/setCookie';
-import BottomButton from '@/components/common/BottomButton';
+import { setAuthCookies } from '@/auth/cookie/setCookie';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import UserInfoInput from '@/components/features/auth/UserInfoInput';
-import { useUserInfoStore } from '@/hooks/stores/useUserInfoStore';
+import { useUserEmailStore } from '@/hooks/stores/useUserEmailStore';
 import { checkNicknameRedundancy, updateNickname } from '@/services/api/auth';
 
 export default function NicknamePage() {
@@ -29,14 +29,14 @@ export default function NicknamePage() {
     }, [nickname]);
 
     const handleNicknameValidation = async (nickname: string) => {
-        setIsNicknameValid(false);
-
-        const response = await checkNicknameRedundancy(nickname);
-
-        // // console.log('checkNicknameRedundancy Response: ', response);
-
-        setIsNicknameValid(!!response.usable);
-        setIsChecking(false);
+        try {
+            const { usable } = await checkNicknameRedundancy(nickname);
+            setIsNicknameValid(usable);
+        } catch {
+            setIsNicknameValid(false);
+        } finally {
+            setIsChecking(false);
+        }
     };
 
     const handleNicknameSubmit = async () => {
@@ -46,18 +46,22 @@ export default function NicknamePage() {
         const { data: nicknameUserInfo, status } = nicknameResponse;
 
         if (status === 200) {
-            useUserInfoStore.getState().setUserInfo(nicknameUserInfo);
-            setUserInfoCookie();
+            useUserEmailStore.getState().setUserEmail(nicknameUserInfo.email);
+            setAuthCookies({
+                nickName: nicknameUserInfo.nickName,
+            });
             router.push('/auth/terms');
         }
     };
+
+    const isDisabled = nickname.length === 0 || isChecking || !isNicknameValid;
 
     return (
         <>
             <section className="flex h-fit w-full flex-col gap-8">
                 <UserInfoInput
                     label="email"
-                    userInfo={useUserInfoStore.getState().email}
+                    userInfo={useUserEmailStore.getState().email}
                 />
                 <UserInfoInput
                     label="nickname"
@@ -68,11 +72,9 @@ export default function NicknamePage() {
                     isNicknameValid={isNicknameValid}
                 />
             </section>
-            <BottomButton
+            <BottomFixedButton
                 text="다음"
-                isDisabled={
-                    nickname.length === 0 || (isChecking && !isNicknameValid)
-                }
+                isDisabled={isDisabled}
                 position="static"
                 onClick={handleNicknameSubmit}
             />

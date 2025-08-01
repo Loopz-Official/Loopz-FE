@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 
+import EditDeleteButton from '@/components/common/Button/EditDelete';
 import CheckBox from '@/components/common/CheckBox';
-import EditDeleteButton from '@/components/common/EditDeleteButton';
 import { useSelectedProductsStore } from '@/hooks/stores/useSelectedProductsStore';
 import { ObjectCommonInfo } from '@/schemas/object/object';
 import { formatPrice } from '@/utils/formatPrice';
@@ -58,7 +58,12 @@ const CartItem = ({
     return (
         <div className="flex flex-col gap-2 border-b border-solid border-black pb-6">
             <section className="flex items-center justify-between">
-                <CheckBox isChecked={isChecked} onChange={toggleCheck} />
+                <CheckBox
+                    checked={isChecked}
+                    onChange={toggleCheck}
+                    variant="product-card"
+                    size="md"
+                />
                 <EditDeleteButton type="delete" onClick={onDelete} />
             </section>
 

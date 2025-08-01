@@ -8,7 +8,8 @@ import {
 } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import BottomButton from '@/components/common/BottomButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
+import CheckBox from '@/components/common/CheckBox';
 import AddressSearchSection from '@/components/features/address/AddressSearchSection';
 import NameSection from '@/components/features/address/NameSection';
 import PhoneNumberSection from '@/components/features/address/PhoneNumberSection';
@@ -137,22 +138,21 @@ export default function AddressCUPage() {
                 </div>
 
                 <label className="flex w-fit cursor-pointer items-center gap-2">
-                    <input
-                        onChange={(e) =>
+                    <CheckBox
+                        checked={newAddress.defaultAddress}
+                        onChange={() =>
                             handleFieldChange(
                                 'defaultAddress',
-                                e.target.checked
+                                !newAddress.defaultAddress
                             )
                         }
-                        checked={newAddress.defaultAddress}
-                        type="checkbox"
-                        className="border-gray-09 rounded-xs not-checked:bg-[url('/checkbox/unchecked.svg')] relative h-4 w-4 appearance-none border bg-center bg-no-repeat checked:border-black checked:bg-black checked:bg-[url('/checkbox/checked.svg')]"
+                        size="sm"
                     />
                     <span className="text-body-03">기본 배송지로 설정</span>
                 </label>
             </div>
 
-            <BottomButton
+            <BottomFixedButton
                 text={type === 'add' ? '저장하기' : '수정하기'}
                 isDisabled={isDisabled}
                 onClick={handleSubmitButtonClick}

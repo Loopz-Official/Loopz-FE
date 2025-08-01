@@ -1,0 +1,20 @@
+import { HELPER_TEXT } from '@/constants/helperText';
+
+type BottomNoticeType = 'cart' | 'address';
+
+const BottomNotification = ({ type }: { type: BottomNoticeType }) => {
+    const helperText = HELPER_TEXT[type];
+
+    return (
+        <div className="bottom-18 h-15 fixed w-full max-w-2xl bg-white">
+            <hr className="border-gray-light border-4" />
+
+            <div className="text-disabled text-caption-02 mb-3 mt-5 grid grid-cols-[auto_1fr] gap-0.5 px-5">
+                <div className="w-4 text-center font-black">·</div>
+                <div>{helperText}</div>
+            </div>
+        </div>
+    );
+};
+
+export default BottomNotification;

@@ -27,7 +27,7 @@ export default function AgreementSection({
         <>
             <label className="flex w-fit cursor-pointer items-center gap-3">
                 <CheckBox
-                    isChecked={isAllMandatoryChecked}
+                    checked={isAllMandatoryChecked}
                     onChange={toggleMandatoryOnly}
                 />
                 <span className="text-caption-01 select-none font-semibold">
@@ -44,7 +44,7 @@ export default function AgreementSection({
                         className="flex w-fit cursor-pointer items-center gap-3"
                     >
                         <CheckBox
-                            isChecked={isChecked(id)}
+                            checked={isChecked(id)}
                             onChange={() => toggle(id)}
                         />
 

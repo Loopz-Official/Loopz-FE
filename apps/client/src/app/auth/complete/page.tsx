@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { CheckCircleComplete } from '@/icons/Auth';
+import { CheckCircleComplete } from '@/icons/Common';
 
 export default function SignupComplete() {
     const router = useRouter();
