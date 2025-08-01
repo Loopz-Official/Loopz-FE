@@ -66,7 +66,7 @@ export const agreeSignupTerms = async (termsAgreement: TermsAgreement) => {
             termsAgreement
         );
 
-        // // console.log('Agree to terms Response: ', response);
+        // console.log('Agree to terms Response: ', response);
 
         if (response.status === 200) {
             return {
