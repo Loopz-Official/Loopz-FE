@@ -55,7 +55,7 @@ export default function KeywordList({
                                 handleDeleteButtonClick(e, searchId)
                             }
                         >
-                            <I.CloseIcon />
+                            <I.CloseIcon className="fill-gray-07" />
                         </div>
                     )}
                 </button>

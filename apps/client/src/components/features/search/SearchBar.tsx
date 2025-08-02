@@ -4,10 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import * as I from '@/icons/Header';
+import { RIGHT_SIDE_OPTIONS } from '@/constants/header';
+import * as H from '@/icons/Header';
+import * as S from '@/icons/Search';
 import { RelativeObjectResponse } from '@/schemas/search';
 import { getRelativeObject } from '@/services/api/search';
 import { splitTextByKeyword } from '@/utils/splitTextByKeyword';
+
+import CartCount from '../cart/CartCount';
 
 export default function SearchBar({
     keyword: paramsKeyword,
@@ -19,6 +23,12 @@ export default function SearchBar({
     const [relativeObjects, setRelativeObjects] =
         useState<RelativeObjectResponse>([]);
     const router = useRouter();
+
+    const {
+        label,
+        icon: Icon,
+        route,
+    } = RIGHT_SIDE_OPTIONS.find((option) => option.label === '장바구니')!;
 
     useEffect(() => {
         if (!keyword) {
@@ -63,21 +73,40 @@ export default function SearchBar({
         <>
             <form
                 onSubmit={handleSubmit}
-                className="border-gray-regular sticky top-0 z-50 grid h-14 w-full grid-cols-[auto_1fr_auto] border-b bg-white px-5 py-[0.875rem]"
+                className="border-gray-regular sticky top-0 z-50 grid h-14 w-full grid-cols-[auto_1fr_auto] gap-3 border-b bg-white px-5 py-[0.875rem]"
             >
                 <button type="button" onClick={handleBackButtonClick}>
-                    <I.BackIcon />
+                    <H.BackIcon />
                 </button>
-                <input
-                    type="text"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                    placeholder="구매하고 싶은 제품 유형을 검색해 보세요!"
-                    className="placeholder:text-disabled text-body-03 ml-3 mr-auto w-full max-w-80 placeholder:font-normal"
-                />
-                <button>
-                    <I.SearchIcon />
-                </button>
+                <div className="flex items-center justify-between">
+                    <input
+                        type="text"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        placeholder="구매하고 싶은 제품 유형을 검색해 보세요!"
+                        className="placeholder:text-disabled text-body-03 mr-auto w-full placeholder:font-normal"
+                    />
+                    {keyword && (
+                        <Link href={'/search'}>
+                            <S.CloseIcon className="fill-gray-10" />
+                        </Link>
+                    )}
+                </div>
+                {paramsKeyword ? (
+                    <button
+                        type="button"
+                        className="relative flex items-center gap-1"
+                        aria-label={label}
+                        onClick={() => router.push(route)}
+                    >
+                        <Icon className="h-7 w-7" />
+                        <CartCount />
+                    </button>
+                ) : (
+                    <button>
+                        <H.SearchIcon />
+                    </button>
+                )}
             </form>
 
             {isSearching && relativeObjects.length > 0 && (
