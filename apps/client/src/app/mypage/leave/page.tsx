@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import RadioButton from '@/components/common/Button/Radio';
 import Header from '@/components/layouts/Header';
 import { LEAVE_REASONS } from '@/constants/user';
@@ -10,9 +11,25 @@ export default function Page() {
     const [selectedValue, setSelectedValue] = useState<string>(
         LEAVE_REASONS[0] ?? ''
     );
+    const [textareaValue, setTextareaValue] = useState<string>('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue(e.target.value);
+    };
+
+    const handleTextareaChange = (
+        e: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+        setTextareaValue(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        const reason =
+            selectedValue === LEAVE_REASONS.at(-1)
+                ? textareaValue || selectedValue
+                : selectedValue;
+
+        console.log(reason);
     };
 
     return (
@@ -43,6 +60,8 @@ export default function Page() {
                 {selectedValue === '기타' && (
                     <div className="pl-8">
                         <textarea
+                            value={textareaValue}
+                            onChange={handleTextareaChange}
                             placeholder="30자 이내로 내용을 입력해주세요."
                             maxLength={30}
                             className="border-gray-regular text-body-03 mt-2 h-16 w-full resize-none rounded-sm border p-2.5 font-normal text-black"
@@ -50,6 +69,12 @@ export default function Page() {
                     </div>
                 )}
             </section>
+
+            <BottomFixedButton
+                text="계속하기"
+                isDisabled={!selectedValue}
+                onClick={handleSubmit}
+            />
         </>
     );
 }
