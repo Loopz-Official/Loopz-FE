@@ -10,6 +10,12 @@ export default function Page() {
     const [isChecked, setIsChecked] = useState(false);
     const router = useRouter();
 
+    const handleSubmit = () => {
+        // TODO: 회원 탈퇴 api 연결
+        // 탈퇴 성공 시 유저 정보 제거 후 회원 탈퇴 완료 페이지로 이동
+        router.push('/mypage/leave/complete');
+    };
+
     return (
         <>
             <section className="mb-5 space-y-2 px-5 pt-8">
@@ -38,7 +44,7 @@ export default function Page() {
             <BottomFixedButton
                 text="완료하기"
                 isDisabled={!isChecked}
-                onClick={() => router.push('/mypage/leave/complete')}
+                onClick={handleSubmit}
             />
         </>
     );
