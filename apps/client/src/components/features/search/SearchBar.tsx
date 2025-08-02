@@ -49,8 +49,10 @@ export default function SearchBar({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        router.push(`/search?keyword=${keyword}`);
-        setIsSearching(false);
+        if (keyword) {
+            router.push(`/search?keyword=${keyword}`);
+            setIsSearching(false);
+        }
     };
 
     useEffect(() => {
