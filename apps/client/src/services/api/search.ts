@@ -58,3 +58,18 @@ export const deleteSearchHistory = async (searchId: string) => {
         throw error;
     }
 };
+
+// 최근 검색어 삭제 API
+export const deleteAllSearchHistory = async () => {
+    try {
+        const response = await apiClient.delete(`/search/v1`);
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        throw new Error('Failed to delete all search history');
+    } catch (error) {
+        console.error('Error deleting allsearch history:', error);
+        throw error;
+    }
+};
