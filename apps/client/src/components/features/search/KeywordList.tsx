@@ -13,18 +13,28 @@ export interface Keyword {
 type keywordListProps = {
     variant: 'recent' | 'recommanded';
     keywords: Keyword[];
+    onDelete: (searchId: string) => void;
 };
 
-export default function KeywordList({ variant, keywords }: keywordListProps) {
+export default function KeywordList({
+    variant,
+    keywords,
+    onDelete,
+}: keywordListProps) {
     const isRecentKeyword = variant === 'recent';
     const router = useRouter();
+
+    const handleDeleteButtonClick = (e: React.MouseEvent, searchId: string) => {
+        e.stopPropagation();
+        onDelete(searchId);
+    };
 
     return (
         <div
             className="flex w-full gap-x-1.5 overflow-x-scroll pr-5"
             style={{ scrollbarWidth: 'none' }}
         >
-            {keywords.map(({ keyword }) => (
+            {keywords.map(({ keyword, searchId }) => (
                 <button
                     key={keyword}
                     onClick={() => router.push(`/search?keyword=${keyword}`)}
@@ -41,7 +51,9 @@ export default function KeywordList({ variant, keywords }: keywordListProps) {
                         <div
                             role="button"
                             tabIndex={0}
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) =>
+                                handleDeleteButtonClick(e, searchId)
+                            }
                         >
                             <I.CloseIcon />
                         </div>
