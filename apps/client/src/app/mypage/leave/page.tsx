@@ -1,13 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import RadioButton from '@/components/common/Button/Radio';
-import Header from '@/components/layouts/Header';
 import { LEAVE_REASONS } from '@/constants/user';
 
 export default function Page() {
+    const router = useRouter();
+
     const [selectedValue, setSelectedValue] = useState<string>(
         LEAVE_REASONS[0] ?? ''
     );
@@ -30,16 +32,15 @@ export default function Page() {
                 : selectedValue;
 
         console.log(reason);
+        router.push('/mypage/leave/confirm');
     };
 
     return (
         <>
-            <Header type="title" title="탈퇴하기" />
-
             <section className="mb-5 px-5 pt-8">
-                <div className="text-body-01 font-semibold">
+                <h3 className="text-body-01 font-semibold">
                     (필수) 탈퇴 사유를 선택해 주세요.
-                </div>
+                </h3>
             </section>
 
             <section className="px-5">
