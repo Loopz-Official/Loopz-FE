@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import { clearUserInfoCookie } from '@/auth/cookie/clearCookie';
 import { CheckCircleComplete } from '@/icons/Common';
 
 export default function SignupComplete() {
@@ -10,6 +11,8 @@ export default function SignupComplete() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            clearUserInfoCookie();
+            localStorage.clear();
             router.push('/main');
         }, 2000);
         return () => clearTimeout(timer);

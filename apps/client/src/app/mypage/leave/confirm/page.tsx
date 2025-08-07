@@ -5,15 +5,22 @@ import { useState } from 'react';
 
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import CheckBox from '@/components/common/CheckBox';
+import { useLeaveReasonStore } from '@/hooks/stores/useLeaveReason';
+import { leave } from '@/services/api/auth';
 
 export default function Page() {
     const [isChecked, setIsChecked] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = () => {
-        // TODO: 회원 탈퇴 api 연결
-        // 탈퇴 성공 시 유저 정보 제거 후 회원 탈퇴 완료 페이지로 이동
-        router.push('/mypage/leave/complete');
+    const { reason } = useLeaveReasonStore();
+
+    const handleSubmit = async () => {
+        try {
+            await leave(reason);
+            router.push('/mypage/leave/complete');
+        } catch (error) {
+            alert(error);
+        }
     };
 
     return (
