@@ -47,6 +47,10 @@ export default function SearchBar({
         return () => clearTimeout(timer);
     }, [keyword, paramsKeyword]);
 
+    useEffect(() => {
+        setKeyword(paramsKeyword ?? '');
+    }, [paramsKeyword]);
+
     const autocomplete = async (keyword: string) => {
         const response = await getRelativeObject(keyword);
         setRelativeObjects(response);
@@ -64,10 +68,6 @@ export default function SearchBar({
             setIsSearching(false);
         }
     };
-
-    useEffect(() => {
-        setKeyword(paramsKeyword ?? '');
-    }, [paramsKeyword]);
 
     return (
         <>
@@ -87,7 +87,7 @@ export default function SearchBar({
                         className="placeholder:text-disabled text-body-03 mr-auto w-full placeholder:font-normal"
                     />
                     {keyword && (
-                        <Link href={'/search'}>
+                        <Link href={'/search'} onClick={() => setKeyword('')}>
                             <S.CloseIcon className="fill-gray-10" />
                         </Link>
                     )}
@@ -120,7 +120,8 @@ export default function SearchBar({
                         >
                             {splitTextByKeyword(keyword, objectName).map(
                                 (part) =>
-                                    part === keyword ? (
+                                    part.toLocaleLowerCase() ===
+                                    keyword.toLocaleLowerCase() ? (
                                         <span key={part} className="text-point">
                                             {part}
                                         </span>
