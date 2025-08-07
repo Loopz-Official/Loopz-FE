@@ -6,6 +6,7 @@ import { useState } from 'react';
 import BottomFixedButton from '@/components/common/Button/BottomFixed';
 import RadioButton from '@/components/common/Button/Radio';
 import { LEAVE_REASONS } from '@/constants/user';
+import { useLeaveReasonStore } from '@/hooks/stores/useLeaveReason';
 
 export default function Page() {
     const router = useRouter();
@@ -14,6 +15,8 @@ export default function Page() {
         LEAVE_REASONS[0] ?? ''
     );
     const [textareaValue, setTextareaValue] = useState<string>('');
+
+    const { setReason } = useLeaveReasonStore();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue(e.target.value);
@@ -31,7 +34,7 @@ export default function Page() {
                 ? textareaValue || selectedValue
                 : selectedValue;
 
-        console.log(reason);
+        setReason(reason);
         router.push('/mypage/leave/confirm');
     };
 
