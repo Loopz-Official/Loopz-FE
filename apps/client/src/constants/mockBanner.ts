@@ -6,12 +6,6 @@ export const MOCK_BANNER = [
         embeddedUrl: 'https://loopz-flow.com',
     },
     {
-        imageUrl: '/banner/02.png',
-        title: 'POPGA',
-        description: '팝업스토어 정보가 필요할 땐 팝가에서 혜택 받기',
-        embeddedUrl: 'https://popga.co.kr',
-    },
-    {
         imageUrl: '/banner/03.png',
         title: '우리는 한 번만 쓰이던 이야기에\n다음 장을 엽니다.',
         description: 'Loopz의 철학이 궁금하다면',

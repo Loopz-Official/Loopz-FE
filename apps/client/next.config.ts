@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
                 pathname: '/dn/**',
             },
             {
+                protocol: 'http',
+                hostname: 'k.kakaocdn.net',
+                pathname: '/dn/**',
+            },
+            {
                 protocol: 'https',
                 hostname: 'lh3.googleusercontent.com',
                 pathname: '/**',
