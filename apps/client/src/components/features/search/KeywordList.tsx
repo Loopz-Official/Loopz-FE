@@ -36,7 +36,7 @@ export default function KeywordList({
         >
             {keywords.map(({ keyword, searchId }) => (
                 <button
-                    key={keyword}
+                    key={searchId}
                     onClick={() => router.push(`/search?keyword=${keyword}`)}
                     className={clsx(
                         'text-body-03 text-gray-dark flex w-max items-center gap-1.5 whitespace-nowrap rounded-full border py-1 tracking-normal',

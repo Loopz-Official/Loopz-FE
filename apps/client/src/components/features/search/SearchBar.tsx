@@ -111,9 +111,9 @@ export default function SearchBar({
 
             {isSearching && relativeObjects.length > 0 && (
                 <div className="fixed top-14 z-20 h-full w-full bg-white pt-4">
-                    {relativeObjects.map(({ objectName }) => (
+                    {relativeObjects.map(({ objectName, objectId }) => (
                         <Link
-                            key={objectName}
+                            key={objectId}
                             href={`/search?keyword=${objectName}`}
                             onClick={() => setIsSearching(false)}
                             className="text-body-03 line-clamp-1 w-full px-5 py-3 font-normal"
