@@ -5,6 +5,8 @@ import {
     FilterRecord,
     objectBoardFilterRequest,
     ObjectSelectionRequest,
+    searchObjectRequest,
+    SearchObjectRequest,
     SortAndSoldOutOptions,
 } from '@/schemas/object';
 import { validate } from '@/schemas/utils/validate';
@@ -12,6 +14,7 @@ import {
     getLikedObjectList,
     getObjectBoardList,
     getObjectDetail,
+    getSearchedObjectList,
     getSelectedObjectInfos,
 } from '@/services/api/object';
 
@@ -89,6 +92,44 @@ export const useLikedObjectListQuery = (
             );
 
             return await getLikedObjectList(params);
+        },
+        initialPageParam: 0, // 현재까지 받은 페이지 수
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasNext) {
+                return allPages.length; // 다음 pageParam = 현재까지 받은 페이지 수
+            }
+            return undefined;
+        },
+        staleTime: 1000 * 10, // 10초 (For testing)
+        gcTime: 1000 * 30, // 30초 (For testing)
+    });
+};
+
+// 오브제 검색 조회
+export const useSearchedObjectListQuery = (
+    size: number,
+    filters: Partial<SearchObjectRequest>
+) => {
+    return useInfiniteQuery({
+        queryKey: ['object-searched', size, filters],
+        queryFn: async (context) => {
+            const page =
+                typeof context.pageParam === 'number'
+                    ? context.pageParam + 1 // DB에서 page는 1부터 시작하므로 +1
+                    : 1;
+
+            // API 요청 파라미터 구성
+            const params = validate(
+                searchObjectRequest,
+                {
+                    page,
+                    size,
+                    ...filters,
+                },
+                'Searched Object Request'
+            );
+
+            return await getSearchedObjectList(params);
         },
         initialPageParam: 0, // 현재까지 받은 페이지 수
         getNextPageParam: (lastPage, allPages) => {

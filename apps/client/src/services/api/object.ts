@@ -7,6 +7,7 @@ import {
     objectBoardResponse,
     objectDetailInfo,
     ObjectSelectionRequest,
+    SearchObjectRequest,
     selectedObjectInfos,
 } from '@/schemas/object/object';
 import { validate } from '@/schemas/utils/validate';
@@ -80,6 +81,23 @@ export const getLikedObjectList = async (params: FilteredObjectRequest) => {
         throw new Error('Invalid response status');
     } catch (error) {
         console.error('좋아요 조회 실패', error);
+        throw error;
+    }
+};
+
+// 오브제 검색 조회
+export const getSearchedObjectList = async (params: SearchObjectRequest) => {
+    try {
+        const response = await apiClient.get('/search/v1/objects', {
+            params,
+        });
+
+        if (response.status === 200) {
+            return validate(objectBoardResponse, response.data.data);
+        }
+        throw new Error('Invalid response status');
+    } catch (error) {
+        console.error('검색 조회 실패', error);
         throw error;
     }
 };

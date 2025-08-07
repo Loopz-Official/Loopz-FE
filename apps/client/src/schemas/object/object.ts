@@ -85,6 +85,14 @@ export const filteredObjectRequest = z.object({
 });
 export type FilteredObjectRequest = z.infer<typeof filteredObjectRequest>;
 
+// Object Search
+export const searchObjectRequest = z.object({
+    ...paginationOptions.shape,
+    ...sortAndSoldOutOptions.shape,
+    keyword: z.string(),
+});
+export type SearchObjectRequest = z.infer<typeof searchObjectRequest>;
+
 // Selected Object Info Request & Response
 export const objectSelectionRequest = z.object({
     objectId: z.uuid(),
