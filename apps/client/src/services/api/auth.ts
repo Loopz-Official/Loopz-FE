@@ -96,3 +96,16 @@ export const logout = async () => {
         console.error('Error logging out:', error);
     }
 };
+
+export const leave = async (reason: string) => {
+    try {
+        await apiClient.delete('/user/v1', {
+            data: { reason },
+        });
+
+        return;
+    } catch (error) {
+        console.error('Error leaving:', error);
+        throw new Error('회원 탈퇴 중 문제가 발생했습니다.');
+    }
+};
