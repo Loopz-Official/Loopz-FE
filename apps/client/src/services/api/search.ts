@@ -69,7 +69,7 @@ export const deleteAllSearchHistory = async () => {
         }
         throw new Error('Failed to delete all search history');
     } catch (error) {
-        console.error('Error deleting allsearch history:', error);
+        console.error('Error deleting all search history:', error);
         throw error;
     }
 };
