@@ -12,7 +12,7 @@ export default function Page() {
     const router = useRouter();
 
     const [selectedValue, setSelectedValue] = useState<string>(
-        LEAVE_REASONS[0] ?? ''
+        LEAVE_REASONS[0]!
     );
     const [textareaValue, setTextareaValue] = useState<string>('');
 
@@ -61,7 +61,7 @@ export default function Page() {
                     ))}
                 </div>
 
-                {selectedValue === '기타' && (
+                {selectedValue === LEAVE_REASONS.at(-1) && (
                     <div className="pl-8">
                         <textarea
                             value={textareaValue}

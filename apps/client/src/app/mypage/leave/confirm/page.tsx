@@ -19,7 +19,7 @@ export default function Page() {
             await leave(reason);
             router.push('/mypage/leave/complete');
         } catch (error) {
-            alert(error);
+            alert((error as Error).message);
         }
     };
 

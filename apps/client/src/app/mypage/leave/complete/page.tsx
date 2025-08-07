@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { clearUserInfoCookie } from '@/auth/cookie/clearCookie';
 import { CheckCircleComplete } from '@/icons/Common';
 
-export default function SignupComplete() {
+export default function Page() {
     const router = useRouter();
 
     useEffect(() => {
