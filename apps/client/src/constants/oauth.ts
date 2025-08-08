@@ -24,12 +24,12 @@ export const OAUTH_SERVICES = [
         url: OAUTH_REQUEST_URL.kakao,
         bgColor: '#FEE500',
     },
-    {
-        name: '네이버',
-        icon: I.NaverLogo,
-        url: '/api/auth/naver',
-        bgColor: '#03C75A',
-    },
+    // {
+    //     name: '네이버',
+    //     icon: I.NaverLogo,
+    //     url: '/api/auth/naver',
+    //     bgColor: '#03C75A',
+    // },
     {
         name: 'Google',
         icon: I.GoogleLogo,
